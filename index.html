@@ -42,16 +42,17 @@
     </div>
     <script>
         const googleSheetsCSVURL = 'https://google.com';
+        
         function cleanMediaURL(url) {
             if (!url || url.trim() === "" || url.includes("example.com")) return "";
             let cleanUrl = url.trim();
             if (cleanUrl.includes("://youtube.com")) {
-                let videoId = cleanUrl.split("v=")[1].split("&")[0];
-                return `https://youtube.com{videoId}?autoplay=1&rel=0`;
+                let videoId = cleanUrl.split("v=").split("&")[0];
+                return "https://youtube.com" + videoId + "?autoplay=1&rel=0";
             }
             if (cleanUrl.includes("youtu.be/")) {
                 let videoId = cleanUrl.split("youtu.be/")[1].split("?")[0];
-                return `https://youtube.com{videoId}?autoplay=1&rel=0`;
+                return "https://youtube.com" + videoId + "?autoplay=1&rel=0";
             }
             if (cleanUrl.includes("://youtube.com")) {
                 if (!cleanUrl.includes("autoplay=1")) {
@@ -61,30 +62,29 @@
             }
             return cleanUrl;
         }
+
         function parseCSVText(text) {
             let lines = text.split(/\r\n|\n/);
             let result = [];
-            for (let i = 1; i < lines.length; i++) {
+            for (let i = 0; i < lines.length; i++) {
                 if (!lines[i]) continue;
                 let row = [];
                 let insideQuote = false;
                 let entry = "";
                 for (let j = 0; j < lines[i].length; j++) {
                     let char = lines[i][j];
-                    if (char === '"') {
-                        insideQuote = !insideQuote;
-                    } else if (char === ',' && !insideQuote) {
+                    if (char === '"') { insideQuote = !insideQuote; }
+                    else if (char === ',' && !insideQuote) {
                         row.push(entry.trim().replace(/^"|"$/g, ''));
                         entry = "";
-                    } else {
-                        entry += char;
-                    }
+                    } else { entry += char; }
                 }
                 row.push(entry.trim().replace(/^"|"$/g, ''));
-                if (row.length > 1) result.push(row);
+                if (row.length > 0) result.push(row);
             }
             return result;
         }
+
         async function fetchGoogleDatabase() {
             const container = document.getElementById('danceListLayout');
             try {
@@ -92,49 +92,55 @@
                 if (!response.ok) throw new Error('Data sync stream failed');
                 const csvData = await response.text();
                 const parsedRows = parseCSVText(csvData);
-                const tracks = parsedRows.map(row => ({
-                    name: row[0] || 'Unknown Title',
-                    choreographer: row[1] || 'Unknown',
-                    song: row[2] || 'Unknown Song',
-                    artist: row[3] || 'Unknown Artist',
-                    steps: cleanMediaURL(row[4]),
-                    teach: cleanMediaURL(row[5]),
-                    demo: cleanMediaURL(row[6]),
-                    music: cleanMediaURL(row[7])
-                }));
+                
+                if (parsedRows.length === 0) throw new Error('Empty dataset');
+                
+                const headerRow = parsedRows[0].map(h => h.toLowerCase().trim());
+                const idxName = headerRow.indexOf('dance name');
+                const idxChoreo = headerRow.indexOf('choreographer');
+                const idxSong = headerRow.indexOf('song name');
+                const idxArtist = headerRow.indexOf('song artist');
+                const idxSteps = headerRow.indexOf('steps url');
+                const idxTeach = headerRow.indexOf('teach url');
+                const idxDemo = headerRow.indexOf('demo url');
+                const idxMusic = headerRow.indexOf('music url');
+
+                const tracks = [];
+                for(let i = 1; i < parsedRows.length; i++) {
+                    let row = parsedRows[i];
+                    if (row.length <= Math.max(idxName, idxChoreo, idxSong, idxArtist)) continue;
+                    tracks.push({
+                        name: row[idxName] || 'Unknown Title',
+                        choreographer: row[idxChoreo] || 'Unknown',
+                        song: row[idxSong] || 'Unknown Song',
+                        artist: row[idxArtist] || 'Unknown Artist',
+                        steps: idxSteps !== -1 ? cleanMediaURL(row[idxSteps]) : '',
+                        teach: idxTeach !== -1 ? cleanMediaURL(row[idxTeach]) : '',
+                        demo: idxDemo !== -1 ? cleanMediaURL(row[idxDemo]) : '',
+                        music: idxMusic !== -1 ? cleanMediaURL(row[idxMusic]) : ''
+                    });
+                }
                 renderDanceApplication(tracks);
             } catch (error) {
-                container.innerHTML = `
-                    <div style="text-align:center;padding:20px;color:#ff6b6b;">
-                        <h3>Spreadsheet Stream Active</h3>
-                        <p>Your media platform layout is ready. Please ensure your Google Sheet remains published to the web.</p>
-                    </div>`;
+                container.innerHTML = '<div style="text-align:center;padding:20px;color:#ff6b6b;"><h3>Spreadsheet Stream Active</h3><p>Your media platform layout is ready. Please ensure your Google Sheet remains published to the web.</p></div>';
             }
         }
+
         function renderDanceApplication(tracks) {
             const container = document.getElementById('danceListLayout');
             container.innerHTML = '';
             if(tracks.length === 0) {
-                container.innerHTML = '<p style="text-align:center;color:#aaa;">No rows detected inside your spreadsheet table rows.</p>';
+                container.innerHTML = '<p style="text-align:center;color:#aaa;">No data found inside your spreadsheet rows.</p>';
                 return;
             }
             tracks.forEach(track => {
                 const card = document.createElement('div');
                 card.className = 'dance-entry-card';
-                const btnSteps = track.steps ? `<button class="action-touch-btn" onclick="launchInAppBrowser('${track.steps}', '${track.name} - Steps')">Steps</button>` : `<button class="action-touch-btn disabled">None</button>`;
-                const btnTeach = track.teach ? `<button class="action-touch-btn" onclick="launchInAppBrowser('${track.teach}', '${track.name} - Teach')">Teach</button>` : `<button class="action-touch-btn disabled">None</button>`;
-                const btnDemo = track.demo ? `<button class="action-touch-btn" onclick="launchInAppBrowser('${track.demo}', '${track.name} - Demo')">Demo</button>` : `<button class="action-touch-btn disabled">None</button>`;
-                const btnMusic = track.music ? `<button class="action-touch-btn" onclick="launchInAppBrowser('${track.music}', '${track.name} - Play')">Music</button>` : `<button class="action-touch-btn disabled">None</button>`;
-                card.innerHTML = `
-                    <div class="title-line">${track.name} • By: ${track.choreographer}</div>
-                    <div class="meta-line">Song: ${track.song} - ${track.artist}</div>
-                    <div class="button-bar-grid">
-                        ${btnSteps}
-                        ${btnTeach}
-                        ${btnDemo}
-                        ${btnMusic}
-                    </div>
-                `;
+                const btnSteps = track.steps ? '<button class="action-touch-btn" onclick="launchInAppBrowser(\'' + track.steps + '\', \'' + track.name + ' - Steps\')">Steps</button>' : '<button class="action-touch-btn disabled">None</button>';
+                const btnTeach = track.teach ? '<button class="action-touch-btn" onclick="launchInAppBrowser(\'' + track.teach + '\', \'' + track.name + ' - Teach\')">Teach</button>' : '<button class="action-touch-btn disabled">None</button>';
+                const btnDemo = track.demo ? '<button class="action-touch-btn" onclick="launchInAppBrowser(\'' + track.demo + '\', \'' + track.name + ' - Demo\')">Demo</button>' : '<button class="action-touch-btn disabled">None</button>';
+                const btnMusic = track.music ? '<button class="action-touch-btn" onclick="launchInAppBrowser(\'' + track.music + '\', \'' + track.name + ' - Play\')">Music</button>' : '<button class="action-touch-btn disabled">None</button>';
+                card.innerHTML = '<div class="title-line">' + track.name + ' • By: ' + track.choreographer + '</div><div class="meta-line">Song: ' + track.song + ' - ' + track.artist + '</div><div class="button-bar-grid">' + btnSteps + btnTeach + btnDemo + btnMusic + '</div>';
                 container.appendChild(card);
             });
         }
