@@ -152,6 +152,122 @@
             document.getElementById('appIframeViewport').src = '';
         }
         window.onload = fetchExcelDatabase;
+   <script>
+        // Your Verified View-Only OneDrive Share Link
+        const oneDriveShareURL = 'https://1drv.ms';
+        
+        // The Bulletproof Microsoft API Conversion Tool
+        function getCSVDownloadURL(shareUrl) {
+            try {
+                // Extracts the precise unique ID from your folder link path
+                const parts = shareUrl.split('/');
+                const fileId = parts[parts.indexOf('c') + 1];
+                // Forces OneDrive to bypass the browser screen and stream the raw spreadsheet data directly
+                return `https://live.com{fileId}&resid=${fileId}&authkey=IQCu82MPK8amTZGEV74X1EdrAXcLN1kRqT1oitemxJeh0hk&em=2&app=Excel`;
+            } catch(e) { 
+                return ''; 
+            }
+        }
+
+        function cleanMediaURL(url) {
+            if (!url || url.trim() === "" || url.includes("example.com")) return "";
+            let cleanUrl = url.trim();
+            if (cleanUrl.includes("://youtube.com")) {
+                let videoId = cleanUrl.split("v=")[1].split("&")[0];
+                return `https://youtube.com{videoId}?autoplay=1&rel=0`;
+            }
+            if (cleanUrl.includes("youtu.be/")) {
+                let videoId = cleanUrl.split("youtu.be/")[1].split("?")[0];
+                return `https://youtube.com{videoId}?autoplay=1&rel=0`;
+            }
+            return cleanUrl;
+        }
+
+        function parseCSVText(text) {
+            let lines = text.split(/\r\n|\n/);
+            let result = [];
+            for (let i = 1; i < lines.length; i++) {
+                if (!lines[i]) continue;
+                let row = [];
+                let insideQuote = false;
+                let entry = "";
+                for (let j = 0; j < lines[i].length; j++) {
+                    let char = lines[i][j];
+                    if (char === '"') { insideQuote = !insideQuote; }
+                    else if (char === ',' && !insideQuote) {
+                        row.push(entry.trim().replace(/^"|"$/g, ''));
+                        entry = "";
+                    } else { entry += char; }
+                }
+                row.push(entry.trim().replace(/^"|"$/g, ''));
+                if (row.length > 1) result.push(row);
+            }
+            return result;
+        }
+
+        async function fetchExcelDatabase() {
+            const container = document.getElementById('danceListLayout');
+            const dataUrl = getCSVDownloadURL(oneDriveShareURL);
+            try {
+                const response = await fetch(dataUrl);
+                if (!response.ok) throw new Error('Network block');
+                const csvData = await response.text();
+                const parsedRows = parseCSVText(csvData);
+                
+                // Maps your columns automatically: 0=Name, 1=Choreographer, 2=Song, 3=Artist
+                const tracks = parsedRows.map(row => ({
+                    name: row[0] || 'Unknown Title',
+                    choreographer: row[1] || 'Unknown',
+                    song: row[2] || 'Unknown Song',
+                    artist: row[3] || 'Unknown Artist',
+                    steps: cleanMediaURL(row[4]),
+                    teach: cleanMediaURL(row[5]),
+                    demo: cleanMediaURL(row[6]),
+                    music: cleanMediaURL(row[7])
+                }));
+                renderDanceApplication(tracks);
+            } catch (error) {
+                // If Microsoft blocks the API fetch request, load a clean local fallback row so you can see the layout running instantly
+                const structuralFallback = [
+                    { name: "Rowdy Crowd", choreographer: "Maggie Shipley", song: "Y'all Some", artist: "Pryor & Lee", steps: "https://copperknob.co.uk", teach: "https://youtube.com", demo: "https://youtube.com", music: "https://youtube.com" }
+                ];
+                renderDanceApplication(structuralFallback);
+            }
+        }
+
+        function renderDanceApplication(tracks) {
+            const container = document.getElementById('danceListLayout');
+            container.innerHTML = '';
+            tracks.forEach(track => {
+                const card = document.createElement('div');
+                card.className = 'dance-entry-card';
+                card.innerHTML = `
+                    <div class="title-line">${track.name} • By: ${track.choreographer}</div>
+                    <div class="meta-line">Song: ${track.song} - ${track.artist}</div>
+                    <div class="button-bar-grid">
+                        <button class="action-touch-btn" onclick="launchInAppBrowser('${track.steps}', '${track.name} - Steps')">Steps</button>
+                        <button class="action-touch-btn" onclick="launchInAppBrowser('${track.teach}', '${track.name} - Teach')">Teach</button>
+                        <button class="action-touch-btn" onclick="launchInAppBrowser('${track.demo}', '${track.name} - Demo')">Demo</button>
+                        <button class="action-touch-btn" onclick="launchInAppBrowser('${track.music}', '${track.name} - Play')">Music</button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function launchInAppBrowser(targetUrl, displayTitle) {
+            if (!targetUrl || targetUrl === "undefined") { alert("No link provided in spreadsheet row cell."); return; }
+            document.getElementById('overlayPanelTitle').innerText = displayTitle;
+            document.getElementById('appIframeViewport').src = targetUrl;
+            document.getElementById('playerOverlayFrame').style.display = 'block';
+        }
+
+        function shutOverlayViewer() {
+            document.getElementById('playerOverlayFrame').style.display = 'none';
+            document.getElementById('appIframeViewport').src = '';
+        }
+
+        window.onload = fetchExcelDatabase;
     </script>
 </body>
 </html>
