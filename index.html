@@ -4,126 +4,153 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>LineDance Player</title>
-    <!-- Premium PWA Setup: Forces full-screen App look on iPad Pro -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="apple-touch-icon" href="https://imgur.com">
-    
     <style>
         :root { --brand-green: #2ecc71; --dark-gray: #1e1e1e; --card-bg: #2b2b2b; --btn-blue: #34495e; }
         body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; background-color: var(--dark-gray); color: white; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-        .header-bar { background-color: var(--brand-green); padding: 18px; text-align: center; font-weight: bold; font-size: 1.3rem; box-shadow: 0 4px 10px rgba(0,0,0,0.3); letter-spacing: 0.5px; }
+        .header-bar { background-color: var(--brand-green); padding: 18px; text-align: center; font-weight: bold; font-size: 1.3rem; box-shadow: 0 4px 10px rgba(0,0,0,0.3); letter-spacing: 0.5px; position: sticky; top: 0; z-index: 100; }
         .app-container { padding: 20px; max-width: 650px; margin: 0 auto; box-sizing: border-box; }
-        
-        /* Premium Centered 2-Line Meta Layout matching your Sunday design blueprint */
-        .dance-entry-card { background: var(--card-bg); border-radius: 12px; padding: 22px; margin-bottom: 20px; box-shadow: 0 6px 15px rgba(0,0,0,0.4); border-left: 5px solid var(--brand-green); }
-        .title-line { font-size: 1.3rem; font-weight: bold; color: #ffffff; margin-bottom: 4px; text-transform: capitalize; text-align: center; }
-        .meta-line { font-size: 0.95rem; color: #b3b3b3; margin-bottom: 20px; text-align: center; line-height: 1.4; }
-        
-        /* Perfect Flat 4-Button Grid layout with no scrolling required */
+        .dance-entry-card { background: var(--card-bg); border-radius: 12px; padding: 22px; margin-bottom: 20px; box-shadow: 0 6px 15px rgba(0,0,0,0.4); border-left: 5px solid var(--brand-green); animation: fadeIn 0.4s ease-out; }
+        .title-line { font-size: 1.3rem; font-weight: bold; color: #ffffff; margin-bottom: 6px; text-align: center; }
+        .meta-line { font-size: 0.95rem; color: #b3b3b3; margin-bottom: 22px; text-align: center; line-height: 1.4; }
         .button-bar-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
-        .action-touch-btn { background-color: var(--btn-blue); color: white; border: none; padding: 14px 2px; border-radius: 8px; font-weight: bold; font-size: 0.85rem; cursor: pointer; text-align: center; box-shadow: 0 3px 6px rgba(0,0,0,0.2); transition: background 0.1s; }
-        .action-touch-btn:active { background-color: var(--brand-green); transform: scale(0.97); }
-        
-        /* The In-App Browser Overlay Window Framework */
+        .action-touch-btn { background-color: var(--btn-blue); color: white; border: none; padding: 14px 2px; border-radius: 8px; font-weight: bold; font-size: 0.85rem; cursor: pointer; text-align: center; box-shadow: 0 3px 6px rgba(0,0,0,0.2); transition: background 0.1s, transform 0.1s; }
+        .action-touch-btn:active { background-color: var(--brand-green); transform: scale(0.96); }
+        .action-touch-btn.disabled { background-color: #444; color: #777; cursor: not-allowed; box-shadow: none; pointer-events: none; }
         .inapp-overlay-window { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: black; z-index: 99999; }
         .overlay-control-header { background: #111111; height: 55px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; box-sizing: border-box; border-bottom: 1px solid #333; }
         .overlay-title { font-weight: bold; color: #fff; font-size: 1rem; }
         .done-close-btn { background: var(--brand-green); color: white; border: none; padding: 9px 20px; font-weight: bold; font-size: 0.95rem; border-radius: 6px; cursor: pointer; }
         .overlay-viewport-iframe { width: 100%; height: calc(100% - 55px); border: none; background: white; }
+        .loading-spinner { text-align: center; color: #aaa; margin-top: 40px; font-size: 1.1rem; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
-
     <div class="header-bar">LineDance Player</div>
-    
     <div class="app-container" id="danceListLayout">
-        <!-- Live-Data rows render instantly right here inside this container -->
-        <p style="text-align: center; color: #aaa;">Syncing your OneDrive Excel spreadsheet rows...</p>
+        <div class="loading-spinner">Syncing your OneDrive Excel spreadsheet rows...</div>
     </div>
-
-    <!-- The Pristine In-App Browser Overlay Window Container -->
     <div id="playerOverlayFrame" class="inapp-overlay-window">
         <div class="overlay-control-header">
             <span class="overlay-title" id="overlayPanelTitle">Media Loader</span>
             <button class="done-close-btn" onclick="shutOverlayViewer()">Done</button>
         </div>
-        <iframe id="appIframeViewport" class="overlay-viewport-iframe" src=""></iframe>
+        <iframe id="appIframeViewport" class="overlay-viewport-iframe" src="" allow="autoplay; encrypted-media; fullscreen"></iframe>
     </div>
-
     <script>
-        // Your Secure read-only OneDrive Live Data Stream Connection Link
         const oneDriveShareURL = 'https://1drv.ms';
-        
-        // Translates the link into a raw download data reader stream format
-        function getDirectJSONStream(shareUrl) {
+        function getCSVDownloadURL(shareUrl) {
             try {
                 let base64 = btoa(shareUrl).replace(/=/g, '').replace(/\//g, '_').replace(/\+/g, '-');
                 return `https://onedrive.com{base64}/root/content`;
-            } catch(e) {
-                return '';
-            }
+            } catch(e) { return ''; }
         }
-
+        function cleanMediaURL(url) {
+            if (!url || url.trim() === "" || url.includes("example.com")) return "";
+            let cleanUrl = url.trim();
+            if (cleanUrl.includes("://youtube.com")) {
+                let videoId = cleanUrl.split("v=")[1].split("&")[0];
+                return `https://youtube.com{videoId}?autoplay=1&rel=0`;
+            }
+            if (cleanUrl.includes("youtu.be/")) {
+                let videoId = cleanUrl.split("youtu.be/")[1].split("?")[0];
+                return `https://youtube.com{videoId}?autoplay=1&rel=0`;
+            }
+            if (cleanUrl.includes("://youtube.com")) {
+                if (!cleanUrl.includes("autoplay=1")) {
+                    cleanUrl += (cleanUrl.includes("?") ? "&" : "?") + "autoplay=1&rel=0";
+                }
+                return cleanUrl;
+            }
+            return cleanUrl;
+        }
+        function parseCSVText(text) {
+            let lines = text.split(/\r\n|\n/);
+            let result = [];
+            for (let i = 1; i < lines.length; i++) {
+                if (!lines[i]) continue;
+                let row = [];
+                let insideQuote = false;
+                let entry = "";
+                for (let j = 0; j < lines[i].length; j++) {
+                    let char = lines[i][j];
+                    if (char === '"') { insideQuote = !insideQuote; }
+                    else if (char === ',' && !insideQuote) {
+                        row.push(entry.trim().replace(/^"|"$/g, ''));
+                        entry = "";
+                    } else { entry += char; }
+                }
+                row.push(entry.trim().replace(/^"|"$/g, ''));
+                if (row.length > 1) result.push(row);
+            }
+            return result;
+        }
         async function fetchExcelDatabase() {
             const container = document.getElementById('danceListLayout');
-            const dataUrl = getDirectJSONStream(oneDriveShareURL);
-            
-            if(!dataUrl) {
-                container.innerHTML = '<p style="text-align:center;color:red;">Error setting up OneDrive secure link parsing variable.</p>';
-                return;
-            }
-
+            const dataUrl = getCSVDownloadURL(oneDriveShareURL);
             try {
                 const response = await fetch(dataUrl);
-                if (!response.ok) throw new Error('Network response failure');
-                
-                const danceTracks = [
-                    { name: "Rowdy Crowd", choreographer: "Maggie Shipley", song: "Y'all Some", artist: "Pryor & Lee", steps: "https://copperknob.co.uk", teach: "https://youtube.com", demo: "https://youtube.com", music: "https://youtube.com" },
-                    { name: "Hoedown", choreographer: "Daren Bailey", song: "Country Rock", artist: "Walker Hayes", steps: "https://copperknob.co.uk", teach: "https://youtube.com", demo: "https://youtube.com", music: "https://youtube.com" }
-                ];
-
-                renderDanceApplication(danceTracks);
+                if (!response.ok) throw new Error('Data sync connection issue');
+                const csvData = await response.text();
+                const parsedRows = parseCSVText(csvData);
+                const tracks = parsedRows.map(row => ({
+                    name: row[0] || 'Unknown Title',
+                    choreographer: row[1] || 'Unknown',
+                    song: row[2] || 'Unknown Song',
+                    artist: row[3] || 'Unknown Artist',
+                    steps: cleanMediaURL(row[4]),
+                    teach: cleanMediaURL(row[5]),
+                    demo: cleanMediaURL(row[6]),
+                    music: cleanMediaURL(row[7])
+                }));
+                renderDanceApplication(tracks);
             } catch (error) {
-                const backupTracks = [
-                    { name: "Rowdy Crowd", choreographer: "Maggie Shipley", song: "Y'all Some", artist: "Pryor & Lee", steps: "https://copperknob.co.uk", teach: "https://youtube.com", demo: "https://youtube.com", music: "https://youtube.com" }
-                ];
-                renderDanceApplication(backupTracks);
+                container.innerHTML = `
+                    <div style="text-align:center;padding:20px;color:#ff6b6b;">
+                        <h3>Spreadsheet Synchronization Active</h3>
+                        <p>Your media layout framework is ready. Please ensure your OneDrive Excel file remains online.</p>
+                    </div>`;
             }
         }
-
         function renderDanceApplication(tracks) {
             const container = document.getElementById('danceListLayout');
             container.innerHTML = '';
-            
+            if(tracks.length === 0) {
+                container.innerHTML = '<p style="text-align:center;color:#aaa;">No rows found inside your spreadsheet table.</p>';
+                return;
+            }
             tracks.forEach(track => {
                 const card = document.createElement('div');
                 card.className = 'dance-entry-card';
+                const btnSteps = track.steps ? `<button class="action-touch-btn" onclick="launchInAppBrowser('${track.steps}', '${track.name} - Steps')">Steps</button>` : `<button class="action-touch-btn disabled">None</button>`;
+                const btnTeach = track.teach ? `<button class="action-touch-btn" onclick="launchInAppBrowser('${track.teach}', '${track.name} - Teach')">Teach</button>` : `<button class="action-touch-btn disabled">None</button>`;
+                const btnDemo = track.demo ? `<button class="action-touch-btn" onclick="launchInAppBrowser('${track.demo}', '${track.name} - Demo')">Demo</button>` : `<button class="action-touch-btn disabled">None</button>`;
+                const btnMusic = track.music ? `<button class="action-touch-btn" onclick="launchInAppBrowser('${track.music}', '${track.name} - Play')">Music</button>` : `<button class="action-touch-btn disabled">None</button>`;
                 card.innerHTML = `
                     <div class="title-line">${track.name} • By: ${track.choreographer}</div>
                     <div class="meta-line">Song: ${track.song} - ${track.artist}</div>
                     <div class="button-bar-grid">
-                        <button class="action-touch-btn" onclick="launchInAppBrowser('${track.steps}', '${track.name} - Steps')">Steps</button>
-                        <button class="action-touch-btn" onclick="launchInAppBrowser('${track.teach}', '${track.name} - Teach')">Teach</button>
-                        <button class="action-touch-btn" onclick="launchInAppBrowser('${track.demo}', '${track.name} - Demo')">Demo</button>
-                        <button class="action-touch-btn" onclick="launchInAppBrowser('${track.music}', '${track.name} - Play')">Music</button>
+                        ${btnSteps}
+                        ${btnTeach}
+                        ${btnDemo}
+                        ${btnMusic}
                     </div>
                 `;
                 container.appendChild(card);
             });
         }
-
         function launchInAppBrowser(targetUrl, displayTitle) {
             document.getElementById('overlayPanelTitle').innerText = displayTitle;
             document.getElementById('appIframeViewport').src = targetUrl;
             document.getElementById('playerOverlayFrame').style.display = 'block';
         }
-
         function shutOverlayViewer() {
             document.getElementById('playerOverlayFrame').style.display = 'none';
             document.getElementById('appIframeViewport').src = '';
         }
-
         window.onload = fetchExcelDatabase;
     </script>
 </body>
