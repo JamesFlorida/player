@@ -12,7 +12,7 @@
         body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; background-color: var(--dark-gray); color: white; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         .header-bar { background-color: var(--brand-green); padding: 18px; text-align: center; font-weight: bold; font-size: 1.3rem; box-shadow: 0 4px 10px rgba(0,0,0,0.3); letter-spacing: 0.5px; position: sticky; top: 0; z-index: 100; }
         .app-container { padding: 20px; max-width: 650px; margin: 0 auto; box-sizing: border-box; }
-        .dance-entry-card { background: var(--card-bg); border-radius: 12px; padding: 22px; margin-bottom: 20px; box-shadow: 0 6px 15px rgba(0,0,0,0.4); border-left: 5px solid var(--brand-green); animation: fadeIn 0.4s ease-out; }
+        .dance-entry-card { background: var(--card-bg); border-radius: 12px; padding: 22px; margin-bottom: 20px; box-shadow: 0 6px 15px rgba(0,0,0,0.4); border-left: 5px solid var(--brand-green); }
         .title-line { font-size: 1.3rem; font-weight: bold; color: #ffffff; margin-bottom: 6px; text-align: center; }
         .meta-line { font-size: 0.95rem; color: #b3b3b3; margin-bottom: 22px; text-align: center; line-height: 1.4; }
         .button-bar-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
@@ -24,137 +24,53 @@
         .overlay-title { font-weight: bold; color: #fff; font-size: 1rem; }
         .done-close-btn { background: var(--brand-green); color: white; border: none; padding: 9px 20px; font-weight: bold; font-size: 0.95rem; border-radius: 6px; cursor: pointer; }
         .overlay-viewport-iframe { width: 100%; height: calc(100% - 55px); border: none; background: white; }
-        .loading-spinner { text-align: center; color: #aaa; margin-top: 40px; font-size: 1.1rem; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
     <div class="header-bar">LineDance Player</div>
-    <div class="app-container" id="danceListLayout">
-        <div class="loading-spinner">Syncing your playlist data stream...</div>
-    </div>
+    <div class="app-container" id="danceListLayout"></div>
     <div id="playerOverlayFrame" class="inapp-overlay-window">
         <div class="overlay-control-header">
             <span class="overlay-title" id="overlayPanelTitle">Media Loader</span>
-            <button class="done-close-btn" onclick="shutOverlayViewer()">Done</button>
+            <button class="done-close-btn" onclick="launchInAppBrowser()">Done</button>
         </div>
         <iframe id="appIframeViewport" class="overlay-viewport-iframe" src="" allow="autoplay; encrypted-media; fullscreen"></iframe>
     </div>
     <script>
-        const googleSheetsCSVURL = 'https://google.com';
-        
-        function cleanMediaURL(url) {
-            if (!url || url.trim() === "" || url.includes("example.com")) return "";
-            let cleanUrl = url.trim();
-            if (cleanUrl.includes("://youtube.com")) {
-                let videoId = cleanUrl.split("v=")[1].split("&")[0];
-                return "https://youtube.com" + videoId + "?autoplay=1&rel=0";
-            }
-            if (cleanUrl.includes("youtu.be/")) {
-                let videoId = cleanUrl.split("youtu.be/")[1].split("?")[0];
-                return "https://youtube.com" + videoId + "?autoplay=1&rel=0";
-            }
-            if (cleanUrl.includes("://youtube.com")) {
-                if (!cleanUrl.includes("autoplay=1")) {
-                    cleanUrl += (cleanUrl.includes("?") ? "&" : "?") + "autoplay=1&rel=0";
-                }
-                return cleanUrl;
-            }
-            return cleanUrl;
-        }
+        const localDanceDatabase = [
+            { id: "Stock1", group: "Sunday Night", name: "AA", choreographer: "Gary O'Reilly", song: "AA", artist: "Walker Hayes", steps: "", teach: "https://youtube.com", demo: "https://youtube.com", music: "" },
+            { id: "Stock2", group: "Sunday Night", name: "Blue Night Cha", choreographer: "Kim Ray", song: "Blue Night", artist: "Michael Learns to Rock", steps: "", teach: "https://youtube.com", demo: "https://youtube.com", music: "" },
+            { id: "Stock3", group: "Sunday Night", name: "Shotgun Jenny", choreographer: "Kathy Hunyadi", song: "Shotgun Jenny", artist: "Kevin Fowler", steps: "", teach: "https://youtube.com", demo: "https://youtube.com", music: "" }
+        ];
 
-        function parseCSVText(text) {
-            let lines = text.split(/\r\n|\n/);
-            let result = [];
-            for (let i = 0; i < lines.length; i++) {
-                if (!lines[i]) continue;
-                let row = [];
-                let insideQuote = false;
-                let entry = "";
-                for (let j = 0; j < lines[i].length; j++) {
-                    let char = lines[i][j];
-                    if (char === '"') { insideQuote = !insideQuote; }
-                    else if (char === ',' && !insideQuote) {
-                        row.push(entry.trim().replace(/^"|"$/g, ''));
-                        entry = "";
-                    } else { entry += char; }
-                }
-                row.push(entry.trim().replace(/^"|"$/g, ''));
-                if (row.length > 0) result.push(row);
-            }
-            return result;
-        }
-
-        async function fetchGoogleDatabase() {
-            const container = document.getElementById('danceListLayout');
-            try {
-                const response = await fetch(googleSheetsCSVURL);
-                if (!response.ok) throw new Error('Data sync stream failed');
-                const csvData = await response.text();
-                const parsedRows = parseCSVText(csvData);
-                
-                if (parsedRows.length === 0) throw new Error('Empty dataset');
-                
-                const headers = parsedRows[0].map(h => h.toLowerCase().replace(/[^a-z0-9]/g, ''));
-                const idxName = headers.findIndex(h => h.includes('dancename'));
-                const idxChoreo = headers.findIndex(h => h.includes('choreographer'));
-                const idxSong = headers.findIndex(h => h.includes('songname'));
-                const idxArtist = headers.findIndex(h => h.includes('songartist'));
-                const idxSteps = headers.findIndex(h => h.includes('stepsurl'));
-                const idxTeach = headers.findIndex(h => h.includes('teachurl'));
-                const idxDemo = headers.findIndex(h => h.includes('demourl'));
-                const idxMusic = headers.findIndex(h => h.includes('musicurl'));
-
-                const tracks = [];
-                for(let i = 1; i < parsedRows.length; i++) {
-                    let row = parsedRows[i];
-                    if (row.length <= Math.max(idxName, idxChoreo, idxSong, idxArtist)) continue;
-                    tracks.push({
-                        name: row[idxName] || 'Unknown Title',
-                        choreographer: row[idxChoreo] || 'Unknown',
-                        song: row[idxSong] || 'Unknown Song',
-                        artist: row[idxArtist] || 'Unknown Artist',
-                        steps: idxSteps !== -1 ? cleanMediaURL(row[idxSteps]) : '',
-                        teach: idxTeach !== -1 ? cleanMediaURL(row[idxTeach]) : '',
-                        demo: idxDemo !== -1 ? cleanMediaURL(row[idxDemo]) : '',
-                        music: idxMusic !== -1 ? cleanMediaURL(row[idxMusic]) : ''
-                    });
-                }
-                renderDanceApplication(tracks);
-            } catch (error) {
-                container.innerHTML = '<div style="text-align:center;padding:20px;color:#ff6b6b;"><h3>Spreadsheet Stream Active</h3><p>Your media platform layout is ready. Please ensure your Google Sheet remains published to the web.</p></div>';
-            }
-        }
-
-        function renderDanceApplication(tracks) {
+        function renderDanceApplication() {
             const container = document.getElementById('danceListLayout');
             container.innerHTML = '';
-            if(tracks.length === 0) {
-                container.innerHTML = '<p style="text-align:center;color:#aaa;">No data found inside your spreadsheet rows.</p>';
-                return;
-            }
-            tracks.forEach(track => {
+            localDanceDatabase.forEach(track => {
                 const card = document.createElement('div');
                 card.className = 'dance-entry-card';
-                const btnSteps = track.steps ? '<button class="action-touch-btn" onclick="launchInAppBrowser(\'' + track.steps + '\', \'' + track.name + ' - Steps\')">Steps</button>' : '<button class="action-touch-btn disabled">None</button>';
-                const btnTeach = track.teach ? '<button class="action-touch-btn" onclick="launchInAppBrowser(\'' + track.teach + '\', \'' + track.name + ' - Teach\')">Teach</button>' : '<button class="action-touch-btn disabled">None</button>';
-                const btnDemo = track.demo ? '<button class="action-touch-btn" onclick="launchInAppBrowser(\'' + track.demo + '\', \'' + track.name + ' - Demo\')">Demo</button>' : '<button class="action-touch-btn disabled">None</button>';
-                const btnMusic = track.music ? '<button class="action-touch-btn" onclick="launchInAppBrowser(\'' + track.music + '\', \'' + track.name + ' - Play\')">Music</button>' : '<button class="action-touch-btn disabled">None</button>';
-                card.innerHTML = '<div class="title-line">' + track.name + ' • By: ' + track.choreographer + '</div><div class="meta-line">Song: ' + track.song + ' - ' + track.artist + '</div><div class="button-bar-grid">' + btnSteps + btnTeach + btnDemo + btnMusic + '</div>';
+                const btnSteps = track.steps ? `<button class="action-touch-btn" onclick="openMediaOverlay('${track.steps}', '${track.name} - Steps')">Steps</button>` : `<button class="action-touch-btn disabled">None</button>`;
+                const btnTeach = track.teach ? `<button class="action-touch-btn" onclick="openMediaOverlay('${track.teach}', '${track.name} - Teach')">Teach</button>` : `<button class="action-touch-btn disabled">None</button>`;
+                const btnDemo = track.demo ? `<button class="action-touch-btn" onclick="openMediaOverlay('${track.demo}', '${track.name} - Demo')">Demo</button>` : `<button class="action-touch-btn disabled">None</button>`;
+                const btnMusic = track.music ? `<button class="action-touch-btn" onclick="openMediaOverlay('${track.music}', '${track.name} - Play')">Music</button>` : `<button class="action-touch-btn disabled">None</button>`;
+                card.innerHTML = `<div class="title-line">${track.name} • By: ${track.choreographer}</div><div class="meta-line">Song: ${track.song} - ${track.artist} (${track.group})</div><div class="button-bar-grid">${btnSteps}${btnTeach}${btnDemo}${btnMusic}</div>`;
                 container.appendChild(card);
             });
         }
-        function launchInAppBrowser(targetUrl, displayTitle) {
-            if(!targetUrl || targetUrl === "undefined") return;
+
+        function openMediaOverlay(targetUrl, displayTitle) {
+            if(!targetUrl) return;
             document.getElementById('overlayPanelTitle').innerText = displayTitle;
             document.getElementById('appIframeViewport').src = targetUrl;
             document.getElementById('playerOverlayFrame').style.display = 'block';
         }
-        function shutOverlayViewer() {
+
+        function launchInAppBrowser() {
             document.getElementById('playerOverlayFrame').style.display = 'none';
             document.getElementById('appIframeViewport').src = '';
         }
-        window.onload = fetchGoogleDatabase;
+
+        window.onload = renderDanceApplication;
     </script>
 </body>
 </html>
