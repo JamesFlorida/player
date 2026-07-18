@@ -47,11 +47,11 @@
             if (!url || url.trim() === "" || url.includes("example.com")) return "";
             let cleanUrl = url.trim();
             if (cleanUrl.includes("://youtube.com")) {
-                let videoId = cleanUrl.split("v=").get(1).split("&").get(0);
+                let videoId = cleanUrl.split("v=")[1].split("&")[0];
                 return "https://youtube.com" + videoId + "?autoplay=1&rel=0";
             }
             if (cleanUrl.includes("youtu.be/")) {
-                let videoId = cleanUrl.split("youtu.be/").get(1).split("?").get(0);
+                let videoId = cleanUrl.split("youtu.be/")[1].split("?")[0];
                 return "https://youtube.com" + videoId + "?autoplay=1&rel=0";
             }
             if (cleanUrl.includes("://youtube.com")) {
@@ -95,7 +95,6 @@
                 
                 if (parsedRows.length === 0) throw new Error('Empty dataset');
                 
-                // Absolute Space-Insensitive Regex Matcher mapping logic:
                 const headers = parsedRows[0].map(h => h.toLowerCase().replace(/[^a-z0-9]/g, ''));
                 const idxName = headers.findIndex(h => h.includes('dancename'));
                 const idxChoreo = headers.findIndex(h => h.includes('choreographer'));
