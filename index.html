@@ -12,25 +12,23 @@
         body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; background-color: var(--dark-gray); color: white; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         .header-bar { background-color: var(--brand-green); padding: 18px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.3rem; box-shadow: 0 4px 10px rgba(0,0,0,0.3); position: sticky; top: 0; z-index: 100; height: 60px; box-sizing: border-box; }
         .back-nav-btn { position: absolute; left: 15px; background: rgba(0,0,0,0.4); border: 1px solid #444; color: white; padding: 6px 14px; border-radius: 6px; font-size: 0.9rem; font-weight: bold; cursor: pointer; display: none; }
-        .back-nav-btn:active { background: var(--brand-green); border-color: transparent; }
         .app-container { padding: 20px; max-width: 650px; margin: 0 auto; box-sizing: border-box; }
         .playlist-selection-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; padding-top: 10px; }
-        .playlist-hub-card { background: var(--card-bg); border-radius: 12px; padding: 30px 20px; text-align: center; font-size: 1.2rem; font-weight: bold; cursor: pointer; box-shadow: 0 6px 15px rgba(0,0,0,0.3); border-bottom: 4px solid var(--brand-green); transition: transform 0.1s; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100px; box-sizing: border-box; }
-        .playlist-hub-card:active { transform: scale(0.96); background: #333; }
+        .playlist-hub-card { background: var(--card-bg); border-radius: 12px; padding: 30px 20px; text-align: center; font-size: 1.2rem; font-weight: bold; cursor: pointer; box-shadow: 0 6px 15px rgba(0,0,0,0.3); border-bottom: 4px solid var(--brand-green); min-height: 100px; display: flex; flex-direction: column; justify-content: center; align-items: center; box-sizing: border-box; }
         .playlist-track-counter { font-size: 0.85rem; color: #aaa; margin-top: 8px; font-weight: normal; }
         .dance-entry-card { background: var(--card-bg); border-radius: 12px; padding: 22px; margin-bottom: 20px; box-shadow: 0 6px 15px rgba(0,0,0,0.4); border-left: 5px solid var(--brand-green); }
         .title-line { font-size: 1.3rem; font-weight: bold; color: #ffffff; margin-bottom: 6px; text-align: center; }
         .meta-line { font-size: 0.95rem; color: #b3b3b3; margin-bottom: 22px; text-align: center; line-height: 1.4; }
         .button-bar-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
-        .action-touch-btn { background-color: var(--btn-blue); color: white; border: none; padding: 14px 2px; border-radius: 8px; font-weight: bold; font-size: 0.85rem; cursor: pointer; text-align: center; box-shadow: 0 3px 6px rgba(0,0,0,0.2); transition: background 0.1s, transform 0.1s; text-decoration: none; display: block; }
-        .action-touch-btn:active { background-color: var(--brand-green); transform: scale(0.96); }
+        .action-touch-btn { background-color: var(--btn-blue); color: white; border: none; padding: 14px 2px; border-radius: 8px; font-weight: bold; font-size: 0.85rem; cursor: pointer; text-align: center; box-shadow: 0 3px 6px rgba(0,0,0,0.2); transition: background 0.1s; text-decoration: none; display: block; }
+        .action-touch-btn:active { background-color: var(--brand-green); }
         .action-touch-btn.disabled { background-color: #444; color: #777; cursor: not-allowed; box-shadow: none; pointer-events: none; }
         .inapp-overlay-window { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: black; z-index: 99999; }
         .overlay-control-header { background: #111111; height: 55px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; box-sizing: border-box; border-bottom: 1px solid #333; }
         .overlay-title { font-weight: bold; color: #fff; font-size: 1rem; }
         .done-close-btn { background: var(--brand-green); color: white; border: none; padding: 9px 20px; font-weight: bold; font-size: 0.95rem; border-radius: 6px; cursor: pointer; }
         .overlay-viewport-iframe { width: 100%; height: calc(100% - 55px); border: none; background: white; }
-    </style>
+</style>
 </head>
 <body>
     <div class="header-bar">
@@ -45,10 +43,9 @@
         </div>
         <iframe id="appIframeViewport" class="overlay-viewport-iframe" src="" allow="autoplay; encrypted-media; fullscreen"></iframe>
     </div>
-    <script>
-        // --- YOUR LIVE 200-ROW DATABASE BLOCKS SIT SAFELY INSIDE THESE BRACKETS ---
+<script>
         const localDanceDatabase = [
-            {id: "1", group: "Stock1", name: "AA (ccw-4x32,0)", choreographer: "Linda Scott", song: "AA", artist: "Walker Hayes", steps: "https://www.copperknob.co.uk/stepsheets/156833/aa", teach: "https://youtube.com/embed/ALz8MFlRENk?autoplay=1&rel=0", demo: "https://youtube.com/embed/ALz8MFlRENk?autoplay=1&rel=0", music: "https://youtube.com/embed/_1aO4pCvxN0?autoplay=1&rel=0" },
+            { id: "1", group: "Stock1", name: "AA (ccw-4x32,0)", choreographer: "Linda Scott", song: "AA", artist: "Walker Hayes", steps: "https://www.copperknob.co.uk/stepsheets/156833/aa", teach: "https://youtube.com/embed/ALz8MFlRENk?autoplay=1&rel=0", demo: "https://youtube.com/embed/ALz8MFlRENk?autoplay=1&rel=0", music: "https://youtube.com/embed/_1aO4pCvxN0?autoplay=1&rel=0" },
 { id: "2", group: "Stock3", name: "Blue night cha(BlurredLines)", choreographer: "Kim Ray", song: "Blurred Lines", artist: "Robin Thicke", steps: "http://www.copperknob.co.uk/qr/80256", teach: "https://youtube.com/embed/7jToAyvoyBQ?autoplay=1&rel=0", demo: "https://youtube.com/embed/7jToAyvoyBQ?autoplay=1&rel=0", music: "https://youtube.com/embed/UYV9yabvYGs?autoplay=1&rel=0" },
 { id: "3", group: "Stock0.1", name: "But Who Would Wanna?", choreographer: "Candy Hovey", song: "Wine,Beer,Whiskey", artist: "Little Big Town", steps: "https://www.copperknob.co.uk/stepsheets/159669/but-who-would-wanna", teach: "https://youtube.com/embed/jZ5Iraml8mA?autoplay=1&rel=0", demo: "https://youtube.com/embed/jZ5Iraml8mA?autoplay=1&rel=0", music: "https://youtube.com/embed/FDF0Y9KOloY?autoplay=1&rel=0" },
 { id: "4", group: "Stock3", name: "Shotgun Jenny", choreographer: "Kathy Brown", song: "Shake it", artist: "Big AND Rich", steps: "https://www.copperknob.co.uk/downloadsheet?StepsheetID=87543", teach: "https://youtube.com/embed/KYcuBzF92Vg?autoplay=1&rel=0", demo: "https://youtube.com/embed/d5TDmA8ae6c?autoplay=1&rel=0", music: "https://youtube.com/embed/O6OA_BQeeI4?autoplay=1&rel=0" },
@@ -221,7 +218,7 @@
 { id: "171", group: "Stock10", name: "Getaway Car", choreographer: "Brandon &Trevor", song: "Getaway Car", artist: "Dustin Lynch", steps: "https://www.copperknob.co.uk/stepsheets/DSWK5BY/getaway-car", teach: "https://youtube.com/embed/VAnRxJdP1VY?autoplay=1&rel=0", demo: "https://youtube.com/embed/8ah3554i-CA?autoplay=1&rel=0", music: "https://youtube.com/embed/-LcTwwCTN7M?autoplay=1&rel=0" },
 { id: "172", group: "Stock10", name: "Do Si Dough", choreographer: "Glover & Szymanski", song: "Do Si Dough", artist: "Josiah Siska", steps: "https://www.copperknob.co.uk/stepsheets/CT3L6XC/do-si-dough", teach: "https://youtube.com/embed/AsCS6c-G1_Q?autoplay=1&rel=0", demo: "https://youtube.com/embed/VRjv5gxBWe0?autoplay=1&rel=0", music: "https://youtube.com/embed/kb3L9kVKOPw?autoplay=1&rel=0" },
 { id: "173", group: "Stock10", name: "Country Tightrope", choreographer: "Daren Bailey", song: "Tightrope", artist: "Zach Top", steps: "https://www.copperknob.co.uk/stepsheets/T5KS4TQ/country-tightrope", teach: "https://youtube.com/embed/LfpzB_lSLfs?autoplay=1&rel=0", demo: "https://youtube.com/embed/UPAY5lKzY1k?autoplay=1&rel=0", music: "https://youtube.com/embed/XYYqmbARbkM?autoplay=1&rel=0" }
-                       
+        
         ];
 
         let selectedActivePlaylistGroup = null;
@@ -242,11 +239,14 @@
 
         function renderApplicationInterface() {
             const viewport = document.getElementById('masterApplicationViewport');
+            if(!viewport) return;
             viewport.innerHTML = '';
+
             if (selectedActivePlaylistGroup === null) {
                 const groupNames = [...new Set(localDanceDatabase.map(track => track.group || "General"))].sort();
                 const grid = document.createElement('div');
                 grid.className = 'playlist-selection-grid';
+                
                 groupNames.forEach(name => {
                     const count = localDanceDatabase.filter(t => t.group === name).length;
                     const card = document.createElement('div');
@@ -261,11 +261,22 @@
                 filteredTracks.forEach(track => {
                     const card = document.createElement('div');
                     card.className = 'dance-entry-card';
+                    
                     const btnSteps = track.steps ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.steps}', '${track.name} - Steps')">Steps</button>` : `<button class="action-touch-btn disabled">None</button>`;
                     const btnTeach = track.teach ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.teach}', '${track.name} - Teach')">Teach</button>` : `<button class="action-touch-btn disabled">None</button>`;
                     const btnDemo = track.demo ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.demo}', '${track.name} - Demo')">Demo</button>` : `<button class="action-touch-btn disabled">None</button>`;
                     const btnMusic = track.music ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.music}', '${track.name} - Play')">Music</button>` : `<button class="action-touch-btn disabled">None</button>`;
-                    card.innerHTML = `<div class="title-line">${track.name} • By: ${track.choreographer}</div><div class="meta-line">Song: ${track.song} - ${track.artist}</div><div class="button-bar-grid">${btnSteps}${btnTeach}${btnDemo}${btnMusic}</div>`;
+                    
+                    card.innerHTML = `
+                        <div class="title-line">${track.name} • By: ${track.choreographer}</div>
+                        <div class="meta-line">Song: ${track.song} - ${track.artist}</div>
+                        <div class="button-bar-grid">
+                            ${btnSteps}
+                            ${btnTeach}
+                            ${btnDemo}
+                            ${btnMusic}
+                        </div>
+                    `;
                     viewport.appendChild(card);
                 });
             }
@@ -284,6 +295,6 @@
         }
 
         window.onload = renderApplicationInterface;
-    </script>
+</script>
 </body>
 </html>
