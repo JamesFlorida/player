@@ -283,11 +283,20 @@
         }
 
         function launchMediaOverlay(targetUrl, displayTitle) {
-            if(!targetUrl) return;
-            document.getElementById('overlayPanelTitle').innerText = displayTitle;
-            document.getElementById('appIframeViewport').src = targetUrl;
-            document.getElementById('playerOverlayFrame').style.display = 'block';
-        }
+    if(!targetUrl) return;
+    
+    // NATIVE IOS SAFARI FALLBACK: If running on a smaller mobile screen, 
+    // bypass the embedded frame to keep Apple's tracker firewall from locking up.
+    if (window.innerWidth < 768) {
+        window.open(targetUrl, '_blank');
+        return;
+    }
+    
+    document.getElementById('overlayPanelTitle').innerText = displayTitle;
+    document.getElementById('appIframeViewport').src = targetUrl;
+    document.getElementById('playerOverlayFrame').style.display = 'block';
+}
+
 
         function shutOverlayViewer() {
             document.getElementById('playerOverlayFrame').style.display = 'none';
