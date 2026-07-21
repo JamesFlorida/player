@@ -36,9 +36,12 @@
         <span id="applicationHeaderTitle">LineDance Player</span>
     </div>
     
-    <div class="app-container" style="padding-bottom: 0;">
-        <input type="text" id="danceSearchInput" placeholder="🔍 Search dances or choreographers..." oninput="handleLiveSearchInput()" style="width: 100%; padding: 14px; border-radius: 8px; border: 1px solid #444; background: #1a1a1a; color: white; font-size: 1rem; box-sizing: border-box; margin-bottom: 10px;">
+       <!-- This creates a clean side-by-side layout for your search bar and sync button -->
+    <div class="app-container" style="padding-bottom: 0; display: flex; gap: 10px; align-items: center;">
+        <input type="text" id="danceSearchInput" placeholder="🔍 Search dances or choreographers..." oninput="handleLiveSearchInput()" style="flex: 1; padding: 14px; border-radius: 8px; border: 1px solid #444; background: #1a1a1a; color: white; font-size: 1rem; box-sizing: border-box;">
+        <button onclick="forceCacheBusterReload()" style="background: #34495e; color: white; border: 1px solid #444; padding: 12px 14px; border-radius: 8px; font-size: 1.1rem; cursor: pointer; height: 48px; display: flex; align-items: center; justify-content: center;" aria-label="Sync Playlist Updates">🔄</button>
     </div>
+
     
     <div class="app-container" id="masterApplicationViewport"></div>
     <div id="playerOverlayFrame" class="inapp-overlay-window">
@@ -342,6 +345,11 @@
         function shutOverlayViewer() {
             document.getElementById('playerOverlayFrame').style.display = 'none';
             document.getElementById('appIframeViewport').src = '';
+        }
+        function forceCacheBusterReload() {
+            // Generates a random number timestamp to forcefully destroy Apple's link cache tracking memory
+            const uniqueTimestamp = new Date().getTime();
+            window.location.href = window.location.origin + window.location.pathname + '?v=' + uniqueTimestamp;
         }
 
         window.onload = renderApplicationInterface;
