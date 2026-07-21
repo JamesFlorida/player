@@ -6,8 +6,7 @@
     <title>LineDance Player</title>
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="apple-touch-icon" href="https://jamesflorida.github.io/player/BootsPicture.png">
-
+    <link rel="apple-touch-icon" href="https://github.io">
     <style>
         :root { --brand-green: #2ecc71; --dark-gray: #1e1e1e; --card-bg: #2b2b2b; --btn-blue: #34495e; }
         body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; background-color: var(--dark-gray); color: white; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
@@ -29,22 +28,19 @@
         .overlay-title { font-weight: bold; color: #fff; font-size: 1rem; }
         .done-close-btn { background: var(--brand-green); color: white; border: none; padding: 9px 20px; font-weight: bold; font-size: 0.95rem; border-radius: 6px; cursor: pointer; }
         .overlay-viewport-iframe { width: 100%; height: calc(100% - 55px); border: none; background: white; }
-</style>
+    </style>
 </head>
-    <body>
-
+<body>
     <div class="header-bar">
         <button class="back-nav-btn" id="navbarReturnTrigger" onclick="navigateToPlaylistHubMenu()">⬅ Playlists</button>
         <span id="applicationHeaderTitle">LineDance Player</span>
     </div>
     
-    <!-- This introduces your live mobile search container -->
     <div class="app-container" style="padding-bottom: 0;">
-        <input type="text" id="danceSearchInput" placeholder="🔍 Search 200+ dances or choreographers..." oninput="handleLiveSearchInput()" style="width: 100%; padding: 14px; border-radius: 8px; border: 1px solid #444; background: #1a1a1a; color: white; font-size: 1rem; box-sizing: border-box; margin-bottom: 10px;">
+        <input type="text" id="danceSearchInput" placeholder="🔍 Search dances or choreographers..." oninput="handleLiveSearchInput()" style="width: 100%; padding: 14px; border-radius: 8px; border: 1px solid #444; background: #1a1a1a; color: white; font-size: 1rem; box-sizing: border-box; margin-bottom: 10px;">
     </div>
     
     <div class="app-container" id="masterApplicationViewport"></div>
-
     <div id="playerOverlayFrame" class="inapp-overlay-window">
         <div class="overlay-control-header">
             <span class="overlay-title" id="overlayPanelTitle">Media Loader</span>
@@ -52,9 +48,10 @@
         </div>
         <iframe id="appIframeViewport" class="overlay-viewport-iframe" src="" allow="autoplay; encrypted-media; fullscreen"></iframe>
     </div>
-<script>
+    <script>
+        // --- YOUR LIVE 200-ROW DATABASE BLOCKS SIT SAFELY INSIDE THESE BRACKETS ---
         const localDanceDatabase = [
-            { id: "1", group: "Stock1", name: "AA (ccw-4x32,0)", choreographer: "Linda Scott", song: "AA", artist: "Walker Hayes", steps: "https://www.copperknob.co.uk/stepsheets/156833/aa", teach: "https://youtube.com/embed/ALz8MFlRENk?autoplay=1&rel=0", demo: "https://youtube.com/embed/ALz8MFlRENk?autoplay=1&rel=0", music: "https://youtube.com/embed/_1aO4pCvxN0?autoplay=1&rel=0" },
+           { id: "1", group: "Stock1", name: "AA (ccw-4x32,0)", choreographer: "Linda Scott", song: "AA", artist: "Walker Hayes", steps: "https://www.copperknob.co.uk/stepsheets/156833/aa", teach: "https://youtube.com/embed/ALz8MFlRENk?autoplay=1&rel=0", demo: "https://youtube.com/embed/ALz8MFlRENk?autoplay=1&rel=0", music: "https://youtube.com/embed/_1aO4pCvxN0?autoplay=1&rel=0" },
 { id: "2", group: "Stock3", name: "Blue night cha(BlurredLines)", choreographer: "Kim Ray", song: "Blurred Lines", artist: "Robin Thicke", steps: "http://www.copperknob.co.uk/qr/80256", teach: "https://youtube.com/embed/7jToAyvoyBQ?autoplay=1&rel=0", demo: "https://youtube.com/embed/7jToAyvoyBQ?autoplay=1&rel=0", music: "https://youtube.com/embed/UYV9yabvYGs?autoplay=1&rel=0" },
 { id: "3", group: "Stock0.1", name: "But Who Would Wanna?", choreographer: "Candy Hovey", song: "Wine,Beer,Whiskey", artist: "Little Big Town", steps: "https://www.copperknob.co.uk/stepsheets/159669/but-who-would-wanna", teach: "https://youtube.com/embed/jZ5Iraml8mA?autoplay=1&rel=0", demo: "https://youtube.com/embed/jZ5Iraml8mA?autoplay=1&rel=0", music: "https://youtube.com/embed/FDF0Y9KOloY?autoplay=1&rel=0" },
 { id: "4", group: "Stock3", name: "Shotgun Jenny", choreographer: "Kathy Brown", song: "Shake it", artist: "Big AND Rich", steps: "https://www.copperknob.co.uk/downloadsheet?StepsheetID=87543", teach: "https://youtube.com/embed/KYcuBzF92Vg?autoplay=1&rel=0", demo: "https://youtube.com/embed/d5TDmA8ae6c?autoplay=1&rel=0", music: "https://youtube.com/embed/O6OA_BQeeI4?autoplay=1&rel=0" },
@@ -227,8 +224,9 @@
 { id: "171", group: "Stock10", name: "Getaway Car", choreographer: "Brandon &Trevor", song: "Getaway Car", artist: "Dustin Lynch", steps: "https://www.copperknob.co.uk/stepsheets/DSWK5BY/getaway-car", teach: "https://youtube.com/embed/VAnRxJdP1VY?autoplay=1&rel=0", demo: "https://youtube.com/embed/8ah3554i-CA?autoplay=1&rel=0", music: "https://youtube.com/embed/-LcTwwCTN7M?autoplay=1&rel=0" },
 { id: "172", group: "Stock10", name: "Do Si Dough", choreographer: "Glover & Szymanski", song: "Do Si Dough", artist: "Josiah Siska", steps: "https://www.copperknob.co.uk/stepsheets/CT3L6XC/do-si-dough", teach: "https://youtube.com/embed/AsCS6c-G1_Q?autoplay=1&rel=0", demo: "https://youtube.com/embed/VRjv5gxBWe0?autoplay=1&rel=0", music: "https://youtube.com/embed/kb3L9kVKOPw?autoplay=1&rel=0" },
 { id: "173", group: "Stock10", name: "Country Tightrope", choreographer: "Daren Bailey", song: "Tightrope", artist: "Zach Top", steps: "https://www.copperknob.co.uk/stepsheets/T5KS4TQ/country-tightrope", teach: "https://youtube.com/embed/LfpzB_lSLfs?autoplay=1&rel=0", demo: "https://youtube.com/embed/UPAY5lKzY1k?autoplay=1&rel=0", music: "https://youtube.com/embed/XYYqmbARbkM?autoplay=1&rel=0" }
-        
+ 
         ];
+
         let selectedActivePlaylistGroup = null;
         let activeSearchQueryString = "";
 
@@ -254,8 +252,7 @@
             const searchBox = document.getElementById('danceSearchInput');
             activeSearchQueryString = searchBox.value.toLowerCase().trim();
             
-            // If the user types a search while inside a playlist, kick them back to the main search view
-            if (activeSearchQueryString !== "" && selectedActivePlaylistGroup !== null) {
+            if (activeSearchQueryString !== "") {
                 selectedActivePlaylistGroup = null;
                 document.getElementById('navbarReturnTrigger').style.display = 'block';
                 document.getElementById('applicationHeaderTitle').innerText = 'Search Results';
@@ -272,7 +269,6 @@
             if(!viewport) return;
             viewport.innerHTML = '';
 
-            // STATE 1: User is actively searching across all 200+ dances
             if (activeSearchQueryString !== "") {
                 const matchedTracks = localDanceDatabase.filter(track => {
                     const danceName = (track.name || "").toLowerCase();
@@ -287,7 +283,6 @@
 
                 renderDanceCardsList(matchedTracks, viewport);
             } 
-            // STATE 2: User is looking at the main Playlist Hub directory grid
             else if (selectedActivePlaylistGroup === null) {
                 const groupNames = [...new Set(localDanceDatabase.map(track => track.group || "General"))].sort();
                 const grid = document.createElement('div');
@@ -303,7 +298,6 @@
                 });
                 viewport.appendChild(grid);
             } 
-            // STATE 3: User is viewing a single isolated playlist category
             else {
                 const filteredTracks = localDanceDatabase.filter(track => track.group === selectedActivePlaylistGroup);
                 renderDanceCardsList(filteredTracks, viewport);
@@ -351,8 +345,7 @@
         }
 
         window.onload = renderApplicationInterface;
-
-        
 </script>
 </body>
 </html>
+
