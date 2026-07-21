@@ -31,12 +31,20 @@
         .overlay-viewport-iframe { width: 100%; height: calc(100% - 55px); border: none; background: white; }
 </style>
 </head>
-<body>
+    <body>
+
     <div class="header-bar">
         <button class="back-nav-btn" id="navbarReturnTrigger" onclick="navigateToPlaylistHubMenu()">⬅ Playlists</button>
         <span id="applicationHeaderTitle">LineDance Player</span>
     </div>
+    
+    <!-- This introduces your live mobile search container -->
+    <div class="app-container" style="padding-bottom: 0;">
+        <input type="text" id="danceSearchInput" placeholder="🔍 Search 200+ dances or choreographers..." oninput="handleLiveSearchInput()" style="width: 100%; padding: 14px; border-radius: 8px; border: 1px solid #444; background: #1a1a1a; color: white; font-size: 1rem; box-sizing: border-box; margin-bottom: 10px;">
+    </div>
+    
     <div class="app-container" id="masterApplicationViewport"></div>
+
     <div id="playerOverlayFrame" class="inapp-overlay-window">
         <div class="overlay-control-header">
             <span class="overlay-title" id="overlayPanelTitle">Media Loader</span>
@@ -221,11 +229,13 @@
 { id: "173", group: "Stock10", name: "Country Tightrope", choreographer: "Daren Bailey", song: "Tightrope", artist: "Zach Top", steps: "https://www.copperknob.co.uk/stepsheets/T5KS4TQ/country-tightrope", teach: "https://youtube.com/embed/LfpzB_lSLfs?autoplay=1&rel=0", demo: "https://youtube.com/embed/UPAY5lKzY1k?autoplay=1&rel=0", music: "https://youtube.com/embed/XYYqmbARbkM?autoplay=1&rel=0" }
         
         ];
-
         let selectedActivePlaylistGroup = null;
+        let activeSearchQueryString = "";
 
         function navigateToPlaylistHubMenu() {
             selectedActivePlaylistGroup = null;
+            activeSearchQueryString = "";
+            document.getElementById('danceSearchInput').value = "";
             document.getElementById('navbarReturnTrigger').style.display = 'none';
             document.getElementById('applicationHeaderTitle').innerText = 'LineDance Player';
             renderApplicationInterface();
@@ -233,8 +243,27 @@
 
         function openSpecificPlaylistView(groupName) {
             selectedActivePlaylistGroup = groupName;
+            activeSearchQueryString = "";
+            document.getElementById('danceSearchInput').value = "";
             document.getElementById('navbarReturnTrigger').style.display = 'block';
             document.getElementById('applicationHeaderTitle').innerText = groupName;
+            renderApplicationInterface();
+        }
+
+        function handleLiveSearchInput() {
+            const searchBox = document.getElementById('danceSearchInput');
+            activeSearchQueryString = searchBox.value.toLowerCase().trim();
+            
+            // If the user types a search while inside a playlist, kick them back to the main search view
+            if (activeSearchQueryString !== "" && selectedActivePlaylistGroup !== null) {
+                selectedActivePlaylistGroup = null;
+                document.getElementById('navbarReturnTrigger').style.display = 'block';
+                document.getElementById('applicationHeaderTitle').innerText = 'Search Results';
+            } else if (activeSearchQueryString === "" && selectedActivePlaylistGroup === null) {
+                document.getElementById('navbarReturnTrigger').style.display = 'none';
+                document.getElementById('applicationHeaderTitle').innerText = 'LineDance Player';
+            }
+            
             renderApplicationInterface();
         }
 
@@ -243,7 +272,23 @@
             if(!viewport) return;
             viewport.innerHTML = '';
 
-            if (selectedActivePlaylistGroup === null) {
+            // STATE 1: User is actively searching across all 200+ dances
+            if (activeSearchQueryString !== "") {
+                const matchedTracks = localDanceDatabase.filter(track => {
+                    const danceName = (track.name || "").toLowerCase();
+                    const choreographer = (track.choreographer || "").toLowerCase();
+                    return danceName.includes(activeSearchQueryString) || choreographer.includes(activeSearchQueryString);
+                });
+
+                if(matchedTracks.length === 0) {
+                    viewport.innerHTML = '<p style="text-align:center;color:#aaa;margin-top:20px;">No matching dances or choreographers found.</p>';
+                    return;
+                }
+
+                renderDanceCardsList(matchedTracks, viewport);
+            } 
+            // STATE 2: User is looking at the main Playlist Hub directory grid
+            else if (selectedActivePlaylistGroup === null) {
                 const groupNames = [...new Set(localDanceDatabase.map(track => track.group || "General"))].sort();
                 const grid = document.createElement('div');
                 grid.className = 'playlist-selection-grid';
@@ -257,47 +302,48 @@
                     grid.appendChild(card);
                 });
                 viewport.appendChild(grid);
-            } else {
+            } 
+            // STATE 3: User is viewing a single isolated playlist category
+            else {
                 const filteredTracks = localDanceDatabase.filter(track => track.group === selectedActivePlaylistGroup);
-                filteredTracks.forEach(track => {
-                    const card = document.createElement('div');
-                    card.className = 'dance-entry-card';
-                    
-                    const btnSteps = track.steps ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.steps}', '${track.name} - Steps')">Steps</button>` : `<button class="action-touch-btn disabled">None</button>`;
-                    const btnTeach = track.teach ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.teach}', '${track.name} - Teach')">Teach</button>` : `<button class="action-touch-btn disabled">None</button>`;
-                    const btnDemo = track.demo ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.demo}', '${track.name} - Demo')">Demo</button>` : `<button class="action-touch-btn disabled">None</button>`;
-                    const btnMusic = track.music ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.music}', '${track.name} - Play')">Music</button>` : `<button class="action-touch-btn disabled">None</button>`;
-                    
-                    card.innerHTML = `
-                        <div class="title-line">${track.name} • By: ${track.choreographer}</div>
-                        <div class="meta-line">Song: ${track.song} - ${track.artist}</div>
-                        <div class="button-bar-grid">
-                            ${btnSteps}
-                            ${btnTeach}
-                            ${btnDemo}
-                            ${btnMusic}
-                        </div>
-                    `;
-                    viewport.appendChild(card);
-                });
+                renderDanceCardsList(filteredTracks, viewport);
             }
         }
 
-        function launchMediaOverlay(targetUrl, displayTitle) {
-    if(!targetUrl) return;
-    
-    // NATIVE IOS SAFARI FALLBACK: If running on a smaller mobile screen, 
-    // bypass the embedded frame to keep Apple's tracker firewall from locking up.
-    if (window.innerWidth < 768) {
-        window.open(targetUrl, '_blank');
-        return;
-    }
-    
-    document.getElementById('overlayPanelTitle').innerText = displayTitle;
-    document.getElementById('appIframeViewport').src = targetUrl;
-    document.getElementById('playerOverlayFrame').style.display = 'block';
-}
+        function renderDanceCardsList(tracksList, containerElement) {
+            tracksList.forEach(track => {
+                const card = document.createElement('div');
+                card.className = 'dance-entry-card';
+                
+                const btnSteps = track.steps ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.steps}', '${track.name} - Steps')">Steps</button>` : `<button class="action-touch-btn disabled">None</button>`;
+                const btnTeach = track.teach ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.teach}', '${track.name} - Teach')">Teach</button>` : `<button class="action-touch-btn disabled">None</button>`;
+                const btnDemo = track.demo ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.demo}', '${track.name} - Demo')">Demo</button>` : `<button class="action-touch-btn disabled">None</button>`;
+                const btnMusic = track.music ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.music}', '${track.name} - Play')">Music</button>` : `<button class="action-touch-btn disabled">None</button>`;
+                
+                card.innerHTML = `
+                    <div class="title-line">${track.name} • By: ${track.choreographer}</div>
+                    <div class="meta-line">Song: ${track.song} - ${track.artist} (${track.group})</div>
+                    <div class="button-bar-grid">
+                        ${btnSteps}
+                        ${btnTeach}
+                        ${btnDemo}
+                        ${btnMusic}
+                    </div>
+                `;
+                containerElement.appendChild(card);
+            });
+        }
 
+        function launchMediaOverlay(targetUrl, displayTitle) {
+            if(!targetUrl) return;
+            if (window.innerWidth < 768) {
+                window.open(targetUrl, '_blank');
+                return;
+            }
+            document.getElementById('overlayPanelTitle').innerText = displayTitle;
+            document.getElementById('appIframeViewport').src = targetUrl;
+            document.getElementById('playerOverlayFrame').style.display = 'block';
+        }
 
         function shutOverlayViewer() {
             document.getElementById('playerOverlayFrame').style.display = 'none';
@@ -305,6 +351,8 @@
         }
 
         window.onload = renderApplicationInterface;
+
+        
 </script>
 </body>
 </html>
