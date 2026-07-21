@@ -37,10 +37,11 @@
     </div>
     
        <!-- This creates a clean side-by-side layout for your search bar and sync button -->
-    <div class="app-container" style="padding-bottom: 0; display: flex; gap: 10px; align-items: center;">
-        <input type="text" id="danceSearchInput" placeholder="🔍 Search dances or choreographers..." oninput="handleLiveSearchInput()" style="flex: 1; padding: 14px; border-radius: 8px; border: 1px solid #444; background: #1a1a1a; color: white; font-size: 1rem; box-sizing: border-box;">
-        <button onclick="forceCacheBusterReload()" style="background: #34495e; color: white; border: 1px solid #444; padding: 12px 14px; border-radius: 8px; font-size: 1.1rem; cursor: pointer; height: 48px; display: flex; align-items: center; justify-content: center;" aria-label="Sync Playlist Updates">🔄</button>
+        <div class="app-container" style="padding-bottom: 0; display: flex; gap: 10px; align-items: center;">
+        <input type="text" id="danceSearchInput" placeholder="🔍 Search dances or choreographers..." oninput="handleLiveSearchInput()" style="flex: 1; padding: 14px; border-radius: 8px; border: 1px solid #444; background: #1a1a1a; color: white; font-size: 1rem; box-sizing: border-box; height: 50px;">
+        <button onclick="forceCacheBusterReload()" style="background: var(--brand-green); color: white; border: none; padding: 0 16px; border-radius: 8px; font-size: 0.95rem; font-weight: bold; cursor: pointer; height: 50px; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 6px rgba(0,0,0,0.2); white-space: nowrap;">Sync Playlist</button>
     </div>
+
 
     
     <div class="app-container" id="masterApplicationViewport"></div>
