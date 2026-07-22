@@ -1,0 +1,62 @@
+#Python Code URL check
+import urllib.request
+import json
+import re
+
+# 1. Open your index.html file on your computer hard drive
+with open('index.html', 'r', encoding='utf-8') as file:
+    content = file.read()
+
+# 2. Locate the database text block array inside the script
+db_match = re.search(r'const localDanceDatabase = \[(.*?)\];', content, re.DOTALL)
+if not db_match:
+    print("Could not locate your localDanceDatabase array block.")
+    exit()
+
+# 3. Clean up the text data format to read rows
+raw_data = db_match.group(1).strip()
+# Enclose keys in quotes to form clean JSON block structures
+clean_json_text = "[" + re.sub(r'(\w+):', r'"\1":', raw_data) + "]"
+# Strip trailing rogue commas before the closing bracket if any
+clean_json_text = clean_json_text.replace(",\n]", "\n]")
+
+try:
+    dances = json.loads(clean_json_text)
+except Exception as e:
+    print("Syntax parsing block check failed. Please ensure commas match your rows.")
+    exit()
+
+print(f"🔄 Scanning through {len(dances)} dances... (Checking 800 links total)")
+print("-" * 60)
+
+# 4. Loop over every row and verify the network headers
+for dance in dances:
+    dance_name = dance.get("name", "Unknown")
+    dance_id = dance.get("id", "")
+    
+    # Check the 3 media parameters
+    for link_type in ["teach", "demo", "music"]:
+        url = dance.get(link_type, "")
+        if not url or "embed" not in url:
+            continue
+            
+        try:
+            # Set up a fake browser request header so YouTube doesn't block the test script
+            req = urllib.request.Request(
+                url, 
+                headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}
+            )
+            # Fetch just the starting status codes from the server without downloading the video
+            with urllib.request.urlopen(req, timeout=5) as response:
+                html = response.read().decode('utf-8')
+                
+                # NATIVE GOOGLE ERROR FILTER: Catch YouTube's internal fatal script crashes
+                if "An error occurred" in html or "Unable to execute JavaScript" in html:
+                    print(f"❌ DEAD LINK FLAG -> Dance #{dance_id} [{dance_name}] -> {link_type.upper()} button is a ghost link!")
+                    
+        except Exception:
+            # Catch standard 404 Page Deleted or 403 Forbidden permission walls
+            print(f"❌ DEAD LINK FLAG -> Dance #{dance_id} [{dance_name}] -> {link_type.upper()} server returned an error.")
+
+print("-" * 60)
+print("✅ Link verification complete!")
