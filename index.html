@@ -338,9 +338,12 @@
         window.open(targetUrl, '_blank');
         return;
     }
-    document.getElementById('overlayPanelTitle').innerText = displayTitle;
+    if (targetUrl.includes('vimeo')) {
     document.getElementById('appIframeViewport').src = targetUrl;
     document.getElementById('playerOverlayFrame').style.display = 'block';
+    return;
+}
+
 }
 
 
