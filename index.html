@@ -333,19 +333,15 @@
         }
 
         function launchMediaOverlay(targetUrl, displayTitle) {
-    if(!targetUrl) return;
-    if (window.innerWidth < 768) {
-        window.open(targetUrl, '_blank');
-        return;
-    }
-    if (targetUrl.includes('vimeo')) {
-    document.getElementById('appIframeViewport').src = targetUrl;
-    document.getElementById('playerOverlayFrame').style.display = 'block';
-    return;
-}
-
-}
-
+            if(!targetUrl) return;
+            if (window.innerWidth < 768) {
+                window.open(targetUrl, '_blank');
+                return;
+            }
+            document.getElementById('overlayPanelTitle').innerText = displayTitle;
+            document.getElementById('appIframeViewport').src = targetUrl;
+            document.getElementById('playerOverlayFrame').style.display = 'block';
+        }
 
         function shutOverlayViewer() {
             document.getElementById('playerOverlayFrame').style.display = 'none';
@@ -361,4 +357,3 @@
 </script>
 </body>
 </html>
-
