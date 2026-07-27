@@ -52,7 +52,7 @@ function renderGrid(dances) {
         btnGroup.className = 'btn-group';
         
         const btnSteps = track.steps ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.steps}', '${track.name} - Steps')">Steps</button>` : `<button class="action-touch-btn disabled">None</button>`;
-        const btnTeach = track.teach ? `<button class="action-touch-btn" onclick="launchMediaOverlay('https://youtube.com' + track.teach, '${track.name} - Teach')">Teach</button>` : `<button class="action-touch-btn disabled">None</button>`;
+        const btnTeach = track.teach ? `<button class="action-touch-btn" onclick="launchMediaOverlay('https://youtube.com/embed/' + track.teach, '${track.name} - Teach')">Teach</button>` : `<button class="action-touch-btn disabled">None</button>`;
         const btnDemo = track.demo ? `<button class="action-touch-btn" onclick="launchMediaOverlay('https://youtube.com' + track.demo, '${track.name} - Demo')">Demo</button>` : `<button class="action-touch-btn disabled">None</button>`;
         const btnMusic = track.music ? `<button class="action-touch-btn" onclick="launchMediaOverlay('https://youtube.com' + track.music, '${track.name} - Play')">Music</button>` : `<button class="action-touch-btn disabled">None</button>`;
         
