@@ -50,7 +50,9 @@
             <span class="overlay-title" id="overlayPanelTitle">Media Loader</span>
             <button class="done-close-btn" onclick="shutOverlayViewer()">Done</button>
         </div>
-        <iframe id="appIframeViewport" class="overlay-viewport-iframe" src="" allow="autoplay; encrypted-media; fullscreen"></iframe>
+//  iframe inserted
+        <iframe id="appIframeViewport" class="overlay-viewport-iframe" src="" allow="autoplay; encrypted-media; fullscreen" sandbox="allow-scripts allow-same-origin allow-popups allow-forms"></iframe>
+
     </div>
     <script>
         // --- YOUR LIVE 200-ROW DATABASE BLOCKS SIT SAFELY INSIDE THESE BRACKETS ---
