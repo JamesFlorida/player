@@ -184,6 +184,12 @@ function shutOverlayViewer() {
     document.getElementById('appIframeViewport').src = '';
 }
 
+
+function shutOverlayViewer() {
+    document.getElementById('playerOverlayFrame').style.display = 'none';
+    document.getElementById('appIframeViewport').src = '';
+}
+
 function forceCacheBusterReload() {
     const uniqueTimestamp = new Date().getTime();
     window.location.href = window.location.origin + window.location.pathname + '?v=' + uniqueTimestamp;
