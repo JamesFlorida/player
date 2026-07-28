@@ -147,9 +147,9 @@ function renderDanceCardsList(tracksList, containerElement) {
         card.className = 'dance-entry-card';
         
         const btnSteps = track.steps ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.steps.replace('http://', 'https://')}', '${track.name} - Steps')">Steps</button>` : `<button class="action-touch-btn disabled">None</button>`;
-        const btnTeach = track.teach ? `<button class="action-touch-btn" onclick="launchMediaOverlay('https://www.youtube.com/embed/' + track.teach, '${track.name} - Teach')">Teach</button>` : `<button class="action-touch-btn disabled">None</button>`;
-        const btnDemo = track.demo ? `<button class="action-touch-btn" onclick="launchMediaOverlay('https://www.youtube.com/embed/' + track.demo, '${track.name} - Demo')">Demo</button>` : `<button class="action-touch-btn disabled">None</button>`;
-        const btnMusic = track.music ? `<button class="action-touch-btn" onclick="launchMediaOverlay('https://www.youtube.com/embed/' + track.music, '${track.name} - Play')">Music</button>` : `<button class="action-touch-btn disabled">None</button>`;
+        const btnTeach = track.teach ? `<button class="action-touch-btn" onclick="launchMediaOverlay('https://youtube-nocookie.com' + track.teach, '${track.name} - Teach')">Teach</button>` : `<button class="action-touch-btn disabled">None</button>`;
+        const btnDemo = track.demo ? `<button class="action-touch-btn" onclick="launchMediaOverlay('https://youtube-nocookie.com' + track.demo, '${track.name} - Demo')">Demo</button>` : `<button class="action-touch-btn disabled">None</button>`;
+        const btnMusic = track.music ? `<button class="action-touch-btn" onclick="launchMediaOverlay('https://youtube-nocookie.com' + track.music, '${track.name} - Play')">Music</button>` : `<button class="action-touch-btn disabled">None</button>`;
         
         card.innerHTML = `
             <div class="title-line">${track.name} • By: ${track.choreographer}</div>
@@ -164,6 +164,7 @@ function renderDanceCardsList(tracksList, containerElement) {
         containerElement.appendChild(card);
     });
 }
+
 
 
 
