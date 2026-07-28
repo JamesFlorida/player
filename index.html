@@ -199,87 +199,80 @@
  
         ];
 
-        let selectedActivePlaylistGroup = null;
-        let activeSearchQueryString = "";
+       let selectedActivePlaylistGroup = null;
+let activeSearchQueryString = "";
 
-        function navigateToPlaylistHubMenu() {
-            selectedActivePlaylistGroup = null;
-            activeSearchQueryString = "";
-            document.getElementById('danceSearchInput').value = "";
-            document.getElementById('navbarReturnTrigger').style.display = 'none';
-            document.getElementById('applicationHeaderTitle').innerText = 'LineDance Player';
-            renderApplicationInterface();
+function navigateToPlaylistHubMenu() {
+    selectedActivePlaylistGroup = null;
+    activeSearchQueryString = "";
+    document.getElementById('danceSearchInput').value = "";
+    document.getElementById('navbarReturnTrigger').style.display = 'none';
+    document.getElementById('applicationHeaderTitle').innerText = 'LineDance Player';
+    renderApplicationInterface();
+}
+
+function openSpecificPlaylistView(groupName) {
+    selectedActivePlaylistGroup = groupName;
+    activeSearchQueryString = "";
+    document.getElementById('danceSearchInput').value = "";
+    document.getElementById('navbarReturnTrigger').style.display = 'block';
+    document.getElementById('applicationHeaderTitle').innerText = groupName;
+    renderApplicationInterface();
+}
+
+function handleLiveSearchInput() {
+    const searchBox = document.getElementById('danceSearchInput');
+    activeSearchQueryString = searchBox.value.toLowerCase().trim();
+    if (activeSearchQueryString !== "") {
+        selectedActivePlaylistGroup = null;
+        document.getElementById('navbarReturnTrigger').style.display = 'block';
+        document.getElementById('applicationHeaderTitle').innerText = 'Search Results';
+    } else if (activeSearchQueryString === "" && selectedActivePlaylistGroup === null) {
+        document.getElementById('navbarReturnTrigger').style.display = 'none';
+        document.getElementById('applicationHeaderTitle').innerText = 'LineDance Player';
+    }
+    renderApplicationInterface();
+}
+
+function renderApplicationInterface() {
+    const viewport = document.getElementById('masterApplicationViewport');
+    if(!viewport) return;
+    viewport.innerHTML = '';
+    
+    if (activeSearchQueryString !== "") {
+        const matchedTracks = localDanceDatabase.filter(track => {
+            const danceName = (track.name || "").toLowerCase();
+            const choreographer = (track.choreographer || "").toLowerCase();
+            return danceName.includes(activeSearchQueryString) || choreographer.includes(activeSearchQueryString);
+        });
+        if(matchedTracks.length === 0) {
+            viewport.innerHTML = '<p style="text-align:center;color:#aaa;margin-top:20px;">No matching dances or choreographers found.</p>';
+            return;
         }
+        renderDanceCardsList(matchedTracks, viewport);
+    } else if (selectedActivePlaylistGroup === null) {
+        const groupNames = [...new Set(localDanceDatabase.map(track => track.group || "General"))].sort();
+        const grid = document.createElement('div');
+        grid.className = 'playlist-selection-grid';
+        groupNames.forEach(name => {
+            const count = localDanceDatabase.filter(t => t.group === name).length;
+            const card = document.createElement('div');
+            card.className = 'playlist-hub-card';
+            card.innerHTML = `<div>${name}</div><div class="playlist-track-counter">${count} Dances</div>`;
+            card.onclick = () => openSpecificPlaylistView(name);
+            grid.appendChild(card);
+        });
+        viewport.appendChild(grid);
+    } else {
+        const filteredTracks = localDanceDatabase.filter(track => track.group === selectedActivePlaylistGroup);
+        renderDanceCardsList(filteredTracks, viewport);
+    }
+}
 
-        function openSpecificPlaylistView(groupName) {
-            selectedActivePlaylistGroup = groupName;
-            activeSearchQueryString = "";
-            document.getElementById('danceSearchInput').value = "";
-            document.getElementById('navbarReturnTrigger').style.display = 'block';
-            document.getElementById('applicationHeaderTitle').innerText = groupName;
-            renderApplicationInterface();
-        }
-
-        function handleLiveSearchInput() {
-            const searchBox = document.getElementById('danceSearchInput');
-            activeSearchQueryString = searchBox.value.toLowerCase().trim();
-            
-            if (activeSearchQueryString !== "") {
-                selectedActivePlaylistGroup = null;
-                document.getElementById('navbarReturnTrigger').style.display = 'block';
-                document.getElementById('applicationHeaderTitle').innerText = 'Search Results';
-            } else if (activeSearchQueryString === "" && selectedActivePlaylistGroup === null) {
-                document.getElementById('navbarReturnTrigger').style.display = 'none';
-                document.getElementById('applicationHeaderTitle').innerText = 'LineDance Player';
-            }
-            
-            renderApplicationInterface();
-        }
-
-        function renderApplicationInterface() {
-            const viewport = document.getElementById('masterApplicationViewport');
-            if(!viewport) return;
-            viewport.innerHTML = '';
-
-            if (activeSearchQueryString !== "") {
-                const matchedTracks = localDanceDatabase.filter(track => {
-                    const danceName = (track.name || "").toLowerCase();
-                    const choreographer = (track.choreographer || "").toLowerCase();
-                    return danceName.includes(activeSearchQueryString) || choreographer.includes(activeSearchQueryString);
-                });
-
-                if(matchedTracks.length === 0) {
-                    viewport.innerHTML = '<p style="text-align:center;color:#aaa;margin-top:20px;">No matching dances or choreographers found.</p>';
-                    return;
-                }
-
-                renderDanceCardsList(matchedTracks, viewport);
-            } 
-            else if (selectedActivePlaylistGroup === null) {
-                const groupNames = [...new Set(localDanceDatabase.map(track => track.group || "General"))].sort();
-                const grid = document.createElement('div');
-                grid.className = 'playlist-selection-grid';
-                
-                groupNames.forEach(name => {
-                    const count = localDanceDatabase.filter(t => t.group === name).length;
-                    const card = document.createElement('div');
-                    card.className = 'playlist-hub-card';
-                    card.innerHTML = `<div>${name}</div><div class="playlist-track-counter">${count} Dances</div>`;
-                    card.onclick = () => openSpecificPlaylistView(name);
-                    grid.appendChild(card);
-                });
-                viewport.appendChild(grid);
-            } 
-            else {
-                const filteredTracks = localDanceDatabase.filter(track => track.group === selectedActivePlaylistGroup);
-                renderDanceCardsList(filteredTracks, viewport);
-            }
-        }
-
-        function renderDanceCardsList(tracksList, containerElement) {
-            tracksList.forEach(track => {
+function renderDanceCardsList(tracksList, containerElement) {
+    tracksList.forEach(track => {
         const card = document.createElement('div');
-            card.className = 'dance-entry-card';
+        card.className = 'dance-entry-card';
         
         const btnSteps = track.steps ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.steps.replace('http://', 'https://')}', '${track.name} - Steps')">Steps</button>` : `<button class="action-touch-btn disabled">None</button>`;
         const btnTeach = track.teach ? `<button class="action-touch-btn" onclick="launchMediaOverlay('https://youtube.com' + track.teach, '${track.name} - Teach')">Teach</button>` : `<button class="action-touch-btn disabled">None</button>`;
@@ -300,31 +293,29 @@
     });
 }
 
+function launchMediaOverlay(targetUrl, displayTitle) {
+    if (!targetUrl) return;
+    if (window.innerWidth < 768) {
+        window.open(targetUrl, '_blank');
+        return;
+    }
+    document.getElementById('overlayPanelTitle').innerText = displayTitle;
+    document.getElementById('appIframeViewport').src = targetUrl;
+    document.getElementById('playerOverlayFrame').style.display = 'block';
+}
 
+function shutOverlayViewer() {
+    document.getElementById('playerOverlayFrame').style.display = 'none';
+    document.getElementById('appIframeViewport').src = '';
+}
 
-        function launchMediaOverlay(targetUrl, displayTitle) {
-            if(!targetUrl) return;
-            if (window.innerWidth < 768) {
-                window.open(targetUrl, '_blank');
-                return;
-            }
-            document.getElementById('overlayPanelTitle').innerText = displayTitle;
-            document.getElementById('appIframeViewport').src = targetUrl;
-            document.getElementById('playerOverlayFrame').style.display = 'block';
-        }
-        function shutOverlayViewer() {
-            document.getElementById('appIframeViewport').src = '';
-            document.getElementById('playerOverlayFrame').style.display = 'none';
-            }
+function forceCacheBusterReload() {
+    const uniqueTimestamp = new Date().getTime();
+    window.location.href = window.location.origin + window.location.pathname + '?v=' + uniqueTimestamp;
+}
 
-        
-        function forceCacheBusterReload() {
-            // Generates a random number timestamp to forcefully destroy Apple's link cache tracking memory
-            const uniqueTimestamp = new Date().getTime();
-            window.location.href = window.location.origin + window.location.pathname + '?v=' + uniqueTimestamp;
-        }
-
-        window.onload = renderApplicationInterface;
+window.onload = renderApplicationInterface;
 </script>
+
 </body>
 </html>
