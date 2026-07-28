@@ -311,11 +311,12 @@
             document.getElementById('appIframeViewport').src = targetUrl;
             document.getElementById('playerOverlayFrame').style.display = 'block';
         }
-
         function shutOverlayViewer() {
-            document.getElementById('playerOverlayFrame').style.display = 'none';
             document.getElementById('appIframeViewport').src = '';
-        }
+            document.getElementById('playerOverlayFrame').style.display = 'none';
+            }
+
+        
         function forceCacheBusterReload() {
             // Generates a random number timestamp to forcefully destroy Apple's link cache tracking memory
             const uniqueTimestamp = new Date().getTime();
