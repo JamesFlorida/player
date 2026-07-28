@@ -275,30 +275,31 @@
                 renderDanceCardsList(filteredTracks, viewport);
             }
         }
-
+//here
         function renderDanceCardsList(tracksList, containerElement) {
-            tracksList.forEach(track => {
-                const card = document.createElement('div');
-                card.className = 'dance-entry-card';
-                        const btnSteps = track.steps ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.steps}', '${track.name} - Steps')">Steps</button>` : `<button class="action-touch-btn disabled">None</button>`;
+    tracksList.forEach(track => {
+        const card = document.createElement('div');
+        card.className = 'dance-entry-card';
+        
+        const btnSteps = track.steps ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.steps}', '${track.name} - Steps')">Steps</button>` : `<button class="action-touch-btn disabled">None</button>`;
         const btnTeach = track.teach ? `<button class="action-touch-btn" onclick="launchMediaOverlay('https://youtube.com' + track.teach, '${track.name} - Teach')">Teach</button>` : `<button class="action-touch-btn disabled">None</button>`;
         const btnDemo = track.demo ? `<button class="action-touch-btn" onclick="launchMediaOverlay('https://youtube.com' + track.demo, '${track.name} - Demo')">Demo</button>` : `<button class="action-touch-btn disabled">None</button>`;
         const btnMusic = track.music ? `<button class="action-touch-btn" onclick="launchMediaOverlay('https://youtube.com' + track.music, '${track.name} - Play')">Music</button>` : `<button class="action-touch-btn disabled">None</button>`;
+        
+        card.innerHTML = `
+            <div class="title-line">${track.name} • By: ${track.choreographer}</div>
+            <div class="meta-line">Song: ${track.song} - ${track.artist} (${track.group})</div>
+            <div class="button-bar-grid">
+                ${btnSteps}
+                ${btnTeach}
+                ${btnDemo}
+                ${btnMusic}
+            </div>
+        `;
+        containerElement.appendChild(card);
+    });
+}
 
-                
-
-                    <div class="title-line">${track.name} • By: ${track.choreographer}</div>
-                    <div class="meta-line">Song: ${track.song} - ${track.artist} (${track.group})</div>
-                    <div class="button-bar-grid">
-                        ${btnSteps}
-                        ${btnTeach}
-                        ${btnDemo}
-                        ${btnMusic}
-                    </div>
-                `;
-                containerElement.appendChild(card);
-            });
-        }
 
         function launchMediaOverlay(targetUrl, displayTitle) {
             if(!targetUrl) return;
