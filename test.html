@@ -71,7 +71,7 @@
 
         ];
 
-        let selectedActivePlaylistGroup = null;
+       let selectedActivePlaylistGroup = null;
 let activeSearchQueryString = "";
 
 function navigateToPlaylistHubMenu() {
@@ -165,9 +165,6 @@ function renderDanceCardsList(tracksList, containerElement) {
     });
 }
 
-
-
-
 function launchMediaOverlay(targetUrl, displayTitle) {
     if (!targetUrl) return;
     if (window.innerWidth < 768) {
@@ -184,12 +181,6 @@ function shutOverlayViewer() {
     document.getElementById('appIframeViewport').src = '';
 }
 
-
-function shutOverlayViewer() {
-    document.getElementById('playerOverlayFrame').style.display = 'none';
-    document.getElementById('appIframeViewport').src = '';
-}
-
 function forceCacheBusterReload() {
     const uniqueTimestamp = new Date().getTime();
     window.location.href = window.location.origin + window.location.pathname + '?v=' + uniqueTimestamp;
@@ -197,6 +188,7 @@ function forceCacheBusterReload() {
 
 window.onload = renderApplicationInterface;
 </script>
+
 
 </body>
 </html>
