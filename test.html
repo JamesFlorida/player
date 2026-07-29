@@ -37,10 +37,19 @@
     </div>
     
        <!-- This creates a clean side-by-side layout for your search bar and sync button -->
-        <div class="app-container" style="padding-bottom: 0; display: flex; gap: 10px; align-items: center;">
+            <!-- This creates a clean side-by-side layout for your search bar and sync button -->
+    <div class="app-container" style="padding-bottom: 0; display: flex; gap: 10px; align-items: center;">
         <input type="text" id="danceSearchInput" placeholder="🔍 Search dances or choreographers..." oninput="handleLiveSearchInput()" style="flex: 1; padding: 14px; border-radius: 8px; border: 1px solid #444; background: #1a1a1a; color: white; font-size: 1rem; box-sizing: border-box; height: 50px;">
         <button onclick="forceCacheBusterReload()" style="background: var(--brand-green); color: white; border: none; padding: 0 16px; border-radius: 8px; font-size: 0.95rem; font-weight: bold; cursor: pointer; height: 50px; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 6px rgba(0,0,0,0.2); white-space: nowrap;">Sync Playlist</button>
     </div>
+
+    <!-- Symmetrical Dancer Email Banner (100% Visible & Safe From Script Conflicts) -->
+    <div style="text-align: center; margin: 15px auto; padding: 0 20px; max-width: 650px; box-sizing: border-box;">
+        <span style="color: #888888; font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 0.95rem; font-weight: bold; letter-spacing: 0.3px;">
+            ✉ Dancer Feedback & Music Requests: tampadancing@gmail.com
+        </span>
+    </div>
+
 
 
     
@@ -356,7 +365,7 @@ function forceCacheBusterReload() {
 
 window.onload = renderApplicationInterface;
 </script>
-<p style="text-align: center; color: #888888; margin: 40px auto 20px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 0.95rem; font-weight: bold; max-width: 650px;">✉ Dancer Feedback & Music Requests: tampadancing@gmail.com</p>
 
 </body>
 </html>
+
