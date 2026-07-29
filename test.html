@@ -28,13 +28,30 @@
         .overlay-title { font-weight: bold; color: #fff; font-size: 1rem; }
         .done-close-btn { background: var(--brand-green); color: white; border: none; padding: 9px 20px; font-weight: bold; font-size: 0.95rem; border-radius: 6px; cursor: pointer; }
         .overlay-viewport-iframe { width: 100%; height: calc(100% - 55px); border: none; background: white; }
+        .feedback-nav-link {
+    position: absolute;
+    right: 15px;
+    background: rgba(0,0,0,0.4);
+    border: 1px solid #444;
+    color: white;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+}
+
     </style>
 </head>
 <body>
-    <div class="header-bar">
-        <button class="back-nav-btn" id="navbarReturnTrigger" onclick="navigateToPlaylistHubMenu()">⬅ Playlists</button>
-        <span id="applicationHeaderTitle">LineDance Player</span>
-    </div>
+   <div class="header-bar">
+    <button id="navbarReturnTrigger" class="back-nav-btn" onclick="navigateToPlaylistHubMenu()">Back</button>
+    LineDance Player
+    <a href="mailto:tampadancing@://gmail.com" class="feedback-nav-link" title="Send Feedback">✉ Feedback</a>
+</div>
+
+
     
        <!-- This creates a clean side-by-side layout for your search bar and sync button -->
         <div class="app-container" style="padding-bottom: 0; display: flex; gap: 10px; align-items: center;">
