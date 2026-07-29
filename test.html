@@ -28,6 +28,15 @@
         .overlay-title { font-weight: bold; color: #fff; font-size: 1rem; }
         .done-close-btn { background: var(--brand-green); color: white; border: none; padding: 9px 20px; font-weight: bold; font-size: 0.95rem; border-radius: 6px; cursor: pointer; }
         .overlay-viewport-iframe { width: 100%; height: calc(100% - 55px); border: none; background: white; }
+        /* Intelligent Mobile Responsive Scaling Override for iPhone Screen Glass */
+@media (max-width: 480px) {
+    .header-bar {
+        height: 48px !important;
+        padding: 10px !important;
+        font-size: 1.1rem !important;
+    }
+}
+
     </style>
 </head>
 <body>
