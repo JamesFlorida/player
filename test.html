@@ -29,13 +29,15 @@
         .done-close-btn { background: var(--brand-green); color: white; border: none; padding: 9px 20px; font-weight: bold; font-size: 0.95rem; border-radius: 6px; cursor: pointer; }
         .overlay-viewport-iframe { width: 100%; height: calc(100% - 55px); border: none; background: white; }
         /* Intelligent Mobile Responsive Scaling Override for iPhone Screen Glass */
-@media (max-width: 480px) {
+/* Intelligent Mobile Responsive Scaling Override STRICTLY for Phone Glass */
+@media (max-width: 380px) {
     .header-bar {
         height: 48px !important;
         padding: 10px !important;
         font-size: 1.1rem !important;
     }
 }
+
 
     </style>
 </head>
@@ -313,11 +315,6 @@ function renderDanceCardsList(tracksList, containerElement) {
 function launchMediaOverlay(targetUrl, displayTitle) {
     if (!targetUrl) return;
     
-    if (window.innerWidth < 768) {
-        window.open(targetUrl, '_blank');
-        return;
-    }
-    
     document.getElementById('overlayPanelTitle').innerText = displayTitle;
     const container = document.getElementById('playerOverlayFrame');
     
@@ -341,9 +338,9 @@ function launchMediaOverlay(targetUrl, displayTitle) {
             <iframe id="appIframeViewport" class="overlay-viewport-iframe" src="${targetUrl}" allow="autoplay; encrypted-media; fullscreen" sandbox="allow-scripts allow-same-origin allow-popups allow-forms"></iframe>
         `;
     }
-    
     container.style.display = 'block';
 }
+
 
 function shutOverlayViewer() {
     const container = document.getElementById('playerOverlayFrame');
