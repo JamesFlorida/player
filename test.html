@@ -380,9 +380,13 @@ function shutOverlayViewer() {
 
 
 function shutOverlayViewer() {
-    document.getElementById('playerOverlayFrame').style.display = 'none';
-    document.getElementById('appIframeViewport').src = '';
+    const container = document.getElementById('playerOverlayFrame');
+    container.style.display = 'none';
+    
+    // Safely clears out whatever layout is active to prevent any script tracking locks
+    container.innerHTML = ''; 
 }
+
 
 function forceCacheBusterReload() {
     const uniqueTimestamp = new Date().getTime();
