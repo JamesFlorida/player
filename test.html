@@ -298,79 +298,50 @@ function renderDanceCardsList(tracksList, containerElement) {
 function launchMediaOverlay(targetUrl, displayTitle) {
     if (!targetUrl) return;
     
-    // Handles the small mobile phone layout screen size shortcut
     if (window.innerWidth < 768) {
         window.open(targetUrl, '_blank');
         return;
     }
     
-    const headerTitle = document.getElementById('overlayPanelTitle');
-    const iframeViewport = document.getElementById('appIframeViewport');
+    document.getElementById('overlayPanelTitle').innerText = displayTitle;
+    const container = document.getElementById('playerOverlayFrame');
     
-    headerTitle.innerText = displayTitle;
-    
-    // Checks if the user clicked the Steps button to read a sheet document
+    // Checks if the user clicked the Steps button to view a sheet document
     if (displayTitle.includes("Steps")) {
-        // Tells the iframe to load a clean, dark-mode directory card instead of the blocked website
-        iframeViewport.src = 'data:text/html;charset=utf-8,' + encodeURIComponent(`
-            <!DOCTYPE html>
-            <html>
-            <head>
-                <style>
-                    body { 
-                        background: #000000; 
-                        color: #ffffff; 
-                        font-family: -apple-system, sans-serif; 
-                        display: flex; 
-                        flex-direction: column; 
-                        justify-content: center; 
-                        align-items: center; 
-                        height: 100vh; 
-                        margin: 0; 
-                        padding: 20px;
-                        box-sizing: border-box;
-                        text-align: center;
-                    }
-                    .card {
-                        background: #1a1a1a;
-                        padding: 35px 25px;
-                        border-radius: 12px;
-                        box-shadow: 0 6px 15px rgba(0,0,0,0.5);
-                        max-width: 400px;
-                        width: 100%;
-                        border-bottom: 4px solid #2ecc71;
-                    }
-                    h2 { margin-top: 0; font-size: 1.4rem; color: #2ecc71; }
-                    p { color: #b3b3b3; font-size: 1rem; margin-bottom: 30px; line-height: 1.5; }
-                    .launch-btn {
-                        background: #3498db;
-                        color: white;
-                        text-decoration: none;
-                        padding: 16px 30px;
-                        border-radius: 8px;
-                        font-weight: bold;
-                        font-size: 1.05rem;
-                        display: inline-block;
-                        box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-                    }
-                </style>
-            </head>
-            <body>
-                <div class="card">
-                    <h2>📄 Step Sheet Document</h2>
-                    <p>CopperKnob protects this layout securely. Click below to launch the official sheet cleanly inside your browser safely.</p>
-                    <a href="${targetUrl}" target="_blank" class="launch-btn">🚀 Open Sheet Now</a>
-                </div>
-            </body>
-            </html>
-        `);
+        // Dynamically injects an unrestricted object container to bypass copperknob's iframe block
+        container.innerHTML = `
+            <div class="overlay-control-header">
+                <span class="overlay-title" id="overlayPanelTitle">${displayTitle}</span>
+                <button class="done-close-btn" onclick="shutOverlayViewer()">Done</button>
+            </div>
+            <object data="${targetUrl.replace('http://', 'https://')}" class="overlay-viewport-iframe" type="text/html"></object>
+        `;
     } else {
-        // Keeps your pristine safety tracking parameters completely active for YouTube video streams
-        iframeViewport.src = targetUrl;
+        // Restores your standard sandboxed iframe container for flawless YouTube video streaming
+        container.innerHTML = `
+            <div class="overlay-control-header">
+                <span class="overlay-title" id="overlayPanelTitle">${displayTitle}</span>
+                <button class="done-close-btn" onclick="shutOverlayViewer()">Done</button>
+            </div>
+            <iframe id="appIframeViewport" class="overlay-viewport-iframe" src="${targetUrl}" allow="autoplay; encrypted-media; fullscreen" sandbox="allow-scripts allow-same-origin allow-popups allow-forms"></iframe>
+        `;
     }
     
-    document.getElementById('playerOverlayFrame').style.display = 'block';
+    container.style.display = 'block';
 }
+
+function shutOverlayViewer() {
+    const container = document.getElementById('playerOverlayFrame');
+    container.style.display = 'none';
+    container.innerHTML = `
+        <div class="overlay-control-header">
+            <span class="overlay-title" id="overlayPanelTitle">Media Loader</span>
+            <button class="done-close-btn" onclick="shutOverlayViewer()">Done</button>
+        </div>
+        <iframe id="appIframeViewport" class="overlay-viewport-iframe" src="" allow="autoplay; encrypted-media; fullscreen"></iframe>
+    `;
+}
+
 
 
 function shutOverlayViewer() {
