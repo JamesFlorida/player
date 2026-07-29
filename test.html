@@ -299,16 +299,80 @@ function renderDanceCardsList(tracksList, containerElement) {
 function launchMediaOverlay(targetUrl, displayTitle) {
     if (!targetUrl) return;
     
-    // Bypasses CopperKnob's frame blocks by forcing steps sheets to open in a secure browser tab
-    if (displayTitle.includes("Steps") || window.innerWidth < 768) {
+    // Handles the small mobile phone layout screen size shortcut
+    if (window.innerWidth < 768) {
         window.open(targetUrl, '_blank');
         return;
     }
     
-    document.getElementById('overlayPanelTitle').innerText = displayTitle;
-    document.getElementById('appIframeViewport').src = targetUrl;
+    const headerTitle = document.getElementById('overlayPanelTitle');
+    const iframeViewport = document.getElementById('appIframeViewport');
+    
+    headerTitle.innerText = displayTitle;
+    
+    // Checks if the user clicked the Steps button to read a sheet document
+    if (displayTitle.includes("Steps")) {
+        // Tells the iframe to load a clean, dark-mode directory card instead of the blocked website
+        iframeViewport.src = 'data:text/html;charset=utf-8,' + encodeURIComponent(`
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <style>
+                    body { 
+                        background: #000000; 
+                        color: #ffffff; 
+                        font-family: -apple-system, sans-serif; 
+                        display: flex; 
+                        flex-direction: column; 
+                        justify-content: center; 
+                        align-items: center; 
+                        height: 100vh; 
+                        margin: 0; 
+                        padding: 20px;
+                        box-sizing: border-box;
+                        text-align: center;
+                    }
+                    .card {
+                        background: #1a1a1a;
+                        padding: 35px 25px;
+                        border-radius: 12px;
+                        box-shadow: 0 6px 15px rgba(0,0,0,0.5);
+                        max-width: 400px;
+                        width: 100%;
+                        border-bottom: 4px solid #2ecc71;
+                    }
+                    h2 { margin-top: 0; font-size: 1.4rem; color: #2ecc71; }
+                    p { color: #b3b3b3; font-size: 1rem; margin-bottom: 30px; line-height: 1.5; }
+                    .launch-btn {
+                        background: #3498db;
+                        color: white;
+                        text-decoration: none;
+                        padding: 16px 30px;
+                        border-radius: 8px;
+                        font-weight: bold;
+                        font-size: 1.05rem;
+                        display: inline-block;
+                        box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="card">
+                    <h2>📄 Step Sheet Document</h2>
+                    <p>CopperKnob protects this layout securely. Click below to launch the official sheet cleanly inside your browser safely.</p>
+                    <a href="${targetUrl}" target="_self" class="launch-btn">🚀 Open Sheet Now</a>
+                </div>
+            </body>
+            </html>
+        `);
+    } else {
+        // Keeps your pristine safety tracking parameters completely active for YouTube video streams
+        iframeViewport.src = targetUrl;
+    }
+    
     document.getElementById('playerOverlayFrame').style.display = 'block';
 }
+
 
 
 function shutOverlayViewer() {
