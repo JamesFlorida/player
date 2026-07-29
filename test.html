@@ -28,31 +28,13 @@
         .overlay-title { font-weight: bold; color: #fff; font-size: 1rem; }
         .done-close-btn { background: var(--brand-green); color: white; border: none; padding: 9px 20px; font-weight: bold; font-size: 0.95rem; border-radius: 6px; cursor: pointer; }
         .overlay-viewport-iframe { width: 100%; height: calc(100% - 55px); border: none; background: white; }
-        .feedback-nav-link {
-    position: absolute;
-    right: 15px;
-    background: rgba(0,0,0,0.4);
-    border: 1px solid #444;
-    color: white;
-    padding: 6px 14px;
-    border-radius: 6px;
-    font-size: 0.9rem;
-    font-weight: bold;
-    cursor: pointer;
-    text-decoration: none;
-}
-
     </style>
 </head>
 <body>
-   <div class="header-bar">
-    <button id="navbarReturnTrigger" class="back-nav-btn" onclick="navigateToPlaylistHubMenu()">Back</button>
-    LineDance Player
-    <button class="feedback-nav-link" onclick="launchMediaOverlay('feedback-form', 'Dancer Feedback')" title="Send Feedback">✉ Feedback</button>
-</div>
-
-
-
+    <div class="header-bar">
+        <button class="back-nav-btn" id="navbarReturnTrigger" onclick="navigateToPlaylistHubMenu()">⬅ Playlists</button>
+        <span id="applicationHeaderTitle">LineDance Player</span>
+    </div>
     
        <!-- This creates a clean side-by-side layout for your search bar and sync button -->
         <div class="app-container" style="padding-bottom: 0; display: flex; gap: 10px; align-items: center;">
@@ -321,27 +303,12 @@ function launchMediaOverlay(targetUrl, displayTitle) {
         return;
     }
     
+    document.getElementById('overlayPanelTitle').innerText = displayTitle;
     const container = document.getElementById('playerOverlayFrame');
     
-    // 1. Checks if the user clicked the Feedback button
-    if (targetUrl === "feedback-form") {
-        container.innerHTML = `
-            <div class="overlay-control-header">
-                <span class="overlay-title" id="overlayPanelTitle">${displayTitle}</span>
-                <button class="done-close-btn" onclick="shutOverlayViewer()">Done</button>
-            </div>
-            <div style="background:#000000;height:calc(100% - 55px);display:flex;justify-content:center;align-items:center;padding:20px;box-sizing:border-box;text-align:center;font-family:-apple-system,sans-serif;">
-                <div style="background:#1a1a1a;padding:35px 25px;border-radius:12px;box-shadow:0 6px 15px rgba(0,0,0,0.5);max-width:400px;width:100%;border-bottom:4px solid #2ecc71;">
-                    <h2 style="margin-top:0;font-size:1.4rem;color:#2ecc71;">✉ Contact & Feedback</h2>
-                    <p style="color:#b3b3b3;font-size:1rem;margin-bottom:15px;line-height:1.5;">Have music requests, questions, or choreography corrections? Reach out directly via email at:</p>
-                    <div style="font-size:1.2rem;font-weight:bold;color:#ffffff;background:#2b2b2b;padding:12px;border-radius:6px;margin-bottom:25px;border:1px dashed #555;">tampadancing@gmail.com</div>
-                    <p style="font-size:0.85rem;color:#777;margin:0;">Tap your green "Done" button at the top of your screen to return to your dance playlists instantly!</p>
-                </div>
-            </div>
-        `;
-    } 
-    // 2. Checks if the user clicked the Steps button to view a sheet document
-    else if (displayTitle.includes("Steps")) {
+    // Checks if the user clicked the Steps button to view a sheet document
+    if (displayTitle.includes("Steps")) {
+        // Dynamically injects an unrestricted object container to bypass copperknob's iframe block
         container.innerHTML = `
             <div class="overlay-control-header">
                 <span class="overlay-title" id="overlayPanelTitle">${displayTitle}</span>
@@ -349,9 +316,8 @@ function launchMediaOverlay(targetUrl, displayTitle) {
             </div>
             <object data="${targetUrl.replace('http://', 'https://')}" class="overlay-viewport-iframe" type="text/html"></object>
         `;
-    } 
-    // 3. Handles YouTube video streaming
-    else {
+    } else {
+        // Restores your standard sandboxed iframe container for flawless YouTube video streaming
         container.innerHTML = `
             <div class="overlay-control-header">
                 <span class="overlay-title" id="overlayPanelTitle">${displayTitle}</span>
@@ -363,7 +329,6 @@ function launchMediaOverlay(targetUrl, displayTitle) {
     
     container.style.display = 'block';
 }
-
 
 function shutOverlayViewer() {
     const container = document.getElementById('playerOverlayFrame');
@@ -380,13 +345,9 @@ function shutOverlayViewer() {
 
 
 function shutOverlayViewer() {
-    const container = document.getElementById('playerOverlayFrame');
-    container.style.display = 'none';
-    
-    // Safely clears out whatever layout is active to prevent any script tracking locks
-    container.innerHTML = ''; 
+    document.getElementById('playerOverlayFrame').style.display = 'none';
+    document.getElementById('appIframeViewport').src = '';
 }
-
 
 function forceCacheBusterReload() {
     const uniqueTimestamp = new Date().getTime();
