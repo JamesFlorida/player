@@ -48,8 +48,9 @@
    <div class="header-bar">
     <button id="navbarReturnTrigger" class="back-nav-btn" onclick="navigateToPlaylistHubMenu()">Back</button>
     LineDance Player
-    <a href="mailto:tampadancing@gmail.com" class="feedback-nav-link" title="Send Feedback">✉ Feedback</a>
+    <button class="feedback-nav-link" onclick="launchMediaOverlay('feedback-form', 'Dancer Feedback')" title="Send Feedback">✉ Feedback</button>
 </div>
+
 
 
     
@@ -320,12 +321,27 @@ function launchMediaOverlay(targetUrl, displayTitle) {
         return;
     }
     
-    document.getElementById('overlayPanelTitle').innerText = displayTitle;
     const container = document.getElementById('playerOverlayFrame');
     
-    // Checks if the user clicked the Steps button to view a sheet document
-    if (displayTitle.includes("Steps")) {
-        // Dynamically injects an unrestricted object container to bypass copperknob's iframe block
+    // 1. Checks if the user clicked the Feedback button
+    if (targetUrl === "feedback-form") {
+        container.innerHTML = `
+            <div class="overlay-control-header">
+                <span class="overlay-title" id="overlayPanelTitle">${displayTitle}</span>
+                <button class="done-close-btn" onclick="shutOverlayViewer()">Done</button>
+            </div>
+            <div style="background:#000000;height:calc(100% - 55px);display:flex;justify-content:center;align-items:center;padding:20px;box-sizing:border-box;text-align:center;font-family:-apple-system,sans-serif;">
+                <div style="background:#1a1a1a;padding:35px 25px;border-radius:12px;box-shadow:0 6px 15px rgba(0,0,0,0.5);max-width:400px;width:100%;border-bottom:4px solid #2ecc71;">
+                    <h2 style="margin-top:0;font-size:1.4rem;color:#2ecc71;">✉ Contact & Feedback</h2>
+                    <p style="color:#b3b3b3;font-size:1rem;margin-bottom:15px;line-height:1.5;">Have music requests, questions, or choreography corrections? Reach out directly via email at:</p>
+                    <div style="font-size:1.2rem;font-weight:bold;color:#ffffff;background:#2b2b2b;padding:12px;border-radius:6px;margin-bottom:25px;border:1px dashed #555;">tampadancing@gmail.com</div>
+                    <p style="font-size:0.85rem;color:#777;margin:0;">Tap your green "Done" button at the top of your screen to return to your dance playlists instantly!</p>
+                </div>
+            </div>
+        `;
+    } 
+    // 2. Checks if the user clicked the Steps button to view a sheet document
+    else if (displayTitle.includes("Steps")) {
         container.innerHTML = `
             <div class="overlay-control-header">
                 <span class="overlay-title" id="overlayPanelTitle">${displayTitle}</span>
@@ -333,8 +349,9 @@ function launchMediaOverlay(targetUrl, displayTitle) {
             </div>
             <object data="${targetUrl.replace('http://', 'https://')}" class="overlay-viewport-iframe" type="text/html"></object>
         `;
-    } else {
-        // Restores your standard sandboxed iframe container for flawless YouTube video streaming
+    } 
+    // 3. Handles YouTube video streaming
+    else {
         container.innerHTML = `
             <div class="overlay-control-header">
                 <span class="overlay-title" id="overlayPanelTitle">${displayTitle}</span>
@@ -346,6 +363,7 @@ function launchMediaOverlay(targetUrl, displayTitle) {
     
     container.style.display = 'block';
 }
+
 
 function shutOverlayViewer() {
     const container = document.getElementById('playerOverlayFrame');
