@@ -446,24 +446,34 @@ function renderDanceCardsList(tracksList, containerElement) {
 
 function launchMediaOverlay(targetUrl, displayTitle) {
     if (!targetUrl) return;
+    
     const container = document.getElementById('playerOverlayFrame');
+    if (!container) return;
+    
+    // UN-BOMBABLE UPGRADE: Force-clears and instantly builds a fresh inner layout from scratch on every single click
+    container.style.display = 'none';
+    container.innerHTML = '';
+    
     if (displayTitle.includes("Steps")) {
+        // Injects a fresh title bar, a pristine Done button, and an unrestricted object view for your stepsheets
         container.innerHTML = `
             <div class="overlay-control-header">
                 <span class="overlay-title" id="overlayPanelTitle">${displayTitle}</span>
                 <button class="done-close-btn" onclick="shutOverlayViewer()">Done</button>
             </div>
-            <object data="${targetUrl.replace('http://', 'https://')}" class="overlay-viewport-iframe" type="text/html"></object>
+            <object data="${targetUrl.replace('http://', 'https://')}" style="width:100%; height:calc(100% - 55px); border:none; background:white;" type="text/html"></object>
         `;
     } else {
+        // Injects a fresh title bar, a pristine Done button, and a secure iframe container for YouTube video streaming
         container.innerHTML = `
             <div class="overlay-control-header">
                 <span class="overlay-title" id="overlayPanelTitle">${displayTitle}</span>
                 <button class="done-close-btn" onclick="shutOverlayViewer()">Done</button>
             </div>
-            <iframe id="appIframeViewport" class="overlay-viewport-iframe" src="${targetUrl}" allow="autoplay; encrypted-media; fullscreen" sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-popups-to-escape-sandbox"></iframe>
+            <iframe id="appIframeViewport" style="width:100%; height:calc(100% - 55px); border:none; background:white;" src="${targetUrl}" allow="autoplay; encrypted-media; fullscreen" sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-popups-to-escape-sandbox"></iframe>
         `;
     }
+    
     container.style.display = 'block';
 }
 
