@@ -422,10 +422,13 @@ function renderDanceCardsList(tracksList, containerElement) {
     tracksList.forEach(track => {
         const card = document.createElement('div');
         card.className = 'dance-entry-card';
-        const btnSteps = track.steps ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.steps.replace('http://', 'https://')}', '${track.name} - Steps')">Steps</button>` : `<button class="action-touch-btn disabled">None</button>`;
-        const btnTeach = track.teach ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.teach.replace('http://', 'https://')}', '${track.name} - Teach')">Teach</button>` : `<button class="action-touch-btn disabled">None</button>`;
-        const btnDemo = track.demo ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.demo.replace('http://', 'https://')}', '${track.name} - Demo')">Demo</button>` : `<button class="action-touch-btn disabled">None</button>`;
-        const btnMusic = track.music ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.music.replace('http://', 'https://')}', '${track.name} - Play')">Music</button>` : `<button class="action-touch-btn disabled">None</button>`;
+        
+        // BACKTICK UPGRADE: Safely escapes all parameters to ensure apostrophes like Weren't can never crash your button click handlers!
+        const btnSteps = track.steps ? `<button class="action-touch-btn" onclick="launchMediaOverlay(\`${track.steps.replace('http://', 'https://')}\`, \`${track.name.replace(/`/g, '\\`')} - Steps\`)" style="background-color: var(--venue-button-bg, #34495e); color: white;">Steps</button>` : `<button class="action-touch-btn disabled">None</button>`;
+        const btnTeach = track.teach ? `<button class="action-touch-btn" onclick="launchMediaOverlay(\`${track.teach.replace('http://', 'https://')}\`, \`${track.name.replace(/`/g, '\\`')} - Teach\`)" style="background-color: var(--venue-button-bg, #34495e); color: white;">Teach</button>` : `<button class="action-touch-btn disabled">None</button>`;
+        const btnDemo = track.demo ? `<button class="action-touch-btn" onclick="launchMediaOverlay(\`${track.demo.replace('http://', 'https://')}\`, \`${track.name.replace(/`/g, '\\`')} - Demo\`)" style="background-color: var(--venue-button-bg, #34495e); color: white;">Demo</button>` : `<button class="action-touch-btn disabled">None</button>`;
+        const btnMusic = track.music ? `<button class="action-touch-btn" onclick="launchMediaOverlay(\`${track.music.replace('http://', 'https://')}\`, \`${track.name.replace(/`/g, '\\`')} - Play\`)" style="background-color: var(--venue-button-bg, #34495e); color: white;">Music</button>` : `<button class="action-touch-btn disabled">None</button>`;
+        
         card.innerHTML = `
             <div class="title-line">${track.name} • By: ${track.choreographer}</div>
             <div class="meta-line">Song: ${track.song} - ${track.artist} (${track.group})</div>
@@ -439,6 +442,7 @@ function renderDanceCardsList(tracksList, containerElement) {
         containerElement.appendChild(card);
     });
 }
+
 
 function launchMediaOverlay(targetUrl, displayTitle) {
     if (!targetUrl) return;
