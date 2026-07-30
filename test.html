@@ -292,10 +292,11 @@ function renderDanceCardsList(tracksList, containerElement) {
         const card = document.createElement('div');
         card.className = 'dance-entry-card';
         
-        const btnSteps = track.steps ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.steps.replace('http://', 'https://')}', '${track.name} - Steps')">Steps</button>` : `<button class="action-touch-btn disabled">None</button>`;
-        const btnTeach = track.teach ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.teach.replace('http://', 'https://')}', '${track.name} - Teach')">Teach</button>` : `<button class="action-touch-btn disabled">None</button>`;
-        const btnDemo = track.demo ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.demo.replace('http://', 'https://')}', '${track.name} - Demo')">Demo</button>` : `<button class="action-touch-btn disabled">None</button>`;
-        const btnMusic = track.music ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.music.replace('http://', 'https://')}', '${track.name} - Play')">Music</button>` : `<button class="action-touch-btn disabled">None</button>`;
+        // EXPLICIT UPGRADE: Passes 'steps' or 'video' directly as a clear instruction parameter
+        const btnSteps = track.steps ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.steps}', '${track.name} - Steps', 'steps')">Steps</button>` : `<button class="action-touch-btn disabled">None</button>`;
+        const btnTeach = track.teach ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.teach}', '${track.name} - Teach', 'video')">Teach</button>` : `<button class="action-touch-btn disabled">None</button>`;
+        const btnDemo = track.demo ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.demo}', '${track.name} - Demo', 'video')">Demo</button>` : `<button class="action-touch-btn disabled">None</button>`;
+        const btnMusic = track.music ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.music}', '${track.name} - Play', 'video')">Music</button>` : `<button class="action-touch-btn disabled">None</button>`;
         
         card.innerHTML = `
             <div class="title-line">${track.name} • By: ${track.choreographer}</div>
@@ -311,35 +312,38 @@ function renderDanceCardsList(tracksList, containerElement) {
     });
 }
 
-
-function launchMediaOverlay(targetUrl, displayTitle) {
+function launchMediaOverlay(targetUrl, displayTitle, mediaType) {
     if (!targetUrl) return;
     
-    document.getElementById('overlayPanelTitle').innerText = displayTitle;
     const container = document.getElementById('playerOverlayFrame');
+    if (!container) return;
     
-    // Checks if the user clicked the Steps button to view a sheet document
-    if (displayTitle.includes("Steps")) {
-        // Dynamically injects an unrestricted object container to bypass copperknob's iframe block
+    // Safety Reset: Force-clears container layout completely to prevent background freezes
+    container.style.display = 'none';
+    container.innerHTML = '';
+    
+    // EXPLICIT ROUTING: Evaluates the strict 'steps' flag variable directly with zero text string guesswork
+    if (mediaType === 'steps') {
         container.innerHTML = `
             <div class="overlay-control-header">
                 <span class="overlay-title" id="overlayPanelTitle">${displayTitle}</span>
                 <button class="done-close-btn" onclick="shutOverlayViewer()">Done</button>
             </div>
-            <object data="${targetUrl.replace('http://', 'https://')}" class="overlay-viewport-iframe" type="text/html"></object>
+            <object data="${targetUrl.replace('http://', 'https://')}" style="width:100%; height:calc(100% - 55px); border:none; background:white;" type="text/html"></object>
         `;
     } else {
-        // Restores your standard sandboxed iframe container for flawless YouTube video streaming
         container.innerHTML = `
             <div class="overlay-control-header">
                 <span class="overlay-title" id="overlayPanelTitle">${displayTitle}</span>
                 <button class="done-close-btn" onclick="shutOverlayViewer()">Done</button>
             </div>
-            <iframe id="appIframeViewport" class="overlay-viewport-iframe" src="${targetUrl}" allow="autoplay; encrypted-media; fullscreen" sandbox="allow-scripts allow-same-origin allow-popups allow-forms"></iframe>
+            <iframe id="appIframeViewport" style="width:100%; height:calc(100% - 55px); border:none; background:white;" src="${targetUrl}" allow="autoplay; encrypted-media; fullscreen" sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-popups-to-escape-sandbox"></iframe>
         `;
     }
+    
     container.style.display = 'block';
 }
+
 
 
 function shutOverlayViewer() {
