@@ -357,9 +357,14 @@ function shutOverlayViewer() {
 
 
 function shutOverlayViewer() {
-    document.getElementById('playerOverlayFrame').style.display = 'none';
-    document.getElementById('appIframeViewport').src = '';
+    const container = document.getElementById('playerOverlayFrame');
+    if (container) {
+        container.style.display = 'none';
+        // Forcefully completely clears out the inner HTML contents to tear down the stale object memory pipeline
+        container.innerHTML = '';
+    }
 }
+
 
 function forceCacheBusterReload() {
     const uniqueTimestamp = new Date().getTime();
