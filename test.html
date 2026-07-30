@@ -1,45 +1,190 @@
-// Part 1
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>LineDance Player</title>
-    <meta name="apple-mobilFe-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="apple-touch-icon" href="https://jamesflorida.github.io/player/BootsPicture.png">
+    <link rel="apple-touch-icon" href="https://github.io">
     <style>
-        :root { --brand-green: #2ecc71; --dark-gray: #1e1e1e; --card-bg: #2b2b2b; --btn-blue: #34495e; }
-        body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; background-color: var(--dark-gray); color: white; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-        .header-bar { background-color: var(--brand-green); padding: 18px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.3rem; box-shadow: 0 4px 10px rgba(0,0,0,0.3); position: sticky; top: 0; z-index: 100; height: 60px; box-sizing: border-box; }
-        .back-nav-btn { position: absolute; left: 15px; background: rgba(0,0,0,0.4); border: 1px solid #444; color: white; padding: 6px 14px; border-radius: 6px; font-size: 0.9rem; font-weight: bold; cursor: pointer; display: none; }
-        .app-container { padding: 20px; max-width: 650px; margin: 0 auto; box-sizing: border-box; }
-        .playlist-selection-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; padding-top: 10px; }
-        .playlist-hub-card { background: var(--card-bg); border-radius: 12px; padding: 30px 20px; text-align: center; font-size: 1.2rem; font-weight: bold; cursor: pointer; box-shadow: 0 6px 15px rgba(0,0,0,0.3); border-bottom: 4px solid var(--brand-green); min-height: 100px; display: flex; flex-direction: column; justify-content: center; align-items: center; box-sizing: border-box; }
-        .playlist-track-counter { font-size: 0.85rem; color: #aaa; margin-top: 8px; font-weight: normal; }
-        .dance-entry-card { background: var(--card-bg); border-radius: 12px; padding: 22px; margin-bottom: 20px; box-shadow: 0 6px 15px rgba(0,0,0,0.4); border-left: 5px solid var(--brand-green); }
-        .title-line { font-size: 1.3rem; font-weight: bold; color: #ffffff; margin-bottom: 6px; text-align: center; }
-        .meta-line { font-size: 0.95rem; color: #b3b3b3; margin-bottom: 22px; text-align: center; line-height: 1.4; }
-        .button-bar-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
-        .action-touch-btn { background-color: var(--btn-blue); color: white; border: none; padding: 14px 2px; border-radius: 8px; font-weight: bold; font-size: 0.85rem; cursor: pointer; text-align: center; box-shadow: 0 3px 6px rgba(0,0,0,0.2); transition: background 0.1s; text-decoration: none; display: block; }
-        .action-touch-btn:active { background-color: var(--brand-green); }
-        .action-touch-btn.disabled { background-color: #444; color: #777; cursor: not-allowed; box-shadow: none; pointer-events: none; }
-        .inapp-overlay-window { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: black; z-index: 99999; }
-        .overlay-control-header { background: #111111; height: 55px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; box-sizing: border-box; border-bottom: 1px solid #333; }
-        .overlay-title { font-weight: bold; color: #fff; font-size: 1rem; }
-        .done-close-btn { background: var(--brand-green); color: white; border: none; padding: 9px 20px; font-weight: bold; font-size: 0.95rem; border-radius: 6px; cursor: pointer; }
-        .overlay-viewport-iframe { width: 100%; height: calc(100% - 55px); border: none; background: white; }
-        /* Intelligent Mobile Responsive Scaling Override for iPhone Screen Glass */
-/* Intelligent Mobile Responsive Scaling Override STRICTLY for Phone Glass */
-@media (max-width: 380px) {
-    .header-bar {
-        height: 48px !important;
-        padding: 10px !important;
-        font-size: 1.1rem !important;
-    }
-}
-
-
+        :root {
+            --brand-green: #2ecc71;
+            --dark-gray: #1e1e1e;
+            --card-bg: #2b2b2b;
+            --btn-blue: #34495e;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--dark-gray);
+            color: white;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .header-bar {
+            background-color: var(--brand-green);
+            padding: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.3rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            height: 60px;
+            box-sizing: border-box;
+        }
+        .back-nav-btn {
+            position: absolute;
+            left: 15px;
+            background: rgba(0,0,0,0.4);
+            border: 1px solid #444;
+            color: white;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: none;
+        }
+        .app-container {
+            padding: 20px;
+            max-width: 650px;
+            margin: 0 auto;
+            box-sizing: border-box;
+        }
+        .playlist-selection-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            padding-top: 10px;
+        }
+        .playlist-hub-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px 20px;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+            border-bottom: 4px solid var(--brand-green);
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+        }
+        .playlist-track-counter {
+            font-size: 0.85rem;
+            color: #aaa;
+            margin-top: 8px;
+            font-weight: normal;
+        }
+        .dance-entry-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 22px;
+            margin-bottom: 20px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+            border-left: 5px solid var(--brand-green);
+        }
+        .title-line {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 6px;
+            text-align: center;
+        }
+        .meta-line {
+            font-size: 0.95rem;
+            color: #b3b3b3;
+            margin-bottom: 22px;
+            text-align: center;
+            line-height: 1.4;
+        }
+        .button-bar-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+        .action-touch-btn {
+            background-color: var(--btn-blue);
+            color: white;
+            border: none;
+            padding: 14px 2px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 0.85rem;
+            cursor: pointer;
+            text-align: center;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+            transition: background 0.1s;
+            text-decoration: none;
+            display: block;
+        }
+        .action-touch-btn:active {
+            background-color: var(--brand-green);
+        }
+        .action-touch-btn.disabled {
+            background-color: #444;
+            color: #777;
+            cursor: not-allowed;
+            box-shadow: none;
+            pointer-events: none;
+        }
+        .inapp-overlay-window {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: black;
+            z-index: 99999;
+        }
+        .overlay-control-header {
+            background: #111111;
+            height: 55px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            box-sizing: border-box;
+            border-bottom: 1px solid #333;
+        }
+        .overlay-title {
+            font-weight: bold;
+            color: #fff;
+            font-size: 1rem;
+        }
+        .done-close-btn {
+            background: var(--brand-green);
+            color: white;
+            border: none;
+            padding: 9px 20px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .overlay-viewport-iframe, object {
+            width: 100%;
+            height: calc(100% - 55px);
+            border: none;
+            background: white;
+        }
+        @media (max-width: 380px) {
+            .header-bar {
+                height: 48px !important;
+                padding: 10px !important;
+                font-size: 1.1rem !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -47,35 +192,21 @@
         <button class="back-nav-btn" id="navbarReturnTrigger" onclick="navigateToPlaylistHubMenu()">⬅ Playlists</button>
         <span id="applicationHeaderTitle">LineDance Player</span>
     </div>
-    
-           <!-- This creates a clean side-by-side layout for your search bar and sync button -->
     <div class="app-container" style="padding-bottom: 0; display: flex; gap: 10px; align-items: center;">
         <input type="text" id="danceSearchInput" placeholder="🔍 Search dances or choreographers..." oninput="handleLiveSearchInput()" style="flex: 1; padding: 14px; border-radius: 8px; border: 1px solid #444; background: #1a1a1a; color: white; font-size: 1rem; box-sizing: border-box; height: 50px;">
         <button onclick="forceCacheBusterReload()" style="background: var(--brand-green); color: white; border: none; padding: 0 16px; border-radius: 8px; font-size: 0.95rem; font-weight: bold; cursor: pointer; height: 50px; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 6px rgba(0,0,0,0.2); white-space: nowrap;">Sync Playlist</button>
     </div>
-
-    <!-- Symmetrical Dancer Email Banner (Soft Silver Upgrade) -->
     <div style="text-align: center; margin: 15px auto; padding: 0 20px; max-width: 650px; box-sizing: border-box;">
         <span style="color: #b3b3b3; font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 0.95rem; font-weight: bold; letter-spacing: 0.3px;">
             ✉ Dancer Feedback & Music Requests: tampadancing@gmail.com
         </span>
     </div>
-
-    
     <div class="app-container" id="masterApplicationViewport"></div>
-    <div id="playerOverlayFrame" class="inapp-overlay-window">
-        <div class="overlay-control-header">
-            <span class="overlay-title" id="overlayPanelTitle">Media Loader</span>
-            <button class="done-close-btn" onclick="shutOverlayViewer()">Done</button>
-        </div>
-//  iframe inserted
-       <iframe id="appIframeViewport" class="overlay-viewport-iframe" src="" allow="autoplay; encrypted-media; fullscreen" sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-popups-to-escape-sandbox"></iframe>
-    </div>
-    <script>
-// Part 2
-        // --- YOUR LIVE 200-ROW DATABASE BLOCKS SIT SAFELY INSIDE THESE BRACKETS ---
-        const localDanceDatabase = [
-         { id: "140", group: "Stock-014", name: "Boots Off", choreographer: "Rachael McNaney", song: "Boots Off", artist: "Jon Pardi", steps: "https://www.copperknob.co.uk/stepsheets/196086/boots-off", teach: "https://youtube.com/embed/YxkCnVnybvk", demo: "https://youtube.com/embed/Xr2MQ8pbPME", music: "https://youtube.com/embed/z8WxUN0hvsA" },
+    <div id="playerOverlayFrame" class="inapp-overlay-window"></div>
+<script>
+const localDanceDatabase = [
+
+{ id: "140", group: "Stock-014", name: "Boots Off", choreographer: "Rachael McNaney", song: "Boots Off", artist: "Jon Pardi", steps: "https://www.copperknob.co.uk/stepsheets/196086/boots-off", teach: "https://youtube.com/embed/YxkCnVnybvk", demo: "https://youtube.com/embed/Xr2MQ8pbPME", music: "https://youtube.com/embed/z8WxUN0hvsA" },
 { id: "139", group: "Stock-014", name: "Backup Plan", choreographer: "Melanie Mahoney", song: "Backup Plan", artist: "Zimmerman/Combs", steps: "https://www.copperknob.co.uk/stepsheets/200325/backup-plan", teach: "https://youtube.com/embed/HTciNVT--M4", demo: "https://youtube.com/embed/HTciNVT--M4", music: "https://youtube.com/embed/Yyd5kmngrOU" },
 { id: "138", group: "Stock-014", name: "Dance With You", choreographer: "Lisa Johns-Grose", song: "Dance With You", artist: "Thomas Rhett", steps: "https://www.copperknob.co.uk/stepsheets/N4GQQ46/dance-with-you", teach: "https://youtube.com/embed/JZtpinRfnVE", demo: "https://youtube.com/embed/JZtpinRfnVE", music: "https://youtube.com/embed/edOFds30j2E" },
 { id: "137", group: "Stock-014", name: "Heart of Stone", choreographer: "Pam Horst", song: "Heart of Stone", artist: "Jelly Roll", steps: "https://www.copperknob.co.uk/stepsheets/5JSY4MV/heart-of-stone", teach: "https://youtube.com/embed/2Q3T5NqdvY8", demo: "https://youtube.com/embed/cBl2oFzbiP0", music: "https://youtube.com/embed/U0Gk4Zh93As" },
@@ -216,10 +347,9 @@
 { id: "2", group: "Stock-001", name: "Shotgun Jenny", choreographer: "Kathy Brown", song: "Shake it", artist: "Big AND Rich", steps: "https://www.copperknob.co.uk/downloadsheet?StepsheetID=87543", teach: "https://youtube.com/embed/KYcuBzF92Vg", demo: "https://youtube.com/embed/d5TDmA8ae6c", music: "https://youtube.com/embed/O6OA_BQeeI4" },
 { id: "1", group: "Stock-001", name: "My Maria-NO STEP SHEET", choreographer: "Unknown Choreographer", song: "My Maria", artist: "Brooks AND Dunn", steps: "https://youtu.be/oNqUTJGiq3g", teach: "https://youtube.com/embed/oNqUTJGiq3g", demo: "https://youtube.com/embed/oNqUTJGiq3g", music: "https://youtube.com/embed/gPoICeX33vY" },
 
-            
-        ];
+];
 
-       let selectedActivePlaylistGroup = null;
+   let selectedActivePlaylistGroup = null;
 let activeSearchQueryString = "";
 
 function navigateToPlaylistHubMenu() {
@@ -258,7 +388,6 @@ function renderApplicationInterface() {
     const viewport = document.getElementById('masterApplicationViewport');
     if(!viewport) return;
     viewport.innerHTML = '';
-    
     if (activeSearchQueryString !== "") {
         const matchedTracks = localDanceDatabase.filter(track => {
             const danceName = (track.name || "").toLowerCase();
@@ -289,17 +418,14 @@ function renderApplicationInterface() {
     }
 }
 
-//Part 3
 function renderDanceCardsList(tracksList, containerElement) {
     tracksList.forEach(track => {
         const card = document.createElement('div');
         card.className = 'dance-entry-card';
-        
         const btnSteps = track.steps ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.steps.replace('http://', 'https://')}', '${track.name} - Steps')">Steps</button>` : `<button class="action-touch-btn disabled">None</button>`;
         const btnTeach = track.teach ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.teach.replace('http://', 'https://')}', '${track.name} - Teach')">Teach</button>` : `<button class="action-touch-btn disabled">None</button>`;
         const btnDemo = track.demo ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.demo.replace('http://', 'https://')}', '${track.name} - Demo')">Demo</button>` : `<button class="action-touch-btn disabled">None</button>`;
         const btnMusic = track.music ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.music.replace('http://', 'https://')}', '${track.name} - Play')">Music</button>` : `<button class="action-touch-btn disabled">None</button>`;
-        
         card.innerHTML = `
             <div class="title-line">${track.name} • By: ${track.choreographer}</div>
             <div class="meta-line">Song: ${track.song} - ${track.artist} (${track.group})</div>
@@ -314,15 +440,10 @@ function renderDanceCardsList(tracksList, containerElement) {
     });
 }
 
-
 function launchMediaOverlay(targetUrl, displayTitle) {
     if (!targetUrl) return;
-    
     const container = document.getElementById('playerOverlayFrame');
-    
-    // Checks if the user clicked the Steps button to view a sheet document
     if (displayTitle.includes("Steps")) {
-        // Dynamically injects an unrestricted object container to bypass copperknob's iframe block
         container.innerHTML = `
             <div class="overlay-control-header">
                 <span class="overlay-title" id="overlayPanelTitle">${displayTitle}</span>
@@ -331,43 +452,24 @@ function launchMediaOverlay(targetUrl, displayTitle) {
             <object data="${targetUrl.replace('http://', 'https://')}" class="overlay-viewport-iframe" type="text/html"></object>
         `;
     } else {
-        // Restores your standard sandboxed iframe container for flawless YouTube video streaming
         container.innerHTML = `
             <div class="overlay-control-header">
                 <span class="overlay-title" id="overlayPanelTitle">${displayTitle}</span>
                 <button class="done-close-btn" onclick="shutOverlayViewer()">Done</button>
             </div>
-            <iframe id="appIframeViewport" class="overlay-viewport-iframe" src="${targetUrl}" allow="autoplay; encrypted-media; fullscreen" sandbox="allow-scripts allow-same-origin allow-popups allow-forms"></iframe>
+            <iframe id="appIframeViewport" class="overlay-viewport-iframe" src="${targetUrl}" allow="autoplay; encrypted-media; fullscreen" sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-popups-to-escape-sandbox"></iframe>
         `;
     }
-    
     container.style.display = 'block';
 }
-
-
-function shutOverlayViewer() {
-    const container = document.getElementById('playerOverlayFrame');
-    container.style.display = 'none';
-    container.innerHTML = `
-        <div class="overlay-control-header">
-            <span class="overlay-title" id="overlayPanelTitle">Media Loader</span>
-            <button class="done-close-btn" onclick="shutOverlayViewer()">Done</button>
-        </div>
-        <iframe id="appIframeViewport" class="overlay-viewport-iframe" src="" allow="autoplay; encrypted-media; fullscreen"></iframe>
-    `;
-}
-
-
 
 function shutOverlayViewer() {
     const container = document.getElementById('playerOverlayFrame');
     if (container) {
         container.style.display = 'none';
-        // Forcefully completely clears out the inner HTML contents to tear down the stale object memory pipeline
         container.innerHTML = '';
     }
 }
-
 
 function forceCacheBusterReload() {
     const uniqueTimestamp = new Date().getTime();
@@ -376,6 +478,6 @@ function forceCacheBusterReload() {
 
 window.onload = renderApplicationInterface;
 </script>
-
 </body>
 </html>
+ 
