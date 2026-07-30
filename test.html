@@ -316,25 +316,30 @@ function launchMediaOverlay(targetUrl, displayTitle) {
     if (!targetUrl) return;
     
     const container = document.getElementById('playerOverlayFrame');
+    if (!container) return;
+    
+    // Safety Reset: Forcefully completely flushes out the inner HTML contents to tear down stale loops
+    container.style.display = 'none';
+    container.innerHTML = '';
     
     // Checks if the user clicked the Steps button to view a sheet document
     if (displayTitle.includes("Steps")) {
-        // Dynamically injects an unrestricted object container to bypass copperknob's iframe block
+        // FIXED: Stripped away the broken replace method so it reads your perfect raw https data natively
         container.innerHTML = `
             <div class="overlay-control-header">
                 <span class="overlay-title" id="overlayPanelTitle">${displayTitle}</span>
                 <button class="done-close-btn" onclick="shutOverlayViewer()">Done</button>
             </div>
-            <object data="${targetUrl.replace('http://', 'https://')}" class="overlay-viewport-iframe" type="text/html"></object>
+            <object data="${targetUrl}" style="width:100%; height:calc(100% - 55px); border:none; background:white;" type="text/html"></object>
         `;
     } else {
-        // Restores your standard sandboxed iframe container for flawless YouTube video streaming
+        // Keeps your standard sandboxed container tightly locked in place for flawless YouTube video streaming
         container.innerHTML = `
             <div class="overlay-control-header">
                 <span class="overlay-title" id="overlayPanelTitle">${displayTitle}</span>
                 <button class="done-close-btn" onclick="shutOverlayViewer()">Done</button>
             </div>
-            <iframe id="appIframeViewport" class="overlay-viewport-iframe" src="${targetUrl}" allow="autoplay; encrypted-media; fullscreen" sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-popups-to-escape-sandbox"></iframe>
+            <iframe id="appIframeViewport" style="width:100%; height:calc(100% - 55px); border:none; background:white;" src="${targetUrl}" allow="autoplay; encrypted-media; fullscreen" sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-popups-to-escape-sandbox"></iframe>
         `;
     }
     
