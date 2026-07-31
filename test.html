@@ -208,33 +208,7 @@
     <div id="playerOverlayFrame" class="inapp-overlay-window"></div>
 <script>
 const localDanceDatabase = [
-  { id: "1", group: "Stock-001", name: "A Bar Song", choreographer: "Ben Moss", song: "A Bar Song (Tipsy)", artist: "Shaboozey", steps: "https://copperknob.co.uk", teach: "https://youtube.com", demo: "https://youtube.com", music: "https://youtube.com" },
-  { id: "2", group: "Stock-001", name: "2 Stepping", choreographer: "Rachael McEnaney", song: "2 Stepping", artist: "Priscilla Block", steps: "https://copperknob.co.uk", teach: "https://youtube.com", demo: "https://youtube.com", music: "https://youtube.com" },
-  { id: "3", group: "Stock-001", name: "Cowboy Don't", choreographer: "Unknown", song: "Cowboy Don't", artist: "Brett Young", steps: "https://copperknob.co.uk", teach: "https://youtube.com", demo: "https://youtube.com", music: "https://youtube.com" },
-  { id: "4", group: "Stock-001", name: "Drunkard", choreographer: "Unknown", song: "Drunkard", artist: "Luke Bryan", steps: "https://copperknob.co.uk", teach: "https://youtube.com", demo: "https://youtube.com", music: "https://youtube.com" },
-  { id: "5", group: "Stock-001", name: "Get In Line", choreographer: "Unknown", song: "Get In Line", artist: "Zac Brown", steps: "https://copperknob.co.uk", teach: "https://youtube.com", demo: "https://youtube.com", music: "https://youtube.com" },
-  { id: "6", group: "Stock-001", name: "Good Time", choreographer: "Unknown", song: "Good Time", artist: "Alan Jackson", steps: "https://copperknob.co.uk", teach: "https://youtube.com", demo: "https://youtube.com", music: "https://youtube.com" },
-  { id: "7", group: "Stock-001", name: "I Got a Woman", choreographer: "Michael Desire", song: "I Got a Woman", artist: "RudeDog", steps: "https://copperknob.co.uk", teach: "https://youtube.com", demo: "https://youtube.com", music: "https://youtube.com" },
-  { id: "8", group: "Stock-001", name: "Keep Up", choreographer: "Unknown", song: "Keep Up", artist: "Kenzie", steps: "https://copperknob.co.uk", teach: "https://youtube.com", demo: "https://youtube.com", music: "https://youtube.com" },
-  { id: "9", group: "Stock-001", name: "Neon Light", choreographer: "Unknown", song: "Neon Light", artist: "Blake Shelton", steps: "https://copperknob.co.uk", teach: "https://youtube.com", demo: "https://youtube.com", music: "https://youtube.com" },
-  { id: "10", group: "Stock-001", name: "One Number Away", choreographer: "Unknown", song: "One Number Away", artist: "Luke Combs", steps: "https://copperknob.co.uk", teach: "https://youtube.com", demo: "https://youtube.com", music: "https://youtube.com" },
-  { id: "11", group: "Stock-010", name: "Dirt On My Boots", choreographer: "Unknown", song: "Dirt On My Boots", artist: "Jon Pardi", steps: "https://copperknob.co.uk", teach: "https://youtube.com", demo: "https://youtube.com", music: "https://youtube.com" },
-  { id: "12", group: "Stock-010", name: "Head Over Boots", choreographer: "Unknown", song: "Head Over Boots", artist: "Jon Pardi", steps: "https://copperknob.co.uk", teach: "https://youtube.com", demo: "https://youtube.com", music: "https://youtube.com" },
-  { id: "13", group: "Stock-010", name: "Heartache On Dance Floor", choreographer: "Unknown", song: "Heartache On The Dance Floor", artist: "Jon Pardi", steps: "https://copperknob.co.uk", teach: "https://youtube.com", demo: "https://youtube.com", music: "https://youtube.com" },
-  { id: "14", group: "Stock-010", name: "Night Shift", choreographer: "Unknown", song: "Night Shift", artist: "Jon Pardi", steps: "https://copperknob.co.uk", teach: "https://youtube.com", demo: "https://youtube.com", music: "https://youtube.com" },
-  { id: "15", group: "Stock-010", name: "She Ain't In It", choreographer: "Unknown", song: "She Ain't In It", artist: "Jon Pardi", steps: "https://copperknob.co.uk", teach: "https://youtube.com", demo: "https://youtube.com", music: "https://youtube.com" },
-  { id: "16", group: "Stock-010", name: "Tequila Little Time", choreographer: "Unknown", song: "Tequila Little Time", artist: "Jon Pardi", steps: "https://copperknob.co.uk", teach: "https://youtube.com", demo: "https://youtube.com", music: "https://youtube.com" },
-  { id: "17", group: "Stock-010", name: "Up All Night", choreographer: "Unknown", song: "Up All Night", artist: "Jon Pardi", steps: "https://copperknob.co.uk", teach: "https://youtube.com", demo: "https://youtube.com", music: "https://youtube.com" },
-  { id: "18", group: "Stock-010", name: "What I Can't Put Down", choreographer: "Unknown", song: "What I Can't Put Down", artist: "Jon Pardi", steps: "https://copperknob.co.uk", teach: "https://youtube.com", demo: "https://youtube.com", music: "https://youtube.com" },
-  { id: "19", group: "Stock-010", name: "When I've Been Drinkin", choreographer: "Unknown", song: "When I've Been Drinkin'", artist: "Jon Pardi", steps: "https://copperknob.co.uk", teach: "https://youtube.com", demo: "https://youtube.com", music: "https://youtube.com" },
-  { id: "20", group: "Stock-010", name: "Your Heart Or Mine", choreographer: "Unknown", song: "Your Heart Or Mine", artist: "Jon Pardi", steps: "https://copperknob.co.uk", teach: "https://youtube.com", demo: "https://youtube.com", music: "https://youtube.com" },
-  { id: "126", group: "Stock-013", name: "Choosin Texas", choreographer: "Nidhi Risi", song: "Choosin Texas", artist: "Ella Langley", steps: "https://copperknob.co.uk", teach: "https://youtube.com", demo: "https://youtube.com", music: "https://youtube.com" },
-  { id: "127", group: "Stock-013", name: "Alligator Smile", choreographer: "Julie Heinrichs", song: "Can't Keep Up", artist: "Brett Eldredge", steps: "https://copperknob.co.uk", teach: "https://youtube.com", demo: "https://youtube.com", music: "https://youtube.com" },
-  { id: "130", group: "Stock-013", name: "After Party", choreographer: "Maurice Rowe", song: "After Party", artist: "Koffee Brown", steps: "https://copperknob.co.uk", teach: "https://youtube.com", demo: "https://youtube.com", music: "https://youtube.com" },
-  { id: "131", group: "Stock-014", name: "Weren't for the Wind", choreographer: "Amy Christian", song: "Weren't for the Wind", artist: "Ella Langley", steps: "https://copperknob.co.uk", teach: "https://youtube.com", demo: "https://youtube.com", music: "https://youtube.com" },
-  { id: "134", group: "Stock-014", name: "Single Again", choreographer: "Mel Llewelin", song: "Single Again", artist: "Josh Ross", steps: "https://copperknob.co.uk", teach: "https://youtube.com", demo: "https://youtube.com", music: "https://youtube.com" },
-  { id: "139", group: "Stock-014", name: "Backup Plan", choreographer: "Melanie Mahoney", song: "Backup Plan", artist: "Zimmerman/Combs", steps: "https://copperknob.co.uk", teach: "https://youtube.com", demo: "https://youtube.com", music: "https://youtube.com" },
-  { id: "140", group: "Stock-014", name: "Boots Off", choreographer: "Rachael McNaney", song: "Boots Off", artist: "Jon Pardi", steps: "https://copperknob.co.uk", teach: "https://youtube.com", demo: "https://youtube.com", music: "https://youtube.com" }
+  
 ];
 let selectedActivePlaylistGroup = null;
 let activeSearchQueryString = "";
@@ -306,15 +280,25 @@ function renderApplicationInterface() {
     }
 }
 
+//const btnTeach = track.teach ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.teach}', '${track.name} - Teach')">Teach</button>` : `<button class="action-touch-btn disabled">None</button>`;
+
+//const btnTeach = track.teach ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.teach}', '${track.name} - Teach', 'video')">Teach</button>` : `<button class="action-touch-btn disabled">None</button>`;
+
+
+
 function renderDanceCardsList(tracksList, containerElement) {
     tracksList.forEach(track => {
         const card = document.createElement('div');
         card.className = 'dance-entry-card';
+        const btnSteps = track.steps ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.steps}', '${track.name} - Steps', 'steps')">Steps</button>` : `<button class="action-touch-btn disabled">None</button>`;
+       
         
-        const btnSteps = track.steps ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.steps}', '${track.name} - Steps')">Steps</button>` : `<button class="action-touch-btn disabled">None</button>`;
-        const btnTeach = track.teach ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.teach}', '${track.name} - Teach')">Teach</button>` : `<button class="action-touch-btn disabled">None</button>`;
-        const btnDemo = track.demo ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.demo}', '${track.name} - Demo')">Demo</button>` : `<button class="action-touch-btn disabled">None</button>`;
-        const btnMusic = track.music ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.music}', '${track.name} - Play')">Music</button>` : `<button class="action-touch-btn disabled">None</button>`;
+        const btnTeach = track.teach ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.teach}', '${track.name} - Teach', 'video')">Teach</button>` : `<button class="action-touch-btn disabled">None</button>`;
+
+        const btnDemo = track.demo ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.demo}', '${track.name} - Demo', 'video')">Demo</button>` : `<button class="action-touch-btn disabled">None</button>`;
+
+        const btnMusic = track.music ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.music}', '${track.name} - Play', 'video')">Music</button>` : `<button class="action-touch-btn disabled">None</button>`;
+
         
         card.innerHTML = `
             <div class="title-line">${track.name} • By: ${track.choreographer}</div>
@@ -330,34 +314,38 @@ function renderDanceCardsList(tracksList, containerElement) {
     });
 }
 
-function launchMediaOverlay(targetUrl, displayTitle) {
-    if (!targetUrl) return;
+function launchMediaOverlay(targetUrl, displayTitle, mediaType) {
+    targetUrl = targetUrl.replace('http://', 'https://');
+
     const container = document.getElementById('playerOverlayFrame');
     if (!container) return;
-    
-    // Safety Clean: Wipes out the background slate to guarantee a fresh rendering engine loop on every single tap
+
     container.style.display = 'none';
     container.innerHTML = '';
-    
-    if (displayTitle.includes("Steps")) {
+
+    if (mediaType === 'steps') {
         container.innerHTML = `
             <div class="overlay-control-header">
-                <span class="overlay-title" id="overlayPanelTitle">${displayTitle}</span>
+                <span class="overlay-title">${displayTitle}</span>
                 <button class="done-close-btn" onclick="shutOverlayViewer()">Done</button>
             </div>
-            <object data="${targetUrl}" style="width: 100%; height: calc(100% - 55px); border: none; background: white;" type="text/html"></object>
+            <object data="${targetUrl}" class="overlay-viewport-iframe" type="text/html"></object>
         `;
     } else {
-        // PERMANENT VIDEO FIX: Injects explicit, bulletproof inline size tracking rules so your YouTube frames never collapse to 0 pixels
         container.innerHTML = `
             <div class="overlay-control-header">
-                <span class="overlay-title" id="overlayPanelTitle">${displayTitle}</span>
+                <span class="overlay-title">${displayTitle}</span>
                 <button class="done-close-btn" onclick="shutOverlayViewer()">Done</button>
             </div>
-        
-            <iframe src="${targetUrl}" style="width: 100%; height: calc(100% - 55px); border: none; background: white;" allow="autoplay; encrypted-media; fullscreen"></iframe>
+            <iframe id="appIframeViewport"
+                    class="overlay-viewport-iframe"
+                    src="${targetUrl}"
+                    allow="autoplay; encrypted-media; fullscreen"
+                    sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-popups-to-escape-sandbox">
+            </iframe>
         `;
     }
+
     container.style.display = 'block';
 }
 
