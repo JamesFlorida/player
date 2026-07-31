@@ -480,6 +480,7 @@
             //   demo: "https://www.youtube.com/embed/EXAMPLE_DEMO",
             //   music: "https://www.youtube.com/embed/EXAMPLE_MUSIC"
             // }
+            
         ];
 
         /* ============================================
@@ -679,7 +680,7 @@
                     groupNames = [...venueConfig.playlistGroups];
                 } else {
                     // Derive groups from track.group
-                    groupNames = [...new Set(localDanceDatabase.map(track => track.group || "General"))].sort();
+                    groupNames = [...new Set(localDanceDatabase.map(track => track.playlist || "General"))].sort();
                 }
 
                 const grid = document.createElement('div');
@@ -697,7 +698,7 @@
             // SPECIFIC PLAYLIST VIEW
             else {
                 const filteredTracks = localDanceDatabase.filter(
-                    track => track.group === selectedActivePlaylistGroup
+                    track => track.playlist === selectedActivePlaylistGroup
                 );
                 renderDanceCardsList(filteredTracks, viewport);
             }
@@ -729,7 +730,7 @@
 
                 card.innerHTML = `
                     <div class="title-line">${track.name} • By: ${track.choreographer}</div>
-                    <div class="meta-line">Song: ${track.song} - ${track.artist} (${track.group})</div>
+                    <div class="meta-line">Song: ${track.song} - ${track.artist} (${track.playlist})</div>
                     <div class="button-bar-grid">
                         ${btnSteps}
                         ${btnTeach}
