@@ -335,6 +335,7 @@ function launchMediaOverlay(targetUrl, displayTitle) {
     const container = document.getElementById('playerOverlayFrame');
     if (!container) return;
     
+    // Safety Clean: Wipes out the background slate to guarantee a fresh rendering engine loop on every single tap
     container.style.display = 'none';
     container.innerHTML = '';
     
@@ -344,19 +345,21 @@ function launchMediaOverlay(targetUrl, displayTitle) {
                 <span class="overlay-title" id="overlayPanelTitle">${displayTitle}</span>
                 <button class="done-close-btn" onclick="shutOverlayViewer()">Done</button>
             </div>
-            <object data="${targetUrl}" class="overlay-viewport-iframe" type="text/html"></object>
+            <object data="${targetUrl}" style="width: 100%; height: calc(100% - 55px); border: none; background: white;" type="text/html"></object>
         `;
     } else {
+        // PERMANENT VIDEO FIX: Injects explicit, bulletproof inline size tracking rules so your YouTube frames never collapse to 0 pixels
         container.innerHTML = `
             <div class="overlay-control-header">
                 <span class="overlay-title" id="overlayPanelTitle">${displayTitle}</span>
                 <button class="done-close-btn" onclick="shutOverlayViewer()">Done</button>
             </div>
-        <iframe id="appIframeViewport" class="overlay-viewport-iframe" src="${targetUrl}" allow="autoplay; encrypted-media; fullscreen"></iframe>
+            <iframe src="${targetUrl}" style="width: 100%; height: calc(100% - 55px); border: none; background: white;" allow="autoplay; encrypted-media; fullscreen"></iframe>
         `;
     }
     container.style.display = 'block';
 }
+
 
 function shutOverlayViewer() {
     const container = document.getElementById('playerOverlayFrame');
