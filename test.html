@@ -467,12 +467,19 @@
              - music: YouTube music URL (optional)
            ============================================ */
         const localDanceDatabase = [
-           { id: "140", playlist: "Stock-014", level: "Intermediate", name: "Boots Off", choreographer: "Rachael McNaney", song: "Boots Off", artist: "Jon Pardi", steps: "https://www.copperknob.co.uk/stepsheets/196086/boots-off", teach: "https://youtube.com/embed/YxkCnVnybvk", demo: "https://youtube.com/embed/Xr2MQ8pbPME", music: "https://youtube.com/embed/z8WxUN0hvsA" },
-{ id: "139", playlist: "Stock-014", level: "Intermediate", name: "Backup Plan", choreographer: "Melanie Mahoney", song: "Backup Plan", artist: "Zimmerman/Combs", steps: "https://www.copperknob.co.uk/stepsheets/QQ7QP4G/backup-plan", teach: "https://youtube.com/embed/HTciNVT--M4", demo: "https://youtube.com/embed/HTciNVT--M4", music: "https://youtube.com/embed/Yyd5kmngrOU" },
-{ id: "138", playlist: "Stock-014", level: "Intermediate", name: "Dance With You", choreographer: "Lisa Johns-Grose", song: "Dance With You", artist: "Thomas Rhett", steps: "https://www.copperknob.co.uk/stepsheets/N4GQQ46/dance-with-you", teach: "https://youtube.com/embed/JZtpinRfnVE", demo: "https://youtube.com/embed/JZtpinRfnVE", music: "https://youtube.com/embed/edOFds30j2E" },
-{ id: "137", playlist: "Stock-014", level: "Intermediate", name: "Heart of Stone", choreographer: "Pam Horst", song: "Heart of Stone", artist: "Jelly Roll", steps: "https://www.copperknob.co.uk/stepsheets/5JSY4MV/heart-of-stone", teach: "https://youtube.com/embed/2Q3T5NqdvY8", demo: "https://youtube.com/embed/cBl2oFzbiP0", music: "https://youtube.com/embed/U0Gk4Zh93As" },
-
-            
+            // Example:
+            // {
+            //   id: 1,
+            //   name: "Example Dance",
+            //   choreographer: "Jane Doe",
+            //   song: "Sample Song",
+            //   artist: "Sample Artist",
+            //   group: "Beginner",
+            //   steps: "https://www.copperknob.co.uk/stepsheets/example",
+            //   teach: "https://www.youtube.com/embed/EXAMPLE_TEACH",
+            //   demo: "https://www.youtube.com/embed/EXAMPLE_DEMO",
+            //   music: "https://www.youtube.com/embed/EXAMPLE_MUSIC"
+            // }
         ];
 
         /* ============================================
@@ -659,4 +666,152 @@
                 });
                 if (matchedTracks.length === 0) {
                     viewport.innerHTML =
-                        '<p style="text-align:center;color:#aaa;margin-top:20px;">
+                        '<p style="text-align:center;color:#aaa;margin-top:20px;">No matching dances found on the roster.</p>';
+                    return;
+                }
+                renderDanceCardsList(matchedTracks, viewport);
+            }
+            // PLAYLIST HUB
+            else if (selectedActivePlaylistGroup === null) {
+                let groupNames;
+                if (venueConfig.playlistGroups && venueConfig.playlistGroups.length > 0) {
+                    // Use venue-defined groups
+                    groupNames = [...venueConfig.playlistGroups];
+                } else {
+                    // Derive groups from track.group
+                    groupNames = [...new Set(localDanceDatabase.map(track => track.group || "General"))].sort();
+                }
+
+                const grid = document.createElement('div');
+                grid.className = 'playlist-selection-grid';
+                groupNames.forEach(name => {
+                    const count = localDanceDatabase.filter(t => t.group === name).length;
+                    const card = document.createElement('div');
+                    card.className = 'playlist-hub-card';
+                    card.innerHTML = `<div>${name}</div><div class="playlist-track-counter">${count} Dances</div>`;
+                    card.onclick = () => openSpecificPlaylistView(name);
+                    grid.appendChild(card);
+                });
+                viewport.appendChild(grid);
+            }
+            // SPECIFIC PLAYLIST VIEW
+            else {
+                const filteredTracks = localDanceDatabase.filter(
+                    track => track.group === selectedActivePlaylistGroup
+                );
+                renderDanceCardsList(filteredTracks, viewport);
+            }
+        }
+
+        /* ============================================
+           DANCE CARD RENDERING
+           ============================================ */
+        function renderDanceCardsList(tracksList, containerElement) {
+            tracksList.forEach(track => {
+                const card = document.createElement('div');
+                card.className = 'dance-entry-card';
+
+                const btnSteps = track.steps
+                    ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.steps}', '${track.name} - Steps')">Steps</button>`
+                    : `<button class="action-touch-btn disabled">None</button>`;
+
+                const btnTeach = track.teach
+                    ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.teach}', '${track.name} - Teach')">Teach</button>`
+                    : `<button class="action-touch-btn disabled">None</button>`;
+
+                const btnDemo = track.demo
+                    ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.demo}', '${track.name} - Demo')">Demo</button>`
+                    : `<button class="action-touch-btn disabled">None</button>`;
+
+                const btnMusic = track.music
+                    ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.music}', '${track.name} - Play')">Music</button>`
+                    : `<button class="action-touch-btn disabled">None</button>`;
+
+                card.innerHTML = `
+                    <div class="title-line">${track.name} • By: ${track.choreographer}</div>
+                    <div class="meta-line">Song: ${track.song} - ${track.artist} (${track.group})</div>
+                    <div class="button-bar-grid">
+                        ${btnSteps}
+                        ${btnTeach}
+                        ${btnDemo}
+                        ${btnMusic}
+                    </div>
+                `;
+                containerElement.appendChild(card);
+            });
+        }
+
+        /* ============================================
+           OVERLAY LOGIC (STEPS + YOUTUBE)
+           - Steps: CopperKnob / step sheet via <object>
+           - Teach/Demo/Music: YouTube via <iframe>
+           - HTTPS enforcement for YouTube
+           - Sandbox permissions preserved
+           ============================================ */
+        function launchMediaOverlay(targetUrl, displayTitle) {
+            if (!targetUrl) return;
+
+            // Force HTTPS for YouTube and other embeds
+            targetUrl = targetUrl.replace('http://', 'https://');
+
+            const container = document.getElementById('playerOverlayFrame');
+            if (!container) return;
+
+            container.style.display = 'none';
+            container.innerHTML = '';
+
+            if (displayTitle.includes("Steps")) {
+                // STEPS: use <object> for CopperKnob / step sheets
+                container.innerHTML = `
+                    <div class="overlay-control-header">
+                        <span class="overlay-title" id="overlayPanelTitle">${displayTitle}</span>
+                        <button class="done-close-btn" onclick="shutOverlayViewer()">Done</button>
+                    </div>
+                    <object data="${targetUrl}" class="overlay-viewport-iframe" type="text/html"></object>
+                `;
+            } else {
+                // YOUTUBE: use <iframe> with proper sandbox + allow
+                container.innerHTML = `
+                    <div class="overlay-control-header">
+                        <span class="overlay-title" id="overlayPanelTitle">${displayTitle}</span>
+                        <button class="done-close-btn" onclick="shutOverlayViewer()">Done</button>
+                    </div>
+                    <iframe id="appIframeViewport"
+                            class="overlay-viewport-iframe"
+                            src="${targetUrl}"
+                            allow="autoplay; encrypted-media; fullscreen"
+                            sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-popups-to-escape-sandbox">
+                    </iframe>
+                `;
+            }
+            container.style.display = 'block';
+        }
+
+        function shutOverlayViewer() {
+            const container = document.getElementById('playerOverlayFrame');
+            if (container) {
+                container.style.display = 'none';
+                container.innerHTML = '';
+            }
+        }
+
+        /* ============================================
+           CACHE BUSTER RELOAD
+           - Forces a fresh load of the file.
+           ============================================ */
+        function forceCacheBusterReload() {
+            const uniqueTimestamp = new Date().getTime();
+            window.location.href =
+                window.location.origin + window.location.pathname + '?v=' + uniqueTimestamp;
+        }
+
+        /* ============================================
+           APP BOOTSTRAP
+           ============================================ */
+        window.onload = function () {
+            initializeVenueBranding();
+            renderApplicationInterface();
+        };
+    </script>
+</body>
+</html>
