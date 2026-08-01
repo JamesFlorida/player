@@ -736,7 +736,7 @@
                 const grid = document.createElement('div');
                 grid.className = 'playlist-selection-grid';
                 groupNames.forEach(name => {
-                    const count = localDanceDatabase.filter(t => t.group === name).length;
+                    const count = localDanceDatabase.filter(t => t.playlist === name).length;
                     const card = document.createElement('div');
                     card.className = 'playlist-hub-card';
                     card.innerHTML = `<div>${name}</div><div class="playlist-track-counter">${count} Dances</div>`;
