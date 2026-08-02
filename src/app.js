@@ -3,22 +3,7 @@
            - All venue-specific items live here.
            - Change this block to rebrand the app.
            ============================================ */
-        const venueConfig = {
-            /* Basic identity */
-            name: "Line Dance Player (Generic)",
-            headerTitle: "LineDance Player",
-            email: "tampadancing@gmail.com",
-
-            /* Search bar placeholder text */
-            searchPlaceholder: "Search dances or choreographers...",
-
-            /* Theme colors */
-            theme: {
-                brandGreen: "#2ecc71",   // Primary accent
-                darkGray: "#1e1e1e",    // Page background
-                cardBg: "#2b2b2b",      // Cards
-                buttonBlue: "#34495e"   // Buttons
-            },
+        
 
             /* Visual assets (all optional) */
             assets: {
