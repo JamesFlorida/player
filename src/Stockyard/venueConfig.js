@@ -9,5 +9,15 @@ const venueConfig = {
         darkGray: "#121212",
         cardBg: "#1e1e1e",
         buttonBlue: "#2c3e50"
+    },
+
+    assets: {
+        bannerUrl: "",
+        touchIconUrl: "",
+        backgroundImageUrl: "",
+        watermarkUrl: "",
+        instructorPhotoUrl: "",
+        splashImageUrl: ""
     }
 };
+
