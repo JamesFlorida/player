@@ -20,4 +20,5 @@ const venueConfig = {
         splashImageUrl: ""
     }
 };
+console.log("Loaded NEW Stockyard config");
 
