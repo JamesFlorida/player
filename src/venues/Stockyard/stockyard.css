@@ -65,7 +65,7 @@ body .header-bar {
     box-shadow: 0 0 14px rgba(255, 180, 60, 0.5);
 }
 /* Stockyard search bar styling */
-#searchInput {
+#danceSearchInput {
     border: 2px solid #800000;
     border-radius: 6px;
     padding: 8px 12px;
@@ -73,6 +73,7 @@ body .header-bar {
     color: #fff;
     box-shadow: 0 0 6px rgba(255, 180, 60, 0.4);
 }
+
 
 
 
