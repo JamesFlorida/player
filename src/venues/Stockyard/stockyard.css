@@ -14,3 +14,26 @@
     transform: scale(1.05);
 }
 
+/* Stockyard Banner (replaces the bright green strip) */
+.header-bar {
+    background-color: #B00000; /* Stockyard neon-sign red */
+    color: #fff;
+    padding: 12px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 3px solid #000; /* subtle bar-style edge */
+}
+
+/* Back button styled for Stockyard theme */
+.back-nav-btn {
+    background-color: #000;
+    color: #fff;
+    border: 1px solid #fff;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+
