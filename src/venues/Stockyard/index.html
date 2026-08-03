@@ -2,11 +2,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Stockyard Line Dance App</title>
-
     <!--
     ============================================
     VENUE ASSETS: TOUCH ICON (HOME SCREEN ICON)
@@ -16,7 +11,26 @@
     - Will be set dynamically from venueConfig.assets.touchIconUrl
     ============================================
     -->
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Stockyard Line Dance App</title>
+
+    <!-- Venue Touch Icon (set dynamically from venueConfig) -->
     <link id="venueTouchIcon" rel="apple-touch-icon" href="">
+
+    <!-- Shared Styles -->
+    <link rel="stylesheet" href="../styles.css">
+
+    <!-- Shared App Logic -->
+    <script src="../app.js" defer></script>
+
+    <!-- Stockyard Venue Config -->
+    <script src="venueConfig.js" defer></script>
+
+    <!-- Stockyard Dance Data -->
+    <script src="danceData-stockyard.js" defer></script>
 </head>
 <body>
     <!--
