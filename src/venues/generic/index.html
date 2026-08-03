@@ -1,23 +1,38 @@
 <!DOCTYPE html>
+<!-- GENERIC but currently Stockyard Version -->
 <html lang="en">
 <head>
+<!--
+============================================
+VENUE ASSETS: TOUCH ICON (HOME SCREEN ICON)
+- PNG only
+- Recommended size: 180x180 pixels
+- This is what shows when user "Add to Home Screen"
+- Will be set dynamically from venueConfig.assets.touchIconUrl
+============================================
+-->
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>LineDance Player - Venue Template</title>
+    <title>Stockyard Line Dance App</title>
 
-    <!--
-    ============================================
-    VENUE ASSETS: TOUCH ICON (HOME SCREEN ICON)
-    - PNG only
-    - Recommended size: 180x180 pixels
-    - This is what shows when user "Add to Home Screen"
-    - Will be set dynamically from venueConfig.assets.touchIconUrl
-    ============================================
-    -->
+    <!-- Venue Touch Icon (set dynamically from venueConfig) -->
     <link id="venueTouchIcon" rel="apple-touch-icon" href="">
+    
+    <!-- Shared Styles -->
+    <link rel="stylesheet" href="/player/src/styles.css">
+
+    <!-- Shared App Logic -->
+    <script src="/player/src/app.js" defer></script>
+
+    <!-- Stockyard Venue Config -->
+    <script src="/player/src/venues/Stockyard/venueConfig.js" defer></script>
+
+    <!-- Stockyard Dance Data -->
+    <script src="/player/src/venues/Stockyard/danceData-stockyard.js" defer></script>
 </head>
 <body>
+
     <!--
     ============================================
     OPTIONAL SPLASH SCREEN
@@ -34,7 +49,7 @@
         <button class="back-nav-btn"
                 id="navbarReturnTrigger"
                 onclick="navigateToPlaylistHubMenu()">⬅ Playlists</button>
-        <span id="applicationHeaderTitle">LineDance Player</span>
+        <span id="applicationHeaderTitle">The Stockyard Line Dance Player</span>
     </div>
 
     <!--
@@ -102,9 +117,7 @@
 
     <!-- FOOTER BADGE (OPTIONAL) -->
     <div id="venueFooter" class="venue-footer"></div>
-    <link rel="stylesheet" href="styles.css">
-    <script src="../data/danceData.js"></script>
-    <script src="app.js"></script>
-
+    <link rel="stylesheet" href="/player/src/styles.css">
+   
 </body>
 </html>
