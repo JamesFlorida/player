@@ -35,5 +35,44 @@ body .header-bar {
     border-radius: 4px;
     font-weight: bold;
 }
+/* Stockyard western glow divider */
+.header-divider {
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(
+        to right,
+        transparent,
+        #ffcc88,
+        transparent
+    );
+    margin-top: 4px;
+    margin-bottom: 12px;
+    opacity: 0.8;
+}
+/* Stockyard playlist tile frame */
+.playlist-tile {
+    background-color: #1a1a1a;
+    border: 2px solid #800000;
+    border-radius: 8px;
+    padding: 12px;
+    color: #fff;
+    box-shadow: 0 0 10px rgba(255, 180, 60, 0.35);
+    transition: transform 0.1s ease-in-out;
+}
+
+.playlist-tile:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 14px rgba(255, 180, 60, 0.5);
+}
+/* Stockyard search bar styling */
+#searchInput {
+    border: 2px solid #800000;
+    border-radius: 6px;
+    padding: 8px 12px;
+    background-color: #111;
+    color: #fff;
+    box-shadow: 0 0 6px rgba(255, 180, 60, 0.4);
+}
+
 
 
