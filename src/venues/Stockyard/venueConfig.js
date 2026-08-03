@@ -1,6 +1,6 @@
 const venueConfig = {
     name: "The Stockyard",
-    headerTitle: "The Stockyard Line Dance Player",
+    headerTitle: "The Stockyard Dance Player",
     searchPlaceholder: "Search Stockyard roster...",
     email: "tampadancing@gmail.com",
 
