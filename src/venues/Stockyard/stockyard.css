@@ -1,1 +1,16 @@
+.venue-header {
+    background-color: #111; /* deep charcoal */
+    text-align: center;
+    padding: 12px 0;
+}
+
+.stockyard-logo {
+    height: 80px;
+    filter: drop-shadow(0 0 12px rgba(255, 180, 60, 0.7)); /* warm amber bar glow */
+    transition: transform 0.3s ease;
+}
+
+.stockyard-logo:hover {
+    transform: scale(1.05);
+}
 
