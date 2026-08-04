@@ -198,6 +198,14 @@ button.sync-btn {
     display: none;
 }
 
+.playlist-hub-card {
+    border: 2px solid #800000 !important;
+    background-color: #1a1a1a !important;
+    color: #fff !important;
+    border-radius: 8px !important;
+    box-shadow: 0 0 10px rgba(255, 180, 60, 0.35) !important;
+}
+
 
 
 
