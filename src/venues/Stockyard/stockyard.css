@@ -25,6 +25,10 @@ body .header-bar {
     gap: 12px;
     border-bottom: 3px solid #000; /* subtle bar-style edge */
 }
+/* Stockyard override for global green background */
+.app-container {
+    background-color: #111 !important;
+}
 
 /* Back button styled for Stockyard theme */
 .back-nav-btn {
