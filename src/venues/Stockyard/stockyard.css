@@ -122,6 +122,13 @@ div.playlist-tile,
 .playlist-tile {
     border: 2px solid #800000 !important;
 }
+/* FINAL NUCLEAR BORDER OVERRIDE */
+div.playlist-tile,
+.playlist-tile,
+.playlist-grid div,
+.playlist-section div {
+    border: 2px solid #800000 !important;
+}
 
 
 /* Layout for search bar row */
