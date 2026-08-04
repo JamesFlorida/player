@@ -109,6 +109,15 @@ body .header-bar {
     background-color: #a00000;
     box-shadow: 0 0 14px rgba(255, 180, 60, 0.7);
 }
+/* Layout for instructor photo row */
+.instructor-photo-row {
+    padding-top: 0;
+}
+
+/* Instructor photo default hidden */
+.venue-instructor-photo {
+    display: none;
+}
 
 
 
