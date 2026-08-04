@@ -64,26 +64,46 @@ body .header-bar {
     transform: scale(1.03);
     box-shadow: 0 0 14px rgba(255, 180, 60, 0.5);
 }
+/* Layout for search bar row */
+.search-bar-row {
+    padding-bottom: 0;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
 /* Stockyard search bar styling */
 #danceSearchInput {
+    flex: 1;
+    padding: 14px;
+    border-radius: 8px;
     border: 2px solid #800000;
-    border-radius: 6px;
-    padding: 8px 12px;
     background-color: #111;
     color: #fff;
+    font-size: 1rem;
+    box-sizing: border-box;
+    height: 50px;
     box-shadow: 0 0 6px rgba(255, 180, 60, 0.4);
 }
+
 /* Stockyard sync button styling */
 .sync-btn {
     background-color: #800000;
     color: #fff;
     border: 2px solid #ffcc88;
-    padding: 8px 14px;
-    border-radius: 6px;
+    padding: 0 16px;
+    border-radius: 8px;
     font-weight: bold;
-    box-shadow: 0 0 10px rgba(255, 180, 60, 0.5);
+    font-size: 0.95rem;
     cursor: pointer;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    box-shadow: 0 0 10px rgba(255, 180, 60, 0.5);
 }
+
 
 .sync-btn:hover {
     background-color: #a00000;
