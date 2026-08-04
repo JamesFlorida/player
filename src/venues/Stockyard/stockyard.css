@@ -106,11 +106,18 @@ button.sync-btn {
     box-shadow: 0 0 10px rgba(255, 180, 60, 0.5);
 }
 
-
 .sync-btn:hover {
-    background-color: #a00000;
+    background-color: #800000;
     box-shadow: 0 0 14px rgba(255, 180, 60, 0.7);
 }
+.venue-feedback-line {
+    color: #ffcc88;
+    text-shadow: 0 0 6px rgba(255, 180, 60, 0.6);
+    font-weight: bold;
+    text-align: center;
+}
+
+
 /* Layout for instructor photo row */
 .instructor-photo-row {
     padding-top: 0;
