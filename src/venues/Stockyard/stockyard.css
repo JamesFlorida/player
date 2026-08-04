@@ -219,12 +219,24 @@ button.sync-btn {
     background-color: #1a1a1a !important;
     color: #fff !important;
 }
+
 /* === TEST VIGNETTE — HIGH CONTRAST === */
+/*
 body {
     background: radial-gradient(circle at center,
         #ffcccc 0%,   /* very light pink */
         #ff6666 40%,  /* strong red */
         #660000 100%  /* dark red */
+    ) !important;
+}
+*/
+/* === TEST VERTICAL GRADIENT — HIGH CONTRAST === */
+body {
+    background: linear-gradient(
+        to bottom,
+        #ffcc00 0%,   /* bright yellow */
+        #ff6600 50%,  /* orange */
+        #cc0000 100%  /* red */
     ) !important;
 }
 
