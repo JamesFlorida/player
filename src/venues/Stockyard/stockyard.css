@@ -87,6 +87,11 @@ input#danceSearchInput {
     height: 50px;
     box-shadow: 0 0 6px rgba(255, 180, 60, 0.4);
 }
+input#danceSearchInput:focus {
+    outline: none;
+    border-color: #ffcc88;
+    box-shadow: 0 0 10px rgba(255, 180, 60, 0.6);
+}
 
 /* Stockyard sync button styling */
 button.sync-btn {
