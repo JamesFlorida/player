@@ -243,7 +243,7 @@ body {
 
 
 /* === STOCKYARD BACKGROUND OPTION 2: VERTICAL GRADIENT === */
-
+/*
 body {
     background: linear-gradient(
         to bottom,
@@ -252,10 +252,10 @@ body {
         #000 100%
     ) !important;
 }
-
+*/
 
 /* === STOCKYARD BACKGROUND OPTION 3: TEXTURE === */
-/*
+
 body {
     background-color: #111 !important;
     background-image: url('data:image/svg+xml;utf8,\
@@ -267,7 +267,7 @@ body {
     ) !important;
     background-size: 200px 200px !important;
 }
-*/
+
 
 
 
