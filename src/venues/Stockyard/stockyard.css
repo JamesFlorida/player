@@ -50,7 +50,7 @@ body .header-bar {
     opacity: 0.8;
 }
 /* Stockyard playlist tile frame */
-.playlist-tile {
+div.playlist-tile {
     background-color: #1a1a1a;
     border: 2px solid #800000;
     border-radius: 8px;
@@ -60,7 +60,7 @@ body .header-bar {
     transition: transform 0.1s ease-in-out;
 }
 
-.playlist-tile:hover {
+div.playlist-tile:hover {
     transform: scale(1.03);
     box-shadow: 0 0 14px rgba(255, 180, 60, 0.5);
 }
@@ -73,7 +73,7 @@ body .header-bar {
 }
 
 /* Stockyard search bar styling */
-#danceSearchInput {
+input#danceSearchInput {
     flex: 1;
     padding: 14px;
     border-radius: 8px;
@@ -87,7 +87,7 @@ body .header-bar {
 }
 
 /* Stockyard sync button styling */
-.sync-btn {
+button.sync-btn {
     background-color: #800000;
     color: #fff;
     border: 2px solid #ffcc88;
