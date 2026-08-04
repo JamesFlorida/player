@@ -231,6 +231,7 @@ body {
 }
 */
 /* === TEST VERTICAL GRADIENT — HIGH CONTRAST === */
+/*
 body {
     background: linear-gradient(
         to bottom,
@@ -238,6 +239,21 @@ body {
         #ff6600 50%,  /* orange */
         #cc0000 100%  /* red */
     ) !important;
+}
+*/
+/* === TEST TEXTURE — HIGH CONTRAST CHECKERBOARD === */
+body {
+    background-color: #ffffff !important;
+    background-image: linear-gradient(45deg,
+        #ff0000 25%,  /* red squares */
+        #ffffff 25%,  /* white squares */
+        #ffffff 50%,
+        #ff0000 50%,
+        #ff0000 75%,
+        #ffffff 75%,
+        #ffffff 100%
+    ) !important;
+    background-size: 40px 40px !important;
 }
 
 
