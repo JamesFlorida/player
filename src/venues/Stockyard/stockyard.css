@@ -296,6 +296,12 @@ body {
 }
 */
 
+/* Allow body background to show through */
+.playlist-selection-grid,
+.playlist-grid,
+.playlist-section {
+    background: transparent !important;
+}
 
 
 
