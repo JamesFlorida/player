@@ -62,8 +62,10 @@ div.playlist-tile {
 
 div.playlist-tile:hover {
     transform: scale(1.03);
+    border-color: #800000; /* ← THIS kills the green */
     box-shadow: 0 0 14px rgba(255, 180, 60, 0.5);
 }
+
 /* Layout for search bar row */
 .search-bar-row {
     padding-bottom: 0;
