@@ -219,16 +219,15 @@ button.sync-btn {
     background-color: #1a1a1a !important;
     color: #fff !important;
 }
-/* === TEST BACKGROUND — EXTREME COLORS TO CONFIRM LOADING === */
-/*
+/* === TEST VIGNETTE — HIGH CONTRAST === */
 body {
     background: radial-gradient(circle at center,
-        yellow 0%,
-        orange 40%,
-        red 100%
+        #ffcccc 0%,   /* very light pink */
+        #ff6666 40%,  /* strong red */
+        #660000 100%  /* dark red */
     ) !important;
 }
-*/
+
 
 /* Stockyard background vignette */
 /*
@@ -255,7 +254,7 @@ body {
 */
 
 /* === STOCKYARD BACKGROUND OPTION 3: TEXTURE === */
-
+/*
 body {
     background-color: #111 !important;
     background-image: url('data:image/svg+xml;utf8,\
@@ -267,7 +266,7 @@ body {
     ) !important;
     background-size: 200px 200px !important;
 }
-
+*/
 
 
 
