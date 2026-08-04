@@ -197,14 +197,24 @@ button.sync-btn {
 .venue-instructor-photo {
     display: none;
 }
-
+/* Stockyard override for playlist hub cards */
 .playlist-hub-card {
     border: 2px solid #800000 !important;
     background-color: #1a1a1a !important;
     color: #fff !important;
     border-radius: 8px !important;
     box-shadow: 0 0 10px rgba(255, 180, 60, 0.35) !important;
+    padding: 12px !important;
+    transition: transform 0.1s ease-in-out !important;
 }
+
+.playlist-hub-card:hover {
+    transform: scale(1.03) !important;
+    border-color: #800000 !important;
+    box-shadow: 0 0 14px rgba(255, 180, 60, 0.5) !important;
+}
+
+
 
 
 
