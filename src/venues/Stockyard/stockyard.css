@@ -117,6 +117,11 @@ div.playlist-tile:hover {
 .overlay-frame * {
     border-color: #800000 !important;
 }
+/* Nuclear option: force Stockyard tile borders */
+div.playlist-tile,
+.playlist-tile {
+    border: 2px solid #800000 !important;
+}
 
 
 /* Layout for search bar row */
