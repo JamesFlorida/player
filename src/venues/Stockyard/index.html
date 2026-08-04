@@ -81,21 +81,17 @@ VENUE ASSETS: TOUCH ICON (HOME SCREEN ICON)
     - Placeholder text will be set from venueConfig.searchPlaceholder.
     ============================================
     -->
-    <div class="app-container" style="padding-bottom: 0; display: flex; gap: 10px; align-items: center;">
-        <input type="text"
-               id="danceSearchInput"
-               placeholder=""
-               oninput="handleLiveSearchInput()"
-             <input type="text"
-                    id="danceSearchInput"
-                    placeholder=""
-                    oninput="handleLiveSearchInput()">
-  
-          <button class="sync-btn" onclick="forceCacheBusterReload()">
-    Sync Playlist
-</button>
-     
-    </div>
+   <div class="app-container" style="padding-bottom: 0; display: flex; gap: 10px; align-items: center;">
+    <input type="text"
+           id="danceSearchInput"
+           placeholder=""
+           oninput="handleLiveSearchInput()">
+
+    <button class="sync-btn" onclick="forceCacheBusterReload()">
+        Sync Playlist
+    </button>
+</div>
+
 
     <!--
     ============================================
