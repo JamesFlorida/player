@@ -69,6 +69,23 @@ div.playlist-tile:hover {
     border-color: #800000; /* ← THIS kills the green */
     box-shadow: 0 0 14px rgba(255, 180, 60, 0.5);
 }
+/* Kill global green playlist backgrounds */
+.playlist-section,
+.playlist-grid {
+    background-color: transparent !important;
+}
+
+/* Kill green sidebar on dance data screen */
+.inapp-overlay-window,
+.overlay-viewport-iframe {
+    background-color: #111 !important;
+}
+
+/* Kill any leftover green borders inside playlist grid */
+.playlist-section *,
+.playlist-grid * {
+    border-color: #800000 !important;
+}
 
 /* Layout for search bar row */
 .search-bar-row {
