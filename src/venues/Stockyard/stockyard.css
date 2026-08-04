@@ -219,7 +219,18 @@ button.sync-btn {
     background-color: #1a1a1a !important;
     color: #fff !important;
 }
+/* === TEST BACKGROUND — EXTREME COLORS TO CONFIRM LOADING === */
+body {
+    background: radial-gradient(circle at center,
+        yellow 0%,
+        orange 40%,
+        red 100%
+    ) !important;
+}
+
+
 /* Stockyard background vignette */
+/*
 body {
     background: radial-gradient(circle at center,
         #111 0%,
@@ -227,6 +238,7 @@ body {
         #000 100%
     ) !important;
 }
+*/
 
 /* === STOCKYARD BACKGROUND OPTION 2: VERTICAL GRADIENT === */
 /*
