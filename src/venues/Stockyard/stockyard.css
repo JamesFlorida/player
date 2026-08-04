@@ -231,7 +231,7 @@ body {
 */
 
 /* Stockyard background vignette */
-
+/*
 body {
     background: radial-gradient(circle at center,
         #1c1c1c 0%,
@@ -239,11 +239,11 @@ body {
         #000000 100%
     ) !important;
 }
-
+*/
 
 
 /* === STOCKYARD BACKGROUND OPTION 2: VERTICAL GRADIENT === */
-/*
+
 body {
     background: linear-gradient(
         to bottom,
@@ -252,7 +252,7 @@ body {
         #000 100%
     ) !important;
 }
-*/
+
 
 /* === STOCKYARD BACKGROUND OPTION 3: TEXTURE === */
 /*
