@@ -213,6 +213,13 @@ button.sync-btn {
     border-color: #800000 !important;
     box-shadow: 0 0 14px rgba(255, 180, 60, 0.5) !important;
 }
+/* Stockyard override for dance cards (kills green left bar) */
+.dance-entry-card {
+    border-left: 5px solid #800000 !important;
+    background-color: #1a1a1a !important;
+    color: #fff !important;
+}
+
 
 
 
