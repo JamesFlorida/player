@@ -86,6 +86,38 @@ div.playlist-tile:hover {
 .playlist-grid * {
     border-color: #800000 !important;
 }
+/* Phase 2: Kill remaining global green wrappers */
+.dance-data-container,
+.dance-data-wrapper,
+.dance-data-panel,
+.dance-data-sidebar,
+.dance-data-content,
+.dance-data-body {
+    background-color: transparent !important;
+}
+
+/* Phase 2: Kill overlay green backgrounds */
+.overlay-content,
+.overlay-body,
+.overlay-inner,
+.overlay-frame {
+    background-color: #111 !important;
+}
+
+/* Phase 2: Kill leftover borders */
+.dance-data-container *,
+.dance-data-wrapper *,
+.dance-data-panel *,
+.dance-data-sidebar *,
+.dance-data-content *,
+.dance-data-body *,
+.overlay-content *,
+.overlay-body *,
+.overlay-inner *,
+.overlay-frame * {
+    border-color: #800000 !important;
+}
+
 
 /* Layout for search bar row */
 .search-bar-row {
