@@ -16,7 +16,8 @@
 
 /* Stockyard Banner (replaces the bright green strip) */
 body .header-bar {
-    background-color: #B00000; /* Stockyard neon-sign red */
+    /* background-color: #B00000;  Stockyard neon-sign red */
+    background-color: #71716F ; /*alt banner color to check reload */
     color: #fff;
     padding: 12px;
     font-weight: bold;
