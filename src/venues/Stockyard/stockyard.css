@@ -189,7 +189,6 @@ button.sync-btn {
     text-align: center;
 }
 
-
 /* Layout for instructor photo row */
 .instructor-photo-row {
     padding-top: 0;
@@ -264,7 +263,7 @@ body {
 
 
 /* Stockyard background vignette */
-/*
+
 body {
     background: radial-gradient(circle at center,
         #1c1c1c 0%,
@@ -272,7 +271,7 @@ body {
         #000000 100%
     ) !important;
 }
-*/
+
 
 
 /* === STOCKYARD BACKGROUND OPTION 2: VERTICAL GRADIENT === */
@@ -303,13 +302,13 @@ body {
 */
 
 /* Allow body background to show through */
-/*
+
 .playlist-selection-grid,
 .playlist-grid,
 .playlist-section {
     background: transparent !important;
 }
-*/
+
 
 
 
