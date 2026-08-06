@@ -1,12 +1,16 @@
-.venue-header {
-    background-color: #111; /* deep charcoal */
+/* ========================================================= */
+/* Stockyard Core Styling                                    */
+/* ========================================================= */
+
+venue-header {
+    background-color: #111;
     text-align: center;
     padding: 12px 0;
 }
 
 .stockyard-logo {
     height: 80px;
-    filter: drop-shadow(0 0 12px rgba(255, 180, 60, 0.7)); /* warm amber bar glow */
+    filter: drop-shadow(0 0 12px rgba(255, 180, 60, 0.7));
     transition: transform 0.3s ease;
 }
 
@@ -14,24 +18,21 @@
     transform: scale(1.05);
 }
 
-/* Stockyard Banner (replaces the bright green strip) */
 body .header-bar {
-    /* background-color: #B00000;  Stockyard neon-sign red */
-    background-color: #71716F ; /*alt banner color to check reload */
+    background-color: #71716F;
     color: #fff;
     padding: 12px;
     font-weight: bold;
     display: flex;
     align-items: center;
     gap: 12px;
-    border-bottom: 3px solid #000; /* subtle bar-style edge */
+    border-bottom: 3px solid #000;
 }
-/* Stockyard override for global green background */
+
 .app-container {
     background-color: #111 !important;
 }
 
-/* Back button styled for Stockyard theme */
 .back-nav-btn {
     background-color: #000;
     color: #fff;
@@ -40,21 +41,16 @@ body .header-bar {
     border-radius: 4px;
     font-weight: bold;
 }
-/* Stockyard western glow divider */
+
 .header-divider {
     width: 100%;
     height: 4px;
-    background: linear-gradient(
-        to right,
-        transparent,
-        #ffcc88,
-        transparent
-    );
+    background: linear-gradient(to right, transparent, #ffcc88, transparent);
     margin-top: 4px;
     margin-bottom: 12px;
     opacity: 0.8;
 }
-/* Stockyard playlist tile frame */
+
 div.playlist-tile {
     background-color: #1a1a1a;
     border: 2px solid #800000;
@@ -67,28 +63,25 @@ div.playlist-tile {
 
 div.playlist-tile:hover {
     transform: scale(1.03);
-    border-color: #800000; 
+    border-color: #800000;
     box-shadow: 0 0 14px rgba(255, 180, 60, 0.5);
 }
 
-/* Kill global green playlist backgrounds */
 .playlist-section,
 .playlist-grid {
-    background-color: transparent !important;
+    background: transparent !important;
 }
 
-/* Kill green sidebar on dance data screen */
 .inapp-overlay-window,
 .overlay-viewport-iframe {
     background-color: #111 !important;
 }
 
-/* Kill any leftover green borders inside playlist grid */
 .playlist-section *,
 .playlist-grid * {
     border-color: #800000 !important;
 }
-/* Phase 2: Kill remaining global green wrappers */
+
 .dance-data-container,
 .dance-data-wrapper,
 .dance-data-panel,
@@ -98,7 +91,6 @@ div.playlist-tile:hover {
     background-color: transparent !important;
 }
 
-/* Phase 2: Kill overlay green backgrounds */
 .overlay-content,
 .overlay-body,
 .overlay-inner,
@@ -106,7 +98,6 @@ div.playlist-tile:hover {
     background-color: #111 !important;
 }
 
-/* Phase 2: Kill leftover borders */
 .dance-data-container *,
 .dance-data-wrapper *,
 .dance-data-panel *,
@@ -119,12 +110,7 @@ div.playlist-tile:hover {
 .overlay-frame * {
     border-color: #800000 !important;
 }
-/* Nuclear option: force Stockyard tile borders */
-div.playlist-tile,
-.playlist-tile {
-    border: 2px solid #800000 !important;
-}
-/* FINAL NUCLEAR BORDER OVERRIDE */
+
 div.playlist-tile,
 .playlist-tile,
 .playlist-grid div,
@@ -132,8 +118,6 @@ div.playlist-tile,
     border: 2px solid #800000 !important;
 }
 
-
-/* Layout for search bar row */
 .search-bar-row {
     padding-bottom: 0;
     display: flex;
@@ -141,7 +125,6 @@ div.playlist-tile,
     align-items: center;
 }
 
-/* Stockyard search bar styling */
 input#danceSearchInput {
     flex: 1;
     padding: 14px;
@@ -154,13 +137,13 @@ input#danceSearchInput {
     height: 50px;
     box-shadow: 0 0 6px rgba(255, 180, 60, 0.4);
 }
+
 input#danceSearchInput:focus {
     outline: none;
     border-color: #ffcc88;
     box-shadow: 0 0 10px rgba(255, 180, 60, 0.6);
 }
 
-/* Stockyard sync button styling */
 button.sync-btn {
     background-color: #800000;
     color: #fff;
@@ -182,6 +165,7 @@ button.sync-btn {
     background-color: #800000;
     box-shadow: 0 0 14px rgba(255, 180, 60, 0.7);
 }
+
 .venue-feedback-line {
     color: #ffcc88;
     text-shadow: 0 0 6px rgba(255, 180, 60, 0.6);
@@ -189,16 +173,14 @@ button.sync-btn {
     text-align: center;
 }
 
-/* Layout for instructor photo row */
 .instructor-photo-row {
     padding-top: 0;
 }
 
-/* Instructor photo default hidden */
 .venue-instructor-photo {
     display: none;
 }
-/* Stockyard override for playlist hub cards */
+
 .playlist-hub-card {
     border: 2px solid #800000 !important;
     background-color: #1a1a1a !important;
@@ -214,14 +196,122 @@ button.sync-btn {
     border-color: #800000 !important;
     box-shadow: 0 0 14px rgba(255, 180, 60, 0.5) !important;
 }
-/* Stockyard override for dance cards (kills green left bar) */
+
 .dance-entry-card {
     border-left: 5px solid #800000 !important;
     background-color: #1a1a1a !important;
     color: #fff !important;
 }
 
+/* ========================================================= */
+/* Stockyard Subtle Backgrounds                              */
+/* ========================================================= */
 
+/* ACTIVE — Charcoal Vignette */
+body {
+    background: radial-gradient(circle at center,
+        #1c1c1c 0%,
+        #0f0f0f 45%,
+        #000000 100%
+    ) !important;
+}
 
+/* Charcoal Vertical Gradient */
+/*
+body {
+    background: linear-gradient(
+        to bottom,
+        #1a1a1a 0%,
+        #0f0f0f 50%,
+        #000000 100%
+    ) !important;
+}
+*/
 
+/* Charcoal Texture */
+/*
+body {
+    background-color: #111 !important;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><rect width='200' height='200' fill='#111'/><path d='M0 100 L200 100' stroke='#1a1a1a' stroke-width='2' opacity='0.2'/><path d='M100 0 L100 200' stroke='#1a1a1a' stroke-width='2' opacity='0.2'/></svg>");
+    background-size: 200px 200px !important;
+}
+*/
 
+/* ========================================================= */
+/* Stockyard Dramatic Backgrounds                            */
+/* ========================================================= */
+
+/* Spotlight */
+/*
+body {
+    background: radial-gradient(circle at center,
+        #2a2a2a 0%,
+        #111111 40%,
+        #000000 100%
+    ) !important;
+}
+*/
+
+/* Red Ambient Glow */
+/*
+body {
+    background: radial-gradient(circle at center,
+        #330000 0%,
+        #000000 80%
+    ) !important;
+}
+*/
+
+/* Warm Amber Glow */
+/*
+body {
+    background: radial-gradient(circle at center,
+        #332200 0%,
+        #000000 80%
+    ) !important;
+}
+*/
+
+/* ========================================================= */
+/* Test Backgrounds                                          */
+/* ========================================================= */
+
+/* Checkerboard */
+/*
+body {
+    background-color: #ffffff !important;
+    background-image: linear-gradient(45deg,
+        #ff0000 25%,
+        #ffffff 25%,
+        #ffffff 50%,
+        #ff0000 50%,
+        #ff0000 75%,
+        #ffffff 75%,
+        #ffffff 100%
+    ) !important;
+    background-size: 40px 40px !important;
+}
+*/
+
+/* Yellow → Orange → Red */
+/*
+body {
+    background: linear-gradient(
+        to bottom,
+        #ffcc00 0%,
+        #ff6600 50%,
+        #cc0000 100%
+    ) !important;
+}
+*/
+
+/* Pink → Red Vignette */
+/*
+body {
+    background: radial-gradient(circle at center,
+        #ffcccc 0%,
+        #ff6666 40%,
+        #660000 100%
+    ) !important;
+}
+*/
