@@ -202,7 +202,11 @@ button.sync-btn {
     background-color: #1a1a1a !important;
     color: #fff !important;
 }
+
+/* ========================================================= */
+/* Background — Pure Black                                   */
+/* ========================================================= */
+
 body {
     background-color: #000 !important;
 }
-
