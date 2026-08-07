@@ -50,16 +50,7 @@ console.log(localDanceDatabase);
             //   music: "https://www.youtube.com/embed/EXAMPLE_MUSIC"
             // }
 
-        venueDanceMap.forEach(mapEntry => {
-            const baseDance = globalDanceList.find(d => d.id === mapEntry.id);
-            if (baseDance) {
-                localDanceDatabase.push({
-            ...baseDance,
-            playlist: mapEntry.playlist,
-            daytaught: mapEntry.daytaught
-        });
-    }
-});
+       
 
 console.log(localDanceDatabase);
 
