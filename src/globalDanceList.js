@@ -1,3 +1,4 @@
+ const globalDanceList = [
 { id: 140, name: "Boots Off", choreographer: "Rachael McNaney", song: "Boots Off", artist: "Jon Pardi", steps: "https://www.copperknob.co.uk/stepsheets/5C29H2X/boots-off", teach: "https://youtube.com/embed/YxkCnVnybvk", demo: "https://youtube.com/embed/Xr2MQ8pbPME", music: "https://youtube.com/embed/z8WxUN0hvsA" },
 { id: 139, name: "Backup Plan", choreographer: "Melanie Mahoney", song: "Backup Plan", artist: "Zimmerman/Combs", steps: "https://www.copperknob.co.uk/stepsheets/QQ7QP4G/backup-plan", teach: "https://youtube.com/embed/HTciNVT--M4", demo: "https://youtube.com/embed/HTciNVT--M4", music: "https://youtube.com/embed/Yyd5kmngrOU" },
 { id: 138, name: "Dance With You", choreographer: "Lisa Johns-Grose", song: "Dance With You", artist: "Thomas Rhett", steps: "https://www.copperknob.co.uk/stepsheets/N4GQQ46/dance-with-you", teach: "https://youtube.com/embed/JZtpinRfnVE", demo: "https://youtube.com/embed/JZtpinRfnVE", music: "https://youtube.com/embed/edOFds30j2E" },
@@ -138,3 +139,5 @@
 { id: 3, name: "5150", choreographer: "Tom Avinger", song: "5-1-5-0", artist: "Dierks Bentley", steps: "https://www.copperknob.co.uk/stepsheets/87135/5150", teach: "https://youtube.com/embed/tVS1EOAKqk8", demo: "https://youtube.com/embed/fwjydYz7ynw", music: "https://youtube.com/embed/hBOHvY-lTuI" },
 { id: 2, name: "Shotgun Jenny", choreographer: "Kathy Brown", song: "Shake it", artist: "Big AND Rich", steps: "https://www.copperknob.co.uk/downloadsheet?StepsheetID=87543", teach: "https://youtube.com/embed/KYcuBzF92Vg", demo: "https://youtube.com/embed/d5TDmA8ae6c", music: "https://youtube.com/embed/O6OA_BQeeI4" },
 { id: 1, name: "My Maria-NO STEP SHEET", choreographer: "Unknown Choreographer", song: "My Maria", artist: "Brooks AND Dunn", steps: "https://youtu.be/oNqUTJGiq3g", teach: "https://youtube.com/embed/oNqUTJGiq3g", demo: "https://youtube.com/embed/oNqUTJGiq3g", music: "https://youtube.com/embed/gPoICeX33vY" },
+];
+export { globalDanceList };
