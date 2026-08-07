@@ -1,5 +1,7 @@
         import { globalDanceList } from "./globalDanceList.js";
         import { venueDanceMap } from "./venues/Stockyard/venueDanceMap.js";
+        import { venueConfig } from "./venues/Stockyard/venueConfig.js";
+
         let localDanceDatabase = [];
 
                 venueDanceMap.forEach(mapEntry => {
