@@ -1,5 +1,17 @@
         import { globalDanceList } from "./globalDanceList.js";
         import { venueDanceMap } from "./venues/Stockyard/venueDanceMap.js";
+        let localDanceDatabase = [];
+
+                venueDanceMap.forEach(mapEntry => {
+            const baseDance = globalDanceList.find(d => d.id === mapEntry.id);
+            if (baseDance) {
+                localDanceDatabase.push({
+            ...baseDance,
+            playlist: mapEntry.playlist,
+            daytaught: mapEntry.daytaught
+        });
+    }
+});
 
 
         /* ============================================
@@ -19,7 +31,7 @@
              - demo: YouTube demo URL (optional)
              - music: YouTube music URL (optional)
            ============================================ */
-        const localDanceDatabase = [
+       
             // Example:
             // {
             //   id: 1,
@@ -35,7 +47,6 @@
             //   demo: "https://www.youtube.com/embed/EXAMPLE_DEMO",
             //   music: "https://www.youtube.com/embed/EXAMPLE_MUSIC"
             // }
-        ];
 
         venueDanceMap.forEach(mapEntry => {
             const baseDance = globalDanceList.find(d => d.id === mapEntry.id);
@@ -47,6 +58,9 @@
         });
     }
 });
+
+console.log(localDanceDatabase);
+
         /* ============================================
            APP STATE
            ============================================ */
