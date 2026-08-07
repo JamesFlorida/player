@@ -1,4 +1,4 @@
-const venueConfig = {
+export const venueConfig = {
     name: "The Stockyard",
     headerTitle: "The Stockyard Dance Player",
     searchPlaceholder: "Search Stockyard roster...",
@@ -20,5 +20,7 @@ const venueConfig = {
         splashImageUrl: ""
     }
 };
+
 console.log("Loaded NEW Stockyard config");
+
 
