@@ -398,3 +398,11 @@ console.log(localDanceDatabase);
             initializeVenueBranding();
             renderApplicationInterface();
         };
+        // Expose functions globally for inline HTML onclick handlers
+        window.launchMediaOverlay = launchMediaOverlay;
+        window.shutOverlayViewer = shutOverlayViewer;
+        window.navigateToPlaylistHubMenu = navigateToPlaylistHubMenu;
+        window.openSpecificPlaylistView = openSpecificPlaylistView;
+        window.handleLiveSearchInput = handleLiveSearchInput;
+        window.setDayFilter = setDayFilter;
+
