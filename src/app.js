@@ -91,6 +91,12 @@
            ============================================ */
         let selectedActivePlaylistGroup = null;
         let activeSearchQueryString = "";
+        let activeDayFilter = "ALL";
+        function setDayFilter(day) {
+         activeDayFilter = day;
+         renderTracks();
+        }
+
 
         /* ============================================
            VENUE INITIALIZATION
@@ -311,39 +317,45 @@
            DANCE CARD RENDERING
            ============================================ */
         function renderDanceCardsList(tracksList, containerElement) {
-            tracksList.forEach(track => {
-                const card = document.createElement('div');
-                card.className = 'dance-entry-card';
+    tracksList.forEach(track => {
 
-                const btnSteps = track.steps
-                    ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.steps}', '${track.name} - Steps')">Steps</button>`
-                    : `<button class="action-touch-btn disabled">None</button>`;
-
-                const btnTeach = track.teach
-                    ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.teach}', '${track.name} - Teach')">Teach</button>`
-                    : `<button class="action-touch-btn disabled">None</button>`;
-
-                const btnDemo = track.demo
-                    ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.demo}', '${track.name} - Demo')">Demo</button>`
-                    : `<button class="action-touch-btn disabled">None</button>`;
-
-                const btnMusic = track.music
-                    ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.music}', '${track.name} - Play')">Music</button>`
-                    : `<button class="action-touch-btn disabled">None</button>`;
-
-                card.innerHTML = `
-                    <div class="title-line">${track.name} • By: ${track.choreographer}</div>
-                    <div class="meta-line">Song: ${track.song} - ${track.artist} (${track.playlist})</div>
-                    <div class="button-bar-grid">
-                        ${btnSteps}
-                        ${btnTeach}
-                        ${btnDemo}
-                        ${btnMusic}
-                    </div>
-                `;
-                containerElement.appendChild(card);
-            });
+        if (activeDayFilter !== "ALL" && track.daytaught !== activeDayFilter) {
+            return; // skip this track
         }
+
+        const card = document.createElement('div');
+        card.className = 'dance-entry-card';
+
+        const btnSteps = track.steps
+            ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.steps}', '${track.name} - Steps')">Steps</button>`
+            : `<button class="action-touch-btn disabled">None</button>`;
+
+        const btnTeach = track.teach
+            ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.teach}', '${track.name} - Teach')">Teach</button>`
+            : `<button class="action-touch-btn disabled">None</button>`;
+
+        const btnDemo = track.demo
+            ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.demo}', '${track.name} - Demo')">Demo</button>`
+            : `<button class="action-touch-btn disabled">None</button>`;
+
+        const btnMusic = track.music
+            ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.music}', '${track.name} - Play')">Music</button>`
+            : `<button class="action-touch-btn disabled">None</button>`;
+
+        card.innerHTML = `
+            <div class="title-line">${track.name} • By: ${track.choreographer}</div>
+            <div class="meta-line">Song: ${track.song} - ${track.artist} (${track.playlist})</div>
+            <div class="button-bar-grid">
+                ${btnSteps}
+                ${btnTeach}
+                ${btnDemo}
+                ${btnMusic}
+            </div>
+        `;
+        containerElement.appendChild(card);
+    });
+}
+
 
         /* ============================================
            OVERLAY LOGIC (STEPS + YOUTUBE)
