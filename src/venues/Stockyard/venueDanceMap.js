@@ -141,6 +141,7 @@ const venueDanceMap = [
 { id: 1, playlist: "Stock-001", daytaught: "Wednesday" },
 ];
 
-import { venueDanceMap } from "./venues/Stockyard/venueDanceMap.js";
+export { venueDanceMap };
+
 
 
