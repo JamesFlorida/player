@@ -13,6 +13,7 @@
             daytaught: mapEntry.daytaught
         });
     }
+  });                       
 console.log("Merged dance count:", localDanceDatabase.length);
 console.log(localDanceDatabase);
 
