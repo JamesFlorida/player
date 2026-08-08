@@ -588,4 +588,5 @@ console.log(localDanceDatabase);
         window.openSpecificPlaylistView = openSpecificPlaylistView;
         window.handleLiveSearchInput = handleLiveSearchInput;
         window.setDayFilter = setDayFilter;
+        window.setDifficultyFilter = setDifficultyFilter;
 
