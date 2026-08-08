@@ -462,7 +462,6 @@ console.log(localDanceDatabase);
         track => track.playlist === selectedActivePlaylistGroup
     );
         renderDanceCardsList(filteredTracks, viewport);
-}   // closes SPECIFIC PLAYLIST VIEW
 
 }   // closes renderApplicationInterface()
 
