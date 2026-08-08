@@ -63,9 +63,10 @@ console.log(localDanceDatabase);
         let activeSearchQueryString = "";
         let activeDayFilter = "ALL";
         function setDayFilter(day) {
-         activeDayFilter = day;
-         renderTracks();
+            activeDayFilter = day;
+            renderApplicationInterface();   // ✔ correct function
         }
+
 
 
         /* ============================================
