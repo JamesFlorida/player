@@ -77,13 +77,14 @@ VENUE ASSETS: TOUCH ICON (HOME SCREEN ICON)
     - Lets users filter by night taught.
     ============================================
     -->
-    <div class="app-container" style="padding: 8px 16px 0 16px;">
-        <button class="sync-btn" onclick="setDayFilter('ALL')">All</button>
-        <button class="sync-btn" onclick="setDayFilter('Tuesday')">Tuesday</button>
-        <button class="sync-btn" onclick="setDayFilter('Wednesday')">Wednesday</button>
-        <button class="sync-btn" onclick="setDayFilter('Weekend')">Weekend</button>
-        <button class="sync-btn" onclick="setDayFilter('Other')">Other</button>
-    </div>
+    <div class="app-container" id="dayFilterBar" style="padding: 8px 16px 0 16px;">
+    <button id="filterAll" class="sync-btn" onclick="setDayFilter('ALL')">All</button>
+    <button id="filterTuesday" class="sync-btn" onclick="setDayFilter('Tuesday')">Tuesday</button>
+    <button id="filterWednesday" class="sync-btn" onclick="setDayFilter('Wednesday')">Wednesday</button>
+    <button id="filterWeekend" class="sync-btn" onclick="setDayFilter('Weekend')">Weekend</button>
+    <button id="filterOther" class="sync-btn" onclick="setDayFilter('Other')">Other</button>
+</div>
+
 
     <!--
     ============================================
