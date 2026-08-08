@@ -294,29 +294,7 @@ console.log(localDanceDatabase);
             renderApplicationInterface();
         }
 
-        function setDifficultyFilter(level) {
-            if (!level) {
-                // Reset difficulty mode
-                activeDifficultyView = null;
-                activeDifficultyFilter = "";
-                navigateToPlaylistHubMenu();
-                return;
-            }
-
-            activeDifficultyView = level;
-            activeDifficultyFilter = level;
-
-            // Exit playlist view and day view
-            selectedActivePlaylistGroup = null;
-            activeDayView = null;
-
-            // Reset search
-            activeSearchQueryString = "";
-            document.getElementById('danceSearchInput').value = "";
-
-            renderApplicationInterface();
-        }
-
+        
         
 
         
