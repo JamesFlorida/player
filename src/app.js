@@ -294,6 +294,28 @@ console.log(localDanceDatabase);
             renderApplicationInterface();
         }
 
+        function setDifficultyFilter(level) {
+            if (!level) {
+                // Reset difficulty mode
+                activeDifficultyView = null;
+                activeDifficultyFilter = "";
+                navigateToPlaylistHubMenu();
+                return;
+            }
+
+            activeDifficultyView = level;
+            activeDifficultyFilter = level;
+
+            // Exit playlist view and day view
+            selectedActivePlaylistGroup = null;
+            activeDayView = null;
+
+            // Reset search
+            activeSearchQueryString = "";
+            document.getElementById('danceSearchInput').value = "";
+
+            renderApplicationInterface();
+        }
 
         
 
@@ -471,7 +493,7 @@ console.log(localDanceDatabase);
            DANCE CARD RENDERING
            ============================================ */
         function renderDanceCardsList(tracksList, containerElement) {
-    tracksList.forEach(track => {
+            tracksList.forEach(track => {
 
         if (activeDayFilter !== "ALL" && track.daytaught !== activeDayFilter) {
             return; // skip this track
