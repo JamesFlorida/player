@@ -63,6 +63,8 @@ console.log(localDanceDatabase);
         let activeSearchQueryString = "";
         let activeDayFilter = "ALL";
         let activeDayView = null;
+        let activeDifficultyView = null;
+        let activeDifficultyFilter = "";
 
         function setDayFilter(day) {
             activeDayFilter = day;
@@ -76,6 +78,28 @@ console.log(localDanceDatabase);
             renderApplicationInterface();
         }
 
+        function setDifficultyFilter(level) {
+            if (!level) {
+                // Reset difficulty mode
+                activeDifficultyView = null;
+                activeDifficultyFilter = "";
+                navigateToPlaylistHubMenu();
+                return;
+            }
+
+            activeDifficultyView = level;
+            activeDifficultyFilter = level;
+
+            // Exit playlist view and day view
+            selectedActivePlaylistGroup = null;
+            activeDayView = null;
+
+            // Reset search
+            activeSearchQueryString = "";
+            document.getElementById('danceSearchInput').value = "";
+
+            renderApplicationInterface();
+        }
 
 
 
@@ -213,6 +237,10 @@ console.log(localDanceDatabase);
             // Exit day view
             activeDayView = null;
 
+            // Exit difficulty view
+            activeDifficultyView = null;
+            activeDifficultyFilter = "";
+
             // Reset search
             activeSearchQueryString = "";
             document.getElementById('danceSearchInput').value = "";
@@ -220,6 +248,10 @@ console.log(localDanceDatabase);
             // Show day filter bar
             const filterBar = document.getElementById('dayFilterBar');
             if (filterBar) filterBar.style.display = 'block';
+
+            // Show difficulty dropdown
+            const diffBar = document.getElementById('difficultyFilterBar');
+            if (diffBar) diffBar.style.display = 'block';
 
             // Hide back button
             document.getElementById('navbarReturnTrigger').style.display = 'none';
@@ -229,7 +261,6 @@ console.log(localDanceDatabase);
 
             renderApplicationInterface();
         }
-
 
         function openSpecificPlaylistView(groupName) {
             // Enter playlist mode
@@ -242,9 +273,17 @@ console.log(localDanceDatabase);
             // Exit Day View Mode
             activeDayView = null;
 
+            // Exit Difficulty View Mode
+            activeDifficultyView = null;
+            activeDifficultyFilter = "";
+
             // Hide day filter bar
             const filterBar = document.getElementById('dayFilterBar');
-                    if (filterBar) filterBar.style.display = 'none';
+            if (filterBar) filterBar.style.display = 'none';
+
+            // Hide difficulty dropdown
+            const diffBar = document.getElementById('difficultyFilterBar');
+            if (diffBar) diffBar.style.display = 'none';
 
             // Show back button
             document.getElementById('navbarReturnTrigger').style.display = 'block';
@@ -254,6 +293,9 @@ console.log(localDanceDatabase);
 
             renderApplicationInterface();
         }
+
+
+        
 
         
         
@@ -329,16 +371,58 @@ console.log(localDanceDatabase);
     renderDanceCardsList(dayTracks, viewport);
     return;   // ⭐ Prevents playlist hub from showing
 }
- 
+
+        // ============================
+        // DIFFICULTY VIEW MODE
+        // ============================
+        if (activeDifficultyView !== null) {
+
+            // Hide day filter bar
+            const filterBar = document.getElementById('dayFilterBar');
+            if (filterBar) filterBar.style.display = 'none';
+
+            // Hide difficulty dropdown
+            const diffBar = document.getElementById('difficultyFilterBar');
+            if (diffBar) diffBar.style.display = 'none';
+
+            // Show back button
+            document.getElementById('navbarReturnTrigger').style.display = 'block';
+
+            // Update header title
+            document.getElementById('applicationHeaderTitle').innerText =
+                activeDifficultyView + " Dances";
+
+            // Normalize difficulty matching
+            const level = activeDifficultyFilter.toLowerCase();
+
+            const difficultyTracks = localDanceDatabase.filter(track => {
+                const diff = (track.difficulty || "").toLowerCase();
+                return diff.includes(level);
+            });
+
+            if (difficultyTracks.length === 0) {
+                viewport.innerHTML =
+            '<p style="text-align:center;color:#aaa;margin-top:20px;">No dances found for this difficulty level.</p>';
+                return;
+            }
+
+    renderDanceCardsList(difficultyTracks, viewport);
+    return;   // ⭐ Prevents playlist hub from showing
+}
+
    
         // ============================
         // PLAYLIST HUB
         // ============================
-        if (selectedActivePlaylistGroup === null && activeDayView === null) {
+        if (selectedActivePlaylistGroup === null && activeDayView === null && activeDifficultyView === null) {
 
             // Show day filter bar
             const filterBar = document.getElementById('dayFilterBar');
             if (filterBar) filterBar.style.display = 'block';
+
+            // Show difficulty dropdown
+            const diffBar = document.getElementById('difficultyFilterBar');
+            if (diffBar) diffBar.style.display = 'block';
 
             // Hide back button
             document.getElementById('navbarReturnTrigger').style.display = 'none';
@@ -369,6 +453,7 @@ console.log(localDanceDatabase);
             viewport.appendChild(grid);
             return;
         }
+
       
 
     // ============================
