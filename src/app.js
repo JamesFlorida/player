@@ -461,9 +461,12 @@ console.log(localDanceDatabase);
     const filteredTracks = localDanceDatabase.filter(
         track => track.playlist === selectedActivePlaylistGroup
     );
+        renderDanceCardsList(filteredTracks, viewport);
+}   // closes SPECIFIC PLAYLIST VIEW
 
-    renderDanceCardsList(filteredTracks, viewport);
-}
+}   // closes renderApplicationInterface()
+
+    
 
 
         /* ============================================
