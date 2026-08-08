@@ -62,6 +62,8 @@ console.log(localDanceDatabase);
         let selectedActivePlaylistGroup = null;
         let activeSearchQueryString = "";
         let activeDayFilter = "ALL";
+        let activeDayView = null;
+
         function setDayFilter(day) {
             activeDayFilter = day;
 
