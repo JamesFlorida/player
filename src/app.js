@@ -64,8 +64,17 @@ console.log(localDanceDatabase);
         let activeDayFilter = "ALL";
         function setDayFilter(day) {
             activeDayFilter = day;
-            renderApplicationInterface();   // ✔ correct function
+
+            // Enter or exit Day View Mode
+            activeDayView = (day === "ALL") ? null : day;
+
+            // Reset playlist selection when switching days
+            selectedActivePlaylistGroup = null;
+
+            renderApplicationInterface();
         }
+
+
 
 
 
@@ -198,6 +207,7 @@ console.log(localDanceDatabase);
         function navigateToPlaylistHubMenu() {
             selectedActivePlaylistGroup = null;
             activeSearchQueryString = "";
+            activeDayView = null;   // ⭐ EXIT DAY VIEW MODE
             document.getElementById('danceSearchInput').value = "";
             document.getElementById('navbarReturnTrigger').style.display = 'none';
             document.getElementById('applicationHeaderTitle').innerText =
@@ -206,13 +216,24 @@ console.log(localDanceDatabase);
         }
 
         function openSpecificPlaylistView(groupName) {
+            // Enter playlist mode
             selectedActivePlaylistGroup = groupName;
+
+            // Reset search
             activeSearchQueryString = "";
             document.getElementById('danceSearchInput').value = "";
+
+            // Exit Day View Mode
+            activeDayView = null;
+
+            // Update UI elements
             document.getElementById('navbarReturnTrigger').style.display = 'block';
             document.getElementById('applicationHeaderTitle').innerText = groupName;
+
             renderApplicationInterface();
         }
+
+        
 
         function handleLiveSearchInput() {
             const searchBox = document.getElementById('danceSearchInput');
@@ -232,57 +253,88 @@ console.log(localDanceDatabase);
         /* ============================================
            MAIN RENDER FUNCTION
            ============================================ */
-        function renderApplicationInterface() {
-            const viewport = document.getElementById('masterApplicationViewport');
-            if (!viewport) return;
-            viewport.innerHTML = '';
+       function renderApplicationInterface() {
+    const viewport = document.getElementById('masterApplicationViewport');
+    if (!viewport) return;
+    viewport.innerHTML = '';
 
-            // SEARCH MODE
-            if (activeSearchQueryString !== "") {
-                const matchedTracks = localDanceDatabase.filter(track => {
-                    const danceName = (track.name || "").toLowerCase();
-                    const choreographer = (track.choreographer || "").toLowerCase();
-                    return danceName.includes(activeSearchQueryString) ||
-                           choreographer.includes(activeSearchQueryString);
-                });
-                if (matchedTracks.length === 0) {
-                    viewport.innerHTML =
-                        '<p style="text-align:center;color:#aaa;margin-top:20px;">No matching dances found on the roster.</p>';
-                    return;
-                }
-                renderDanceCardsList(matchedTracks, viewport);
-            }
-            // PLAYLIST HUB
-            else if (selectedActivePlaylistGroup === null) {
-                let groupNames;
-                if (venueConfig.playlistGroups && venueConfig.playlistGroups.length > 0) {
-                    // Use venue-defined groups
-                    groupNames = [...venueConfig.playlistGroups];
-                } else {
-                    // Derive groups from track.group
-                    groupNames = [...new Set(localDanceDatabase.map(track => track.playlist || "General"))].sort();
-                }
+    // ============================
+    // SEARCH MODE
+    // ============================
+    if (activeSearchQueryString !== "") {
+        const matchedTracks = localDanceDatabase.filter(track => {
+            const danceName = (track.name || "").toLowerCase();
+            const choreographer = (track.choreographer || "").toLowerCase();
+            return danceName.includes(activeSearchQueryString) ||
+                   choreographer.includes(activeSearchQueryString);
+        });
 
-                const grid = document.createElement('div');
-                grid.className = 'playlist-selection-grid';
-                groupNames.forEach(name => {
-                    const count = localDanceDatabase.filter(t => t.playlist === name).length;
-                    const card = document.createElement('div');
-                    card.className = 'playlist-hub-card';
-                    card.innerHTML = `<div>${name}</div><div class="playlist-track-counter">${count} Dances</div>`;
-                    card.onclick = () => openSpecificPlaylistView(name);
-                    grid.appendChild(card);
-                });
-                viewport.appendChild(grid);
-            }
-            // SPECIFIC PLAYLIST VIEW
-            else {
-                const filteredTracks = localDanceDatabase.filter(
-                    track => track.playlist === selectedActivePlaylistGroup
-                );
-                renderDanceCardsList(filteredTracks, viewport);
-            }
+        if (matchedTracks.length === 0) {
+            viewport.innerHTML =
+                '<p style="text-align:center;color:#aaa;margin-top:20px;">No matching dances found on the roster.</p>';
+            return;
         }
+
+        renderDanceCardsList(matchedTracks, viewport);
+        return;   // ⭐ IMPORTANT — prevents falling through to other modes
+    }
+
+    // ============================
+    // DAY VIEW MODE (NEW)
+    // ============================
+    if (activeDayView !== null) {
+        const dayTracks = localDanceDatabase.filter(track =>
+            activeDayFilter === "ALL" ? true : track.daytaught === activeDayFilter
+        );
+
+        if (dayTracks.length === 0) {
+            viewport.innerHTML =
+                '<p style="text-align:center;color:#aaa;margin-top:20px;">No dances taught on this day.</p>';
+            return;
+        }
+
+        renderDanceCardsList(dayTracks, viewport);
+        return;   // ⭐ IMPORTANT — prevents playlist hub from showing
+    }
+
+    // ============================
+    // PLAYLIST HUB
+    // ============================
+    if (selectedActivePlaylistGroup === null) {
+        let groupNames;
+
+        if (venueConfig.playlistGroups && venueConfig.playlistGroups.length > 0) {
+            groupNames = [...venueConfig.playlistGroups];
+        } else {
+            groupNames = [...new Set(localDanceDatabase.map(track => track.playlist || "General"))].sort();
+        }
+
+        const grid = document.createElement('div');
+        grid.className = 'playlist-selection-grid';
+
+        groupNames.forEach(name => {
+            const count = localDanceDatabase.filter(t => t.playlist === name).length;
+            const card = document.createElement('div');
+            card.className = 'playlist-hub-card';
+            card.innerHTML = `<div>${name}</div><div class="playlist-track-counter">${count} Dances</div>`;
+            card.onclick = () => openSpecificPlaylistView(name);
+            grid.appendChild(card);
+        });
+
+        viewport.appendChild(grid);
+        return;
+    }
+
+    // ============================
+    // SPECIFIC PLAYLIST VIEW
+    // ============================
+    const filteredTracks = localDanceDatabase.filter(
+        track => track.playlist === selectedActivePlaylistGroup
+    );
+
+    renderDanceCardsList(filteredTracks, viewport);
+}
+
 
         /* ============================================
            DANCE CARD RENDERING
