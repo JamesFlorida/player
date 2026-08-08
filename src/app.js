@@ -207,15 +207,29 @@ console.log(localDanceDatabase);
            NAVIGATION + SEARCH
            ============================================ */
         function navigateToPlaylistHubMenu() {
+            // Exit playlist view
             selectedActivePlaylistGroup = null;
+
+            // Exit day view
+            activeDayView = null;
+
+            // Reset search
             activeSearchQueryString = "";
-            activeDayView = null;   // ⭐ EXIT DAY VIEW MODE
             document.getElementById('danceSearchInput').value = "";
+
+            // Show day filter bar
+            const filterBar = document.getElementById('dayFilterBar');
+            if (filterBar) filterBar.style.display = 'block';
+
+            // Hide back button
             document.getElementById('navbarReturnTrigger').style.display = 'none';
-            document.getElementById('applicationHeaderTitle').innerText =
-                venueConfig.headerTitle || venueConfig.name || 'LineDance Player';
+
+            // Reset header title
+            document.getElementById('applicationHeaderTitle').innerText = "Playlists";
+
             renderApplicationInterface();
         }
+
 
         function openSpecificPlaylistView(groupName) {
             // Enter playlist mode
@@ -228,13 +242,20 @@ console.log(localDanceDatabase);
             // Exit Day View Mode
             activeDayView = null;
 
-            // Update UI elements
+            // Hide day filter bar
+            const filterBar = document.getElementById('dayFilterBar');
+                    if (filterBar) filterBar.style.display = 'none';
+
+            // Show back button
             document.getElementById('navbarReturnTrigger').style.display = 'block';
+
+            // Update header title
             document.getElementById('applicationHeaderTitle').innerText = groupName;
 
             renderApplicationInterface();
         }
 
+        
         
 
         function handleLiveSearchInput() {
@@ -280,52 +301,75 @@ console.log(localDanceDatabase);
         renderDanceCardsList(matchedTracks, viewport);
         return;   // ⭐ IMPORTANT — prevents falling through to other modes
     }
+       // ============================
+        // DAY VIEW MODE
+        // ============================
+        if (activeDayView !== null) {
 
-    // ============================
-    // DAY VIEW MODE (NEW)
-    // ============================
-    if (activeDayView !== null) {
-        const dayTracks = localDanceDatabase.filter(track =>
-            activeDayFilter === "ALL" ? true : track.daytaught === activeDayFilter
-        );
+            // Hide day filter bar
+            const filterBar = document.getElementById('dayFilterBar');
+            if (filterBar) filterBar.style.display = 'none';
 
-        if (dayTracks.length === 0) {
-            viewport.innerHTML =
-                '<p style="text-align:center;color:#aaa;margin-top:20px;">No dances taught on this day.</p>';
-            return;
-        }
+            // Show back button
+            document.getElementById('navbarReturnTrigger').style.display = 'block';
 
-        renderDanceCardsList(dayTracks, viewport);
-        return;   // ⭐ IMPORTANT — prevents playlist hub from showing
-    }
+            // Update header title
+            document.getElementById('applicationHeaderTitle').innerText = activeDayView + " Dances";
 
-    // ============================
-    // PLAYLIST HUB
-    // ============================
-    if (selectedActivePlaylistGroup === null) {
-        let groupNames;
+            const dayTracks = localDanceDatabase.filter(track =>
+                activeDayFilter === "ALL" ? true : track.daytaught === activeDayFilter
+    );
 
-        if (venueConfig.playlistGroups && venueConfig.playlistGroups.length > 0) {
-            groupNames = [...venueConfig.playlistGroups];
-        } else {
-            groupNames = [...new Set(localDanceDatabase.map(track => track.playlist || "General"))].sort();
-        }
-
-        const grid = document.createElement('div');
-        grid.className = 'playlist-selection-grid';
-
-        groupNames.forEach(name => {
-            const count = localDanceDatabase.filter(t => t.playlist === name).length;
-            const card = document.createElement('div');
-            card.className = 'playlist-hub-card';
-            card.innerHTML = `<div>${name}</div><div class="playlist-track-counter">${count} Dances</div>`;
-            card.onclick = () => openSpecificPlaylistView(name);
-            grid.appendChild(card);
-        });
-
-        viewport.appendChild(grid);
+    if (dayTracks.length === 0) {
+        viewport.innerHTML =
+            '<p style="text-align:center;color:#aaa;margin-top:20px;">No dances taught on this day.</p>';
         return;
     }
+
+    renderDanceCardsList(dayTracks, viewport);
+    return;   // ⭐ Prevents playlist hub from showing
+}
+ 
+   
+        // ============================
+        // PLAYLIST HUB
+        // ============================
+        if (selectedActivePlaylistGroup === null && activeDayView === null) {
+
+            // Show day filter bar
+            const filterBar = document.getElementById('dayFilterBar');
+            if (filterBar) filterBar.style.display = 'block';
+
+            // Hide back button
+            document.getElementById('navbarReturnTrigger').style.display = 'none';
+
+            // Update header title
+            document.getElementById('applicationHeaderTitle').innerText = "Playlists";
+
+            let groupNames;
+
+            if (venueConfig.playlistGroups && venueConfig.playlistGroups.length > 0) {
+                groupNames = [...venueConfig.playlistGroups];
+            } else {
+                groupNames = [...new Set(localDanceDatabase.map(track => track.playlist || "General"))].sort();
+            }
+
+            const grid = document.createElement('div');
+            grid.className = 'playlist-selection-grid';
+
+            groupNames.forEach(name => {
+                const count = localDanceDatabase.filter(t => t.playlist === name).length;
+                const card = document.createElement('div');
+                card.className = 'playlist-hub-card';
+                card.innerHTML = `<div>${name}</div><div class="playlist-track-counter">${count} Dances</div>`;
+                card.onclick = () => openSpecificPlaylistView(name);
+                grid.appendChild(card);
+            });
+
+            viewport.appendChild(grid);
+            return;
+        }
+      
 
     // ============================
     // SPECIFIC PLAYLIST VIEW
