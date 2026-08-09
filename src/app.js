@@ -393,7 +393,7 @@ console.log(localDanceDatabase);
             const level = activeDifficultyFilter.toLowerCase();
 
             const difficultyTracks = localDanceDatabase.filter(track => {
-                const diff = (track.difficulty || "").toLowerCase();
+                const diff = (track.level || "").toLowerCase();
                 return diff.includes(level);
             });
 
