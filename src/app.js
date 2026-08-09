@@ -404,6 +404,7 @@ console.log(localDanceDatabase);
             }
 
     renderDanceCardsList(difficultyTracks, viewport);
+    updateHubVisibility();
     return;   // ⭐ Prevents playlist hub from showing
 }
 
@@ -460,7 +461,7 @@ console.log(localDanceDatabase);
         track => track.playlist === selectedActivePlaylistGroup
     );
         renderDanceCardsList(filteredTracks, viewport);
-updateHubVisibility();
+        updateHubVisibility();
 }   // closes renderApplicationInterface()
 
     
