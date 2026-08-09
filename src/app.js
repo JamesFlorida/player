@@ -563,6 +563,20 @@ console.log(localDanceDatabase);
                 container.innerHTML = '';
             }
         }
+
+        function updateHubVisibility() {
+            const isHub =
+                selectedActivePlaylistGroup === null &&
+                activeDayView === null &&
+                activeDifficultyView === null &&
+                activeSearchQueryString === "";
+
+            // Show hub controls ONLY on the hub
+            document.querySelector('.hub-filter-row').style.display = isHub ? 'flex' : 'none';
+            document.querySelector('.hub-search-row').style.display = isHub ? 'flex' : 'none';
+            document.querySelector('.hub-nav-row').style.display = isHub ? 'grid' : 'none';
+        }
+
         
         function openUserPlaylists() {
             // Placeholder for Phase 2 scaffolding
