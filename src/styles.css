@@ -266,3 +266,45 @@
                 font-size: 1.1rem !important;
             }
         }
+ /* ============================================
+   HUB FILTER ROW — two dropdowns side-by-side
+   ============================================ */
+.hub-filter-row {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 16px 0 16px;
+}
+
+/* Make dropdowns equal width */
+#daySelect,
+#difficultySelect {
+    flex: 1;
+    height: 50px;
+}
+
+/* ============================================
+   HUB SEARCH ROW — search + sync
+   ============================================ */
+.hub-search-row {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    padding: 8px 16px 0 16px;
+}
+
+.hub-search-row input {
+    flex: 1;
+}
+
+/* ============================================
+   HUB NAV ROW — three cards
+   ============================================ */
+.hub-nav-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    padding: 16px;
+}
+      
