@@ -71,21 +71,19 @@ VENUE ASSETS: TOUCH ICON (HOME SCREEN ICON)
         <img id="venueBanner" class="venue-banner" src="" alt="Venue Banner" style="display:none;">
     </div>
 
-       <!--
-    ============================================
-    DANCE NIGHT FILTER BAR
-    - Lets users filter by night taught.
-    ============================================
-    -->
-    <div class="app-container" id="dayFilterBar" style="padding: 8px 16px 0 16px;">
-    <button id="filterAll" class="sync-btn" onclick="setDayFilter('ALL')">All</button>
-    <button id="filterTuesday" class="sync-btn" onclick="setDayFilter('Tuesday')">Tuesday</button>
-    <button id="filterWednesday" class="sync-btn" onclick="setDayFilter('Wednesday')">Wednesday</button>
-    <button id="filterWeekend" class="sync-btn" onclick="setDayFilter('Weekend')">Weekend</button>
-    <button id="filterOther" class="sync-btn" onclick="setDayFilter('Other')">Other</button>
-</div>
+    <!-- ============================================
+     HUB FILTER BAR (NEW LAYOUT)
+     Day Dropdown + Difficulty Dropdown
+     ============================================ -->
+<div class="app-container hub-filter-row">
+    <select id="daySelect" class="sync-btn" onchange="setDayFilter(this.value)">
+        <option value="ALL">All Days</option>
+        <option value="Tuesday">Tuesday</option>
+        <option value="Wednesday">Wednesday</option>
+        <option value="Weekend">Weekend</option>
+        <option value="Other">Other</option>
+    </select>
 
-    <div class="app-container" id="difficultyFilterBar" style="padding: 8px 16px 0 16px; margin-top: 8px;">
     <select id="difficultySelect" class="sync-btn" onchange="setDifficultyFilter(this.value)">
         <option value="">Difficulty</option>
         <option value="Beginner">Beginner</option>
@@ -95,23 +93,38 @@ VENUE ASSETS: TOUCH ICON (HOME SCREEN ICON)
     </select>
 </div>
 
-
-    <!--
-    ============================================
-    SEARCH + SYNC BAR
-    - Placeholder text will be set from venueConfig.searchPlaceholder.
-    ============================================
-    -->
-  <div class="app-container search-bar-row">
+<!-- ============================================
+     SEARCH + SYNC ROW (NEW LAYOUT)
+     ============================================ -->
+<div class="app-container hub-search-row">
     <input type="text"
            id="danceSearchInput"
            placeholder=""
            oninput="handleLiveSearchInput()">
 
     <button class="sync-btn" onclick="forceCacheBusterReload()">
-        Sync Playlist
+        Sync
     </button>
 </div>
+
+<!-- ============================================
+     HUB NAVIGATION ROW (NEW)
+     My Playlists + Create Playlist + Events
+     ============================================ -->
+<div class="app-container hub-nav-row">
+    <div class="playlist-hub-card" onclick="openUserPlaylists()">
+        <div>My Playlists</div>
+    </div>
+
+    <div class="playlist-hub-card" onclick="createNewUserPlaylist()">
+        <div>Create Playlist</div>
+    </div>
+
+    <div class="playlist-hub-card" onclick="openEventsView()">
+        <div>Events</div>
+    </div>
+</div>
+  
 
 
 
