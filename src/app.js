@@ -316,19 +316,19 @@ console.log(localDanceDatabase);
            MAIN RENDER FUNCTION
            ============================================ */
        function renderApplicationInterface() {
-    const viewport = document.getElementById('masterApplicationViewport');
-    if (!viewport) return;
-    viewport.innerHTML = '';
+            const viewport = document.getElementById('masterApplicationViewport');
+            if (!viewport) return;
+            viewport.innerHTML = '';
 
-    // ============================
-    // SEARCH MODE
-    // ============================
-    if (activeSearchQueryString !== "") {
-        const matchedTracks = localDanceDatabase.filter(track => {
-            const danceName = (track.name || "").toLowerCase();
-            const choreographer = (track.choreographer || "").toLowerCase();
-            return danceName.includes(activeSearchQueryString) ||
-                   choreographer.includes(activeSearchQueryString);
+            // ============================
+            // SEARCH MODE
+            // ============================
+            if (activeSearchQueryString !== "") {
+                const matchedTracks = localDanceDatabase.filter(track => {
+                    const danceName = (track.name || "").toLowerCase();
+                    const choreographer = (track.choreographer || "").toLowerCase();
+                    return danceName.includes(activeSearchQueryString) ||
+                           choreographer.includes(activeSearchQueryString);
         });
 
         if (matchedTracks.length === 0) {
@@ -460,7 +460,7 @@ console.log(localDanceDatabase);
         track => track.playlist === selectedActivePlaylistGroup
     );
         renderDanceCardsList(filteredTracks, viewport);
-
+updateHubVisibility();
 }   // closes renderApplicationInterface()
 
     
