@@ -52,9 +52,6 @@ console.log(localDanceDatabase);
             //   music: "https://www.youtube.com/embed/EXAMPLE_MUSIC"
             // }
 
-       
-
-console.log(localDanceDatabase);
 
         /* ============================================
            APP STATE
