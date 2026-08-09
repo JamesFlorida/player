@@ -366,6 +366,7 @@ console.log(localDanceDatabase);
     }
 
     renderDanceCardsList(dayTracks, viewport);
+    updateHubVisibility();           
     return;   // ⭐ Prevents playlist hub from showing
 }
 
