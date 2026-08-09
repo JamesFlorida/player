@@ -307,4 +307,43 @@
     gap: 16px;
     padding: 16px;
 }
-      
+ /* ============================================
+   HUB POLISH FIXES — GLOBAL OVERRIDES
+   ============================================ */
+
+/* GLOBAL DARK THEME FOR INPUTS + DROPDOWNS */
+select.sync-btn,
+input#danceSearchInput {
+    background-color: #111 !important;
+    color: #fff !important;
+    border: 2px solid #800000 !important;
+    box-shadow: 0 0 6px rgba(255, 180, 60, 0.4) !important;
+}
+
+select.sync-btn:focus,
+input#danceSearchInput:focus {
+    border-color: #ffcc88 !important;
+    box-shadow: 0 0 10px rgba(255, 180, 60, 0.6) !important;
+}
+
+/* GLOBAL BUTTON SIZE REDUCTION */
+.sync-btn {
+    height: 42px !important;
+    font-size: 0.85rem !important;
+    padding: 0 12px !important;
+}
+
+/* GLOBAL PLAYLIST HUB CARD SIZE REDUCTION */
+.playlist-hub-card {
+    min-height: 80px !important;
+    font-size: 1rem !important;
+    padding: 14px !important;
+}
+
+/* SMALLER CARDS FOR HUB NAVIGATION */
+.hub-nav-row .playlist-hub-card {
+    min-height: 65px !important;
+    font-size: 0.95rem !important;
+    padding: 10px !important;
+}
+     
