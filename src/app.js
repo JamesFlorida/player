@@ -563,6 +563,22 @@ console.log(localDanceDatabase);
                 container.innerHTML = '';
             }
         }
+        
+        function openUserPlaylists() {
+            // Placeholder for Phase 2 scaffolding
+            alert("User Playlists (coming soon)");
+        }
+
+        function createNewUserPlaylist() {
+            // Placeholder for Phase 2 scaffolding
+            alert("Create Playlist (coming soon)");
+        }
+
+        function openEventsView() {
+            // Placeholder for Phase 3
+            alert("Events (coming soon)");
+        }
+
 
         /* ============================================
            CACHE BUSTER RELOAD
