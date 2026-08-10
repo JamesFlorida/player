@@ -301,17 +301,64 @@ console.log(localDanceDatabase);
         function handleLiveSearchInput() {
             const searchBox = document.getElementById('danceSearchInput');
             activeSearchQueryString = searchBox.value.toLowerCase().trim();
-            if (activeSearchQueryString !== "") {
+
+            // If search is empty → restore normal hub
+            if (!activeSearchQueryString) {
                 selectedActivePlaylistGroup = null;
-                document.getElementById('navbarReturnTrigger').style.display = 'block';
-                document.getElementById('applicationHeaderTitle').innerText = 'Search Results';
-            } else if (activeSearchQueryString === "" && selectedActivePlaylistGroup === null) {
                 document.getElementById('navbarReturnTrigger').style.display = 'none';
                 document.getElementById('applicationHeaderTitle').innerText =
                     venueConfig.headerTitle || venueConfig.name || 'LineDance Player';
+
+                renderPlaylistHubMenu();
+                return;
             }
-            renderApplicationInterface();
+
+            // Filter dances by name or choreographer
+            const matches = localDanceDatabase.filter(d =>
+                (d.name || "").toLowerCase().includes(activeSearchQueryString) ||
+                (d.choreographer || "").toLowerCase().includes(activeSearchQueryString)
+            );
+
+            // Show filtered dances ON THE HUB SCREEN
+            renderSearchResultsOnHub(matches);
         }
+        function renderSearchResultsOnHub(matches) {
+            const viewport = document.getElementById("masterApplicationViewport");
+
+            if (!matches.length) {
+                viewport.innerHTML = `
+                    <p style="text-align:center;color:#aaa;margin-top:20px;">
+                        No matching dances found.
+                    </p>
+                `;
+                return;
+            }
+
+            viewport.innerHTML = `
+                <div class="playlist-container">
+                    ${matches.map(d => `
+                        <div class="hub-playlist-card" onclick="openSpecificDanceFromSearch('${d.id}')">
+                            <div class="hub-playlist-name">${d.name}</div>
+                            <div class="hub-playlist-count">${d.choreographer}</div>
+                        </div>
+                    `).join("")}
+                </div>
+            `;
+        }
+        function openSpecificDanceFromSearch(danceId) {
+            const dance = localDanceDatabase.find(d => d.id === danceId);
+            if (!dance) return;
+
+            // Show back button
+            document.getElementById("navbarReturnTrigger").style.display = "block";
+
+            // Set header title
+            document.getElementById("applicationHeaderTitle").textContent = dance.name;
+
+            // Render dance list screen with ONLY this dance
+            renderDanceCardsList([dance], document.getElementById("masterApplicationViewport"));
+        }
+
 
         /* ============================================
            MAIN RENDER FUNCTION
