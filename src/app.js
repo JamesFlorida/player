@@ -368,26 +368,7 @@ console.log(localDanceDatabase);
             if (!viewport) return;
             viewport.innerHTML = '';
 
-            // ============================
-            // SEARCH MODE
-            // ============================
-            if (activeSearchQueryString !== "") {
-                const matchedTracks = localDanceDatabase.filter(track => {
-                    const danceName = (track.name || "").toLowerCase();
-                    const choreographer = (track.choreographer || "").toLowerCase();
-                    return danceName.includes(activeSearchQueryString) ||
-                           choreographer.includes(activeSearchQueryString);
-        });
-
-        if (matchedTracks.length === 0) {
-            viewport.innerHTML =
-                '<p style="text-align:center;color:#aaa;margin-top:20px;">No matching dances found on the roster.</p>';
-            return;
-        }
-
-        renderDanceCardsList(matchedTracks, viewport);
-        return;   // ⭐ IMPORTANT — prevents falling through to other modes
-    }
+           
        // ============================
         // DAY VIEW MODE
         // ============================
