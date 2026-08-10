@@ -557,5 +557,3 @@ window.handleLiveSearchInput = handleLiveSearchInput;
 window.setDayFilter = setDayFilter;
 window.setDifficultyFilter = setDifficultyFilter;
 window.forceCacheBusterReload = forceCacheBusterReload;
-
-        active
