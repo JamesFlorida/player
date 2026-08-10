@@ -501,18 +501,22 @@ console.log(localDanceDatabase);
     return;
 }
  
-
-      
-
-    // ============================
-    // SPECIFIC PLAYLIST VIEW
-    // ============================
+// ============================
+// SPECIFIC PLAYLIST VIEW
+// ============================
+if (selectedActivePlaylistGroup !== null) {
     const filteredTracks = localDanceDatabase.filter(
         track => track.playlist === selectedActivePlaylistGroup
     );
-        renderDanceCardsList(filteredTracks, viewport);
-        updateHubVisibility();
+
+    renderDanceCardsList(filteredTracks, viewport);
+    updateHubVisibility();
+}
 }   // closes renderApplicationInterface()
+
+      
+
+
 
     
 
