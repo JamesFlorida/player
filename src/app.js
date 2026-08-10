@@ -500,4 +500,61 @@ function shutOverlayViewer() {
 function updateHubVisibility() {
     const isHub =
         selectedActivePlaylistGroup === null &&
+        activeDayView === null &&
+        activeDifficultyView === null &&
+        activeSearchQueryString === "";
+
+    const filterRow = document.querySelector('.hub-filter-row');
+    const searchRow = document.querySelector('.hub-search-row');
+    const navRow = document.querySelector('.hub-nav-row');
+
+    if (filterRow) filterRow.style.display = isHub ? 'flex' : 'none';
+    if (searchRow) filterRow.style.display = isHub ? 'flex' : 'none';
+    if (navRow) navRow.style.display = isHub ? 'grid' : 'none';
+}
+
+/* ============================================
+   USER PLAYLISTS (PLACEHOLDER)
+============================================ */
+function openUserPlaylists() {
+    alert("User Playlists (coming soon)");
+}
+
+function createNewUserPlaylist() {
+    alert("Create Playlist (coming soon)");
+}
+
+function openEventsView() {
+    alert("Events (coming soon)");
+}
+
+/* ============================================
+   CACHE BUSTER RELOAD
+============================================ */
+function forceCacheBusterReload() {
+    const uniqueTimestamp = new Date().getTime();
+    window.location.href =
+        window.location.origin + window.location.pathname + '?v=' + uniqueTimestamp;
+}
+
+/* ============================================
+   APP BOOTSTRAP
+============================================ */
+window.onload = function () {
+    initializeVenueBranding();
+    renderApplicationInterface();
+};
+
+/* ============================================
+   GLOBAL EXPORTS
+============================================ */
+window.launchMediaOverlay = launchMediaOverlay;
+window.shutOverlayViewer = shutOverlayViewer;
+window.navigateToPlaylistHubMenu = navigateToPlaylistHubMenu;
+window.openSpecificPlaylistView = openSpecificPlaylistView;
+window.handleLiveSearchInput = handleLiveSearchInput;
+window.setDayFilter = setDayFilter;
+window.setDifficultyFilter = setDifficultyFilter;
+window.forceCacheBusterReload = forceCacheBusterReload;
+
         active
