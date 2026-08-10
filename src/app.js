@@ -239,8 +239,9 @@ console.log(localDanceDatabase);
             activeDifficultyFilter = "";
 
             // Reset search
-            activeSearchQueryString = "";
-            document.getElementById('danceSearchInput').value = "";
+           const searchInput = document.getElementById('danceSearchInput');
+                if (searchInput) searchInput.value = "";
+
 
             // Show day filter bar
             const filterBar = document.getElementById('dayFilterBar');
