@@ -322,6 +322,7 @@ console.log(localDanceDatabase);
             // Show filtered dances ON THE HUB SCREEN
             renderSearchResultsOnHub(matches);
         }
+
         function renderSearchResultsOnHub(matches) {
             const viewport = document.getElementById("masterApplicationViewport");
 
