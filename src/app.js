@@ -413,13 +413,17 @@ console.log(localDanceDatabase);
         // ============================
         // PLAYLIST HUB
         // ============================
-        if (selectedActivePlaylistGroup === null && activeDayView === null && activeDifficultyView === null) {
+              // ============================
+        // PLAYLIST HUB (NEW LAYOUT)
+        // ============================
+        if (selectedActivePlaylistGroup === null &&
+            activeDayView === null &&
+            activeDifficultyView === null) {
 
-            // Show day filter bar
+            // Show filter bars
             const filterBar = document.getElementById('dayFilterBar');
             if (filterBar) filterBar.style.display = 'block';
 
-            // Show difficulty dropdown
             const diffBar = document.getElementById('difficultyFilterBar');
             if (diffBar) diffBar.style.display = 'block';
 
@@ -429,29 +433,74 @@ console.log(localDanceDatabase);
             // Update header title
             document.getElementById('applicationHeaderTitle').innerText = "Playlists";
 
+        // Build playlist list
             let groupNames;
-
             if (venueConfig.playlistGroups && venueConfig.playlistGroups.length > 0) {
                 groupNames = [...venueConfig.playlistGroups];
             } else {
                 groupNames = [...new Set(localDanceDatabase.map(track => track.playlist || "General"))].sort();
             }
 
-            const grid = document.createElement('div');
-            grid.className = 'playlist-selection-grid';
-
-            groupNames.forEach(name => {
+    // Build playlist cards HTML
+            const playlistCardsHTML = groupNames.map(name => {
                 const count = localDanceDatabase.filter(t => t.playlist === name).length;
-                const card = document.createElement('div');
-                card.className = 'playlist-hub-card';
-                card.innerHTML = `<div>${name}</div><div class="playlist-track-counter">${count} Dances</div>`;
-                card.onclick = () => openSpecificPlaylistView(name);
-                grid.appendChild(card);
-            });
+                return `
+                    <div class="hub-playlist-card" onclick="openSpecificPlaylistView('${name}')">
+                        <div class="hub-playlist-name">${name}</div>
+                        <div class="hub-playlist-count">${count} dances</div>
+                    </div>
+                `;
+            }).join('');
 
-            viewport.appendChild(grid);
-            return;
-        }
+            // Insert full hub screen layout
+            viewport.innerHTML = `
+                <div class="hub-screen">
+
+            <!-- Filters -->
+            <div class="hub-filter-row">
+                <select id="daySelect" onchange="setDayFilter(this.value)">
+                    <option value="ALL">All Days</option>
+                    <option value="Tuesday">Tuesday</option>
+                    <option value="Wednesday">Wednesday</option>
+                    <option value="Weekend">Weekend</option>
+                    <option value="Other">Other</option>
+                </select>
+
+                <select id="difficultySelect" onchange="setDifficultyFilter(this.value)">
+                    <option value="">Difficulty</option>
+                    <option value="Beginner">Beginner</option>
+                    <option value="Improver">Improver</option>
+                    <option value="Intermediate">Intermediate</option>
+                    <option value="Advanced">Advanced</option>
+                </select>
+            </div>
+
+            <!-- Search + Sync -->
+            <div class="hub-search-row">
+                <input type="text" id="danceSearchInput"
+                       placeholder="Search playlists..."
+                       oninput="handleLiveSearchInput()">
+                <button class="sync-btn" onclick="forceCacheBusterReload()">Sync</button>
+            </div>
+
+            <!-- Navigation -->
+            <div class="hub-nav-row">
+                <div class="hub-nav-card" onclick="openUserPlaylists()">My Playlists</div>
+                <div class="hub-nav-card" onclick="createNewUserPlaylist()">Create Playlist</div>
+                <div class="hub-nav-card" onclick="openEventsView()">Events</div>
+            </div>
+
+            <!-- Scrollable Playlist List -->
+            <div class="playlist-container">
+                ${playlistCardsHTML}
+            </div>
+
+        </div>
+    `;
+
+    return;
+}
+ 
 
       
 
