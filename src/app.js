@@ -499,10 +499,10 @@ function shutOverlayViewer() {
 ============================================ */
 function updateHubVisibility() {
     const isHub =
-        selectedActivePlaylistGroup === null &&
-        activeDayView === null &&
-        activeDifficultyView === null &&
-        activeSearchQueryString === "";
+    selectedActivePlaylistGroup === null &&
+    activeDayView === null &&
+    activeDifficultyView === null;
+
 
     const filterRow = document.querySelector('.hub-filter-row');
     const searchRow = document.querySelector('.hub-search-row');
