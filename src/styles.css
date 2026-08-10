@@ -1,273 +1,264 @@
- /* ============================================
-           VENUE THEME VARIABLES (BASE)
-           - These are "internal" CSS variables.
-           - JS will set them from venueConfig.theme.
-           ============================================ */
-        :root {
-            --brand-green: #2ecc71;   /* Default generic green */
-            --dark-gray: #1e1e1e;    /* Default dark background */
-            --card-bg: #2b2b2b;      /* Default card background */
-            --btn-blue: #34495e;     /* Default button color */
+/* ============================================
+   GLOBAL THEME VARIABLES (BASE)
+   ============================================ */
+:root {
+    --brand-green: #2ecc71;   /* Default generic green */
+    --dark-gray: #1e1e1e;    /* Default dark background */
+    --card-bg: #2b2b2b;      /* Default card background */
+    --btn-blue: #34495e;     /* Default button color */
 
-            /* Background image (optional)
-               JS will set this to url(...) if provided. */
-            --venue-bg-image: none;
-        }
+    --venue-bg-image: none;  /* JS may override */
+}
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: var(--dark-gray);
-            background-image: var(--venue-bg-image); /* Optional venue background */
-            background-size: cover;
-            background-repeat: no-repeat;
-            color: white;
-            margin: 0;
-            padding: 0;
-            -webkit-tap-highlight-color: transparent;
-        }
+/* ============================================
+   GLOBAL BODY
+   ============================================ */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--dark-gray);
+    background-image: var(--venue-bg-image);
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: white;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+}
 
-        .header-bar {
-            background-color: var(--brand-green);
-            padding: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 1.3rem;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            height: 60px;
-            box-sizing: border-box;
-            color: #121212;
-        }
+/* ============================================
+   GLOBAL HEADER BAR
+   ============================================ */
+.header-bar {
+    background-color: #333; /* Neutral global layout color */
+    padding: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.3rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    height: 60px;
+    box-sizing: border-box;
+    color: #fff;
+}
 
-        .back-nav-btn {
-            position: absolute;
-            left: 15px;
-            background: rgba(0,0,0,0.7);
-            border: 1px solid #444;
-            color: white;
-            padding: 6px 14px;
-            border-radius: 6px;
-            font-size: 0.9rem;
-            font-weight: bold;
-            cursor: pointer;
-            display: none;
-        }
+/* Back button layout */
+.back-nav-btn {
+    position: absolute;
+    left: 15px;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: none;
+}
 
-        .app-container {
-            padding: 20px;
-            max-width: 650px;
-            margin: 0 auto;
-            box-sizing: border-box;
-        }
+/* ============================================
+   GLOBAL APP CONTAINER
+   ============================================ */
+.app-container {
+    padding: 20px;
+    max-width: 650px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
 
-        .playlist-selection-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
-            padding-top: 10px;
-        }
+/* ============================================
+   GLOBAL PLAYLIST HUB GRID
+   ============================================ */
+.playlist-selection-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    padding-top: 10px;
+}
 
-        .playlist-hub-card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 30px 20px;
-            text-align: center;
-            font-size: 1.2rem;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
-            border-bottom: 4px solid var(--brand-green);
-            min-height: 100px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            box-sizing: border-box;
-        }
+/* ============================================
+   GLOBAL PLAYLIST HUB CARD LAYOUT
+   ============================================ */
+.playlist-hub-card {
+    border-radius: 12px;
+    padding: 30px 20px;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
 
-        .playlist-track-counter {
-            font-size: 0.85rem;
-            color: #aaa;
-            margin-top: 8px;
-            font-weight: normal;
-        }
+.playlist-track-counter {
+    font-size: 0.85rem;
+    margin-top: 8px;
+    font-weight: normal;
+}
 
-        .dance-entry-card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 22px;
-            margin-bottom: 20px;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.4);
-            border-left: 5px solid var(--brand-green);
-        }
+/* ============================================
+   GLOBAL DANCE LIST LAYOUT
+   ============================================ */
+.dance-entry-card {
+    border-radius: 12px;
+    padding: 22px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
 
-        .title-line {
-            font-size: 1.3rem;
-            font-weight: bold;
-            color: #ffffff;
-            margin-bottom: 6px;
-            text-align: center;
-        }
+.title-line {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-bottom: 6px;
+    text-align: center;
+}
 
-        .meta-line {
-            font-size: 0.95rem;
-            color: #b3b3b3;
-            margin-bottom: 22px;
-            text-align: center;
-            line-height: 1.4;
-        }
+.meta-line {
+    font-size: 0.95rem;
+    margin-bottom: 22px;
+    text-align: center;
+    line-height: 1.4;
+}
 
-        .button-bar-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-        }
+/* Button grid */
+.button-bar-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
 
-        .action-touch-btn {
-            background-color: var(--btn-blue);
-            color: white;
-            border: none;
-            padding: 14px 2px;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 0.85rem;
-            cursor: pointer;
-            text-align: center;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.2);
-            transition: background 0.1s;
-            text-decoration: none;
-            display: block;
-        }
+/* Action buttons */
+.action-touch-btn {
+    padding: 14px 2px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 0.85rem;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    box-sizing: border-box;
+}
 
-        .action-touch-btn:active {
-            background-color: var(--brand-green);
-            color: #121212;
-        }
+.action-touch-btn.disabled {
+    cursor: not-allowed;
+    pointer-events: none;
+}
 
-        .action-touch-btn.disabled {
-            background-color: #333;
-            color: #666;
-            cursor: not-allowed;
-            box-shadow: none;
-            pointer-events: none;
-        }
+/* ============================================
+   GLOBAL OVERLAY LAYOUT
+   ============================================ */
+.inapp-overlay-window {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    z-index: 99999;
+}
 
-        .inapp-overlay-window {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: black;
-            z-index: 99999;
-        }
+.overlay-control-header {
+    height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
 
-        .overlay-control-header {
-            background: #111111;
-            height: 55px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 20px;
-            box-sizing: border-box;
-            border-bottom: 1px solid #333;
-        }
+.overlay-title {
+    font-weight: bold;
+    font-size: 1rem;
+}
 
-        .overlay-title {
-            font-weight: bold;
-            color: #fff;
-            font-size: 1rem;
-        }
+.done-close-btn {
+    padding: 9px 20px;
+    font-weight: bold;
+    font-size: 0.95rem;
+    border-radius: 6px;
+    cursor: pointer;
+}
 
-        .done-close-btn {
-            background: var(--brand-green);
-            color: #121212;
-            border: none;
-            padding: 9px 20px;
-            font-weight: bold;
-            font-size: 0.95rem;
-            border-radius: 6px;
-            cursor: pointer;
-        }
+.overlay-viewport-iframe,
+object {
+    width: 100%;
+    height: calc(100% - 55px);
+    border: none;
+}
 
-        .overlay-viewport-iframe,
-        object {
-            width: 100%;
-            height: calc(100% - 55px);
-            border: none;
-            background: white;
-        }
+/* ============================================
+   OPTIONAL GLOBAL ELEMENTS
+   ============================================ */
+.venue-banner {
+    max-width: 100%;
+    display: block;
+    margin: 0 auto;
+}
 
-        /* Venue banner at top (optional) */
-        .venue-banner {
-            max-width: 100%;
-            display: block;
-            margin: 0 auto;
-        }
+.venue-instructor-photo {
+    max-width: 100%;
+    border-radius: 12px;
+    margin: 10px auto 0 auto;
+    display: block;
+}
 
-        /* Instructor photo (optional) */
-        .venue-instructor-photo {
-            max-width: 100%;
-            border-radius: 12px;
-            margin: 10px auto 0 auto;
-            display: block;
-        }
+.venue-watermark {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    opacity: 0.15;
+    width: 120px;
+    pointer-events: none;
+}
 
-        /* Watermark logo (optional) */
-        .venue-watermark {
-            position: fixed;
-            bottom: 10px;
-            right: 10px;
-            opacity: 0.15;
-            width: 120px;
-            pointer-events: none;
-        }
+.venue-footer {
+    text-align: center;
+    font-size: 0.85rem;
+    padding: 10px 0 20px 0;
+}
 
-        /* Footer badge (optional) */
-        .venue-footer {
-            text-align: center;
-            color: #b3b3b3;
-            font-size: 0.85rem;
-            padding: 10px 0 20px 0;
-        }
+.venue-splash-screen {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 100000;
+}
 
-        /* Splash screen (optional) */
-        .venue-splash-screen {
-            position: fixed;
-            inset: 0;
-            background: #000;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 100000;
-        }
+.venue-splash-screen img {
+    max-width: 80%;
+    margin-bottom: 20px;
+}
 
-        .venue-splash-screen img {
-            max-width: 80%;
-            margin-bottom: 20px;
-        }
+.venue-splash-screen span {
+    font-size: 1.1rem;
+    font-weight: bold;
+}
 
-        .venue-splash-screen span {
-            color: #fff;
-            font-size: 1.1rem;
-            font-weight: bold;
-        }
+/* ============================================
+   RESPONSIVE HEADER
+   ============================================ */
+@media (max-width: 380px) {
+    .header-bar {
+        height: 48px !important;
+        padding: 10px !important;
+        font-size: 1.1rem !important;
+    }
+}
 
-        @media (max-width: 380px) {
-            .header-bar {
-                height: 48px !important;
-                padding: 10px !important;
-                font-size: 1.1rem !important;
-            }
-        }
- /* ============================================
-   HUB FILTER ROW — two dropdowns side-by-side
+/* ============================================
+   HUB FILTER ROW — GLOBAL LAYOUT
    ============================================ */
 .hub-filter-row {
     display: flex;
@@ -277,7 +268,6 @@
     padding: 8px 16px 0 16px;
 }
 
-/* Make dropdowns equal width */
 #daySelect,
 #difficultySelect {
     flex: 1;
@@ -285,7 +275,7 @@
 }
 
 /* ============================================
-   HUB SEARCH ROW — search + sync
+   HUB SEARCH ROW — GLOBAL LAYOUT
    ============================================ */
 .hub-search-row {
     display: flex;
@@ -299,7 +289,7 @@
 }
 
 /* ============================================
-   HUB NAV ROW — three cards
+   HUB NAV ROW — GLOBAL LAYOUT
    ============================================ */
 .hub-nav-row {
     display: grid;
@@ -307,11 +297,10 @@
     gap: 16px;
     padding: 16px;
 }
- /* ============================================
-   HUB POLISH FIXES — GLOBAL OVERRIDES
-   ============================================ */
 
-/* GLOBAL DARK THEME FOR INPUTS + DROPDOWNS */
+/* ============================================
+   GLOBAL POLISH OVERRIDES
+   ============================================ */
 select.sync-btn,
 input#danceSearchInput {
     background-color: #111 !important;
@@ -326,24 +315,20 @@ input#danceSearchInput:focus {
     box-shadow: 0 0 10px rgba(255, 180, 60, 0.6) !important;
 }
 
-/* GLOBAL BUTTON SIZE REDUCTION */
 .sync-btn {
     height: 42px !important;
     font-size: 0.85rem !important;
     padding: 0 12px !important;
 }
 
-/* GLOBAL PLAYLIST HUB CARD SIZE REDUCTION */
 .playlist-hub-card {
     min-height: 80px !important;
     font-size: 1rem !important;
     padding: 14px !important;
 }
 
-/* SMALLER CARDS FOR HUB NAVIGATION */
 .hub-nav-row .playlist-hub-card {
     min-height: 65px !important;
     font-size: 0.95rem !important;
     padding: 10px !important;
 }
-     
