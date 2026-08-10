@@ -708,4 +708,3 @@ if (selectedActivePlaylistGroup !== null) {
         window.setDayFilter = setDayFilter;
         window.setDifficultyFilter = setDifficultyFilter;
         window.forceCacheBusterReload = forceCacheBusterReload;
-
