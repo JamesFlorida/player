@@ -23,12 +23,9 @@ VENUE ASSETS: TOUCH ICON (HOME SCREEN ICON)
     <link rel="stylesheet" href="/player/src/styles.css">
     <link rel="stylesheet" href="/player/src/venues/Stockyard/stockyard.css?v=6">
 
-
-
     <script type="module" src="/player/src/app.js"></script>
     <script type="module" src="/player/src/venues/Stockyard/danceData-stockyard.js"></script>
 
-    
     <!-- next line added to suppress favicon error --> 
     <link rel="icon" href="data:,"> 
 
@@ -38,19 +35,18 @@ VENUE ASSETS: TOUCH ICON (HOME SCREEN ICON)
     <!--
     ============================================
     OPTIONAL SPLASH SCREEN
-    - Will be shown briefly if venueConfig.assets.splashImageUrl is set.
-    - PNG or SVG, recommended width: 600–1200px.
     ============================================
     -->
     <div id="venueSplash" class="venue-splash-screen" style="display:none;">
         <img id="venueSplashImage" src="" alt="Venue Splash">
         <span id="venueSplashText">Loading LineDance Player...</span>
     </div>
+
     <header class="venue-header">
-    <img src="images/Stockyard-header-Bull-Logo.png"
-         alt="The Stockyard Logo"
-         class="stockyard-logo">
-   </header>
+        <img src="images/Stockyard-header-Bull-Logo.png"
+             alt="The Stockyard Logo"
+             class="stockyard-logo">
+    </header>
 
     <div class="header-bar">
         <button class="back-nav-btn"
@@ -62,96 +58,10 @@ VENUE ASSETS: TOUCH ICON (HOME SCREEN ICON)
     <!--
     ============================================
     VENUE BANNER (OPTIONAL)
-    - PNG or SVG.
-    - Recommended width: 600–1200px.
-    - If no bannerUrl is provided, this will be hidden.
     ============================================
     -->
     <div class="app-container" style="padding-bottom: 0;">
         <img id="venueBanner" class="venue-banner" src="" alt="Venue Banner" style="display:none;">
-    </div>
-
-    <!-- ============================================
-     HUB FILTER BAR (NEW LAYOUT)
-     Day Dropdown + Difficulty Dropdown
-     ============================================ -->
-<div class="app-container hub-filter-row">
-    <select id="daySelect" class="sync-btn" onchange="setDayFilter(this.value)">
-        <option value="ALL">All Days</option>
-        <option value="Tuesday">Tuesday</option>
-        <option value="Wednesday">Wednesday</option>
-        <option value="Weekend">Weekend</option>
-        <option value="Other">Other</option>
-    </select>
-
-    <select id="difficultySelect" class="sync-btn" onchange="setDifficultyFilter(this.value)">
-        <option value="">Difficulty</option>
-        <option value="Beginner">Beginner</option>
-        <option value="Improver">Improver</option>
-        <option value="Intermediate">Intermediate</option>
-        <option value="Advanced">Advanced</option>
-    </select>
-</div>
-
-<!-- ============================================
-     SEARCH + SYNC ROW (NEW LAYOUT)
-     ============================================ -->
-<div class="app-container hub-search-row">
-    <input type="text"
-           id="danceSearchInput"
-           placeholder=""
-           oninput="handleLiveSearchInput()">
-
-    <button class="sync-btn" onclick="forceCacheBusterReload()">
-        Sync
-    </button>
-</div>
-
-<!-- ============================================
-     HUB NAVIGATION ROW (NEW)
-     My Playlists + Create Playlist + Events
-     ============================================ -->
-<div class="app-container hub-nav-row">
-    <div class="playlist-hub-card" onclick="openUserPlaylists()">
-        <div>My Playlists</div>
-    </div>
-
-    <div class="playlist-hub-card" onclick="createNewUserPlaylist()">
-        <div>Create Playlist</div>
-    </div>
-
-    <div class="playlist-hub-card" onclick="openEventsView()">
-        <div>Events</div>
-    </div>
-</div>
-  
-
-
-
-
-    <!--
-    ============================================
-    INSTRUCTOR PHOTO (OPTIONAL)
-    - JPG or PNG.
-    - Recommended height: 400–800px.
-    - If no instructorPhotoUrl is provided, this will be hidden.
-    ============================================
-    -->
-    <div class="app-container instructor-photo-row">
-    <img id="venueInstructorPhoto" class="venue-instructor-photo" src="" alt="Instructor">
-    </div>
-
-
-    <!--
-    ============================================
-    EMAIL / FEEDBACK BANNER
-    - Text will be set from venueConfig.email and venueConfig.name.
-    ============================================
-    -->
-    <div style="text-align: center; margin: 15px auto; padding: 0 20px; max-width: 650px; box-sizing: border-box;">
-        <span id="venueEmailBanner"
-              style="color: #b3b3b3; font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 0.95rem; font-weight: bold; letter-spacing: 0.3px;">
-        </span>
     </div>
 
     <!-- MAIN APP VIEWPORT -->
@@ -165,11 +75,10 @@ VENUE ASSETS: TOUCH ICON (HOME SCREEN ICON)
 
     <!-- FOOTER BADGE (OPTIONAL) -->
     <div id="venueFooter" class="venue-footer"></div>
+
     <link rel="stylesheet" href="/player/src/styles.css">
    
 </body>
 </html>
 <!-- rebuild -->
 <!-- rebuild poke -->
-
-
