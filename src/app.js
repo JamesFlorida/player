@@ -499,19 +499,19 @@ function shutOverlayViewer() {
 ============================================ */
 function updateHubVisibility() {
     const isHub =
-    selectedActivePlaylistGroup === null &&
-    activeDayView === null &&
-    activeDifficultyView === null;
-
+        selectedActivePlaylistGroup === null &&
+        activeDayView === null &&
+        activeDifficultyView === null;
 
     const filterRow = document.querySelector('.hub-filter-row');
     const searchRow = document.querySelector('.hub-search-row');
     const navRow = document.querySelector('.hub-nav-row');
 
     if (filterRow) filterRow.style.display = isHub ? 'flex' : 'none';
-    if (searchRow) filterRow.style.display = isHub ? 'flex' : 'none';
+    if (searchRow) searchRow.style.display = isHub ? 'flex' : 'none';
     if (navRow) navRow.style.display = isHub ? 'grid' : 'none';
 }
+
 
 /* ============================================
    USER PLAYLISTS (PLACEHOLDER)
