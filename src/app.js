@@ -304,7 +304,6 @@ console.log(localDanceDatabase);
 
             // If search is empty → restore normal hub
             if (!activeSearchQueryString) {
-                selectedActivePlaylistGroup = null;
                 document.getElementById('navbarReturnTrigger').style.display = 'none';
                 document.getElementById('applicationHeaderTitle').innerText =
                     venueConfig.headerTitle || venueConfig.name || 'LineDance Player';
