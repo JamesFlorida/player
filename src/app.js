@@ -618,7 +618,6 @@ if (selectedActivePlaylistGroup !== null) {
                 container.innerHTML = '';
             }
         }
-
         function updateHubVisibility() {
             const isHub =
                 selectedActivePlaylistGroup === null &&
@@ -626,11 +625,16 @@ if (selectedActivePlaylistGroup !== null) {
                 activeDifficultyView === null &&
                 activeSearchQueryString === "";
 
-            // Show hub controls ONLY on the hub
-            document.querySelector('.hub-filter-row').style.display = isHub ? 'flex' : 'none';
-            document.querySelector('.hub-search-row').style.display = isHub ? 'flex' : 'none';
-            document.querySelector('.hub-nav-row').style.display = isHub ? 'grid' : 'none';
+            const filterRow = document.querySelector('.hub-filter-row');
+            const searchRow = document.querySelector('.hub-search-row');
+            const navRow = document.querySelector('.hub-nav-row');
+
+            if (filterRow) filterRow.style.display = isHub ? 'flex' : 'none';
+            if (searchRow) searchRow.style.display = isHub ? 'flex' : 'none';
+            if (navRow) navRow.style.display = isHub ? 'grid' : 'none';
         }
+
+        
 
         
         function openUserPlaylists() {
