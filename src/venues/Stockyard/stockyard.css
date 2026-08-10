@@ -1,8 +1,9 @@
 /* ========================================================= */
-/* Stockyard Core Styling                                    */
+/* Stockyard — Venue Branding Only                           */
 /* ========================================================= */
 
-venue-header {
+/* Header + Logo */
+.venue-header {
     background-color: #111;
     text-align: center;
     padding: 12px 0;
@@ -18,7 +19,8 @@ venue-header {
     transform: scale(1.05);
 }
 
-body .header-bar {
+/* Header Bar */
+.header-bar {
     background-color: #71716F;
     color: #fff;
     padding: 12px;
@@ -29,10 +31,7 @@ body .header-bar {
     border-bottom: 3px solid #000;
 }
 
-.app-container {
-    background-color: #111 !important;
-}
-
+/* Back Button */
 .back-nav-btn {
     background-color: #000;
     color: #fff;
@@ -42,6 +41,7 @@ body .header-bar {
     font-weight: bold;
 }
 
+/* Divider Glow */
 .header-divider {
     width: 100%;
     height: 4px;
@@ -51,7 +51,13 @@ body .header-bar {
     opacity: 0.8;
 }
 
-div.playlist-tile {
+/* App Background */
+.app-container {
+    background-color: #111 !important;
+}
+
+/* Playlist Tiles (Venue Theme) */
+.playlist-tile {
     background-color: #1a1a1a;
     border: 2px solid #800000;
     border-radius: 8px;
@@ -61,27 +67,19 @@ div.playlist-tile {
     transition: transform 0.1s ease-in-out;
 }
 
-div.playlist-tile:hover {
+.playlist-tile:hover {
     transform: scale(1.03);
     border-color: #800000;
     box-shadow: 0 0 14px rgba(255, 180, 60, 0.5);
 }
 
-.playlist-section,
-.playlist-grid {
-    background: transparent !important;
-}
-
+/* Overlay Windows */
 .inapp-overlay-window,
 .overlay-viewport-iframe {
     background-color: #111 !important;
 }
 
-.playlist-section *,
-.playlist-grid * {
-    border-color: #800000 !important;
-}
-
+/* Dance Data Panels (Venue Theme) */
 .dance-data-container,
 .dance-data-wrapper,
 .dance-data-panel,
@@ -89,13 +87,6 @@ div.playlist-tile:hover {
 .dance-data-content,
 .dance-data-body {
     background-color: transparent !important;
-}
-
-.overlay-content,
-.overlay-body,
-.overlay-inner,
-.overlay-frame {
-    background-color: #111 !important;
 }
 
 .dance-data-container *,
@@ -111,61 +102,19 @@ div.playlist-tile:hover {
     border-color: #800000 !important;
 }
 
-div.playlist-tile,
-.playlist-tile,
-.playlist-grid div,
-.playlist-section div {
-    border: 2px solid #800000 !important;
+/* Dance Entry Cards */
+.dance-entry-card {
+    border-left: 5px solid #800000 !important;
+    background-color: #1a1a1a !important;
+    color: #fff !important;
 }
 
-.search-bar-row {
-    padding-bottom: 0;
-    display: flex;
-    gap: 10px;
-    align-items: center;
+/* Instructor Photo (Venue Rule) */
+.venue-instructor-photo {
+    display: none;
 }
 
-input#danceSearchInput {
-    flex: 1;
-    padding: 14px;
-    border-radius: 8px;
-    border: 2px solid #800000;
-    background-color: #111;
-    color: #fff;
-    font-size: 1rem;
-    box-sizing: border-box;
-    height: 50px;
-    box-shadow: 0 0 6px rgba(255, 180, 60, 0.4);
-}
-
-input#danceSearchInput:focus {
-    outline: none;
-    border-color: #ffcc88;
-    box-shadow: 0 0 10px rgba(255, 180, 60, 0.6);
-}
-
-button.sync-btn {
-    background-color: #800000;
-    color: #fff;
-    border: 2px solid #ffcc88;
-    padding: 0 16px;
-    border-radius: 8px;
-    font-weight: bold;
-    font-size: 0.95rem;
-    cursor: pointer;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    white-space: nowrap;
-    box-shadow: 0 0 10px rgba(255, 180, 60, 0.5);
-}
-
-.sync-btn:hover {
-    background-color: #800000;
-    box-shadow: 0 0 14px rgba(255, 180, 60, 0.7);
-}
-
+/* Venue Feedback Line */
 .venue-feedback-line {
     color: #ffcc88;
     text-shadow: 0 0 6px rgba(255, 180, 60, 0.6);
@@ -173,110 +122,7 @@ button.sync-btn {
     text-align: center;
 }
 
-.instructor-photo-row {
-    padding-top: 0;
-}
-
-.venue-instructor-photo {
-    display: none;
-}
-
-.playlist-hub-card {
-    border: 2px solid #800000 !important;
-    background-color: #1a1a1a !important;
-    color: #fff !important;
-    border-radius: 8px !important;
-    box-shadow: 0 0 10px rgba(255, 180, 60, 0.35) !important;
-    padding: 12px !important;
-    transition: transform 0.1s ease-in-out !important;
-}
-
-.playlist-hub-card:hover {
-    transform: scale(1.03) !important;
-    border-color: #800000 !important;
-    box-shadow: 0 0 14px rgba(255, 180, 60, 0.5) !important;
-}
-
-.dance-entry-card {
-    border-left: 5px solid #800000 !important;
-    background-color: #1a1a1a !important;
-    color: #fff !important;
-}
-
-/* ========================================================= */
-/* Background — Pure Black                                   */
-/* ========================================================= */
-
+/* Pure Black Background */
 body {
     background-color: #000 !important;
-}
-/* ============================
-   NEW HUB SCREEN STYLING
-   ============================ */
-
-.hub-screen {
-    padding: 20px;
-}
-
-.hub-filter-row select,
-.hub-search-row input {
-    background-color: #222;
-    color: #fff;
-    border: 1px solid #444;
-    padding: 10px;
-    border-radius: 6px;
-    width: 48%;
-}
-
-.hub-search-row button.sync-btn {
-    background-color: #800000;
-    color: #fff;
-    border: 2px solid #ffcc88;
-    padding: 10px 16px;
-    border-radius: 8px;
-    font-weight: bold;
-}
-
-.hub-nav-row {
-    display: flex;
-    gap: 10px;
-    margin-top: 15px;
-}
-
-.hub-nav-card {
-    flex: 1;
-    background-color: #1a1a1a;
-    color: #fff;
-    padding: 14px;
-    text-align: center;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 0 10px rgba(255, 180, 60, 0.35);
-}
-
-.hub-playlist-card {
-    background-color: #1a1a1a;
-    color: #fff;
-    padding: 14px;
-    margin-bottom: 10px;
-    border-radius: 8px;
-    cursor: pointer;
-    box-shadow: 0 0 10px rgba(255, 180, 60, 0.35);
-}
-
-.hub-playlist-name {
-    font-size: 1.1rem;
-    font-weight: bold;
-}
-
-.hub-playlist-count {
-    font-size: 0.9rem;
-    color: #ccc;
-}
-
-.playlist-container {
-    margin-top: 20px;
-    max-height: 60vh;
-    overflow-y: auto;
 }
