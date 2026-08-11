@@ -289,66 +289,36 @@ function renderSearchResultsOnHub(matches) {
     `;
 }
 
-function renderSimpleSearchCards(matches, containerElement) {
-    containerElement.innerHTML = "";
-
-    matches.forEach(track => {
-        const card = document.createElement('div');
-        card.className = 'dance-entry-card simple-search-card';
-        card.onclick = () => openDanceFromSearchToPlaylist(track.id);
-
-        card.innerHTML = `
-            <div class="title-line">${track.name} • By: ${track.choreographer}</div>
-            <div class="meta-line">Song: ${track.song} - ${track.artist}</div>
-            <div class="meta-line">(Playlist: ${track.playlist})</div>
-        `;
-
-        containerElement.appendChild(card);
-    });
-}
-
-
 /* ============================================
-   MAIN RENDERER (CLEANED)
+   MAIN RENDERER (CLEANED + CORRECTED)
 ============================================ */
 function renderApplicationInterface() {
     const viewport = document.getElementById('masterApplicationViewport');
     if (!viewport) return;
 
     viewport.innerHTML = '';
-/* SEARCH MODE */
-if (activeSearchQueryString && activeSearchQueryString.length > 0) {
 
-    // Keep hub rows visible
-    const filterBar = document.getElementById('dayFilterBar');
-    if (filterBar) filterBar.style.display = 'block';
+    /* --------------------------------------------
+       1. PLAYLIST VIEW (if user is inside a playlist)
+       -------------------------------------------- */
+    if (selectedActivePlaylistGroup !== null) {
 
-    const diffBar = document.getElementById('difficultyFilterBar');
-    if (diffBar) diffBar.style.display = 'block';
+        const filteredTracks = localDanceDatabase.filter(
+            track => track.playlist === selectedActivePlaylistGroup
+        );
 
-    const searchRow = document.querySelector('.hub-search-row');
-    if (searchRow) searchRow.style.display = 'flex';
+        document.getElementById('navbarReturnTrigger').style.display = 'block';
+        document.getElementById('applicationHeaderTitle').innerText = selectedActivePlaylistGroup;
 
-    const navRow = document.querySelector('.hub-nav-row');
-    if (navRow) navRow.style.display = 'flex';
+        renderDanceCardsList(filteredTracks, viewport);
+        updateHubVisibility();
+        return;
+    }
 
-    document.getElementById('navbarReturnTrigger').style.display = 'none';
-    document.getElementById('applicationHeaderTitle').innerText = "Search Results";
-
-    const matches = localDanceDatabase.filter(d =>
-        (d.name || "").toLowerCase().includes(activeSearchQueryString) ||
-        (d.choreographer || "").toLowerCase().includes(activeSearchQueryString)
-    );
-
-    renderSimpleSearchCards(matches, viewport);
-    updateHubVisibility(); // keeps search bar + hub rows visible
-    return;
-}
-
-    /* DAY VIEW */
+    /* --------------------------------------------
+       2. DAY VIEW
+       -------------------------------------------- */
     if (activeDayView !== null) {
-        const filterBar = document.getElementById('dayFilterBar');
-        if (filterBar) filterBar.style.display = 'none';
 
         document.getElementById('navbarReturnTrigger').style.display = 'block';
         document.getElementById('applicationHeaderTitle').innerText = activeDayView + " Dances";
@@ -367,13 +337,10 @@ if (activeSearchQueryString && activeSearchQueryString.length > 0) {
         return;
     }
 
-    /* DIFFICULTY VIEW */
+    /* --------------------------------------------
+       3. DIFFICULTY VIEW
+       -------------------------------------------- */
     if (activeDifficultyView !== null) {
-        const filterBar = document.getElementById('dayFilterBar');
-        if (filterBar) filterBar.style.display = 'none';
-
-        const diffBar = document.getElementById('difficultyFilterBar');
-        if (diffBar) diffBar.style.display = 'none';
 
         document.getElementById('navbarReturnTrigger').style.display = 'block';
         document.getElementById('applicationHeaderTitle').innerText =
@@ -395,90 +362,100 @@ if (activeSearchQueryString && activeSearchQueryString.length > 0) {
         return;
     }
 
-    /* PLAYLIST HUB */
-    if (selectedActivePlaylistGroup === null &&
-        activeDayView === null &&
-        activeDifficultyView === null) {
+    /* --------------------------------------------
+       4. HUB SCREEN (default)
+       -------------------------------------------- */
+    const filterBar = document.getElementById('dayFilterBar');
+    if (filterBar) filterBar.style.display = 'block';
 
-        const filterBar = document.getElementById('dayFilterBar');
-        if (filterBar) filterBar.style.display = 'block';
+    const diffBar = document.getElementById('difficultyFilterBar');
+    if (diffBar) diffBar.style.display = 'block';
 
-        const diffBar = document.getElementById('difficultyFilterBar');
-        if (diffBar) diffBar.style.display = 'block';
+    const searchRow = document.querySelector('.hub-search-row');
+    if (searchRow) searchRow.style.display = 'flex';
 
-        document.getElementById('navbarReturnTrigger').style.display = 'none';
-        document.getElementById('applicationHeaderTitle').innerText = "Playlists";
+    const navRow = document.querySelector('.hub-nav-row');
+    if (navRow) navRow.style.display = 'flex';
 
-        let groupNames;
-        if (venueConfig.playlistGroups?.length > 0) {
-            groupNames = [...venueConfig.playlistGroups];
-        } else {
-            groupNames = [...new Set(localDanceDatabase.map(track => track.playlist || "General"))].sort();
-        }
+    document.getElementById('navbarReturnTrigger').style.display = 'none';
+    document.getElementById('applicationHeaderTitle').innerText = "Playlists";
 
-        const playlistCardsHTML = groupNames.map(name => {
-            const count = localDanceDatabase.filter(t => t.playlist === name).length;
-            return `
-                <div class="hub-playlist-card" onclick="openSpecificPlaylistView('${name}')">
-                    <div class="hub-playlist-name">${name}</div>
-                    <div class="hub-playlist-count">${count} dances</div>
-                </div>
-            `;
-        }).join('');
+    let groupNames;
+    if (venueConfig.playlistGroups?.length > 0) {
+        groupNames = [...venueConfig.playlistGroups];
+    } else {
+        groupNames = [...new Set(localDanceDatabase.map(track => track.playlist || "General"))].sort();
+    }
 
-        viewport.innerHTML = `
-            <div class="hub-screen">
-
-                <div class="hub-filter-row">
-                    <select id="daySelect" onchange="setDayFilter(this.value)">
-                        <option value="ALL">All Days</option>
-                        <option value="Tuesday">Tuesday</option>
-                        <option value="Wednesday">Wednesday</option>
-                        <option value="Weekend">Weekend</option>
-                        <option value="Other">Other</option>
-                    </select>
-
-                    <select id="difficultySelect" onchange="setDifficultyFilter(this.value)">
-                        <option value="">Difficulty</option>
-                        <option value="Beginner">Beginner</option>
-                        <option value="Improver">Improver</option>
-                        <option value="Intermediate">Intermediate</option>
-                        <option value="Advanced">Advanced</option>
-                    </select>
-                </div>
-
-                <div class="hub-search-row">
-                    <input type="text" id="danceSearchInput"
-                           placeholder="Search playlists..."
-                           oninput="handleLiveSearchInput()">
-                    <button class="sync-btn" onclick="forceCacheBusterReload()">Sync</button>
-                </div>
-
-                <div class="hub-nav-row">
-                    <div class="hub-nav-card" onclick="openUserPlaylists()">My Playlists</div>
-                    <div class="hub-nav-card" onclick="createNewUserPlaylist()">Create Playlist</div>
-                    <div class="hub-nav-card" onclick="openEventsView()">Events</div>
-                </div>
-
-                <div class="playlist-container">
-                    ${playlistCardsHTML}
-                </div>
-
+    const playlistCardsHTML = groupNames.map(name => {
+        const count = localDanceDatabase.filter(t => t.playlist === name).length;
+        return `
+            <div class="hub-playlist-card" onclick="openSpecificPlaylistView('${name}')">
+                <div class="hub-playlist-name">${name}</div>
+                <div class="hub-playlist-count">${count} dances</div>
             </div>
         `;
-        return;
-    }
+    }).join('');
 
-    /* SPECIFIC PLAYLIST VIEW */
-    if (selectedActivePlaylistGroup !== null) {
-        const filteredTracks = localDanceDatabase.filter(
-            track => track.playlist === selectedActivePlaylistGroup
+    viewport.innerHTML = `
+        <div class="hub-screen">
+
+            <div class="hub-filter-row">
+                <select id="daySelect" onchange="setDayFilter(this.value)">
+                    <option value="ALL">All Days</option>
+                    <option value="Tuesday">Tuesday</option>
+                    <option value="Wednesday">Wednesday</option>
+                    <option value="Weekend">Weekend</option>
+                    <option value="Other">Other</option>
+                </select>
+
+                <select id="difficultySelect" onchange="setDifficultyFilter(this.value)">
+                    <option value="">Difficulty</option>
+                    <option value="Beginner">Beginner</option>
+                    <option value="Improver">Improver</option>
+                    <option value="Intermediate">Intermediate</option>
+                    <option value="Advanced">Advanced</option>
+                </select>
+            </div>
+
+            <div class="hub-search-row">
+                <input type="text" id="danceSearchInput"
+                       placeholder="Search dances..."
+                       oninput="handleLiveSearchInput()">
+                <button class="sync-btn" onclick="forceCacheBusterReload()">Sync</button>
+            </div>
+
+            <div class="hub-nav-row">
+                <div class="hub-nav-card" onclick="openUserPlaylists()">My Playlists</div>
+                <div class="hub-nav-card" onclick="createNewUserPlaylist()">Create Playlist</div>
+                <div class="hub-nav-card" onclick="openEventsView()">Events</div>
+            </div>
+
+            <div class="playlist-container">
+                ${playlistCardsHTML}
+            </div>
+
+        </div>
+    `;
+
+    /* --------------------------------------------
+       5. SEARCH MODE (runs AFTER hub is built)
+       -------------------------------------------- */
+    if (activeSearchQueryString && activeSearchQueryString.length > 0) {
+
+        document.getElementById('applicationHeaderTitle').innerText = "Search Results";
+
+        const matches = localDanceDatabase.filter(d =>
+            (d.name || "").toLowerCase().includes(activeSearchQueryString) ||
+            (d.choreographer || "").toLowerCase().includes(activeSearchQueryString)
         );
 
-        renderDanceCardsList(filteredTracks, viewport);
+        renderSimpleSearchCards(matches, viewport);
         updateHubVisibility();
+        return;
     }
 }
+
 
 /* ============================================
    DANCE CARD RENDERING
