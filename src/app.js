@@ -202,6 +202,7 @@ function openSpecificPlaylistView(groupName) {
 
     renderApplicationInterface();
 }
+/*
 function openSpecificDanceFromSearch(danceId) {
     // Clear search state
     activeSearchQueryString = "";
@@ -216,6 +217,33 @@ function openSpecificDanceFromSearch(danceId) {
     // Navigate to the playlist that contains this dance
     selectedActivePlaylistGroup = dance.playlist;
 
+    renderApplicationInterface();
+
+    // Scroll to the dance card
+    setTimeout(() => {
+        const el = document.getElementById(`dance-card-${danceId}`);
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 50);
+}
+*/
+function openDanceFromSearchToPlaylist(danceId) {
+    // Exit search mode completely
+    activeSearchQueryString = "";
+    const searchBox = document.getElementById('danceSearchInput');
+    if (searchBox) searchBox.value = "";
+
+    // Find the dance
+    const dance = localDanceDatabase.find(d => d.id === danceId);
+    if (!dance) return;
+
+    // Navigate to the playlist that contains this dance
+    selectedActivePlaylistGroup = dance.playlist;
+
+    // Clear other modes
+    activeDayView = null;
+    activeDifficultyView = null;
+
+    // Render playlist screen
     renderApplicationInterface();
 
     // Scroll to the dance card
@@ -261,18 +289,32 @@ function renderSearchResultsOnHub(matches) {
     `;
 }
 
+function renderSimpleSearchCards(matches, containerElement) {
+    containerElement.innerHTML = "";
+
+    matches.forEach(track => {
+        const card = document.createElement('div');
+        card.className = 'dance-entry-card simple-search-card';
+        card.onclick = () => openDanceFromSearchToPlaylist(track.id);
+
+        card.innerHTML = `
+            <div class="title-line">${track.name} • By: ${track.choreographer}</div>
+            <div class="meta-line">Song: ${track.song} - ${track.artist}</div>
+            <div class="meta-line">(Playlist: ${track.playlist})</div>
+        `;
+
+        containerElement.appendChild(card);
+    });
+}
 
 
 /* ============================================
    MAIN RENDERER (CLEANED)
 ============================================ */
-function renderApplicationInterface() {
-    const viewport = document.getElementById('masterApplicationViewport');
-    if (!viewport) return;
-    viewport.innerHTML = '';
-   /* SEARCH MODE */
+/* SEARCH MODE */
 if (activeSearchQueryString && activeSearchQueryString.length > 0) {
-    // Show hub rows during search
+
+    // Keep hub rows visible
     const filterBar = document.getElementById('dayFilterBar');
     if (filterBar) filterBar.style.display = 'block';
 
@@ -293,13 +335,10 @@ if (activeSearchQueryString && activeSearchQueryString.length > 0) {
         (d.choreographer || "").toLowerCase().includes(activeSearchQueryString)
     );
 
-    // renderSearchResultsOnHub(matches);
-   renderDanceCardsList(matches, viewport);
-   updateHubVisibility(); // keeps search bar + hub rows visible
-
+    renderSimpleSearchCards(matches, viewport);
+    updateHubVisibility(); // keeps search bar + hub rows visible
     return;
 }
-
 
     /* DAY VIEW */
     if (activeDayView !== null) {
