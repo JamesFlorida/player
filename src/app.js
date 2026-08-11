@@ -265,29 +265,7 @@ function openDanceFromSearchToPlaylist(danceId) {
     renderApplicationInterface();
 }
 
-function renderSearchResultsOnHub(matches) {
-    const viewport = document.getElementById("masterApplicationViewport");
 
-    if (!matches.length) {
-        viewport.innerHTML = `
-            <p style="text-align:center;color:#aaa;margin-top:20px;">
-                No matching dances found.
-            </p>
-        `;
-        return;
-    }
-
-    viewport.innerHTML = `
-        <div class="playlist-container">
-            ${matches.map(d => `
-                <div class="hub-playlist-card" onclick="openSpecificDanceFromSearch('${d.id}')">
-                    <div class="hub-playlist-name">${d.name}</div>
-                    <div class="hub-playlist-count">${d.choreographer}</div>
-                </div>
-            `).join("")}
-        </div>
-    `;
-}
 
 /* ============================================
    MAIN RENDERER (CLEANED + CORRECTED)
