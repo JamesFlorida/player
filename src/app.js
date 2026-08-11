@@ -202,6 +202,17 @@ function openSpecificPlaylistView(groupName) {
 
     renderApplicationInterface();
 }
+function openSpecificDanceFromSearch(danceId) {
+    // Clear search state
+    activeSearchQueryString = "";
+    selectedActivePlaylistGroup = null;
+    activeDayView = null;
+    activeDifficultyView = null;
+
+    // Navigate to the dance list screen
+    openSpecificPlaylistView(danceId);
+}
+
 
 /* ============================================
    SEARCH (CORRECTED)
