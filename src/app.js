@@ -217,25 +217,11 @@ function openSpecificDanceFromSearch(danceId) {
 /* ============================================
    SEARCH (CORRECTED)
 ============================================ */
-function handleLiveSearchInput() {
+   function handleLiveSearchInput() {
     const searchBox = document.getElementById('danceSearchInput');
     activeSearchQueryString = searchBox.value.toLowerCase().trim();
 
-    if (!activeSearchQueryString) {
-        document.getElementById('navbarReturnTrigger').style.display = 'none';
-        document.getElementById('applicationHeaderTitle').innerText =
-            venueConfig.headerTitle || venueConfig.name || 'LineDance Player';
-
-       renderApplicationInterface();
-        return;
-    }
-
-    const matches = localDanceDatabase.filter(d =>
-        (d.name || "").toLowerCase().includes(activeSearchQueryString) ||
-        (d.choreographer || "").toLowerCase().includes(activeSearchQueryString)
-    );
-
-    renderSearchResultsOnHub(matches);
+    renderApplicationInterface();
 }
 
 function renderSearchResultsOnHub(matches) {
@@ -271,6 +257,33 @@ function renderApplicationInterface() {
     const viewport = document.getElementById('masterApplicationViewport');
     if (!viewport) return;
     viewport.innerHTML = '';
+   /* SEARCH MODE */
+if (activeSearchQueryString && activeSearchQueryString.length > 0) {
+    // Show hub rows during search
+    const filterBar = document.getElementById('dayFilterBar');
+    if (filterBar) filterBar.style.display = 'block';
+
+    const diffBar = document.getElementById('difficultyFilterBar');
+    if (diffBar) diffBar.style.display = 'block';
+
+    const searchRow = document.querySelector('.hub-search-row');
+    if (searchRow) searchRow.style.display = 'flex';
+
+    const navRow = document.querySelector('.hub-nav-row');
+    if (navRow) navRow.style.display = 'flex';
+
+    document.getElementById('navbarReturnTrigger').style.display = 'none';
+    document.getElementById('applicationHeaderTitle').innerText = "Search Results";
+
+    const matches = localDanceDatabase.filter(d =>
+        (d.name || "").toLowerCase().includes(activeSearchQueryString) ||
+        (d.choreographer || "").toLowerCase().includes(activeSearchQueryString)
+    );
+
+    renderSearchResultsOnHub(matches);
+    return;
+}
+
 
     /* DAY VIEW */
     if (activeDayView !== null) {
