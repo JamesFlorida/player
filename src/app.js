@@ -441,7 +441,7 @@ if (activeSearchQueryString && activeSearchQueryString.length > 0) {
     updateHubVisibility();
 }
   
-
+}
 
 /* ============================================
    DANCE CARD RENDERING
