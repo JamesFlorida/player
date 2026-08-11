@@ -226,7 +226,7 @@ function handleLiveSearchInput() {
         document.getElementById('applicationHeaderTitle').innerText =
             venueConfig.headerTitle || venueConfig.name || 'LineDance Player';
 
-        renderPlaylistHubMenu();
+       renderApplicationInterface();
         return;
     }
 
