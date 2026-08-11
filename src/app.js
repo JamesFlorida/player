@@ -416,23 +416,31 @@ function renderApplicationInterface() {
         </div>
     `;
 
-    /* --------------------------------------------
-       5. SEARCH MODE (runs AFTER hub is built)
-       -------------------------------------------- */
-    if (activeSearchQueryString && activeSearchQueryString.length > 0) {
+  /* --------------------------------------------
+   5. SEARCH MODE (runs AFTER hub is built)
+-------------------------------------------- */
+if (activeSearchQueryString && activeSearchQueryString.length > 0) {
 
-        document.getElementById('applicationHeaderTitle').innerText = "Search Results";
+    document.getElementById('applicationHeaderTitle').innerText = "Search Results";
 
-        const matches = localDanceDatabase.filter(d =>
-            (d.name || "").toLowerCase().includes(activeSearchQueryString) ||
-            (d.choreographer || "").toLowerCase().includes(activeSearchQueryString)
-        );
+    const matches = localDanceDatabase.filter(d =>
+        (d.name || "").toLowerCase().includes(activeSearchQueryString) ||
+        (d.choreographer || "").toLowerCase().includes(activeSearchQueryString)
+    );
 
-        renderSimpleSearchCards(matches, viewport);
-        updateHubVisibility();
-        return;
-    }
+    // Create a container BELOW the hub layout
+    const resultsContainer = document.createElement('div');
+    resultsContainer.className = "search-results-container";
+
+    renderSimpleSearchCards(matches, resultsContainer);
+
+    // Append search results BELOW the hub screen
+    viewport.querySelector('.hub-screen').appendChild(resultsContainer);
+
+    // Keep hub visible
+    updateHubVisibility();
 }
+  
 
 
 /* ============================================
