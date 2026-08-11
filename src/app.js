@@ -568,6 +568,36 @@ function forceCacheBusterReload() {
     window.location.href =
         window.location.origin + window.location.pathname + '?v=' + uniqueTimestamp;
 }
+/* ============================================
+   SIMPLE SEARCH CARD RENDERER
+============================================ */
+function renderSimpleSearchCards(matches, containerElement) {
+    containerElement.innerHTML = "";
+
+    if (!matches.length) {
+        containerElement.innerHTML = `
+            <p style="text-align:center;color:#aaa;margin-top:20px;">
+                No matching dances found.
+            </p>
+        `;
+        return;
+    }
+
+    matches.forEach(track => {
+        const card = document.createElement('div');
+        card.className = 'dance-entry-card simple-search-card';
+        card.onclick = () => openDanceFromSearchToPlaylist(track.id);
+
+        card.innerHTML = `
+            <div class="title-line">${track.name} • By: ${track.choreographer}</div>
+            <div class="meta-line">Song: ${track.song} - ${track.artist}</div>
+            <div class="meta-line">(Playlist: ${track.playlist})</div>
+        `;
+
+        containerElement.appendChild(card);
+    });
+}
+
 
 /* ============================================
    APP BOOTSTRAP
