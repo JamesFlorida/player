@@ -311,6 +311,11 @@ function renderSimpleSearchCards(matches, containerElement) {
 /* ============================================
    MAIN RENDERER (CLEANED)
 ============================================ */
+function renderApplicationInterface() {
+    const viewport = document.getElementById('masterApplicationViewport');
+    if (!viewport) return;
+
+    viewport.innerHTML = '';
 /* SEARCH MODE */
 if (activeSearchQueryString && activeSearchQueryString.length > 0) {
 
