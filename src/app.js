@@ -610,4 +610,7 @@ window.handleLiveSearchInput = handleLiveSearchInput;
 window.setDayFilter = setDayFilter;
 window.setDifficultyFilter = setDifficultyFilter;
 window.forceCacheBusterReload = forceCacheBusterReload;
-window.openSpecificDanceFromSearch = openSpecificDanceFromSearch;
+
+window.renderSimpleSearchCards = renderSimpleSearchCards;
+window.openDanceFromSearchToPlaylist = openDanceFromSearchToPlaylist;
+
