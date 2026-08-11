@@ -293,7 +293,10 @@ if (activeSearchQueryString && activeSearchQueryString.length > 0) {
         (d.choreographer || "").toLowerCase().includes(activeSearchQueryString)
     );
 
-    renderSearchResultsOnHub(matches);
+    // renderSearchResultsOnHub(matches);
+   renderDanceCardsList(matches, viewport);
+   updateHubVisibility(); // keeps search bar + hub rows visible
+
     return;
 }
 
