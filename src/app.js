@@ -209,9 +209,22 @@ function openSpecificDanceFromSearch(danceId) {
     activeDayView = null;
     activeDifficultyView = null;
 
-    // Navigate to the dance list screen
-    openSpecificPlaylistView(danceId);
+    // Find the dance
+    const dance = localDanceDatabase.find(d => d.id === danceId);
+    if (!dance) return;
+
+    // Navigate to the playlist that contains this dance
+    selectedActivePlaylistGroup = dance.playlist;
+
+    renderApplicationInterface();
+
+    // Scroll to the dance card
+    setTimeout(() => {
+        const el = document.getElementById(`dance-card-${danceId}`);
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 50);
 }
+
 
 
 /* ============================================
