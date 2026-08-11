@@ -262,15 +262,7 @@ function renderSearchResultsOnHub(matches) {
     `;
 }
 
-function openSpecificDanceFromSearch(danceId) {
-    const dance = localDanceDatabase.find(d => d.id === danceId);
-    if (!dance) return;
 
-    document.getElementById("navbarReturnTrigger").style.display = "block";
-    document.getElementById("applicationHeaderTitle").textContent = dance.name;
-
-    renderDanceCardsList([dance], document.getElementById("masterApplicationViewport"));
-}
 
 /* ============================================
    MAIN RENDERER (CLEANED)
