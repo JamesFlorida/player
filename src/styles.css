@@ -344,6 +344,12 @@ object {
 .playlist-container {
     padding: 0 16px 20px 16px;
 }
+.search-results-container {
+    display: none;        /* hidden until search is active */
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
 
 
 /* ============================================
