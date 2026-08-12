@@ -430,6 +430,7 @@ function renderApplicationInterface() {
             <div class="playlist-container">
                 ${playlistCardsHTML}
             </div>
+            <div class="search-results-container"></div>
 
         </div>
     `;
