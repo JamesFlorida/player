@@ -680,6 +680,9 @@ function shutOverlayViewer() {
         container.style.display = 'none';
         container.innerHTML = '';
     }
+
+    // Re-render correct screen based on current state
+    renderApplicationInterface();
 }
 
 /* ============================================
