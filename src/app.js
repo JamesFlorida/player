@@ -35,7 +35,7 @@ let selectedSingleDance = null;
 /* ============================================
    DAY FILTER
 ============================================ */
-function setDayFilter(day) {
+ setDayFilter(day) {
     activeDayFilter = day;
     activeDayView = (day === "ALL") ? null : day;
     selectedActivePlaylistGroup = null;
@@ -45,7 +45,7 @@ function setDayFilter(day) {
 /* ============================================
    DIFFICULTY FILTER
 ============================================ */
-function setDifficultyFilter(level) {
+ setDifficultyFilter(level) {
     if (!level) {
         activeDifficultyView = null;
         activeDifficultyFilter = "";
@@ -68,7 +68,7 @@ function setDifficultyFilter(level) {
 /* ============================================
    VENUE BRANDING
 ============================================ */
-function initializeVenueBranding() {
+ initializeVenueBranding() {
     const headerTitleEl = document.getElementById('applicationHeaderTitle');
     if (headerTitleEl) {
         headerTitleEl.innerText = venueConfig.headerTitle || venueConfig.name || "LineDance Player";
@@ -183,32 +183,82 @@ function navigateToPlaylistHubMenu() {
 }
 
 function openSpecificPlaylistView(groupName) {
+    // Do NOT clear search state in Phase 2
+    // activeSearchQueryString stays exactly as-is
+
+    // Restore search bar text
+    const searchInput = document.getElementById('danceSearchInput');
+    if (searchInput) searchInput.value = activeSearchQueryString;
+
+    // Set playlist group
     selectedActivePlaylistGroup = groupName;
 
-    activeSearchQueryString = "";
-    document.getElementById('danceSearchInput').value = "";
+    // Clear single dance mode
+    selectedSingleDance = null;
 
+    // Clear day/difficulty modes
     activeDayView = null;
+    activeDayFilter = "ALL";
     activeDifficultyView = null;
     activeDifficultyFilter = "";
 
+    // Hide filters in playlist view
     const filterBar = document.getElementById('dayFilterBar');
     if (filterBar) filterBar.style.display = 'none';
 
     const diffBar = document.getElementById('difficultyFilterBar');
     if (diffBar) diffBar.style.display = 'none';
 
+    // Show return trigger
     document.getElementById('navbarReturnTrigger').style.display = 'block';
+
+    // Restore playlist header
     document.getElementById('applicationHeaderTitle').innerText = groupName;
 
+    // Render playlist screen
     renderApplicationInterface();
 }
 
-function openDanceFromSearchToSingleDance(danceId) {
-    // Exit search mode completely
-    activeSearchQueryString = "";
+
+function openSearchResultsWorkspace(matches) {
+    selectedSingleDance = null;
+
+    // Render the workspace search results screen
+    renderWorkspaceSearchResults(matches);
+}
+
+function returnToSearchResults() {
+    // Clear single dance mode
+    selectedSingleDance = null;
+    selectedActivePlaylistGroup = null;
+
+    // Restore search bar text
     const searchBox = document.getElementById('danceSearchInput');
-    if (searchBox) searchBox.value = "";
+    if (searchBox) searchBox.value = activeSearchQueryString;
+
+    // If search query exists → re-render workspace search results
+    if (activeSearchQueryString && activeSearchQueryString.length > 0) {
+        const matches = localDanceDatabase.filter(track =>
+            track.name.toLowerCase().includes(activeSearchQueryString.toLowerCase())
+        );
+
+        // Restore header title
+        document.getElementById('applicationHeaderTitle').innerText = "Search Results";
+
+        renderWorkspaceSearchResults(matches);
+    } else {
+        // If no query exists, return to hub
+        returnToHub();
+    }
+}
+
+function openDanceFromSearchToSingleDance(danceId) {
+    // Do NOT clear search state in Phase 2
+    // activeSearchQueryString stays exactly as-is
+
+    // Restore search bar text
+    const searchBox = document.getElementById('danceSearchInput');
+    if (searchBox) searchBox.value = activeSearchQueryString;
 
     // Find the dance
     const dance = localDanceDatabase.find(d => d.id === danceId);
@@ -217,32 +267,55 @@ function openDanceFromSearchToSingleDance(danceId) {
     // Set workspace mode: single dance detail
     selectedSingleDance = dance;
 
-    // Clear other modes
+    // Clear playlist mode (but preserve search context)
     selectedActivePlaylistGroup = null;
-    activeDayView = null;
-    activeDifficultyView = null;
+
+    // Restore header title to dance name
+    document.getElementById('applicationHeaderTitle').innerText = dance.name;
 
     // Render the workspace screen
     renderApplicationInterface();
 }
 
 
-function openDanceFromSearchToPlaylist(danceId) {
-    // Exit search mode completely
+function returnToHub() {
+    // Clear workspace state
+    selectedSingleDance = null;
+    selectedActivePlaylistGroup = null;
+
+    // Clear search state
     activeSearchQueryString = "";
     const searchBox = document.getElementById('danceSearchInput');
     if (searchBox) searchBox.value = "";
+
+    // Restore hub header
+    document.getElementById('applicationHeaderTitle').innerText =
+        venueConfig.headerTitle || venueConfig.name || "LineDance Player";
+
+    // Render hub screen
+    renderApplicationInterface();
+}
+
+function openDanceFromSearchToPlaylist(danceId) {
+    // Do NOT clear search state in Phase 2
+    // activeSearchQueryString stays exactly as-is
+
+    // Restore search bar text
+    const searchBox = document.getElementById('danceSearchInput');
+    if (searchBox) searchBox.value = activeSearchQueryString;
 
     // Find the dance
     const dance = localDanceDatabase.find(d => d.id === danceId);
     if (!dance) return;
 
-    // Navigate to the playlist that contains this dance
+    // Set playlist group
     selectedActivePlaylistGroup = dance.playlist;
 
-    // Clear other modes
-    activeDayView = null;
-    activeDifficultyView = null;
+    // Clear single dance mode
+    selectedSingleDance = null;
+
+    // Restore playlist header
+    document.getElementById('applicationHeaderTitle').innerText = dance.playlist;
 
     // Render playlist screen
     renderApplicationInterface();
@@ -255,7 +328,6 @@ function openDanceFromSearchToPlaylist(danceId) {
 }
 
 
-
 /* ============================================
    SEARCH (CORRECTED)
 ============================================ */
@@ -264,16 +336,23 @@ function openDanceFromSearchToPlaylist(danceId) {
     activeSearchQueryString = searchBox.value.toLowerCase().trim();
 
     // ⭐ If search is empty → fully restore hub screen
-    if (activeSearchQueryString.length === 0) {
-        renderApplicationInterface();   // ⭐ THIS FIXES THE CARD STYLING
-        return;
-    }
+   if (activeSearchQueryString.length === 0) {
+    selectedSingleDance = null;
+    selectedActivePlaylistGroup = null;
+
+    // Restore hub header
+    document.getElementById('applicationHeaderTitle').innerText =
+        venueConfig.headerTitle || venueConfig.name || "LineDance Player";
+
+    // Restore hub screen
+    renderApplicationInterface();
+    return;
+}
+
 
     // ⭐ Otherwise → show search results
     updateSearchResults();
 }
-
-
 
  function updateSearchResults() {
     const viewport = document.getElementById('masterApplicationViewport');
@@ -284,23 +363,9 @@ function openDanceFromSearchToPlaylist(danceId) {
         (d.choreographer || "").toLowerCase().includes(activeSearchQueryString)
     );
 
-    const resultsContainer = document.querySelector('.search-results-container');
-    if (!resultsContainer) return;
-
-    // ⭐ Hide playlist cards when search is active
-    const playlistContainer = document.querySelector('.playlist-container');
-    playlistContainer.style.display = 'none';
-
-    // ⭐ Show search results container
-    resultsContainer.style.display = 'flex';
-
-    // ⭐ Render search results
-    renderSimpleSearchCards(matches, resultsContainer);
+    // ⭐ NEW: render results in the Workspace Search Results Screen
+    openSearchResultsWorkspace(matches);
 }
-
- 
-
-
 
 /* ============================================
    MAIN RENDERER (CLEANED + CORRECTED)
@@ -506,6 +571,7 @@ function renderDanceCardsList(tracksList, containerElement) {
 
 function renderSingleDanceScreen(dance) {
     const viewport = document.getElementById('masterApplicationViewport');
+   document.getElementById('applicationHeaderTitle').innerText = dance.name;
     if (!viewport) return;
 
     viewport.innerHTML = `
@@ -533,11 +599,12 @@ function renderSingleDanceScreen(dance) {
                     : `<button class="action-touch-btn disabled">None</button>`}
             </div>
 
-            <div class="single-dance-nav">
-                <button class="hub-nav-card" onclick="returnToSearchResults()">Back to Results</button>
-                <button class="hub-nav-card" onclick="returnToHub()">Back to Hub</button>
+           <div class="nav-line" onclick="returnToSearchResults()">
+             ← Results
             </div>
-
+            <div class="nav-line" onclick="returnToHub()">
+             ← Hub
+            </div>
         </div>
     `;
 }
@@ -661,6 +728,25 @@ function renderSimpleSearchCards(matches, containerElement) {
 
         containerElement.appendChild(card);
     });
+}
+
+function renderWorkspaceSearchResults(matches) {
+    const viewport = document.getElementById('masterApplicationViewport');
+   document.getElementById('applicationHeaderTitle').innerText = "Search Results";
+    if (!viewport) return;
+
+    viewport.innerHTML = `
+        <div class="workspace-search-results-screen">
+            <div class="nav-line" onclick="returnToHub()">
+                ← Playlists
+            </div>
+
+            <div id="workspaceSearchResultsContainer"></div>
+        </div>
+    `;
+
+    const resultsContainer = document.getElementById('workspaceSearchResultsContainer');
+    renderSimpleSearchCards(matches, resultsContainer);
 }
 
 
