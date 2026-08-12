@@ -30,6 +30,7 @@ let activeDayFilter = "ALL";
 let activeDayView = null;
 let activeDifficultyView = null;
 let activeDifficultyFilter = "";
+let selectedSingleDance = null; 
 
 /* ============================================
    DAY FILTER
@@ -202,30 +203,30 @@ function openSpecificPlaylistView(groupName) {
 
     renderApplicationInterface();
 }
-/*
-function openSpecificDanceFromSearch(danceId) {
-    // Clear search state
+
+function openDanceFromSearchToSingleDance(danceId) {
+    // Exit search mode completely
     activeSearchQueryString = "";
-    selectedActivePlaylistGroup = null;
-    activeDayView = null;
-    activeDifficultyView = null;
+    const searchBox = document.getElementById('danceSearchInput');
+    if (searchBox) searchBox.value = "";
 
     // Find the dance
     const dance = localDanceDatabase.find(d => d.id === danceId);
     if (!dance) return;
 
-    // Navigate to the playlist that contains this dance
-    selectedActivePlaylistGroup = dance.playlist;
+    // Set workspace mode: single dance detail
+    selectedSingleDance = dance;
 
+    // Clear other modes
+    selectedActivePlaylistGroup = null;
+    activeDayView = null;
+    activeDifficultyView = null;
+
+    // Render the workspace screen
     renderApplicationInterface();
-
-    // Scroll to the dance card
-    setTimeout(() => {
-        const el = document.getElementById(`dance-card-${danceId}`);
-        if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
-    }, 50);
 }
-*/
+
+
 function openDanceFromSearchToPlaylist(danceId) {
     // Exit search mode completely
     activeSearchQueryString = "";
@@ -309,6 +310,14 @@ function renderApplicationInterface() {
     if (!viewport) return;
 
     viewport.innerHTML = '';
+       /* --------------------------------------------
+       WORKSPACE SCREEN: Single Dance Detail
+       -------------------------------------------- */
+    if (selectedSingleDance !== null) {
+        renderSingleDanceScreen(selectedSingleDance);
+        return;
+    }
+
 
     /* --------------------------------------------
        1. PLAYLIST VIEW (if user is inside a playlist)
@@ -450,32 +459,6 @@ function renderApplicationInterface() {
 
         </div>
     `;
-
-  /* --------------------------------------------
-   5. SEARCH MODE (runs AFTER hub is built)
--------------------------------------------- */
-if (activeSearchQueryString && activeSearchQueryString.length > 0) {
-
-    document.getElementById('applicationHeaderTitle').innerText = "Search Results";
-
-    const matches = localDanceDatabase.filter(d =>
-        (d.name || "").toLowerCase().includes(activeSearchQueryString) ||
-        (d.choreographer || "").toLowerCase().includes(activeSearchQueryString)
-    );
-
-    // Create a container BELOW the hub layout
-    const resultsContainer = document.createElement('div');
-    resultsContainer.className = "search-results-container";
-
-    renderSimpleSearchCards(matches, resultsContainer);
-
-    // Append search results BELOW the hub screen
-    viewport.querySelector('.hub-screen').appendChild(resultsContainer);
-
-    // Keep hub visible
-    updateHubVisibility();
-}
-  
 }
 
 /* ============================================
@@ -520,6 +503,45 @@ function renderDanceCardsList(tracksList, containerElement) {
         containerElement.appendChild(card);
     });
 }
+
+function renderSingleDanceScreen(dance) {
+    const viewport = document.getElementById('masterApplicationViewport');
+    if (!viewport) return;
+
+    viewport.innerHTML = `
+        <div class="single-dance-screen">
+
+            <div class="title-line">${dance.name} • By: ${dance.choreographer}</div>
+            <div class="meta-line">Song: ${dance.song} - ${dance.artist}</div>
+            <div class="meta-line">(Playlist: ${dance.playlist})</div>
+
+            <div class="button-bar-grid">
+                ${dance.steps
+                    ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${dance.steps}', '${dance.name} - Steps')">Steps</button>`
+                    : `<button class="action-touch-btn disabled">None</button>`}
+
+                ${dance.teach
+                    ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${dance.teach}', '${dance.name} - Teach')">Teach</button>`
+                    : `<button class="action-touch-btn disabled">None</button>`}
+
+                ${dance.demo
+                    ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${dance.demo}', '${dance.name} - Demo')">Demo</button>`
+                    : `<button class="action-touch-btn disabled">None</button>`}
+
+                ${dance.music
+                    ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${dance.music}', '${dance.name} - Play')">Music</button>`
+                    : `<button class="action-touch-btn disabled">None</button>`}
+            </div>
+
+            <div class="single-dance-nav">
+                <button class="hub-nav-card" onclick="returnToSearchResults()">Back to Results</button>
+                <button class="hub-nav-card" onclick="returnToHub()">Back to Hub</button>
+            </div>
+
+        </div>
+    `;
+}
+
 
 /* ============================================
    OVERLAY LOGIC
@@ -629,7 +651,7 @@ function renderSimpleSearchCards(matches, containerElement) {
     matches.forEach(track => {
         const card = document.createElement('div');
         card.className = 'dance-entry-card simple-search-card';
-        card.onclick = () => openDanceFromSearchToPlaylist(track.id);
+        card.onclick = () => openDanceFromSearchToSingleDance(track.id);
 
         card.innerHTML = `
             <div class="title-line">${track.name} • By: ${track.choreographer}</div>
