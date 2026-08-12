@@ -258,12 +258,30 @@ function openDanceFromSearchToPlaylist(danceId) {
 /* ============================================
    SEARCH (CORRECTED)
 ============================================ */
-   function handleLiveSearchInput() {
+ function handleLiveSearchInput() {
     const searchBox = document.getElementById('danceSearchInput');
     activeSearchQueryString = searchBox.value.toLowerCase().trim();
 
-    renderApplicationInterface();
+    // Do NOT re-render the entire app here.
+    // Instead, update only search results.
+    updateSearchResults();
 }
+
+ function updateSearchResults() {
+    const viewport = document.getElementById('masterApplicationViewport');
+    if (!viewport) return;
+
+    const matches = localDanceDatabase.filter(d =>
+        (d.name || "").toLowerCase().includes(activeSearchQueryString) ||
+        (d.choreographer || "").toLowerCase().includes(activeSearchQueryString)
+    );
+
+    const resultsContainer = document.querySelector('.search-results-container');
+    if (!resultsContainer) return;
+
+    renderSimpleSearchCards(matches, resultsContainer);
+}
+ 
 
 
 
