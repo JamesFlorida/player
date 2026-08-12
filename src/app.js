@@ -252,6 +252,29 @@ function returnToSearchResults() {
     }
 }
 
+function openDanceFromPlaylist(danceId) {
+    // Preserve search state (Phase 2)
+    const searchBox = document.getElementById('danceSearchInput');
+    if (searchBox) searchBox.value = activeSearchQueryString;
+
+    // Find the dance
+    const dance = localDanceDatabase.find(d => d.id === danceId);
+    if (!dance) return;
+
+    // Enter single dance mode
+    selectedSingleDance = dance;
+
+    // Clear playlist mode
+    selectedActivePlaylistGroup = null;
+
+    // Update header
+    document.getElementById('applicationHeaderTitle').innerText = dance.name;
+
+    // Render single dance screen
+    renderApplicationInterface();
+}
+
+
 function openDanceFromSearchToSingleDance(danceId) {
     // Do NOT clear search state in Phase 2
     // activeSearchQueryString stays exactly as-is
@@ -538,7 +561,9 @@ function renderDanceCardsList(tracksList, containerElement) {
 
         const card = document.createElement('div');
         card.className = 'dance-entry-card';
-
+        card.id = `dance-card-${track.id}`;
+        card.onclick = () => openDanceFromPlaylist(track.id);
+         
         const btnSteps = track.steps
             ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.steps}', '${track.name} - Steps')">Steps</button>`
             : `<button class="action-touch-btn disabled">None</button>`;
@@ -772,4 +797,6 @@ window.forceCacheBusterReload = forceCacheBusterReload;
 
 window.renderSimpleSearchCards = renderSimpleSearchCards;
 window.openDanceFromSearchToPlaylist = openDanceFromSearchToPlaylist;
+window.openDanceFromPlaylist = openDanceFromPlaylist;
+
 
