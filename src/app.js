@@ -264,8 +264,8 @@ function openDanceFromPlaylist(danceId) {
     // Enter single dance mode
     selectedSingleDance = dance;
 
-    // Clear playlist mode
-    selectedActivePlaylistGroup = null;
+    // Stay in playlist mode
+    selectedActivePlaylistGroup = dance.playlist;
 
     // Update header
     document.getElementById('applicationHeaderTitle').innerText = dance.name;
@@ -273,6 +273,7 @@ function openDanceFromPlaylist(danceId) {
     // Render single dance screen
     renderApplicationInterface();
 }
+
 
 
 function openDanceFromSearchToSingleDance(danceId) {
