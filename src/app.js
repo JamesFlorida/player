@@ -262,20 +262,16 @@ function openDanceFromSearchToPlaylist(danceId) {
     const searchBox = document.getElementById('danceSearchInput');
     activeSearchQueryString = searchBox.value.toLowerCase().trim();
 
-    const playlistContainer = document.querySelector('.playlist-container');
-    const resultsContainer = document.querySelector('.search-results-container');
-
-    // ⭐ If search is empty → restore playlist hub
+    // ⭐ If search is empty → fully restore hub screen
     if (activeSearchQueryString.length === 0) {
-        playlistContainer.style.display = 'flex';
-        resultsContainer.innerHTML = '';
-        resultsContainer.style.display = 'none';
+        renderApplicationInterface();   // ⭐ THIS FIXES THE CARD STYLING
         return;
     }
 
     // ⭐ Otherwise → show search results
     updateSearchResults();
 }
+
 
 
  function updateSearchResults() {
