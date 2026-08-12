@@ -262,10 +262,21 @@ function openDanceFromSearchToPlaylist(danceId) {
     const searchBox = document.getElementById('danceSearchInput');
     activeSearchQueryString = searchBox.value.toLowerCase().trim();
 
-    // Do NOT re-render the entire app here.
-    // Instead, update only search results.
+    const playlistContainer = document.querySelector('.playlist-container');
+    const resultsContainer = document.querySelector('.search-results-container');
+
+    // ⭐ If search is empty → restore playlist hub
+    if (activeSearchQueryString.length === 0) {
+        playlistContainer.style.display = 'flex';
+        resultsContainer.innerHTML = '';
+        resultsContainer.style.display = 'none';
+        return;
+    }
+
+    // ⭐ Otherwise → show search results
     updateSearchResults();
 }
+
 
  function updateSearchResults() {
     const viewport = document.getElementById('masterApplicationViewport');
@@ -279,8 +290,17 @@ function openDanceFromSearchToPlaylist(danceId) {
     const resultsContainer = document.querySelector('.search-results-container');
     if (!resultsContainer) return;
 
+    // ⭐ Hide playlist cards when search is active
+    const playlistContainer = document.querySelector('.playlist-container');
+    playlistContainer.style.display = 'none';
+
+    // ⭐ Show search results container
+    resultsContainer.style.display = 'flex';
+
+    // ⭐ Render search results
     renderSimpleSearchCards(matches, resultsContainer);
 }
+
  
 
 
