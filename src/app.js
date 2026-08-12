@@ -35,7 +35,7 @@ let selectedSingleDance = null;
 /* ============================================
    DAY FILTER
 ============================================ */
- setDayFilter(day) {
+ function setDayFilter(day) {
     activeDayFilter = day;
     activeDayView = (day === "ALL") ? null : day;
     selectedActivePlaylistGroup = null;
@@ -45,7 +45,7 @@ let selectedSingleDance = null;
 /* ============================================
    DIFFICULTY FILTER
 ============================================ */
- setDifficultyFilter(level) {
+ function setDifficultyFilter(level) {
     if (!level) {
         activeDifficultyView = null;
         activeDifficultyFilter = "";
@@ -68,7 +68,7 @@ let selectedSingleDance = null;
 /* ============================================
    VENUE BRANDING
 ============================================ */
- initializeVenueBranding() {
+ function initializeVenueBranding() {
     const headerTitleEl = document.getElementById('applicationHeaderTitle');
     if (headerTitleEl) {
         headerTitleEl.innerText = venueConfig.headerTitle || venueConfig.name || "LineDance Player";
