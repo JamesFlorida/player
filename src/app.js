@@ -642,11 +642,14 @@ function renderWorkspaceScreen() {
     document.getElementById('masterApplicationViewport').innerHTML = `
 
      <div class="workspace-screen">
+        
+         <!-- Create / Edit Playlist Controls -->
+         <div class="workspace-controls">
+             <button id="createNewPlaylistBtn" class="workspace-btn">➕ Create New Playlist</button>
+             <button id="editExistingPlaylistBtn" class="workspace-btn">✏️ Edit Existing Playlist</button>
+      </div>
 
-        <!-- Create New Playlist -->
-        <div class="workspace-controls">
-            <button id="createNewPlaylistBtn" class="workspace-btn">➕ Create New Playlist</button>
-        </div>
+        
 
         <!-- Search Bar -->
         <div class="workspace-search-row">
@@ -676,6 +679,7 @@ function renderWorkspaceScreen() {
 
     // NOW the element exists — safe to attach onclick
     document.getElementById('createNewPlaylistBtn').onclick = startCreatingNewPlaylist;
+    document.getElementById('editExistingPlaylistBtn').onclick = startEditingExistingPlaylist;
 }
 
 
