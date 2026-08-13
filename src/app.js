@@ -43,6 +43,21 @@ let workspaceSearchQuery = "";            // Search bar text inside Workspace
 let workspaceSearchResults = [];          // Search results inside Workspace
 let workspaceEditingOriginalName = "";    // For renaming playlists safely
 
+function startCreatingNewPlaylist() {
+    // Create a blank playlist object
+    selectedActivePlaylistGroup = {
+        name: "",
+        dances: []
+    };
+
+    // Switch navigation mode
+    lastNavigationMode = "workspace";
+
+    // Re-render Workspace in "edit mode"
+    renderWorkspaceScreen();
+}
+
+window.startCreatingNewPlaylist = startCreatingNewPlaylist;
 
 
 /* ============================================
@@ -623,6 +638,9 @@ function renderWorkspaceScreen() {
     document.getElementById('navbarReturnTrigger').style.display = 'block';
     document.getElementById('navbarReturnTrigger').onclick = navigateBackFromWorkspace;
 
+    document.getElementById('createNewPlaylistBtn').onclick = startCreatingNewPlaylist;
+
+
     // Main Workspace Layout
     document.getElementById('masterApplicationViewport').innerHTML = `
 
@@ -897,5 +915,6 @@ window.openDanceFromSearchToPlaylist = openDanceFromSearchToPlaylist;
 window.openDanceFromPlaylist = openDanceFromPlaylist;
 window.openWorkspace = openWorkspace;
 window.navigateBackFromWorkspace = navigateBackFromWorkspace
+window.startCreatingNewPlaylist = startCreatingNewPlaylist;
 
 
