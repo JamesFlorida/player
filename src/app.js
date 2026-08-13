@@ -31,6 +31,8 @@ let activeDayView = null;
 let activeDifficultyView = null;
 let activeDifficultyFilter = "";
 let selectedSingleDance = null; 
+let lastNavigationMode = null;   // "playlist" or "search"
+
 
 /* ============================================
    DAY FILTER
@@ -253,6 +255,7 @@ function returnToSearchResults() {
 }
 
 function openDanceFromPlaylist(danceId) {
+    lastNavigationMode = "playlist";  
     // Preserve search state (Phase 2)
     const searchBox = document.getElementById('danceSearchInput');
     if (searchBox) searchBox.value = activeSearchQueryString;
@@ -277,6 +280,7 @@ function openDanceFromPlaylist(danceId) {
 
 
 function openDanceFromSearchToSingleDance(danceId) {
+    lastNavigationMode = "search";
     // Do NOT clear search state in Phase 2
     // activeSearchQueryString stays exactly as-is
 
@@ -597,8 +601,30 @@ function renderDanceCardsList(tracksList, containerElement) {
 
 function renderSingleDanceScreen(dance) {
     const viewport = document.getElementById('masterApplicationViewport');
-   document.getElementById('applicationHeaderTitle').innerText = dance.name;
+    document.getElementById('applicationHeaderTitle').innerText = dance.name;
     if (!viewport) return;
+
+    let navHTML = "";
+
+    if (lastNavigationMode === "playlist") {
+        navHTML = `
+            <div class="nav-line" onclick="openSpecificPlaylistView(selectedSingleDance.playlist)">
+                ← Playlist
+            </div>
+            <div class="nav-line" onclick="returnToHub()">
+                ← Hub
+            </div>
+        `;
+    } else {
+        navHTML = `
+            <div class="nav-line" onclick="returnToSearchResults()">
+                ← Results
+            </div>
+            <div class="nav-line" onclick="returnToHub()">
+                ← Hub
+            </div>
+        `;
+    }
 
     viewport.innerHTML = `
         <div class="single-dance-screen">
@@ -625,15 +651,12 @@ function renderSingleDanceScreen(dance) {
                     : `<button class="action-touch-btn disabled">None</button>`}
             </div>
 
-           <div class="nav-line" onclick="returnToSearchResults()">
-             ← Results
-            </div>
-            <div class="nav-line" onclick="returnToHub()">
-             ← Hub
-            </div>
+            ${navHTML}
+
         </div>
     `;
 }
+
 
 
 /* ============================================
