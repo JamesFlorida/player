@@ -442,6 +442,14 @@ function selectPlaylistForEditing(name) {
     renderWorkspaceScreen();
 }
 
+function handleWorkspaceNameInput() {
+    const input = document.getElementById('workspacePlaylistNameInput');
+    if (!input) return;
+
+    workspacePlaylistName = input.value.trim();
+}
+
+
 
 
 
@@ -710,6 +718,13 @@ function renderWorkspaceScreen() {
         <!-- Step 7 will fill this -->
     </div>
 
+    <!-- Playlist Name -->
+   <div class="workspace-name-row">
+       <input type="text" id="workspacePlaylistNameInput"
+           placeholder="Playlist name..."
+           oninput="handleWorkspaceNameInput()">
+   </div>
+
     <!-- Search Bar -->
     <div class="workspace-search-row">
         <input type="text" id="workspaceSearchInput"
@@ -740,9 +755,10 @@ function renderWorkspaceScreen() {
     document.getElementById('createNewPlaylistBtn').onclick = startCreatingNewPlaylist;
     document.getElementById('editExistingPlaylistBtn').onclick = startEditingExistingPlaylist;
    renderWorkspacePlaylistSelection();
+   const nameInput = document.getElementById('workspacePlaylistNameInput');
+   if (nameInput) {
+    nameInput.value = workspacePlaylistName || "";
 }
-
-
 
 function renderSingleDanceScreen(dance) {
     const viewport = document.getElementById('masterApplicationViewport');
@@ -981,5 +997,5 @@ window.navigateBackFromWorkspace = navigateBackFromWorkspace
 window.startCreatingNewPlaylist = startCreatingNewPlaylist;
 window.selectPlaylistForEditing = selectPlaylistForEditing;
 window.startEditingExistingPlaylist = startEditingExistingPlaylist;
-
+window.handleWorkspaceNameInput = handleWorkspaceNameInput;
 
