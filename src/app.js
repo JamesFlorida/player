@@ -286,8 +286,10 @@ function openDanceFromPlaylist(danceId) {
     // renderApplicationInterface();   <-- REMOVE THIS LINE
 }
 
-
-
+function navigateBackFromWorkspace() {
+    lastNavigationMode = "hub";
+    renderApplicationInterface();
+}
 
 function openDanceFromSearchToSingleDance(danceId) {
     lastNavigationMode = "search";
