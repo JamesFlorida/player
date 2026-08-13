@@ -255,7 +255,8 @@ function returnToSearchResults() {
 }
 
 function openDanceFromPlaylist(danceId) {
-    lastNavigationMode = "playlist";  
+    lastNavigationMode = "playlist";
+
     // Preserve search state (Phase 2)
     const searchBox = document.getElementById('danceSearchInput');
     if (searchBox) searchBox.value = activeSearchQueryString;
@@ -264,18 +265,16 @@ function openDanceFromPlaylist(danceId) {
     const dance = localDanceDatabase.find(d => d.id === danceId);
     if (!dance) return;
 
-    // Enter single dance mode
-    selectedSingleDance = dance;
+    // ⭐ DO NOT enter single-dance mode when launching media from a playlist
+    selectedSingleDance = null;
 
-    // Stay in playlist mode
+    // ⭐ Stay in playlist mode
     selectedActivePlaylistGroup = dance.playlist;
 
-    // Update header
-    document.getElementById('applicationHeaderTitle').innerText = dance.name;
-
-    // Render single dance screen
-    renderApplicationInterface();
+    // ⭐ DO NOT re-render the screen here
+    // renderApplicationInterface();   <-- REMOVE THIS LINE
 }
+
 
 
 
