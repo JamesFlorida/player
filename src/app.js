@@ -449,6 +449,68 @@ function handleWorkspaceNameInput() {
     workspacePlaylistName = input.value.trim();
 }
 
+function saveWorkspacePlaylist() {
+
+    // Validate name
+    if (!workspacePlaylistName || workspacePlaylistName.trim() === "") {
+        alert("Please enter a playlist name.");
+        return;
+    }
+
+    // Validate selected dances
+    if (!selectedActivePlaylistGroup || !selectedActivePlaylistGroup.dances || selectedActivePlaylistGroup.dances.length === 0) {
+        alert("Please add at least one dance to the playlist.");
+        return;
+    }
+
+    // Save or overwrite playlist
+    userPlaylists[workspacePlaylistName] = {
+        name: workspacePlaylistName,
+        dances: [...selectedActivePlaylistGroup.dances]
+    };
+
+    alert(`Playlist "${workspacePlaylistName}" saved.`);
+
+    // Return to Hub or stay in Workspace?
+    // For now, stay in Workspace and refresh the selection list
+    renderWorkspaceScreen();
+}
+
+function deleteWorkspacePlaylist() {
+
+    // Must be editing a playlist
+    if (!selectedActivePlaylistGroup || !workspacePlaylistName) {
+        alert("No playlist selected to delete.");
+        return;
+    }
+
+    // Prevent deleting Stock playlists
+    if (workspacePlaylistName.startsWith("Stock-")) {
+        alert("Stock playlists cannot be deleted.");
+        return;
+    }
+
+    // Confirm deletion
+    const confirmDelete = confirm(`Delete playlist "${workspacePlaylistName}"?`);
+    if (!confirmDelete) return;
+
+    // Delete from userPlaylists
+    delete userPlaylists[workspacePlaylistName];
+
+    // Reset workspace state
+    selectedActivePlaylistGroup = { name: "", dances: [] };
+    workspacePlaylistName = "";
+    workspaceMode = "create";
+
+    alert("Playlist deleted.");
+
+    // Refresh Workspace
+    renderWorkspaceScreen();
+}
+
+
+
+
 
 
 
@@ -999,4 +1061,6 @@ window.startCreatingNewPlaylist = startCreatingNewPlaylist;
 window.selectPlaylistForEditing = selectPlaylistForEditing;
 window.startEditingExistingPlaylist = startEditingExistingPlaylist;
 window.handleWorkspaceNameInput = handleWorkspaceNameInput;
+window.saveWorkspacePlaylist = saveWorkspacePlaylist;
+window.deleteWorkspacePlaylist = deleteWorkspacePlaylist;
 
