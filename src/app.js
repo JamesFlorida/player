@@ -630,7 +630,8 @@ function renderWorkspaceScreen() {
     document.getElementById('navbarReturnTrigger').style.display = 'block';
 
     // Main Workspace Layout
-    document.getElementById('applicationMainContent').innerHTML = `
+    document.getElementById('masterApplicationViewport').innerHTML = `
+
         <div class="workspace-screen">
 
             <!-- Search Bar -->
