@@ -508,6 +508,49 @@ function deleteWorkspacePlaylist() {
     renderWorkspaceScreen();
 }
 
+function handleWorkspaceSearchInput() {
+    const query = document.getElementById('workspaceSearchInput').value.trim().toLowerCase();
+
+    // If empty, clear results
+    if (!query) {
+        document.getElementById('workspaceSearchResults').innerHTML = "";
+        return;
+    }
+
+    // Search dances (same dataset used by Hub search)
+    const matches = allDances.filter(d =>
+        d.name.toLowerCase().includes(query)
+    );
+
+    // Render results
+    renderWorkspaceSearchResults(matches);
+}
+
+function addDanceToWorkspace(danceName) {
+
+    if (!selectedActivePlaylistGroup) {
+        selectedActivePlaylistGroup = { name: "", dances: [] };
+    }
+
+    // Prevent duplicates
+    if (!selectedActivePlaylistGroup.dances.includes(danceName)) {
+        selectedActivePlaylistGroup.dances.push(danceName);
+    }
+
+    renderWorkspaceSelectedList();
+}
+
+function removeDanceFromWorkspace(danceName) {
+    if (!selectedActivePlaylistGroup) return;
+
+    selectedActivePlaylistGroup.dances =
+        selectedActivePlaylistGroup.dances.filter(d => d !== danceName);
+
+    renderWorkspaceSelectedList();
+}
+
+
+
 
 
 
@@ -881,6 +924,55 @@ function renderSingleDanceScreen(dance) {
     `;
 }
 
+function renderWorkspaceSearchResults(matches) {
+
+    const container = document.getElementById('workspaceSearchResults');
+    if (!container) return;
+
+    if (!matches || matches.length === 0) {
+        container.innerHTML = `<div class="workspace-note">No dances found.</div>`;
+        return;
+    }
+
+    let html = "";
+    matches.forEach(dance => {
+        html += `
+            <div class="workspace-search-item"
+                 onclick="addDanceToWorkspace('${dance.name}')">
+                ${dance.name}
+            </div>
+        `;
+    });
+
+    container.innerHTML = html;
+}
+
+function renderWorkspaceSelectedList() {
+
+    const container = document.getElementById('workspaceSelectedList');
+    if (!container) return;
+
+    const dances = selectedActivePlaylistGroup?.dances || [];
+
+    if (dances.length === 0) {
+        container.innerHTML = `<div class="workspace-note">No dances selected.</div>`;
+        return;
+    }
+
+    let html = "";
+    dances.forEach(dance => {
+        html += `
+            <div class="workspace-selected-item">
+                ${dance}
+                <span class="workspace-remove"
+                      onclick="removeDanceFromWorkspace('${dance}')">✖</span>
+            </div>
+        `;
+    });
+
+    container.innerHTML = html;
+}
+
 
 
 /* ============================================
@@ -1063,4 +1155,6 @@ window.startEditingExistingPlaylist = startEditingExistingPlaylist;
 window.handleWorkspaceNameInput = handleWorkspaceNameInput;
 window.saveWorkspacePlaylist = saveWorkspacePlaylist;
 window.deleteWorkspacePlaylist = deleteWorkspacePlaylist;
-
+window.handleWorkspaceSearchInput = handleWorkspaceSearchInput;
+window.addDanceToWorkspace = addDanceToWorkspace;
+window.removeDanceFromWorkspace = removeDanceFromWorkspace;
