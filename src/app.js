@@ -806,6 +806,20 @@ function openEventsView() {
     alert("Events (coming soon)");
 }
 
+function openWorkspace() {
+    // Initialize Workspace for creating a new playlist
+    workspaceMode = "create";
+    workspacePlaylistName = "";
+    workspaceSelectedDances = [];
+    workspaceSearchQuery = "";
+    workspaceSearchResults = [];
+    workspaceEditingOriginalName = "";
+
+    lastNavigationMode = "workspace";
+    renderApplicationInterface();
+}
+
+
 /* ============================================
    CACHE BUSTER RELOAD
 ============================================ */
