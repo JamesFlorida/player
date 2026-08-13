@@ -644,7 +644,7 @@ function renderWorkspaceScreen() {
     // Main Workspace Layout
     document.getElementById('masterApplicationViewport').innerHTML = `
 
-      <div class="workspace-screen">
+     <div class="workspace-screen">
 
     <!-- Create New Playlist -->
     <div class="workspace-controls">
@@ -675,6 +675,7 @@ function renderWorkspaceScreen() {
     </div>
 
 </div>
+ 
   
     `;
 }
