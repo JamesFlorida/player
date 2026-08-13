@@ -415,6 +415,26 @@ function openDanceFromSearchToPlaylist(danceId) {
     openSearchResultsWorkspace(matches);
 }
 
+function startEditingExistingPlaylist() {
+
+    // If no playlist is selected, do nothing for now
+    // (Step 8 will add a proper selection UI)
+    if (!selectedActivePlaylistGroup) {
+        alert("No playlist selected to edit.");
+        return;
+    }
+
+    // Switch Workspace into edit mode
+    workspaceMode = "edit";
+    workspacePlaylistName = selectedActivePlaylistGroup.name;
+
+    // Re-render Workspace with the playlist loaded
+    renderWorkspaceScreen();
+}
+
+window.startEditingExistingPlaylist = startEditingExistingPlaylist;
+
+
 /* ============================================
    MAIN RENDERER (CLEANED + CORRECTED)
 ============================================ */
