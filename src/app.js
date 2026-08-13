@@ -539,13 +539,6 @@ if (lastNavigationMode === "workspace") {
                 </select>
             </div>
 
-            <div class="hub-search-row">
-                <input type="text" id="danceSearchInput"
-                       placeholder="Search dances..."
-                       oninput="handleLiveSearchInput()">
-                <button class="sync-btn" onclick="forceCacheBusterReload()">Sync</button>
-            </div>
-
             <div class="hub-nav-row">
              <div class="hub-nav-card" onclick="openWorkspace()">Manage User Playlists</div>
              <div class="hub-nav-card" onclick="openEventsView()">Events</div>
