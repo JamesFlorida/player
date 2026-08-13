@@ -43,7 +43,7 @@ let workspaceSearchQuery = "";            // Search bar text inside Workspace
 let workspaceSearchResults = [];          // Search results inside Workspace
 let workspaceEditingOriginalName = "";    // For renaming playlists safely
 let userPlaylists = {};
-
+let allDances = localDanceDatabase;
 
 function startCreatingNewPlaylist() {
     // Create a blank playlist object
