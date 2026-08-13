@@ -882,5 +882,6 @@ window.renderSimpleSearchCards = renderSimpleSearchCards;
 window.openDanceFromSearchToPlaylist = openDanceFromSearchToPlaylist;
 window.openDanceFromPlaylist = openDanceFromPlaylist;
 window.openWorkspace = openWorkspace;
+window.navigateBackFromWorkspace = navigateBackFromWorkspace
 
 
