@@ -1105,6 +1105,7 @@ function renderSimpleSearchCards(matches, containerElement) {
     });
 }
 
+/* --duplicate function
 function renderWorkspaceSearchResults(matches) {
     const viewport = document.getElementById('masterApplicationViewport');
    document.getElementById('applicationHeaderTitle').innerText = "Search Results";
@@ -1123,7 +1124,7 @@ function renderWorkspaceSearchResults(matches) {
     const resultsContainer = document.getElementById('workspaceSearchResultsContainer');
     renderSimpleSearchCards(matches, resultsContainer);
 }
-
+*/
 
 /* ============================================
    APP BOOTSTRAP
