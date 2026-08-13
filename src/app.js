@@ -220,7 +220,9 @@ function openSpecificPlaylistView(groupName) {
     if (diffBar) diffBar.style.display = 'none';
 
     // Show return trigger
-    document.getElementById('navbarReturnTrigger').style.display = 'block';
+   document.getElementById('navbarReturnTrigger').style.display = 'block';
+   document.getElementById('navbarReturnTrigger').onclick = navigateToPlaylistHubMenu;
+
 
     // Restore playlist header
     document.getElementById('applicationHeaderTitle').innerText = groupName;
@@ -425,6 +427,7 @@ if (lastNavigationMode === "workspace") {
         );
 
         document.getElementById('navbarReturnTrigger').style.display = 'block';
+        document.getElementById('navbarReturnTrigger').onclick = navigateToPlaylistHubMenu;
         document.getElementById('applicationHeaderTitle').innerText = selectedActivePlaylistGroup;
 
         renderDanceCardsList(filteredTracks, viewport);
@@ -460,6 +463,8 @@ if (lastNavigationMode === "workspace") {
     if (activeDifficultyView !== null) {
 
         document.getElementById('navbarReturnTrigger').style.display = 'block';
+        document.getElementById('navbarReturnTrigger').onclick = navigateToPlaylistHubMenu;
+
         document.getElementById('applicationHeaderTitle').innerText =
             activeDifficultyView + " Dances";
 
@@ -492,6 +497,8 @@ if (lastNavigationMode === "workspace") {
     if (navRow) navRow.style.display = 'flex';
 
     document.getElementById('navbarReturnTrigger').style.display = 'none';
+    document.getElementById('navbarReturnTrigger').onclick = null;
+
     document.getElementById('applicationHeaderTitle').innerText = "Playlists";
 
     let groupNames;
@@ -614,6 +621,7 @@ function renderWorkspaceScreen() {
 
     // Show back button
     document.getElementById('navbarReturnTrigger').style.display = 'block';
+    document.getElementById('navbarReturnTrigger').onclick = navigateBackFromWorkspace;
 
     // Main Workspace Layout
     document.getElementById('masterApplicationViewport').innerHTML = `
