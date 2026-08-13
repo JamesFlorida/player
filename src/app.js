@@ -231,7 +231,7 @@ function openSpecificPlaylistView(groupName) {
 
 
 function openSearchResultsWorkspace(matches) {
-    selectedSingleDance = null;
+   
 
     // Render the workspace search results screen
     renderWorkspaceSearchResults(matches);
@@ -239,7 +239,6 @@ function openSearchResultsWorkspace(matches) {
 
 function returnToSearchResults() {
     // Clear single dance mode
-    selectedSingleDance = null;
     selectedActivePlaylistGroup = null;
 
     // Restore search bar text
@@ -273,9 +272,6 @@ function openDanceFromPlaylist(danceId) {
     const dance = localDanceDatabase.find(d => d.id === danceId);
     if (!dance) return;
 
-    // ⭐ DO NOT enter single-dance mode when launching media from a playlist
-    selectedSingleDance = null;
-
     // ⭐ Stay in playlist mode
     selectedActivePlaylistGroup = dance.playlist;
 
@@ -301,8 +297,7 @@ function openDanceFromSearchToSingleDance(danceId) {
     const dance = localDanceDatabase.find(d => d.id === danceId);
     if (!dance) return;
 
-    // Set workspace mode: single dance detail
-    selectedSingleDance = dance;
+    
 
     // Clear playlist mode (but preserve search context)
     selectedActivePlaylistGroup = null;
@@ -317,7 +312,7 @@ function openDanceFromSearchToSingleDance(danceId) {
 
 function returnToHub() {
     // Clear workspace state
-    selectedSingleDance = null;
+   
     selectedActivePlaylistGroup = null;
 
     // Clear search state
@@ -348,8 +343,7 @@ function openDanceFromSearchToPlaylist(danceId) {
     // Set playlist group
     selectedActivePlaylistGroup = dance.playlist;
 
-    // Clear single dance mode
-    selectedSingleDance = null;
+   
 
     // Restore playlist header
     document.getElementById('applicationHeaderTitle').innerText = dance.playlist;
@@ -374,7 +368,7 @@ function openDanceFromSearchToPlaylist(danceId) {
 
     // ⭐ If search is empty → fully restore hub screen
    if (activeSearchQueryString.length === 0) {
-    selectedSingleDance = null;
+  
     selectedActivePlaylistGroup = null;
 
     // Restore hub header
