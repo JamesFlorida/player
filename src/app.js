@@ -395,7 +395,7 @@ function openDanceFromSearchToPlaylist(danceId) {
     // Restore hub screen
     renderApplicationInterface();
     return;
-}
+      }
 
 
     // ⭐ Otherwise → show search results
@@ -433,6 +433,15 @@ function startEditingExistingPlaylist() {
 }
 
 window.startEditingExistingPlaylist = startEditingExistingPlaylist;
+function selectPlaylistForEditing(name) {
+    selectedActivePlaylistGroup = userPlaylists[name];
+    workspaceMode = "edit";
+    workspacePlaylistName = name;
+
+    renderWorkspaceScreen();
+}
+
+
 
 
 /* ============================================
@@ -633,6 +642,32 @@ function renderDanceCardsList(tracksList, containerElement) {
     });
 }
 
+function renderWorkspacePlaylistSelection() {
+
+    const container = document.getElementById('workspacePlaylistSelection');
+    if (!container) return;
+
+    // If no user playlists exist yet
+    if (!userPlaylists || Object.keys(userPlaylists).length === 0) {
+        container.innerHTML = `<div class="workspace-note">No user playlists available.</div>`;
+        return;
+    }
+
+    // Build a simple list of user playlists
+    let html = `<div class="workspace-note">Select a playlist to edit:</div>`;
+
+    Object.keys(userPlaylists).forEach(name => {
+        html += `
+            <div class="workspace-playlist-item" onclick="selectPlaylistForEditing('${name}')">
+                ${name}
+            </div>
+        `;
+    });
+
+    container.innerHTML = html;
+}
+
+
 function renderWorkspaceScreen() {
 
     // Header Title
@@ -663,43 +698,47 @@ function renderWorkspaceScreen() {
 
      <div class="workspace-screen">
         
-         <!-- Create / Edit Playlist Controls -->
-         <div class="workspace-controls">
-             <button id="createNewPlaylistBtn" class="workspace-btn">➕ Create New Playlist</button>
-             <button id="editExistingPlaylistBtn" class="workspace-btn">✏️ Edit Existing Playlist</button>
-      </div>
-
-        
-
-        <!-- Search Bar -->
-        <div class="workspace-search-row">
-            <input type="text" id="workspaceSearchInput"
-                   placeholder="Search dances..."
-                   oninput="handleWorkspaceSearchInput()">
-        </div>
-
-        <!-- Search Results -->
-        <div id="workspaceSearchResults" class="workspace-search-results">
-            <!-- Filled in Step 4 -->
-        </div>
-
-        <!-- Selected Dances -->
-        <div id="workspaceSelectedList" class="workspace-selected-list">
-            <!-- Filled in Step 5 -->
-        </div>
-
-        <!-- Action Buttons -->
-        <div class="workspace-action-row">
-            <button onclick="saveWorkspacePlaylist()">Save Playlist</button>
-            <button onclick="deleteWorkspacePlaylist()">Delete Playlist</button>
-        </div>
-
+    <!-- Create / Edit Playlist Controls -->
+    <div class="workspace-controls">
+        <button id="createNewPlaylistBtn" class="workspace-btn">➕ Create New Playlist</button>
+        <button id="editExistingPlaylistBtn" class="workspace-btn">✏️ Edit Existing Playlist</button>
     </div>
+
+    <!-- Playlist Selection (Step 7 placeholder) -->
+    <div id="workspacePlaylistSelection" class="workspace-selection">
+        <!-- Step 7 will fill this -->
+    </div>
+
+    <!-- Search Bar -->
+    <div class="workspace-search-row">
+        <input type="text" id="workspaceSearchInput"
+               placeholder="Search dances..."
+               oninput="handleWorkspaceSearchInput()">
+    </div>
+
+    <!-- Search Results -->
+    <div id="workspaceSearchResults" class="workspace-search-results">
+        <!-- Filled in Step 4 -->
+    </div>
+
+    <!-- Selected Dances -->
+    <div id="workspaceSelectedList" class="workspace-selected-list">
+        <!-- Filled in Step 5 -->
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="workspace-action-row">
+        <button onclick="saveWorkspacePlaylist()">Save Playlist</button>
+        <button onclick="deleteWorkspacePlaylist()">Delete Playlist</button>
+    </div>
+
+</div>
     `;
 
     // NOW the element exists — safe to attach onclick
     document.getElementById('createNewPlaylistBtn').onclick = startCreatingNewPlaylist;
     document.getElementById('editExistingPlaylistBtn').onclick = startEditingExistingPlaylist;
+   renderWorkspacePlaylistSelection();
 }
 
 
@@ -940,5 +979,6 @@ window.openDanceFromPlaylist = openDanceFromPlaylist;
 window.openWorkspace = openWorkspace;
 window.navigateBackFromWorkspace = navigateBackFromWorkspace
 window.startCreatingNewPlaylist = startCreatingNewPlaylist;
+window.selectPlaylistForEditing = selectPlaylistForEditing;
 
 
