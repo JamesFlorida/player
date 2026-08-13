@@ -638,47 +638,46 @@ function renderWorkspaceScreen() {
     document.getElementById('navbarReturnTrigger').style.display = 'block';
     document.getElementById('navbarReturnTrigger').onclick = navigateBackFromWorkspace;
 
-    document.getElementById('createNewPlaylistBtn').onclick = startCreatingNewPlaylist;
-
-
-    // Main Workspace Layout
+    // INSERT HTML FIRST — VERY IMPORTANT
     document.getElementById('masterApplicationViewport').innerHTML = `
 
      <div class="workspace-screen">
 
-    <!-- Create New Playlist -->
-    <div class="workspace-controls">
-        <button id="createNewPlaylistBtn" class="workspace-btn">➕ Create New Playlist</button>
-    </div>
+        <!-- Create New Playlist -->
+        <div class="workspace-controls">
+            <button id="createNewPlaylistBtn" class="workspace-btn">➕ Create New Playlist</button>
+        </div>
 
-    <!-- Search Bar -->
-    <div class="workspace-search-row">
-        <input type="text" id="workspaceSearchInput"
-               placeholder="Search dances..."
-               oninput="handleWorkspaceSearchInput()">
-    </div>
+        <!-- Search Bar -->
+        <div class="workspace-search-row">
+            <input type="text" id="workspaceSearchInput"
+                   placeholder="Search dances..."
+                   oninput="handleWorkspaceSearchInput()">
+        </div>
 
-    <!-- Search Results -->
-    <div id="workspaceSearchResults" class="workspace-search-results">
-        <!-- Filled in Step 4 -->
-    </div>
+        <!-- Search Results -->
+        <div id="workspaceSearchResults" class="workspace-search-results">
+            <!-- Filled in Step 4 -->
+        </div>
 
-    <!-- Selected Dances -->
-    <div id="workspaceSelectedList" class="workspace-selected-list">
-        <!-- Filled in Step 5 -->
-    </div>
+        <!-- Selected Dances -->
+        <div id="workspaceSelectedList" class="workspace-selected-list">
+            <!-- Filled in Step 5 -->
+        </div>
 
-    <!-- Action Buttons -->
-    <div class="workspace-action-row">
-        <button onclick="saveWorkspacePlaylist()">Save Playlist</button>
-        <button onclick="deleteWorkspacePlaylist()">Delete Playlist</button>
-    </div>
+        <!-- Action Buttons -->
+        <div class="workspace-action-row">
+            <button onclick="saveWorkspacePlaylist()">Save Playlist</button>
+            <button onclick="deleteWorkspacePlaylist()">Delete Playlist</button>
+        </div>
 
-</div>
- 
-  
+    </div>
     `;
+
+    // NOW the element exists — safe to attach onclick
+    document.getElementById('createNewPlaylistBtn').onclick = startCreatingNewPlaylist;
 }
+
 
 
 function renderSingleDanceScreen(dance) {
