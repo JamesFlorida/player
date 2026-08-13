@@ -42,6 +42,8 @@ let workspaceSelectedDances = [];         // Array of dance IDs inside the playl
 let workspaceSearchQuery = "";            // Search bar text inside Workspace
 let workspaceSearchResults = [];          // Search results inside Workspace
 let workspaceEditingOriginalName = "";    // For renaming playlists safely
+let userPlaylists = {};
+
 
 function startCreatingNewPlaylist() {
     // Create a blank playlist object
@@ -432,7 +434,6 @@ function startEditingExistingPlaylist() {
     renderWorkspaceScreen();
 }
 
-window.startEditingExistingPlaylist = startEditingExistingPlaylist;
 function selectPlaylistForEditing(name) {
     selectedActivePlaylistGroup = userPlaylists[name];
     workspaceMode = "edit";
@@ -972,7 +973,6 @@ window.handleLiveSearchInput = handleLiveSearchInput;
 window.setDayFilter = setDayFilter;
 window.setDifficultyFilter = setDifficultyFilter;
 window.forceCacheBusterReload = forceCacheBusterReload;
-
 window.renderSimpleSearchCards = renderSimpleSearchCards;
 window.openDanceFromSearchToPlaylist = openDanceFromSearchToPlaylist;
 window.openDanceFromPlaylist = openDanceFromPlaylist;
@@ -980,5 +980,6 @@ window.openWorkspace = openWorkspace;
 window.navigateBackFromWorkspace = navigateBackFromWorkspace
 window.startCreatingNewPlaylist = startCreatingNewPlaylist;
 window.selectPlaylistForEditing = selectPlaylistForEditing;
+window.startEditingExistingPlaylist = startEditingExistingPlaylist;
 
 
