@@ -206,9 +206,6 @@ function openSpecificPlaylistView(groupName) {
     // Set playlist group
     selectedActivePlaylistGroup = groupName;
 
-    // Clear single dance mode
-    selectedSingleDance = null;
-
     // Clear day/difficulty modes
     activeDayView = null;
     activeDayFilter = "ALL";
