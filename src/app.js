@@ -894,5 +894,6 @@ window.forceCacheBusterReload = forceCacheBusterReload;
 window.renderSimpleSearchCards = renderSimpleSearchCards;
 window.openDanceFromSearchToPlaylist = openDanceFromSearchToPlaylist;
 window.openDanceFromPlaylist = openDanceFromPlaylist;
+window.openWorkspace = openWorkspace;
 
 
