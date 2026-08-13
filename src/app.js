@@ -24,14 +24,25 @@ console.log(localDanceDatabase);
 /* ============================================
    APP STATE
 ============================================ */
-let selectedActivePlaylistGroup = null;
-let activeSearchQueryString = "";
-let activeDayFilter = "ALL";
-let activeDayView = null;
-let activeDifficultyView = null;
-let activeDifficultyFilter = "";
-let selectedSingleDance = null; 
-let lastNavigationMode = null;   // "playlist" or "search"
+let selectedActivePlaylistGroup = null;   // Which playlist is currently open (Dancelist Screen)
+let activeSearchQueryString = "";         // Hub search (will be removed later)
+let activeDayFilter = "ALL";              // Hub filter
+let activeDayView = null;                 // Hub day view
+let activeDifficultyView = null;          // Hub difficulty view
+let activeDifficultyFilter = "";          // Hub difficulty filter
+
+let lastNavigationMode = null;            // "hub", "playlist", "workspace"
+
+/* ============================================
+   WORKSPACE STATE
+============================================ */
+let workspaceMode = null;                 // "create" or "edit"
+let workspacePlaylistName = "";           // Name of the playlist being edited/created
+let workspaceSelectedDances = [];         // Array of dance IDs inside the playlist
+let workspaceSearchQuery = "";            // Search bar text inside Workspace
+let workspaceSearchResults = [];          // Search results inside Workspace
+let workspaceEditingOriginalName = "";    // For renaming playlists safely
+
 
 
 /* ============================================
@@ -402,14 +413,14 @@ function renderApplicationInterface() {
     if (!viewport) return;
 
     viewport.innerHTML = '';
+   
        /* --------------------------------------------
-       WORKSPACE SCREEN: Single Dance Detail
-       -------------------------------------------- */
-    if (selectedSingleDance !== null) {
-        renderSingleDanceScreen(selectedSingleDance);
-        return;
-    }
-
+   WORKSPACE SCREEN
+   -------------------------------------------- */
+if (lastNavigationMode === "workspace") {
+    renderWorkspaceScreen();
+    return;
+}
 
     /* --------------------------------------------
        1. PLAYLIST VIEW (if user is inside a playlist)
@@ -484,9 +495,6 @@ function renderApplicationInterface() {
     const diffBar = document.getElementById('difficultyFilterBar');
     if (diffBar) diffBar.style.display = 'block';
 
-    const searchRow = document.querySelector('.hub-search-row');
-    if (searchRow) searchRow.style.display = 'flex';
-
     const navRow = document.querySelector('.hub-nav-row');
     if (navRow) navRow.style.display = 'flex';
 
@@ -539,9 +547,8 @@ function renderApplicationInterface() {
             </div>
 
             <div class="hub-nav-row">
-                <div class="hub-nav-card" onclick="openUserPlaylists()">My Playlists</div>
-                <div class="hub-nav-card" onclick="createNewUserPlaylist()">Create Playlist</div>
-                <div class="hub-nav-card" onclick="openEventsView()">Events</div>
+             <div class="hub-nav-card" onclick="openWorkspace()">Manage User Playlists</div>
+             <div class="hub-nav-card" onclick="openEventsView()">Events</div>
             </div>
 
             <div class="playlist-container">
@@ -597,6 +604,62 @@ function renderDanceCardsList(tracksList, containerElement) {
         containerElement.appendChild(card);
     });
 }
+
+function renderWorkspaceScreen() {
+
+    // Header Title
+    document.getElementById('applicationHeaderTitle').innerText =
+        workspaceMode === "edit"
+            ? `Edit Playlist: ${workspacePlaylistName}`
+            : `Create Playlist`;
+
+    // Hide Hub filters and search
+    const filterBar = document.getElementById('dayFilterBar');
+    if (filterBar) filterBar.style.display = 'none';
+
+    const diffBar = document.getElementById('difficultyFilterBar');
+    if (diffBar) diffBar.style.display = 'none';
+
+    const hubSearchRow = document.querySelector('.hub-search-row');
+    if (hubSearchRow) hubSearchRow.style.display = 'none';
+
+    const hubNavRow = document.querySelector('.hub-nav-row');
+    if (hubNavRow) hubNavRow.style.display = 'none';
+
+    // Show back button
+    document.getElementById('navbarReturnTrigger').style.display = 'block';
+
+    // Main Workspace Layout
+    document.getElementById('applicationMainContent').innerHTML = `
+        <div class="workspace-screen">
+
+            <!-- Search Bar -->
+            <div class="workspace-search-row">
+                <input type="text" id="workspaceSearchInput"
+                       placeholder="Search dances..."
+                       oninput="handleWorkspaceSearchInput()">
+            </div>
+
+            <!-- Search Results -->
+            <div id="workspaceSearchResults" class="workspace-search-results">
+                <!-- Filled in Step 4 -->
+            </div>
+
+            <!-- Selected Dances -->
+            <div id="workspaceSelectedList" class="workspace-selected-list">
+                <!-- Filled in Step 5 -->
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="workspace-action-row">
+                <button onclick="saveWorkspacePlaylist()">Save Playlist</button>
+                <button onclick="deleteWorkspacePlaylist()">Delete Playlist</button>
+            </div>
+
+        </div>
+    `;
+}
+
 
 function renderSingleDanceScreen(dance) {
     const viewport = document.getElementById('masterApplicationViewport');
