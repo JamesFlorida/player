@@ -794,13 +794,6 @@ function updateHubVisibility() {
 /* ============================================
    USER PLAYLISTS (PLACEHOLDER)
 ============================================ */
-function openUserPlaylists() {
-    alert("User Playlists (coming soon)");
-}
-
-function createNewUserPlaylist() {
-    alert("Create Playlist (coming soon)");
-}
 
 function openEventsView() {
     alert("Events (coming soon)");
