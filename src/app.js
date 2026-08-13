@@ -758,6 +758,7 @@ function renderWorkspaceScreen() {
    const nameInput = document.getElementById('workspacePlaylistNameInput');
    if (nameInput) {
     nameInput.value = workspacePlaylistName || "";
+   }
 }
 
 function renderSingleDanceScreen(dance) {
