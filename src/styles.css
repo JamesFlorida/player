@@ -386,3 +386,33 @@ input#danceSearchInput:focus {
     font-size: 0.95rem !important;
     padding: 10px !important;
 }
+
+/* ============================================
+   WORKSPACE LAYOUT (CREATE / EDIT PLAYLIST)
+   ============================================ */
+
+.workspace-columns {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.workspace-column-left {
+    flex: 1;
+    background-color: #1a1a1a;
+    padding: 12px;
+    border-radius: 6px;
+}
+
+.workspace-column-right {
+    flex: 1;
+    background-color: #111;
+    padding: 12px;
+    border-radius: 6px;
+}
+
+.workspace-mode-panel {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+}
