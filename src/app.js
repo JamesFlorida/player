@@ -780,8 +780,6 @@ function renderWorkspacePlaylistSelection() {
 
     container.innerHTML = html;
 }
-
-
 function renderWorkspaceScreen() {
 
     // Header Title
@@ -807,64 +805,65 @@ function renderWorkspaceScreen() {
     document.getElementById('navbarReturnTrigger').style.display = 'block';
     document.getElementById('navbarReturnTrigger').onclick = navigateBackFromWorkspace;
 
-    // INSERT HTML FIRST — VERY IMPORTANT
+    // ⭐ INSERT HTML FIRST — VERY IMPORTANT
     document.getElementById('masterApplicationViewport').innerHTML = `
+      <div class="workspace-screen">
 
-     <div class="workspace-screen">
-        
-    <!-- Create / Edit Playlist Controls -->
-    <div class="workspace-controls">
-        <button id="createNewPlaylistBtn" class="workspace-btn">➕ Create New Playlist</button>
-        <button id="editExistingPlaylistBtn" class="workspace-btn">✏️ Edit Existing Playlist</button>
-    </div>
+        <!-- ⭐ MODE SELECTION PANEL (always shown first) -->
+        <div id="workspaceModePanel" class="workspace-mode-panel">
+            <button onclick="startCreateMode()">Create New Playlist</button>
+            <button onclick="startEditMode()">Edit Existing Playlist</button>
+            <button onclick="startDeleteMode()">Delete Playlist</button>
+        </div>
 
-    <!-- Playlist Selection (Step 7 placeholder) -->
-    <div id="workspacePlaylistSelection" class="workspace-selection">
-        <!-- Step 7 will fill this -->
-    </div>
+        <!-- ⭐ WORKSPACE CONTENT (hidden until a mode is chosen) -->
+        <div id="workspaceContent" style="display:none;">
 
-    <!-- Playlist Name -->
-   <div class="workspace-name-row">
-       <input type="text" id="workspacePlaylistNameInput"
-           placeholder="Playlist name..."
-           oninput="handleWorkspaceNameInput()">
-   </div>
+            <!-- ⭐ TWO-COLUMN LAYOUT -->
+            <div id="workspaceColumns" class="workspace-columns">
 
-    <!-- Search Bar -->
-    <div class="workspace-search-row">
-        <input type="text" id="workspaceSearchInput"
-               placeholder="Search dances..."
-               oninput="handleWorkspaceSearchInput()">
-    </div>
+                <!-- LEFT COLUMN: Search + Add -->
+                <div id="workspaceLeftColumn" class="workspace-column-left"></div>
 
-    <!-- Search Results -->
-    <div id="workspaceSearchResults" class="workspace-search-results">
-        <!-- Filled in Step 4 -->
-    </div>
+                <!-- RIGHT COLUMN: Playlist Name + Selected Dances -->
+                <div id="workspaceRightColumn" class="workspace-column-right"></div>
 
-    <!-- Selected Dances -->
-    <div id="workspaceSelectedList" class="workspace-selected-list">
-        <!-- Filled in Step 5 -->
-    </div>
+            </div>
 
-    <!-- Action Buttons -->
-    <div class="workspace-action-row">
-        <button onclick="saveWorkspacePlaylist()">Save Playlist</button>
-        <button onclick="deleteWorkspacePlaylist()">Delete Playlist</button>
-    </div>
+        </div>
 
-</div>
-    `;
+      </div>
+    `;  // ⭐ HTML STRING ENDS HERE — DO NOT PUT JS BELOW THIS LINE INSIDE THE STRING
 
-    // NOW the element exists — safe to attach onclick
-    document.getElementById('createNewPlaylistBtn').onclick = startCreatingNewPlaylist;
-    document.getElementById('editExistingPlaylistBtn').onclick = startEditingExistingPlaylist;
-   renderWorkspacePlaylistSelection();
-   const nameInput = document.getElementById('workspacePlaylistNameInput');
-   if (nameInput) {
-    nameInput.value = workspacePlaylistName || "";
-   }
-}
+
+    // ⭐ MODE FUNCTIONS — nested inside renderWorkspaceScreen,
+    // but OUTSIDE the HTML string (correct placement)
+
+    window.startCreateMode = function () {
+        workspaceMode = "create";
+        workspacePlaylistName = "";
+        selectedActivePlaylistGroup = { name: "", dances: [] };
+
+        document.getElementById("workspaceContent").style.display = "block";
+        renderCreateModeLayout();
+    };
+
+    window.startEditMode = function () {
+        workspaceMode = "edit";
+        document.getElementById("workspaceContent").style.display = "block";
+        renderEditModeLayout();
+    };
+
+    window.startDeleteMode = function () {
+        workspaceMode = "delete";
+        document.getElementById("workspaceContent").style.display = "block";
+        renderDeleteModeLayout();
+    };
+
+} // ⭐ END OF renderWorkspaceScreen()
+
+
+    
 
 function renderSingleDanceScreen(dance) {
     const viewport = document.getElementById('masterApplicationViewport');
