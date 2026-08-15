@@ -549,12 +549,6 @@ function removeDanceFromWorkspace(danceName) {
     renderWorkspaceSelectedList();
 }
 
-function removeDanceFromWorkspace(danceName) {
-    selectedActivePlaylistGroup.dances =
-        selectedActivePlaylistGroup.dances.filter(d => d !== danceName);
-
-    renderWorkspaceSelectedList();
-}
 
 function handleWorkspaceNameInput() {
     const input = document.getElementById("workspacePlaylistNameInput");
