@@ -1030,6 +1030,8 @@ function launchMediaOverlay(targetUrl, displayTitle) {
     targetUrl = targetUrl.replace('http://', 'https://');
 
     const container = document.getElementById('playerOverlayFrame');
+   container.style.border = "10px solid red";   // DIAGNOSTIC BORDER
+
     if (!container) return;
 
     container.style.display = 'none';
