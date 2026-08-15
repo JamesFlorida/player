@@ -1169,26 +1169,6 @@ function renderSimpleSearchCards(matches, containerElement) {
     });
 }
 
-/* --duplicate function
-function renderWorkspaceSearchResults(matches) {
-    const viewport = document.getElementById('masterApplicationViewport');
-   document.getElementById('applicationHeaderTitle').innerText = "Search Results";
-    if (!viewport) return;
-
-    viewport.innerHTML = `
-        <div class="workspace-search-results-screen">
-            <div class="nav-line" onclick="returnToHub()">
-                ← Playlists
-            </div>
-
-            <div id="workspaceSearchResultsContainer"></div>
-        </div>
-    `;
-
-    const resultsContainer = document.getElementById('workspaceSearchResultsContainer');
-    renderSimpleSearchCards(matches, resultsContainer);
-}
-*/
 
 /* ============================================
    APP BOOTSTRAP
