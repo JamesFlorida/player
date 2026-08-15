@@ -220,6 +220,7 @@ function setDifficultyFilter(level) {
    OPEN PLAYLIST VIEW
 ============================================ */
 function openSpecificPlaylistView(name) {
+   console.log(">>> PLAYLIST CARD CLICKED:", name);
     selectedActivePlaylistGroup = name;
     activeDayView = null;
     activeDifficultyView = null;
