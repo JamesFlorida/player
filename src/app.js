@@ -997,6 +997,8 @@ function openMusic(danceId) {
 }
 
 function launchMediaOverlay(targetUrl, displayTitle) {
+   console.log("launchMediaOverlay URL:", targetUrl);
+
     if (!targetUrl) return;
 
     // Force HTTPS for YouTube and other embeds
@@ -1034,6 +1036,16 @@ function launchMediaOverlay(targetUrl, displayTitle) {
     }
     container.style.display = 'block';
 }
+function shutOverlayViewer() {
+    const container = document.getElementById('playerOverlayFrame');
+    if (container) {
+        container.innerHTML = '';
+        container.style.display = 'none';
+    }
+
+    // Re-render correct screen based on current state
+    renderApplicationInterface();
+}
 
 
 /* ============================================
@@ -1060,4 +1072,5 @@ window.openSteps = openSteps;
 window.openTeach = openTeach;
 window.openDemo = openDemo;
 window.openMusic = openMusic;
-
+window.launchMediaOverlay = launchMediaOverlay;
+window.shutOverlayViewer = shutOverlayViewer;
