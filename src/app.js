@@ -445,7 +445,7 @@ function renderDanceCardsList(tracks, containerElement) {
                 <button class="playlist-btn music-btn">Music</button>
             </div>
         `;
-
+      console.log(">>> HTML GENERATED:", card.innerHTML);
         // Attach event listeners (Chrome Trusted Types–safe)
         card.querySelector('.steps-btn').addEventListener('click', () => openSteps(track.id));
         card.querySelector('.teach-btn').addEventListener('click', () => openTeach(track.id));
