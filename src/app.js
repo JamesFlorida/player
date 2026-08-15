@@ -418,6 +418,8 @@ function renderApplicationInterface() {
    DANCE CARD RENDERER
 ============================================ */
 function renderDanceCardsList(tracks, containerElement) {
+   console.log(">>> renderDanceCardsList running with", tracks.length, "tracks");
+
     containerElement.innerHTML = "";
 
     if (!tracks.length) {
