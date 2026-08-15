@@ -816,7 +816,7 @@ function renderWorkspaceSelectedDances() {
 function addDanceToWorkspace(name) {
     if (!workspaceSelectedDances.includes(name)) {
         workspaceSelectedDances.push(name);
-        renderWorkspaceSelectedList();
+        renderWorkspaceSelectedDances();
     }
 }
 
@@ -827,7 +827,7 @@ function removeDanceFromWorkspace(name) {
     const index = workspaceSelectedDances.indexOf(name);
     if (index !== -1) {
         workspaceSelectedDances.splice(index, 1);
-        renderWorkspaceSelectedList();
+        renderWorkspaceSelectedDances();
     }
 }
 
@@ -889,7 +889,7 @@ function selectPlaylistForEditing(name) {
         <div id="workspaceSearchResults" class="workspace-search-results"></div>
     `;
 
-    renderWorkspaceSelectedList();
+    renderWorkspaceSelectedDances();
     renderWorkspaceSearchResults();
 }
 
