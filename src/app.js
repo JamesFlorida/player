@@ -436,12 +436,18 @@ function renderDanceCardsList(tracks, containerElement) {
             <div class="meta-line">Song: ${track.song} - ${track.artist}</div>
 
             <div class="dance-button-row">
-                <button class="playlist-btn" onclick="openSteps('${track.id}')">Steps</button>
-                <button class="playlist-btn" onclick="openTeach('${track.id}')">Teach</button>
-                <button class="playlist-btn" onclick="openDemo('${track.id}')">Demo</button>
-                <button class="playlist-btn" onclick="openMusic('${track.id}')">Music</button>
+                <button class="playlist-btn steps-btn">Steps</button>
+                <button class="playlist-btn teach-btn">Teach</button>
+                <button class="playlist-btn demo-btn">Demo</button>
+                <button class="playlist-btn music-btn">Music</button>
             </div>
         `;
+
+        // Attach event listeners (Chrome Trusted Types–safe)
+        card.querySelector('.steps-btn').addEventListener('click', () => openSteps(track.id));
+        card.querySelector('.teach-btn').addEventListener('click', () => openTeach(track.id));
+        card.querySelector('.demo-btn').addEventListener('click', () => openDemo(track.id));
+        card.querySelector('.music-btn').addEventListener('click', () => openMusic(track.id));
 
         containerElement.appendChild(card);
     });
