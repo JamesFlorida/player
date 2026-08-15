@@ -80,7 +80,6 @@ function initializeVenueBranding() {
         root.style.setProperty('--card-bg', venueConfig.theme.cardBg || '#2b2b2b');
         root.style.setProperty('--btn-blue', venueConfig.theme.buttonBlue || '#34495e');
     }
-    }
 
     if (venueConfig.assets.backgroundImageUrl) {
         document.documentElement.style.setProperty(
