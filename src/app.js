@@ -363,7 +363,7 @@ function renderApplicationInterface() {
     document.getElementById('navbarReturnTrigger').onclick = null;
 
     
-    document.getElementById('applicationHeaderTitle').innerText = "🔥 HUB SCREEN ACTIVE 🔥";
+    document.getElementById('applicationHeaderTitle').innerText = " PLAYLISTS ";
 
     let groupNames;
     if (venueConfig.playlistGroups?.length > 0) {
@@ -1060,7 +1060,6 @@ function launchMediaOverlay(targetUrl, displayTitle) {
     targetUrl = targetUrl.replace('http://', 'https://');
 
     const container = document.getElementById('playerOverlayFrame');
-   container.style.border = "10px solid red";   // DIAGNOSTIC BORDER
 
     if (!container) return;
 
