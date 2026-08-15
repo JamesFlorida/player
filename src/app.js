@@ -996,6 +996,46 @@ function openMusic(danceId) {
     launchMediaOverlay(danceId, "music");
 }
 
+function launchMediaOverlay(targetUrl, displayTitle) {
+    if (!targetUrl) return;
+
+    // Force HTTPS for YouTube and other embeds
+    targetUrl = targetUrl.replace('http://', 'https://');
+
+    const container = document.getElementById('playerOverlayFrame');
+    if (!container) return;
+
+    container.style.display = 'none';
+    container.innerHTML = '';
+
+    if (displayTitle.includes("steps") || displayTitle.includes("Steps")) {
+        // STEPS: use <object> for CopperKnob / step sheets
+        container.innerHTML = `
+            <div class="overlay-control-header">
+                <span class="overlay-title" id="overlayPanelTitle">${displayTitle}</span>
+                <button class="done-close-btn" onclick="shutOverlayViewer()">Done</button>
+            </div>
+            <object data="${targetUrl}" class="overlay-viewport-iframe" type="text/html"></object>
+        `;
+    } else {
+        // YOUTUBE: use <iframe> with proper sandbox + allow
+        container.innerHTML = `
+            <div class="overlay-control-header">
+                <span class="overlay-title" id="overlayPanelTitle">${displayTitle}</span>
+                <button class="done-close-btn" onclick="shutOverlayViewer()">Done</button>
+            </div>
+            <iframe id="appIframeViewport"
+                    class="overlay-viewport-iframe"
+                    src="${targetUrl}"
+                    allow="autoplay; encrypted-media; fullscreen"
+                    sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-popups-to-escape-sandbox">
+            </iframe>
+        `;
+    }
+    container.style.display = 'block';
+}
+
+
 /* ============================================
    GLOBAL EXPORTS (Required for HTML onclick)
 ============================================ */
