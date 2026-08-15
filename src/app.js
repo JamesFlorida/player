@@ -988,28 +988,7 @@ function renderSingleDanceScreen(dance) {
     `;
 }
 
-function renderWorkspaceSearchResults(matches) {
 
-    const container = document.getElementById('workspaceSearchResults');
-    if (!container) return;
-
-    if (!matches || matches.length === 0) {
-        container.innerHTML = `<div class="workspace-note">No dances found.</div>`;
-        return;
-    }
-
-    let html = "";
-    matches.forEach(dance => {
-        html += `
-            <div class="workspace-search-item"
-                 onclick="addDanceToWorkspace('${dance.name}')">
-                ${dance.name}
-            </div>
-        `;
-    });
-
-    container.innerHTML = html;
-}
 
 function renderWorkspaceSelectedList() {
 
