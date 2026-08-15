@@ -252,6 +252,7 @@ function openDanceFromSearchToSingleDance(danceId) {
    MAIN RENDERER
 ============================================ */
 function renderApplicationInterface() {
+   console.log(">>> renderApplicationInterface RUNNING");
     const viewport = document.getElementById('masterApplicationViewport');
     if (!viewport) return;
 
