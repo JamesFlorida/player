@@ -252,7 +252,8 @@ function openDanceFromSearchToSingleDance(danceId) {
    MAIN RENDERER
 ============================================ */
 function renderApplicationInterface() {
-   console.log(">>> renderApplicationInterface RUNNING");
+    console.log(">>> renderApplicationInterface RUNNING");
+
     const viewport = document.getElementById('masterApplicationViewport');
     if (!viewport) return;
 
@@ -270,6 +271,7 @@ function renderApplicationInterface() {
        PLAYLIST VIEW
        -------------------------------------------- */
     if (selectedActivePlaylistGroup !== null) {
+
         const filteredTracks = localDanceDatabase.filter(
             track => track.playlist === selectedActivePlaylistGroup
         );
@@ -280,17 +282,17 @@ function renderApplicationInterface() {
 
         renderDanceCardsList(filteredTracks, viewport);
         updateHubVisibility();
-        return;
+        return;   // ⭐ prevents hub screen from overwriting playlist
     }
+
     /* --------------------------------------------
        DAY VIEW
        -------------------------------------------- */
     if (activeDayView !== null) {
+
         document.getElementById('navbarReturnTrigger').style.display = 'block';
         document.getElementById('navbarReturnTrigger').onclick = navigateToPlaylistHubMenu;
-
-        document.getElementById('applicationHeaderTitle').innerText =
-            activeDayView + " Dances";
+        document.getElementById('applicationHeaderTitle').innerText = activeDayView + " Dances";
 
         const dayTracks = localDanceDatabase.filter(track =>
             activeDayFilter === "ALL" ? true : track.daytaught === activeDayFilter
@@ -306,7 +308,7 @@ function renderApplicationInterface() {
 
         renderDanceCardsList(dayTracks, viewport);
         updateHubVisibility();
-        return;
+        return;   // ⭐ prevents hub screen from overwriting day view
     }
 
     /* --------------------------------------------
@@ -316,7 +318,6 @@ function renderApplicationInterface() {
 
         document.getElementById('navbarReturnTrigger').style.display = 'block';
         document.getElementById('navbarReturnTrigger').onclick = navigateToPlaylistHubMenu;
-
         document.getElementById('applicationHeaderTitle').innerText =
             activeDifficultyView + " Dances";
 
@@ -336,7 +337,7 @@ function renderApplicationInterface() {
 
         renderDanceCardsList(difficultyTracks, viewport);
         updateHubVisibility();
-        return;
+        return;   // ⭐ prevents hub screen from overwriting difficulty view
     }
 
     /* --------------------------------------------
@@ -415,6 +416,7 @@ function renderApplicationInterface() {
         </div>
     `;
 }
+
 
 /* ============================================
    DANCE CARD RENDERER
