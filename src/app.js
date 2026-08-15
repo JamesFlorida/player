@@ -27,6 +27,7 @@ venueDanceMap.forEach(entry => {
 /* ============================================
    CORE APP STATE
 ============================================ */
+let overlayActive = false; //REMOVE
 let selectedActivePlaylistGroup = null;   // Which playlist is open
 let activeSearchQueryString = "";         // Hub search
 let activeDayFilter = "ALL";              // Hub day filter
@@ -252,6 +253,11 @@ function openDanceFromSearchToSingleDance(danceId) {
    MAIN RENDERER
 ============================================ */
 function renderApplicationInterface() {
+   if (overlayActive) {
+    console.log(">>> renderApplicationInterface BLOCKED (overlay active)");
+    return;
+}
+
     console.log(">>> renderApplicationInterface RUNNING");
 
     const viewport = document.getElementById('masterApplicationViewport');
@@ -1022,6 +1028,8 @@ function openMusic(danceId) {
 
 
 function launchMediaOverlay(targetUrl, displayTitle) {
+   overlayActive = true; //REMOVE 
+
    console.log("launchMediaOverlay URL:", targetUrl);
 
     if (!targetUrl) return;
@@ -1064,6 +1072,8 @@ function launchMediaOverlay(targetUrl, displayTitle) {
     container.style.display = 'block';
 }
 function shutOverlayViewer() {
+   overlayActive = false;  //REMOVE
+
     const container = document.getElementById('playerOverlayFrame');
     if (container) {
         container.innerHTML = '';
