@@ -436,16 +436,17 @@ function renderDanceCardsList(tracks, containerElement) {
             <div class="meta-line">Song: ${track.song} - ${track.artist}</div>
 
             <div class="dance-button-row">
-                <button onclick="openSteps('${track.id}')">Steps</button>
-                <button onclick="openTeach('${track.id}')">Teach</button>
-                <button onclick="openDemo('${track.id}')">Demo</button>
-                <button onclick="openMusic('${track.id}')">Music</button>
+                <button class="playlist-btn" onclick="openSteps('${track.id}')">Steps</button>
+                <button class="playlist-btn" onclick="openTeach('${track.id}')">Teach</button>
+                <button class="playlist-btn" onclick="openDemo('${track.id}')">Demo</button>
+                <button class="playlist-btn" onclick="openMusic('${track.id}')">Music</button>
             </div>
         `;
 
         containerElement.appendChild(card);
     });
 }
+
 
 
 /* ============================================
