@@ -430,7 +430,7 @@ function renderApplicationInterface() {
    DANCE CARD RENDERER
 ============================================ */
 function renderDanceCardsList(tracks, containerElement) {
-   console.log(">>> renderDanceCardsList running with", tracks.length, "tracks");
+    console.log(">>> renderDanceCardsList running with", tracks.length, "tracks");
 
     containerElement.innerHTML = "";
 
@@ -446,6 +446,11 @@ function renderDanceCardsList(tracks, containerElement) {
         const card = document.createElement('div');
         card.className = 'dance-entry-card';
 
+        // Prevent card click from firing when buttons are clicked
+        card.addEventListener('click', (event) => {
+            event.stopPropagation();
+        });
+
         card.innerHTML = `
             <div class="title-line">${track.name} • By: ${track.choreographer}</div>
             <div class="meta-line">Song: ${track.song} - ${track.artist}</div>
@@ -457,12 +462,29 @@ function renderDanceCardsList(tracks, containerElement) {
                 <button class="playlist-btn music-btn">Music</button>
             </div>
         `;
-      console.log(">>> HTML GENERATED:", card.innerHTML);
-        // Attach event listeners (Chrome Trusted Types–safe)
-        card.querySelector('.steps-btn').addEventListener('click', () => openSteps(track.id));
-        card.querySelector('.teach-btn').addEventListener('click', () => openTeach(track.id));
-        card.querySelector('.demo-btn').addEventListener('click', () => openDemo(track.id));
-        card.querySelector('.music-btn').addEventListener('click', () => openMusic(track.id));
+
+        console.log(">>> HTML GENERATED:", card.innerHTML);
+
+        // Attach event listeners with stopPropagation to prevent card navigation
+        card.querySelector('.steps-btn').addEventListener('click', (event) => {
+            event.stopPropagation();
+            launchMediaOverlay(track.steps, `${track.name} - Steps`);
+        });
+
+        card.querySelector('.teach-btn').addEventListener('click', (event) => {
+            event.stopPropagation();
+            launchMediaOverlay(track.teach, `${track.name} - Teach`);
+        });
+
+        card.querySelector('.demo-btn').addEventListener('click', (event) => {
+            event.stopPropagation();
+            launchMediaOverlay(track.demo, `${track.name} - Demo`);
+        });
+
+        card.querySelector('.music-btn').addEventListener('click', (event) => {
+            event.stopPropagation();
+            launchMediaOverlay(track.music, `${track.name} - Music`);
+        });
 
         containerElement.appendChild(card);
     });
