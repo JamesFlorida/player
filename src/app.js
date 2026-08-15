@@ -601,40 +601,52 @@ function renderWorkspaceScreen() {
    CREATE MODE LAYOUT
 ============================================ */
 function renderCreateModeLayout() {
-    const left = document.getElementById('workspaceLeftColumn');
-    const right = document.getElementById('workspaceRightColumn');
 
-    left.innerHTML = `
-        <div class="workspace-section-title">Playlist Name</div>
-        <input id="workspaceNameInput"
-               class="workspace-name-input"
-               type="text"
-               placeholder="Enter playlist name..."
-               value="${workspacePlaylistName}"
-               oninput="handleWorkspaceNameInput(this.value)" />
+    // LEFT COLUMN: SEARCH DANCES
+    document.getElementById("workspaceLeftColumn").innerHTML = `
+        <h2 class="workspace-section-title">Search Dances</h2>
 
-        <div class="workspace-section-title">Selected Dances</div>
-        <div id="workspaceSelectedList" class="workspace-selected-list"></div>
+        <input 
+            id="workspaceSearchInput"
+            type="text"
+            placeholder="Search dances..."
+            oninput="handleWorkspaceSearchInput(this.value)"
+            class="workspace-search-box"
+        />
 
-        <button class="workspace-save-btn" onclick="saveWorkspacePlaylist()">
-            Save Playlist
-        </button>
+        <div id="workspaceSearchResults" class="workspace-search-results">
+            <!-- JS will populate search results here -->
+        </div>
     `;
 
-    right.innerHTML = `
-        <div class="workspace-section-title">Search Dances</div>
-        <input id="workspaceSearchInput"
-               class="workspace-search-input"
-               type="text"
-               placeholder="Search..."
-               oninput="handleWorkspaceSearchInput(this.value)" />
+    // RIGHT COLUMN: YOUR PLAYLIST
+    document.getElementById("workspaceRightColumn").innerHTML = `
+        <h2 class="workspace-section-title">Your Playlist</h2>
 
-        <div id="workspaceSearchResults" class="workspace-search-results"></div>
+        <label class="workspace-label">Playlist Name</label>
+        <input 
+            id="workspaceNameInput"
+            type="text"
+            placeholder="Enter playlist name..."
+            oninput="handleWorkspaceNameInput(this.value)"
+            class="workspace-name-box"
+        />
+
+        <div id="workspaceSelectedDances" class="workspace-selected-list">
+            <!-- JS will populate selected dances here -->
+        </div>
+
+        <div class="workspace-actions">
+            <button class="workspace-save-btn" onclick="saveWorkspacePlaylist()">Save Playlist</button>
+            <button class="workspace-cancel-btn" onclick="navigateBackFromWorkspace()">Cancel</button>
+        </div>
     `;
 
-    renderWorkspaceSelectedList();
-    renderWorkspaceSearchResults();
+    // INITIAL RENDER OF EMPTY LISTS
+    renderWorkspaceSearchResults([]);
+    renderWorkspaceSelectedDances([]);
 }
+
 
 /* ============================================
    EDIT MODE LAYOUT
