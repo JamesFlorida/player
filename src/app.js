@@ -759,21 +759,24 @@ function renderWorkspaceSearchResults() {
     }
 
     workspaceSearchResults.forEach(track => {
-        const card = document.createElement('div');
-        card.className = 'workspace-search-card';
+        const row = document.createElement('div');
+        row.className = 'workspace-dance-row';
 
-        card.innerHTML = `
-            <div class="workspace-search-title">${track.name}</div>
-            <div class="workspace-search-meta">${track.choreographer}</div>
+        row.innerHTML = `
+            <span class="workspace-dance-title">
+                ${track.name} • ${track.choreographer}
+            </span>
+
             <button class="workspace-add-btn"
-                    onclick="addDanceToWorkspace('${track.name}')">
-                + Add
+                onclick="addDanceToWorkspace('${track.name}')">
+                +
             </button>
         `;
 
-        container.appendChild(card);
+        container.appendChild(row);
     });
 }
+
 
 /* ============================================
    WORKSPACE — SELECTED LIST RENDERER
