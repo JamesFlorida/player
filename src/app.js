@@ -989,35 +989,6 @@ function renderSingleDanceScreen(dance) {
 }
 
 
-
-function renderWorkspaceSelectedList() {
-
-    const container = document.getElementById('workspaceSelectedList');
-    if (!container) return;
-
-    const dances = selectedActivePlaylistGroup?.dances || [];
-
-    if (dances.length === 0) {
-        container.innerHTML = `<div class="workspace-note">No dances selected.</div>`;
-        return;
-    }
-
-    let html = "";
-    dances.forEach(dance => {
-        html += `
-            <div class="workspace-selected-item">
-                ${dance}
-                <span class="workspace-remove"
-                      onclick="removeDanceFromWorkspace('${dance}')">✖</span>
-            </div>
-        `;
-    });
-
-    container.innerHTML = html;
-}
-
-
-
 /* ============================================
    OVERLAY LOGIC
 ============================================ */
