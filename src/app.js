@@ -999,4 +999,8 @@ window.deleteWorkspacePlaylist = deleteWorkspacePlaylist;
 window.handleWorkspaceSearchInput = handleWorkspaceSearchInput;
 window.addDanceToWorkspace = addDanceToWorkspace;
 window.removeDanceFromWorkspace = removeDanceFromWorkspace;
+window.openSteps = openSteps;
+window.openTeach = openTeach;
+window.openDemo = openDemo;
+window.openMusic = openMusic;
 
