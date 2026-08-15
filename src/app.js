@@ -230,14 +230,10 @@ function openSpecificPlaylistView(name) {
    OPEN DANCE FROM PLAYLIST
 ============================================ */
 function openDanceFromPlaylist(danceId) {
-    const dance = localDanceDatabase.find(d => d.id === danceId);
-    if (!dance) return;
-
-    window.selectedSingleDance = dance;
-    lastNavigationMode = "playlist";
-    renderSingleDanceScreen(dance);
+    // Dance cards should not navigate anywhere in the new architecture.
+    // All actions happen through the 4 buttons on the card.
+    return;
 }
-
 /* ============================================
    OPEN DANCE FROM SEARCH
 ============================================ */
@@ -434,17 +430,23 @@ function renderDanceCardsList(tracks, containerElement) {
     tracks.forEach(track => {
         const card = document.createElement('div');
         card.className = 'dance-entry-card';
-        card.onclick = () => openDanceFromPlaylist(track.id);
 
         card.innerHTML = `
             <div class="title-line">${track.name} • By: ${track.choreographer}</div>
             <div class="meta-line">Song: ${track.song} - ${track.artist}</div>
-            <div class="meta-line">(Playlist: ${track.playlist})</div>
+
+            <div class="dance-button-row">
+                <button onclick="openSteps('${track.id}')">Steps</button>
+                <button onclick="openTeach('${track.id}')">Teach</button>
+                <button onclick="openDemo('${track.id}')">Demo</button>
+                <button onclick="openMusic('${track.id}')">Music</button>
+            </div>
         `;
 
         containerElement.appendChild(card);
     });
 }
+
 
 /* ============================================
    WORKSPACE PLAYLIST SELECTION (EDIT MODE)
