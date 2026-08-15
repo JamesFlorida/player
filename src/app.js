@@ -981,20 +981,29 @@ window.onload = function () {
 };
 
 function openSteps(danceId) {
-    launchMediaOverlay(danceId, "steps");
+    const dance = localDanceDatabase.find(d => d.id === danceId);
+    if (!dance || !dance.stepsUrl) return;
+    launchMediaOverlay(dance.stepsUrl, "Steps");
 }
 
 function openTeach(danceId) {
-    launchMediaOverlay(danceId, "teach");
+    const dance = localDanceDatabase.find(d => d.id === danceId);
+    if (!dance || !dance.teachUrl) return;
+    launchMediaOverlay(dance.teachUrl, "Teach");
 }
 
 function openDemo(danceId) {
-    launchMediaOverlay(danceId, "demo");
+    const dance = localDanceDatabase.find(d => d.id === danceId);
+    if (!dance || !dance.demoUrl) return;
+    launchMediaOverlay(dance.demoUrl, "Demo");
 }
 
 function openMusic(danceId) {
-    launchMediaOverlay(danceId, "music");
+    const dance = localDanceDatabase.find(d => d.id === danceId);
+    if (!dance || !dance.musicUrl) return;
+    launchMediaOverlay(dance.musicUrl, "Music");
 }
+
 
 function launchMediaOverlay(targetUrl, displayTitle) {
    console.log("launchMediaOverlay URL:", targetUrl);
