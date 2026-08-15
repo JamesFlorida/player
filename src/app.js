@@ -549,8 +549,25 @@ function removeDanceFromWorkspace(danceName) {
     renderWorkspaceSelectedList();
 }
 
+function addDanceToWorkspace(danceName) {
+    if (!selectedActivePlaylistGroup.dances.includes(danceName)) {
+        selectedActivePlaylistGroup.dances.push(danceName);
+    }
+    renderWorkspaceSelectedList();
+}
 
+function removeDanceFromWorkspace(danceName) {
+    selectedActivePlaylistGroup.dances =
+        selectedActivePlaylistGroup.dances.filter(d => d !== danceName);
 
+    renderWorkspaceSelectedList();
+}
+
+function handleWorkspaceNameInput() {
+    const input = document.getElementById("workspacePlaylistNameInput");
+    workspacePlaylistName = input.value;
+    selectedActivePlaylistGroup.name = workspacePlaylistName;
+}
 
 
 
@@ -862,7 +879,74 @@ function renderWorkspaceScreen() {
 
 } // ⭐ END OF renderWorkspaceScreen()
 
+function renderCreateModeLayout() {
 
+    // LEFT COLUMN: Search + Add
+    document.getElementById("workspaceLeftColumn").innerHTML = `
+        <div class="workspace-search-row">
+            <input type="text" id="workspaceSearchInput"
+                   placeholder="Search dances..."
+                   oninput="handleWorkspaceSearchInput()">
+        </div>
+
+        <div id="workspaceSearchResults" class="workspace-search-results"></div>
+    `;
+
+    // RIGHT COLUMN: Playlist name + selected dances
+    document.getElementById("workspaceRightColumn").innerHTML = `
+        <div class="workspace-name-row">
+            <input type="text" id="workspacePlaylistNameInput"
+                   placeholder="Playlist name..."
+                   value="${workspacePlaylistName}"
+                   oninput="handleWorkspaceNameInput()">
+        </div>
+
+        <div id="workspaceSelectedList" class="workspace-selected-list"></div>
+
+        <div class="workspace-action-row">
+            <button onclick="saveWorkspacePlaylist()">Save Playlist</button>
+        </div>
+    `;
+
+    // Render initial empty lists
+    renderWorkspaceSearchResults();
+    renderWorkspaceSelectedList();
+}
+
+function renderWorkspaceSelectedList() {
+    const container = document.getElementById("workspaceSelectedList");
+    container.innerHTML = "";
+
+    selectedActivePlaylistGroup.dances.forEach(danceName => {
+        const row = document.createElement("div");
+        row.className = "workspace-selected-row";
+        row.innerHTML = `
+            <span>${danceName}</span>
+            <button onclick="removeDanceFromWorkspace('${danceName}')">–</button>
+        `;
+        container.appendChild(row);
+    });
+}
+
+
+
+function renderWorkspaceSearchResults() {
+    const query = document.getElementById("workspaceSearchInput").value.toLowerCase();
+    const results = allDances.filter(d => d.name.toLowerCase().includes(query));
+
+    const container = document.getElementById("workspaceSearchResults");
+    container.innerHTML = "";
+
+    results.forEach(dance => {
+        const row = document.createElement("div");
+        row.className = "workspace-search-result-row";
+        row.innerHTML = `
+            <span>${dance.name}</span>
+            <button onclick="addDanceToWorkspace('${dance.name}')">+</button>
+        `;
+        container.appendChild(row);
+    });
+}
     
 
 function renderSingleDanceScreen(dance) {
