@@ -279,6 +279,7 @@ function renderApplicationInterface() {
         document.getElementById('navbarReturnTrigger').style.display = 'block';
         document.getElementById('navbarReturnTrigger').onclick = navigateToPlaylistHubMenu;
         document.getElementById('applicationHeaderTitle').innerText = selectedActivePlaylistGroup;
+        
 
         renderDanceCardsList(filteredTracks, viewport);
         updateHubVisibility();
@@ -355,7 +356,8 @@ function renderApplicationInterface() {
     document.getElementById('navbarReturnTrigger').style.display = 'none';
     document.getElementById('navbarReturnTrigger').onclick = null;
 
-    document.getElementById('applicationHeaderTitle').innerText = "Playlists";
+    
+    document.getElementById('applicationHeaderTitle').innerText = "🔥 HUB SCREEN ACTIVE 🔥";
 
     let groupNames;
     if (venueConfig.playlistGroups?.length > 0) {
