@@ -979,6 +979,23 @@ window.onload = function () {
     initializeVenueBranding();
     renderApplicationInterface();
 };
+
+function openSteps(danceId) {
+    launchMediaOverlay(danceId, "steps");
+}
+
+function openTeach(danceId) {
+    launchMediaOverlay(danceId, "teach");
+}
+
+function openDemo(danceId) {
+    launchMediaOverlay(danceId, "demo");
+}
+
+function openMusic(danceId) {
+    launchMediaOverlay(danceId, "music");
+}
+
 /* ============================================
    GLOBAL EXPORTS (Required for HTML onclick)
 ============================================ */
