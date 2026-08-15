@@ -781,7 +781,7 @@ function renderWorkspaceSearchResults() {
 /* ============================================
    WORKSPACE — SELECTED LIST RENDERER
 ============================================ */
-function renderWorkspaceSelectedList() {
+function renderWorkspaceSelectedDances() {
     const container = document.getElementById('workspaceSelectedList');
     if (!container) return;
 
