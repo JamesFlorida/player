@@ -977,3 +977,24 @@ window.onload = function () {
     initializeVenueBranding();
     renderApplicationInterface();
 };
+/* ============================================
+   GLOBAL EXPORTS (Required for HTML onclick)
+============================================ */
+window.navigateToPlaylistHubMenu = navigateToPlaylistHubMenu;
+window.openSpecificPlaylistView = openSpecificPlaylistView;
+window.handleLiveSearchInput = handleLiveSearchInput;
+window.setDayFilter = setDayFilter;
+window.setDifficultyFilter = setDifficultyFilter;
+window.renderSimpleSearchCards = renderSimpleSearchCards;
+window.openDanceFromSearchToSingleDance = openDanceFromSearchToSingleDance;
+window.openDanceFromPlaylist = openDanceFromPlaylist;
+window.openWorkspace = openWorkspace;
+window.navigateBackFromWorkspace = navigateBackFromWorkspace;
+window.selectPlaylistForEditing = selectPlaylistForEditing;
+window.handleWorkspaceNameInput = handleWorkspaceNameInput;
+window.saveWorkspacePlaylist = saveWorkspacePlaylist;
+window.deleteWorkspacePlaylist = deleteWorkspacePlaylist;
+window.handleWorkspaceSearchInput = handleWorkspaceSearchInput;
+window.addDanceToWorkspace = addDanceToWorkspace;
+window.removeDanceFromWorkspace = removeDanceFromWorkspace;
+
