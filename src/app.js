@@ -442,12 +442,6 @@ function selectPlaylistForEditing(name) {
     renderWorkspaceScreen();
 }
 
-function handleWorkspaceNameInput() {
-    const input = document.getElementById('workspacePlaylistNameInput');
-    if (!input) return;
-
-    workspacePlaylistName = input.value.trim();
-}
 
 function saveWorkspacePlaylist() {
 
