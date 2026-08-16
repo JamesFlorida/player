@@ -660,30 +660,26 @@ function renderCreateModeLayout() {
      - loads the correct layout renderer
 ============================================ */
 
-function startCreateMode() {
-    updateWorkspaceModeButtons("create");
-
-    workspaceMode = "create";
-    workspacePlaylistName = "";
-    workspaceSelectedDances = [];
-    workspaceEditingOriginalName = "";
-
-    document.getElementById("workspaceContent").style.display = "block";
-    renderCreateModeLayout();
-}
-
 function startEditMode() {
-    updateWorkspaceModeButtons("edit");
-
     workspaceMode = "edit";
+    document.getElementById('applicationHeaderTitle').innerText = "Edit Playlist";
+    updateWorkspaceModeButtons("edit");
     document.getElementById("workspaceContent").style.display = "block";
     renderEditModeLayout();
 }
 
-function startDeleteMode() {
-    updateWorkspaceModeButtons("delete");
+function startCreateMode() {
+    workspaceMode = "create";
+    document.getElementById('applicationHeaderTitle').innerText = "Create Playlist";
+    updateWorkspaceModeButtons("create");
+    document.getElementById("workspaceContent").style.display = "block";
+    renderCreateModeLayout();
+}
 
+function startDeleteMode() {
     workspaceMode = "delete";
+    document.getElementById('applicationHeaderTitle').innerText = "Delete Playlist";
+    updateWorkspaceModeButtons("delete");
     document.getElementById("workspaceContent").style.display = "block";
     renderDeleteModeLayout();
 }
