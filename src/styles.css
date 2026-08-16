@@ -545,3 +545,39 @@ input#danceSearchInput:focus {
 .workspace-cancel-btn:hover {
     background: #666;
 }
+
+/* ============================================
+   WORKSPACE MODE BUTTONS (Create / Edit / Delete)
+   --------------------------------------------
+   This section styles the three top action buttons
+   used to switch between workspace modes.
+   
+   - .workspace-mode-btn ........ Base button style
+   - .active .................... Highlights the current mode
+   - .disabled .................. Grays out inactive modes and blocks clicks
+
+   These classes are applied dynamically by JS when
+   the user selects Create, Edit, or Delete mode.
+============================================ */
+
+.workspace-mode-btn {
+    padding: 10px 16px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    background: #444;   /* default medium gray */
+    color: #fff;
+}
+
+.workspace-mode-btn.active {
+    background: #c00;   /* red highlight for active mode */
+}
+
+.workspace-mode-btn.disabled {
+    background: #222;   /* darker gray for disabled mode */
+    color: #777;        /* muted text */
+    cursor: default;    /* no pointer hand */
+    pointer-events: none; /* prevents clicking */
+}
+
