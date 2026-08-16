@@ -969,6 +969,8 @@ function saveWorkspacePlaylist() {
    console.log("SAVE — workspacePlaylistName:", workspacePlaylistName);
    console.log("DEBUG — workspaceSelectedDances:", workspaceSelectedDances);
    console.log("DEBUG — userPlaylistsData BEFORE SAVE:", userPlaylistsData);
+   console.log("DOM VALUE — workspaceNameInput:",
+    document.getElementById("workspaceNameInput")?.value);
 
     if (!workspacePlaylistName) {
         alert("Please enter a playlist name.");
