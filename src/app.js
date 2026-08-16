@@ -1051,7 +1051,6 @@ function navigateBackFromWorkspace() {
    console.log("NAVIGATE — selectedActivePlaylistGroup:", selectedActivePlaylistGroup);
 
     workspaceMode = null;
-    workspacePlaylistName = "";
     workspaceSelectedDances = [];
     workspaceSearchQuery = "";
     workspaceSearchResults = [];
