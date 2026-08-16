@@ -982,6 +982,9 @@ function removeDanceFromWorkspace(name) {
    WORKSPACE — SAVE PLAYLIST
 ============================================ */
 function saveWorkspacePlaylist() {
+   console.log("DEBUG — workspaceSelectedDances:", workspaceSelectedDances);
+   console.log("DEBUG — userPlaylistsData BEFORE SAVE:", userPlaylistsData);
+
     if (!workspacePlaylistName) {
         alert("Please enter a playlist name.");
         return;
@@ -1058,6 +1061,10 @@ function deleteWorkspacePlaylist(name) {
    WORKSPACE — NAVIGATION BACK
 ============================================ */
 function navigateBackFromWorkspace() {
+   console.log("NAVIGATE — lastNavigationMode:", lastNavigationMode);
+   console.log("NAVIGATE — workspaceMode:", workspaceMode);
+   console.log("NAVIGATE — selectedActivePlaylistGroup:", selectedActivePlaylistGroup);
+
     workspaceMode = null;
     workspacePlaylistName = "";
     workspaceSelectedDances = [];
