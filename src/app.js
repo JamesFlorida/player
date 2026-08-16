@@ -782,7 +782,7 @@ function renderWorkspaceSearchResults() {
    WORKSPACE — SELECTED LIST RENDERER
 ============================================ */
 function renderWorkspaceSelectedDances() {
-    const container = document.getElementById('workspaceSelectedList');
+    const container = document.getElementById('workspaceSelectedDances');
     if (!container) return;
 
     container.innerHTML = "";
@@ -871,7 +871,8 @@ function selectPlaylistForEditing(name) {
                oninput="handleWorkspaceNameInput(this.value)" />
 
         <div class="workspace-section-title">Selected Dances</div>
-        <div id="workspaceSelectedList" class="workspace-selected-list"></div>
+        <div id="workspaceSelectedDances" class="workspace-selected-list"></div>
+
 
         <button class="workspace-save-btn" onclick="saveEditedWorkspacePlaylist()">
             Save Changes
