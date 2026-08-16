@@ -521,13 +521,15 @@ function renderWorkspacePlaylistSelection() {
 /* ============================================
    WORKSPACE SCREEN (MAIN ENTRY)
 ============================================ */
-function renderWorkspaceScreen() {
 
+function renderWorkspaceScreen() {
+    // Set header title based on current mode
     document.getElementById('applicationHeaderTitle').innerText =
         workspaceMode === "edit"
             ? `Edit Playlist: ${workspacePlaylistName}`
             : `Create Playlist`;
 
+    // Hide hub UI elements
     const filterBar = document.getElementById('dayFilterBar');
     if (filterBar) filterBar.style.display = 'none';
 
@@ -540,47 +542,35 @@ function renderWorkspaceScreen() {
     const hubNavRow = document.querySelector('.hub-nav-row');
     if (hubNavRow) hubNavRow.style.display = 'none';
 
-    document.getElementById('navbarReturnTrigger').style.display = 'block';
-    document.getElementById('navbarReturnTrigger').onclick = navigateBackFromWorkspace;
+    // Show back button
+    const backBtn = document.getElementById('navbarReturnTrigger');
+    backBtn.style.display = 'block';
+    backBtn.onclick = navigateBackFromWorkspace;
 
+    // Render workspace shell
     document.getElementById('masterApplicationViewport').innerHTML = `
       <div class="workspace-screen">
 
-        /* ============================================
-   WORKSPACE MODE BUTTONS (Create / Edit / Delete)
-   --------------------------------------------
-   Styles the three top action buttons used to
-   switch between workspace modes.
+        <!-- MODE SELECTION PANEL -->
+        <div id="workspaceModePanel" class="workspace-mode-panel">
+            <button id="modeCreateBtn"
+                    class="workspace-mode-btn"
+                    onclick="startCreateMode()">
+                Create New Playlist
+            </button>
 
-   - .workspace-mode-btn ........ Base button style
-   - .active .................... Highlights the current mode
-   - .disabled .................. Grays out inactive modes and blocks clicks
+            <button id="modeEditBtn"
+                    class="workspace-mode-btn"
+                    onclick="startEditMode()">
+                Edit Existing Playlist
+            </button>
 
-   These classes are applied dynamically by JS when
-   the user selects Create, Edit, or Delete mode.
-============================================ */
-
-.workspace-mode-btn {
-    padding: 10px 16px;
-    border-radius: 6px;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    background: #444;   /* default medium gray */
-    color: #fff;
-}
-
-.workspace-mode-btn.active {
-    background: #c00;   /* red highlight for active mode */
-}
-
-.workspace-mode-btn.disabled {
-    background: #222;   /* darker gray for disabled mode */
-    color: #777;        /* muted text */
-    cursor: default;    /* no pointer hand */
-    pointer-events: none; /* prevents clicking */
-}
-
+            <button id="modeDeleteBtn"
+                    class="workspace-mode-btn"
+                    onclick="startDeleteMode()">
+                Delete Playlist
+            </button>
+        </div>
 
         <!-- WORKSPACE CONTENT -->
         <div id="workspaceContent" style="display:none;">
@@ -600,6 +590,7 @@ function renderWorkspaceScreen() {
       </div>
     `;
 }
+
 
 /* ============================================
    CREATE MODE LAYOUT
