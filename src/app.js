@@ -677,6 +677,8 @@ function renderCreateModeLayout() {
 
 
 function startEditMode() {
+   document.getElementById("workspaceLeftColumn").innerHTML = "";
+   document.getElementById("workspaceRightColumn").innerHTML = "";
     workspaceMode = "edit";
     document.getElementById('applicationHeaderTitle').innerText = "Edit Playlist";
     updateWorkspaceModeButtons("edit");
@@ -685,6 +687,8 @@ function startEditMode() {
 }
 
 function startCreateMode() {
+   document.getElementById("workspaceLeftColumn").innerHTML = "";
+   document.getElementById("workspaceRightColumn").innerHTML = "";
     workspaceMode = "create";
     document.getElementById('applicationHeaderTitle').innerText = "Create Playlist";
     updateWorkspaceModeButtons("create");
@@ -693,6 +697,8 @@ function startCreateMode() {
 }
 
 function startDeleteMode() {
+   document.getElementById("workspaceLeftColumn").innerHTML = "";
+   document.getElementById("workspaceRightColumn").innerHTML = "";
     workspaceMode = "delete";
     document.getElementById('applicationHeaderTitle').innerText = "Delete Playlist";
     updateWorkspaceModeButtons("delete");
