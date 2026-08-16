@@ -652,12 +652,12 @@ function renderCreateModeLayout() {
 
         <label class="workspace-label">Playlist Name</label>
         <input 
-            id="workspaceNameInput"
-            type="text"
-            placeholder="Enter playlist name..."
-            oninput="handleWorkspaceNameInput(this.value)"
-            class="workspace-name-box"
-        />
+             id="workspaceNameInput"
+             type="text"
+             placeholder="Enter playlist name..."
+             oninput="workspacePlaylistName = this.value"
+             class="workspace-name-box"
+         >
 
         <div id="workspaceSelectedDances" class="workspace-selected-list">
             <!-- JS will populate selected dances here -->
