@@ -259,10 +259,10 @@ function openDanceFromSearchToSingleDance(danceId) {
    MAIN RENDERER
 ============================================ */
 function renderApplicationInterface() {
-   if (overlayActive) {
-    console.log(">>> renderApplicationInterface BLOCKED (overlay active)");
-    return;
-}
+    if (overlayActive) {
+        console.log(">>> renderApplicationInterface BLOCKED (overlay active)");
+        return;
+    }
 
     console.log(">>> renderApplicationInterface RUNNING");
 
@@ -291,7 +291,6 @@ function renderApplicationInterface() {
         document.getElementById('navbarReturnTrigger').style.display = 'block';
         document.getElementById('navbarReturnTrigger').onclick = navigateToPlaylistHubMenu;
         document.getElementById('applicationHeaderTitle').innerText = selectedActivePlaylistGroup;
-        
 
         renderDanceCardsList(filteredTracks, viewport);
         updateHubVisibility();
@@ -368,9 +367,11 @@ function renderApplicationInterface() {
     document.getElementById('navbarReturnTrigger').style.display = 'none';
     document.getElementById('navbarReturnTrigger').onclick = null;
 
-    
     document.getElementById('applicationHeaderTitle').innerText = " PLAYLISTS ";
 
+    /* --------------------------------------------
+       VENUE PLAYLISTS
+       -------------------------------------------- */
     let groupNames;
     if (venueConfig.playlistGroups?.length > 0) {
         groupNames = [...venueConfig.playlistGroups];
@@ -380,23 +381,7 @@ function renderApplicationInterface() {
         ))].sort();
     }
 
-   const userPlaylistNames = Object.keys(userPlaylistsData || {});
-   const userPlaylistCardsHTML =
-       userPlaylistNames.length > 0
-        ? userPlaylistNames.map(name => {
-            const count = userPlaylistsData[name].length;
-            return `
-                <div class="hub-playlist-card user-playlist-card"
-                     onclick="openUserPlaylistView('${name}')">
-                    <div class="hub-playlist-name">${name}</div>
-                    <div class="hub-playlist-count">${count} dances</div>
-                </div>
-            `;
-        }).join('')
-        : "";   // ⭐ No text, no placeholder, no section
-
-
-    const playlistCardsHTML = groupNames.map(name => {
+    const venuePlaylistCardsHTML = groupNames.map(name => {
         const count = localDanceDatabase.filter(t => t.playlist === name).length;
         return `
             <div class="hub-playlist-card"
@@ -407,6 +392,27 @@ function renderApplicationInterface() {
         `;
     }).join('');
 
+    /* --------------------------------------------
+       USER PLAYLISTS
+       -------------------------------------------- */
+    const userPlaylistNames = Object.keys(userPlaylistsData || {});
+    const userPlaylistCardsHTML =
+        userPlaylistNames.length > 0
+            ? userPlaylistNames.map(name => {
+                const count = userPlaylistsData[name].length;
+                return `
+                    <div class="hub-playlist-card user-playlist-card"
+                         onclick="openUserPlaylistView('${name}')">
+                        <div class="hub-playlist-name">${name}</div>
+                        <div class="hub-playlist-count">${count} dances</div>
+                    </div>
+                `;
+            }).join('')
+            : "";
+
+    /* --------------------------------------------
+       RENDER HUB SCREEN
+       -------------------------------------------- */
     viewport.innerHTML = `
         <div class="hub-screen">
 
@@ -437,19 +443,22 @@ function renderApplicationInterface() {
                 </div>
             </div>
 
-       <div class="playlist-container">
-          ${userPlaylistCardsHTML
-           ? `<div class="hub-section-title">Your Playlists</div>${userPlaylistCardsHTML}`
-           : ""}
-          <div class="hub-section-title">Venue Playlists</div>
-          ${venuePlaylistCardsHTML}
-      </div>
+            <div class="playlist-container">
 
+                ${userPlaylistCardsHTML
+                    ? `<div class="hub-section-title">Your Playlists</div>${userPlaylistCardsHTML}`
+                    : ""}
 
-         <div class="search-results-container"></div>
+                <div class="hub-section-title">Venue Playlists</div>
+                ${venuePlaylistCardsHTML}
+
+            </div>
+
+            <div class="search-results-container"></div>
         </div>
     `;
 }
+
 
 
 /* ============================================
