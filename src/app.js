@@ -546,12 +546,41 @@ function renderWorkspaceScreen() {
     document.getElementById('masterApplicationViewport').innerHTML = `
       <div class="workspace-screen">
 
-        <!-- MODE SELECTION PANEL -->
-        <div id="workspaceModePanel" class="workspace-mode-panel">
-            <button onclick="startCreateMode()">Create New Playlist</button>
-            <button onclick="startEditMode()">Edit Existing Playlist</button>
-            <button onclick="startDeleteMode()">Delete Playlist</button>
-        </div>
+        /* ============================================
+   WORKSPACE MODE BUTTONS (Create / Edit / Delete)
+   --------------------------------------------
+   Styles the three top action buttons used to
+   switch between workspace modes.
+
+   - .workspace-mode-btn ........ Base button style
+   - .active .................... Highlights the current mode
+   - .disabled .................. Grays out inactive modes and blocks clicks
+
+   These classes are applied dynamically by JS when
+   the user selects Create, Edit, or Delete mode.
+============================================ */
+
+.workspace-mode-btn {
+    padding: 10px 16px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    background: #444;   /* default medium gray */
+    color: #fff;
+}
+
+.workspace-mode-btn.active {
+    background: #c00;   /* red highlight for active mode */
+}
+
+.workspace-mode-btn.disabled {
+    background: #222;   /* darker gray for disabled mode */
+    color: #777;        /* muted text */
+    cursor: default;    /* no pointer hand */
+    pointer-events: none; /* prevents clicking */
+}
+
 
         <!-- WORKSPACE CONTENT -->
         <div id="workspaceContent" style="display:none;">
@@ -570,31 +599,6 @@ function renderWorkspaceScreen() {
 
       </div>
     `;
-
-    /* ============================================
-       MODE SWITCHING
-    ============================================ */
-    window.startCreateMode = function () {
-        workspaceMode = "create";
-        workspacePlaylistName = "";
-        workspaceSelectedDances = [];
-        workspaceEditingOriginalName = "";
-
-        document.getElementById("workspaceContent").style.display = "block";
-        renderCreateModeLayout();
-    };
-
-    window.startEditMode = function () {
-        workspaceMode = "edit";
-        document.getElementById("workspaceContent").style.display = "block";
-        renderEditModeLayout();
-    };
-
-    window.startDeleteMode = function () {
-        workspaceMode = "delete";
-        document.getElementById("workspaceContent").style.display = "block";
-        renderDeleteModeLayout();
-    };
 }
 
 /* ============================================
@@ -647,6 +651,52 @@ function renderCreateModeLayout() {
     renderWorkspaceSelectedDances([]);
 }
 
+/* ============================================
+   WORKSPACE MODE FUNCTIONS
+   --------------------------------------------
+   These functions switch the workspace into the
+   correct mode (Create / Edit / Delete).
+
+   They are intentionally defined at the global
+   level so:
+     • HTML buttons can call them
+     • updateWorkspaceModeButtons() can run
+     • other parts of the app can access them
+
+   Each mode:
+     - updates the mode button states
+     - reveals the workspace content
+     - loads the correct layout renderer
+============================================ */
+
+function startCreateMode() {
+    updateWorkspaceModeButtons("create");
+
+    workspaceMode = "create";
+    workspacePlaylistName = "";
+    workspaceSelectedDances = [];
+    workspaceEditingOriginalName = "";
+
+    document.getElementById("workspaceContent").style.display = "block";
+    renderCreateModeLayout();
+}
+
+function startEditMode() {
+    updateWorkspaceModeButtons("edit");
+
+    workspaceMode = "edit";
+    document.getElementById("workspaceContent").style.display = "block";
+    renderEditModeLayout();
+}
+
+function startDeleteMode() {
+    updateWorkspaceModeButtons("delete");
+
+    workspaceMode = "delete";
+    document.getElementById("workspaceContent").style.display = "block";
+    renderDeleteModeLayout();
+}
+
 
 /* ============================================
    EDIT MODE LAYOUT
@@ -689,6 +739,58 @@ function renderDeleteModeLayout() {
 
     renderWorkspaceDeleteList();
 }
+
+/* ============================================
+   WORKSPACE MODE BUTTON STATE HANDLER
+   --------------------------------------------
+   This helper function updates the visual state
+   of the three workspace mode buttons:
+     • Create New Playlist
+     • Edit Existing Playlist
+     • Delete Playlist
+
+   It applies:
+     - .active   → highlights the selected mode
+     - .disabled → grays out inactive modes and
+                   prevents clicking
+
+   Called by:
+     startCreateMode()
+     startEditMode()
+     startDeleteMode()
+============================================ */
+
+function updateWorkspaceModeButtons(activeMode) {
+    const createBtn = document.getElementById("modeCreateBtn");
+    const editBtn = document.getElementById("modeEditBtn");
+    const deleteBtn = document.getElementById("modeDeleteBtn");
+
+    // Reset all buttons to neutral state
+    [createBtn, editBtn, deleteBtn].forEach(btn => {
+        btn.classList.remove("active");
+        btn.classList.remove("disabled");
+    });
+
+    // Apply correct active/disabled states
+    if (activeMode === "create") {
+        createBtn.classList.add("active");
+        editBtn.classList.add("disabled");
+        deleteBtn.classList.add("disabled");
+    }
+
+    if (activeMode === "edit") {
+        editBtn.classList.add("active");
+        createBtn.classList.add("disabled");
+        deleteBtn.classList.add("disabled");
+    }
+
+    if (activeMode === "delete") {
+        deleteBtn.classList.add("active");
+        createBtn.classList.add("disabled");
+        editBtn.classList.add("disabled");
+    }
+}
+
 
 /* ============================================
    DELETE LIST RENDERER
