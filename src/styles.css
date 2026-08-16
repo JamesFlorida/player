@@ -388,7 +388,7 @@ input#danceSearchInput:focus {
 }
 
 /* ============================================
-   WORKSPACE: TWO-COLUMN LAYOUT
+   WORKSPACE — TWO-COLUMN LAYOUT
 ============================================ */
 
 .workspace-columns {
@@ -441,7 +441,7 @@ input#danceSearchInput:focus {
 }
 
 /* ============================================
-   DANCE ROWS
+   SEARCH RESULT ROWS (LEFT COLUMN)
 ============================================ */
 
 .workspace-dance-row {
@@ -455,6 +455,27 @@ input#danceSearchInput:focus {
 .workspace-dance-title {
     color: #fff;
     font-size: 15px;
+}
+
+/* ============================================
+   SELECTED DANCES (RIGHT COLUMN)
+============================================ */
+
+.workspace-selected-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #333;
+}
+
+.workspace-selected-row span {
+    color: #fff;
+    font-size: 15px;
+}
+
+.workspace-selected-row:hover {
+    background: rgba(255,255,255,0.05);
 }
 
 /* ============================================
@@ -476,8 +497,16 @@ input#danceSearchInput:focus {
     background: #0a0; /* green for add */
 }
 
+.workspace-add-btn:hover {
+    background: #0c0;
+}
+
 .workspace-remove-btn {
     background: #c00; /* red for remove */
+}
+
+.workspace-remove-btn:hover {
+    background: #e00;
 }
 
 /* ============================================
@@ -504,8 +533,15 @@ input#danceSearchInput:focus {
     color: #fff;
 }
 
+.workspace-save-btn:hover {
+    background: #e00;
+}
+
 .workspace-cancel-btn {
     background: #555;
     color: #fff;
 }
 
+.workspace-cancel-btn:hover {
+    background: #666;
+}
