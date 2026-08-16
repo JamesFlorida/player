@@ -688,6 +688,55 @@ function startDeleteMode() {
     renderDeleteModeLayout();
 }
 
+/* ============================================
+   WORKSPACE MODE BUTTON STATE HANDLER
+   --------------------------------------------
+   Applies .active and .disabled classes to the
+   three mode buttons based on the selected mode.
+
+   Called by:
+     startCreateMode()
+     startEditMode()
+     startDeleteMode()
+
+   Requirements:
+     • HTML buttons must have IDs:
+         - modeCreateBtn
+         - modeEditBtn
+         - modeDeleteBtn
+============================================ */
+
+function updateWorkspaceModeButtons(activeMode) {
+    const createBtn = document.getElementById("modeCreateBtn");
+    const editBtn = document.getElementById("modeEditBtn");
+    const deleteBtn = document.getElementById("modeDeleteBtn");
+
+    // Reset all buttons to neutral state
+    [createBtn, editBtn, deleteBtn].forEach(btn => {
+        btn.classList.remove("active");
+        btn.classList.remove("disabled");
+    });
+
+    // Apply correct active/disabled states
+    if (activeMode === "create") {
+        createBtn.classList.add("active");
+        editBtn.classList.add("disabled");
+        deleteBtn.classList.add("disabled");
+    }
+
+    if (activeMode === "edit") {
+        editBtn.classList.add("active");
+        createBtn.classList.add("disabled");
+        deleteBtn.classList.add("disabled");
+    }
+
+    if (activeMode === "delete") {
+        deleteBtn.classList.add("active");
+        createBtn.classList.add("disabled");
+        editBtn.classList.add("disabled");
+    }
+}
+
 
 /* ============================================
    EDIT MODE LAYOUT
