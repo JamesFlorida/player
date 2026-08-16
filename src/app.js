@@ -1014,11 +1014,11 @@ function selectPlaylistForEditing(name) {
 
     left.innerHTML = `
         <div class="workspace-section-title">Playlist Name</div>
-        <input id="workspaceNameInput"
-               class="workspace-name-input"
-               type="text"
-               value="${workspacePlaylistName}"
-               oninput="handleWorkspaceNameInput(this.value)" />
+        <input id="workspacePlaylistNameInput"
+       class="workspace-name-input"
+       type="text"
+       placeholder="Enter playlist name"
+       oninput="workspacePlaylistName = this.value">
 
         <div class="workspace-section-title">Selected Dances</div>
         <div id="workspaceSelectedDances" class="workspace-selected-list"></div>
