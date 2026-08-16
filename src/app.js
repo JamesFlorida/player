@@ -813,7 +813,7 @@ function renderWorkspaceDeleteList() {
 
     let html = "";
 
-    Object.keys(userPlaylists).forEach(name => {
+    Object.keys(userPlaylistsData).forEach(name => {
         html += `
             <div class="workspace-delete-item">
                 <span>${name}</span>
