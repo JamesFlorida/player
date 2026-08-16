@@ -966,6 +966,7 @@ function removeDanceFromWorkspace(name) {
    WORKSPACE — SAVE PLAYLIST
 ============================================ */
 function saveWorkspacePlaylist() {
+   console.log("SAVE — workspacePlaylistName:", workspacePlaylistName);
    console.log("DEBUG — workspaceSelectedDances:", workspaceSelectedDances);
    console.log("DEBUG — userPlaylistsData BEFORE SAVE:", userPlaylistsData);
 
