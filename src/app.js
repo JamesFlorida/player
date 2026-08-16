@@ -415,11 +415,13 @@ function renderApplicationInterface() {
                 </div>
             </div>
 
-            <div class="playlist-container">
-                ${playlistCardsHTML}
-            </div>
-
-            <div class="search-results-container"></div>
+         <div class="playlist-container">
+          <div class="hub-section-title">Your Playlists</div>
+             ${userPlaylistCardsHTML}
+          <div class="hub-section-title">Venue Playlists</div>
+             ${venuePlaylistCardsHTML}
+         </div>
+         <div class="search-results-container"></div>
 
         </div>
     `;
