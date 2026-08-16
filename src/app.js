@@ -499,14 +499,14 @@ function renderWorkspacePlaylistSelection() {
     const container = document.getElementById('workspacePlaylistSelection');
     if (!container) return;
 
-    if (!userPlaylists || Object.keys(userPlaylists).length === 0) {
+    if (!userPlaylistsData || Object.keys(userPlaylistsData).length === 0) {
         container.innerHTML = `<div class="workspace-note">No user playlists available.</div>`;
         return;
     }
 
     let html = `<div class="workspace-note">Select a playlist to edit:</div>`;
 
-    Object.keys(userPlaylists).forEach(name => {
+    Object.keys(userPlaylistsData).forEach(name => {
         html += `
             <div class="workspace-playlist-item"
                  onclick="selectPlaylistForEditing('${name}')">
@@ -806,7 +806,7 @@ function renderWorkspaceDeleteList() {
     const container = document.getElementById('workspaceDeleteList');
     if (!container) return;
 
-    if (!userPlaylists || Object.keys(userPlaylists).length === 0) {
+    if (!userPlaylistsData || Object.keys(userPlaylistsData).length === 0) {
         container.innerHTML = `<div class="workspace-note">No playlists to delete.</div>`;
         return;
     }
@@ -954,7 +954,7 @@ function saveWorkspacePlaylist() {
         return;
     }
 
-    userPlaylists[workspacePlaylistName] = [...workspaceSelectedDances];
+    userPlaylistsData[workspacePlaylistName] = [...workspaceSelectedDances];
 
     alert(`Playlist "${workspacePlaylistName}" saved!`);
     navigateBackFromWorkspace();
@@ -1018,10 +1018,10 @@ function saveEditedWorkspacePlaylist() {
     }
 
     if (workspaceEditingOriginalName !== workspacePlaylistName) {
-        delete userPlaylists[workspaceEditingOriginalName];
+        delete userPlaylistsData[workspaceEditingOriginalName];
     }
 
-    userPlaylists[workspacePlaylistName] = [...workspaceSelectedDances];
+    userPlaylistsData[workspacePlaylistName] = [...workspaceSelectedDances];
 
     alert(`Playlist "${workspacePlaylistName}" updated!`);
     navigateBackFromWorkspace();
@@ -1034,7 +1034,7 @@ function deleteWorkspacePlaylist(name) {
     const confirmDelete = confirm(`Delete playlist "${name}"?`);
     if (!confirmDelete) return;
 
-    delete userPlaylists[name];
+    delete userPlaylistsData[name];
 
     alert(`Playlist "${name}" deleted.`);
     renderWorkspaceDeleteList();
