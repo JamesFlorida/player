@@ -381,18 +381,20 @@ function renderApplicationInterface() {
     }
 
    const userPlaylistNames = Object.keys(userPlaylistsData || {});
-   const userPlaylistCardsHTML = userPlaylistNames.length > 0
-       ? userPlaylistNames.map(name => {
-           const count = userPlaylistsData[name].length;
-           return `
-            <div class="hub-playlist-card user-playlist-card"
-                 onclick="openUserPlaylistView('${name}')">
-                <div class="hub-playlist-name">${name}</div>
-                <div class="hub-playlist-count">${count} dances</div>
-            </div>
-        `;
-    }).join('')
-    : `<div class="hub-note">No user playlists yet.</div>`;
+   const userPlaylistCardsHTML =
+       userPlaylistNames.length > 0
+        ? userPlaylistNames.map(name => {
+            const count = userPlaylistsData[name].length;
+            return `
+                <div class="hub-playlist-card user-playlist-card"
+                     onclick="openUserPlaylistView('${name}')">
+                    <div class="hub-playlist-name">${name}</div>
+                    <div class="hub-playlist-count">${count} dances</div>
+                </div>
+            `;
+        }).join('')
+        : "";   // ⭐ No text, no placeholder, no section
+
 
     const playlistCardsHTML = groupNames.map(name => {
         const count = localDanceDatabase.filter(t => t.playlist === name).length;
@@ -435,12 +437,14 @@ function renderApplicationInterface() {
                 </div>
             </div>
 
-        <div class="playlist-container">
-          <div class="hub-section-title">Your Playlists</div>
-             ${userPlaylistCardsHTML}
+       <div class="playlist-container">
+          ${userPlaylistCardsHTML
+           ? `<div class="hub-section-title">Your Playlists</div>${userPlaylistCardsHTML}`
+           : ""}
           <div class="hub-section-title">Venue Playlists</div>
-             ${playlistCardsHTML}
-         </div>
+          ${venuePlaylistCardsHTML}
+      </div>
+
 
          <div class="search-results-container"></div>
         </div>
