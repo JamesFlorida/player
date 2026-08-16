@@ -230,10 +230,13 @@ function openSpecificPlaylistView(name) {
 }
 
 function openUserPlaylistView(name) {
+    console.log(">>> USER PLAYLIST CARD CLICKED:", name);
     selectedActivePlaylistGroup = name;
+    activeDayView = null;
+    activeDifficultyView = null;
+    lastNavigationMode = "playlist";
     renderApplicationInterface();
 }
-
 
 /* ============================================
    OPEN DANCE FROM PLAYLIST
