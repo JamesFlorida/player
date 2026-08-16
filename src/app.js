@@ -523,12 +523,6 @@ function renderWorkspacePlaylistSelection() {
 ============================================ */
 
 function renderWorkspaceScreen() {
-    // Set header title based on current mode
-    document.getElementById('applicationHeaderTitle').innerText =
-        workspaceMode === "edit"
-            ? `Edit Playlist: ${workspacePlaylistName}`
-            : `Create Playlist`;
-
     // Hide hub UI elements
     const filterBar = document.getElementById('dayFilterBar');
     if (filterBar) filterBar.style.display = 'none';
