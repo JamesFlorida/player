@@ -648,53 +648,33 @@ function renderCreateModeLayout() {
 
     // RIGHT COLUMN: YOUR PLAYLIST
     document.getElementById("workspaceRightColumn").innerHTML = `
-        <h2 class="workspace-section-title">Your Playlist</h2>
+    <h2 class="workspace-section-title">Your Playlist</h2>
 
-        <label class="workspace-label">Playlist Name</label>
-        <input 
-             id="workspaceNameInput"
-             type="text"
-             placeholder="Enter playlist name..."
-             oninput="workspacePlaylistName = this.value"
-             class="workspace-name-box"
-         >
+    <label class="workspace-label">Playlist Name</label>
+    <input 
+        id="workspaceNameInput"
+        type="text"
+        placeholder="Enter playlist name..."
+        oninput="workspacePlaylistName = this.value"
+        class="workspace-name-box"
+    />
 
+    <div id="workspaceSelectedDances" class="workspace-selected-list">
+        <!-- JS will populate selected dances here -->
+    </div>
 
-             class="workspace-name-box"
-         >
+    <div class="workspace-actions">
+        <button class="workspace-save-btn" onclick="saveWorkspacePlaylist()">Save Playlist</button>
+        <button class="workspace-cancel-btn" onclick="navigateBackFromWorkspace()">Cancel</button>
+    </div>
+`;
 
-        <div id="workspaceSelectedDances" class="workspace-selected-list">
-            <!-- JS will populate selected dances here -->
-        </div>
-
-        <div class="workspace-actions">
-            <button class="workspace-save-btn" onclick="saveWorkspacePlaylist()">Save Playlist</button>
-            <button class="workspace-cancel-btn" onclick="navigateBackFromWorkspace()">Cancel</button>
-        </div>
-    `;
 
     // INITIAL RENDER OF EMPTY LISTS
     renderWorkspaceSearchResults([]);
     renderWorkspaceSelectedDances([]);
 }
 
-/* ============================================
-   WORKSPACE MODE FUNCTIONS
-   --------------------------------------------
-   These functions switch the workspace into the
-   correct mode (Create / Edit / Delete).
-
-   They are intentionally defined at the global
-   level so:
-     • HTML buttons can call them
-     • updateWorkspaceModeButtons() can run
-     • other parts of the app can access them
-
-   Each mode:
-     - updates the mode button states
-     - reveals the workspace content
-     - loads the correct layout renderer
-============================================ */
 
 function startEditMode() {
     workspaceMode = "edit";
