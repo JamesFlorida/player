@@ -966,7 +966,7 @@ function saveWorkspacePlaylist() {
 function selectPlaylistForEditing(name) {
     workspacePlaylistName = name;
     workspaceEditingOriginalName = name;
-    workspaceSelectedDances = [...userPlaylists[name]];
+    workspaceSelectedDances = [...userPlaylistsData[name]];
 
     const left = document.getElementById('workspaceLeftColumn');
     const right = document.getElementById('workspaceRightColumn');
