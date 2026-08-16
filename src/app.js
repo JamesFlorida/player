@@ -983,7 +983,7 @@ function selectPlaylistForEditing(name) {
         <div id="workspaceSelectedDances" class="workspace-selected-list"></div>
 
 
-        <button class="workspace-save-btn" onclick="saveEditedWorkspacePlaylist()">
+        <button class="workspace-save-btn" onclick="saveWorkspacePlaylist()">
             Save Changes
         </button>
     `;
@@ -1001,30 +1001,6 @@ function selectPlaylistForEditing(name) {
 
     renderWorkspaceSelectedDances();
     renderWorkspaceSearchResults();
-}
-
-/* ============================================
-   WORKSPACE — SAVE EDITED PLAYLIST
-============================================ */
-function saveEditedWorkspacePlaylist() {
-    if (!workspacePlaylistName) {
-        alert("Please enter a playlist name.");
-        return;
-    }
-
-    if (workspaceSelectedDances.length === 0) {
-        alert("Please add at least one dance.");
-        return;
-    }
-
-    if (workspaceEditingOriginalName !== workspacePlaylistName) {
-        delete userPlaylistsData[workspaceEditingOriginalName];
-    }
-
-    userPlaylistsData[workspacePlaylistName] = [...workspaceSelectedDances];
-
-    alert(`Playlist "${workspacePlaylistName}" updated!`);
-    navigateBackFromWorkspace();
 }
 
 /* ============================================
