@@ -1240,3 +1240,6 @@ window.openDemo = openDemo;
 window.openMusic = openMusic;
 window.launchMediaOverlay = launchMediaOverlay;
 window.shutOverlayViewer = shutOverlayViewer;
+window.startCreateMode = startCreateMode;
+window.startEditMode = startEditMode;
+window.startDeleteMode = startDeleteMode;
