@@ -745,13 +745,38 @@ function updateWorkspaceModeButtons(activeMode) {
     const editBtn = document.getElementById("modeEditBtn");
     const deleteBtn = document.getElementById("modeDeleteBtn");
 
-    // Reset all buttons to neutral state
+    const hasPlaylists = Object.keys(userPlaylistsData || {}).length > 0;
+
+    // Reset all buttons
     [createBtn, editBtn, deleteBtn].forEach(btn => {
         btn.classList.remove("active");
         btn.classList.remove("disabled");
     });
 
-    // Apply correct active/disabled states
+    // Normal behavior when playlists exist
+    if (hasPlaylists) {
+        if (activeMode === "create") {
+            createBtn.classList.add("active");
+            editBtn.classList.add("disabled");
+            deleteBtn.classList.add("disabled");
+        }
+
+        if (activeMode === "edit") {
+            editBtn.classList.add("active");
+            createBtn.classList.add("disabled");
+            deleteBtn.classList.add("disabled");
+        }
+
+        if (activeMode === "delete") {
+            deleteBtn.classList.add("active");
+            createBtn.classList.add("disabled");
+            editBtn.classList.add("disabled");
+        }
+
+        return;
+    }
+
+    // Special behavior when NO playlists exist
     if (activeMode === "create") {
         createBtn.classList.add("active");
         editBtn.classList.add("disabled");
@@ -759,18 +784,20 @@ function updateWorkspaceModeButtons(activeMode) {
     }
 
     if (activeMode === "edit") {
+        // Edit is active, but Create is also available
         editBtn.classList.add("active");
-        createBtn.classList.add("disabled");
+        // Create stays enabled so user can jump to Create Mode
         deleteBtn.classList.add("disabled");
     }
 
     if (activeMode === "delete") {
-        deleteBtn.classList.add("active");
-        createBtn.classList.add("disabled");
+        // No playlists → delete makes no sense
+        deleteBtn.classList.add("disabled");
+        // Let user go to Create instead
+        createBtn.classList.add("active");
         editBtn.classList.add("disabled");
     }
 }
-
 
 /* ============================================
    DELETE LIST RENDERER
