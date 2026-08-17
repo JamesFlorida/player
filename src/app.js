@@ -628,6 +628,7 @@ function renderWorkspaceScreen() {
    CREATE MODE LAYOUT
 ============================================ */
 function renderCreateModeLayout() {
+   console.log("RENDER CREATE MODE LAYOUT");
    // added line 8-17-26  remove the edit mode input only when Create Mode is active
    document.getElementById("workspacePlaylistNameInput")?.remove();
 
@@ -689,6 +690,7 @@ function startEditMode() {
 }
 
 function startCreateMode() {
+   console.log("CREATE MODE START — workspaceMode:", workspaceMode);
    document.getElementById("workspaceLeftColumn").innerHTML = "";
    document.getElementById("workspaceRightColumn").innerHTML = "";
     workspaceMode = "create";
