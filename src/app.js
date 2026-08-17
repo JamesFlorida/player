@@ -977,6 +977,7 @@ function saveWorkspacePlaylist() {
    console.log("DEBUG — userPlaylistsData BEFORE SAVE:", userPlaylistsData);
    console.log("DOM VALUE — workspaceNameInput:",
     document.getElementById("workspaceNameInput")?.value);
+   console.log("OVERWRITE CHECK — workspacePlaylistName right before validation:", workspacePlaylistName);
 
     if (!workspacePlaylistName) {
         alert("Please enter a playlist name.");
