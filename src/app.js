@@ -387,9 +387,12 @@ function renderApplicationInterface() {
    -------------------------------------------- */
 if (lastNavigationMode === "user-playlist" && activeUserPlaylistView !== null) {
 
-    const tracks = (userPlaylistsData[activeUserPlaylistView] || [])
-    .map(title => localDanceDatabase.find(t => t.title === title))
-    .filter(t => t); // remove nulls
+   const tracks = (userPlaylistsData[activeUserPlaylistView] || [])
+    .map(title => allDances.find(t =>
+        t.name.trim().toLowerCase() === title.trim().toLowerCase()
+    ))
+    .filter(t => t);
+
 
    console.log("DEBUG — activeUserPlaylistView:", activeUserPlaylistView);
    console.log("DEBUG — raw playlist titles:", userPlaylistsData[activeUserPlaylistView]);
