@@ -9,7 +9,7 @@ import { venueDanceMap } from "./venues/Stockyard/venueDanceMap.js";
 import { venueConfig } from "./venues/Stockyard/venueConfig.js";
 
 /* ============================================
-   MERGE GLOBAL + VENUE DANCE DATA
+   MERGE GLOBAL + VENUE DANCE DATA 
 ============================================ */
 let localDanceDatabase = [];
 
