@@ -628,6 +628,8 @@ function renderWorkspaceScreen() {
    CREATE MODE LAYOUT
 ============================================ */
 function renderCreateModeLayout() {
+   // added line 8-17-26  remove the edit mode input only when Create Mode is active
+   document.getElementById("workspacePlaylistNameInput")?.remove();
 
     // LEFT COLUMN: SEARCH DANCES
     document.getElementById("workspaceLeftColumn").innerHTML = `
