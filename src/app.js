@@ -1299,3 +1299,4 @@ window.shutOverlayViewer = shutOverlayViewer;
 window.startCreateMode = startCreateMode;
 window.startEditMode = startEditMode;
 window.startDeleteMode = startDeleteMode;
+window.openUserPlaylistView = openUserPlaylistView;
