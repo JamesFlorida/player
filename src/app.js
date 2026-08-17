@@ -48,7 +48,7 @@ let workspaceSearchQuery = "";            // Workspace search text
 let workspaceSearchResults = [];          // Workspace search results
 let workspaceEditingOriginalName = "";    // For safe renaming
 let userPlaylistsData = {};                   // User-created playlists
-let allDances = localDanceDatabase;       // Shared dataset
+let allDances = danceData;       // Shared dataset
 
 /* ============================================
    VENUE BRANDING
