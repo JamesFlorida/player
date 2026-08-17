@@ -1021,16 +1021,16 @@ function selectPlaylistForEditing(name) {
 
     left.innerHTML = `
         <div class="workspace-section-title">Playlist Name</div>
+
         <input id="workspacePlaylistNameInput"
-       class="workspace-name-input"
-       type="text"
-       placeholder="Enter playlist name"
-       oninput="workspacePlaylistName = this.value">
-       oninput="console.log('WRITE — workspacePlaylistName set to:', this.value); workspacePlaylistName = this.value"
+               class="workspace-name-input"
+               type="text"
+               placeholder="Enter playlist name"
+               value="${workspacePlaylistName}"
+        />
 
         <div class="workspace-section-title">Selected Dances</div>
         <div id="workspaceSelectedDances" class="workspace-selected-list"></div>
-
 
         <button class="workspace-save-btn" onclick="saveWorkspacePlaylist()">
             Save Changes
@@ -1039,6 +1039,7 @@ function selectPlaylistForEditing(name) {
 
     right.innerHTML = `
         <div class="workspace-section-title">Search Dances</div>
+
         <input id="workspaceSearchInput"
                class="workspace-search-input"
                type="text"
@@ -1048,9 +1049,19 @@ function selectPlaylistForEditing(name) {
         <div id="workspaceSearchResults" class="workspace-search-results"></div>
     `;
 
+    // Attach REAL input handler AFTER DOM is rendered
+    const editNameInput = document.getElementById("workspacePlaylistNameInput");
+    if (editNameInput) {
+        editNameInput.addEventListener("input", (e) => {
+            console.log("WRITE — workspacePlaylistName set to:", e.target.value);
+            workspacePlaylistName = e.target.value;
+        });
+    }
+
     renderWorkspaceSelectedDances();
     renderWorkspaceSearchResults();
 }
+
 
 /* ============================================
    WORKSPACE — DELETE PLAYLIST
