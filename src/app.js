@@ -387,7 +387,9 @@ function renderApplicationInterface() {
    -------------------------------------------- */
 if (lastNavigationMode === "user-playlist" && activeUserPlaylistView !== null) {
 
-    const tracks = userPlaylistsData[activeUserPlaylistView] || [];
+    const tracks = (userPlaylistsData[activeUserPlaylistView] || [])
+    .map(title => localDanceDatabase.find(t => t.title === title))
+    .filter(t => t); // remove nulls
 
     document.getElementById('navbarReturnTrigger').style.display = 'block';
     document.getElementById('navbarReturnTrigger').onclick = navigateToPlaylistHubMenu;
