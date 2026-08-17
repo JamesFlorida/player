@@ -382,6 +382,31 @@ function renderApplicationInterface() {
 
     document.getElementById('applicationHeaderTitle').innerText = " PLAYLISTS ";
 
+   /* --------------------------------------------
+   USER PLAYLIST VIEW
+   -------------------------------------------- */
+if (lastNavigationMode === "user-playlist" && activeUserPlaylistView !== null) {
+
+    const tracks = userPlaylistsData[activeUserPlaylistView] || [];
+
+    document.getElementById('navbarReturnTrigger').style.display = 'block';
+    document.getElementById('navbarReturnTrigger').onclick = navigateToPlaylistHubMenu;
+    document.getElementById('applicationHeaderTitle').innerText = activeUserPlaylistView;
+
+    if (!tracks.length) {
+        viewport.innerHTML = `
+            <p style="text-align:center;color:#aaa;margin-top:20px;">
+                No dances found in this playlist.
+            </p>`;
+        return;
+    }
+
+    renderDanceCardsList(tracks, viewport);
+    updateHubVisibility();
+    return;
+}
+
+
     /* --------------------------------------------
        VENUE PLAYLISTS
        -------------------------------------------- */
