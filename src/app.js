@@ -391,6 +391,10 @@ if (lastNavigationMode === "user-playlist" && activeUserPlaylistView !== null) {
     .map(title => localDanceDatabase.find(t => t.title === title))
     .filter(t => t); // remove nulls
 
+   console.log("DEBUG — activeUserPlaylistView:", activeUserPlaylistView);
+   console.log("DEBUG — raw playlist titles:", userPlaylistsData[activeUserPlaylistView]);
+   console.log("DEBUG — database titles:", localDanceDatabase.map(t => t.title));
+
     document.getElementById('navbarReturnTrigger').style.display = 'block';
     document.getElementById('navbarReturnTrigger').onclick = navigateToPlaylistHubMenu;
     document.getElementById('applicationHeaderTitle').innerText = activeUserPlaylistView;
