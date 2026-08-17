@@ -35,6 +35,8 @@ let activeDayView = null;                 // Hub day view
 let activeDifficultyView = null;          // Hub difficulty view
 let activeDifficultyFilter = "";          // Hub difficulty filter
 let lastNavigationMode = null;            // "hub", "playlist", "workspace"
+let activeUserPlaylistView = null;
+
 
 /* ============================================
    WORKSPACE STATE
@@ -231,12 +233,20 @@ function openSpecificPlaylistView(name) {
 
 function openUserPlaylistView(name) {
     console.log(">>> USER PLAYLIST CARD CLICKED:", name);
-    selectedActivePlaylistGroup = name;
+
+    // Clear venue playlist mode
+    selectedActivePlaylistGroup = null;
+
+    // Activate user playlist mode
+    activeUserPlaylistView = name;
+
     activeDayView = null;
     activeDifficultyView = null;
-    lastNavigationMode = "playlist";
+    lastNavigationMode = "user-playlist";
+
     renderApplicationInterface();
 }
+
 
 /* ============================================
    OPEN DANCE FROM PLAYLIST
