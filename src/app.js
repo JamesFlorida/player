@@ -659,6 +659,7 @@ function renderCreateModeLayout() {
         type="text"
         placeholder="Enter playlist name..."
         oninput="workspacePlaylistName = this.value"
+        oninput="console.log('WRITE — workspacePlaylistName set to:', this.value); workspacePlaylistName = this.value"
         class="workspace-name-box"
     />
 
@@ -1017,6 +1018,7 @@ function selectPlaylistForEditing(name) {
        type="text"
        placeholder="Enter playlist name"
        oninput="workspacePlaylistName = this.value">
+       oninput="console.log('WRITE — workspacePlaylistName set to:', this.value); workspacePlaylistName = this.value"
 
         <div class="workspace-section-title">Selected Dances</div>
         <div id="workspaceSelectedDances" class="workspace-selected-list"></div>
