@@ -628,9 +628,10 @@ function renderWorkspaceScreen() {
    CREATE MODE LAYOUT
 ============================================ */
 function renderCreateModeLayout() {
-   console.log("RENDER CREATE MODE LAYOUT");
-   // added line 8-17-26  remove the edit mode input only when Create Mode is active
-   document.getElementById("workspacePlaylistNameInput")?.remove();
+    console.log("RENDER CREATE MODE LAYOUT");
+
+    // Remove Edit Mode playlist name input if it exists
+    document.getElementById("workspacePlaylistNameInput")?.remove();
 
     // LEFT COLUMN: SEARCH DANCES
     document.getElementById("workspaceLeftColumn").innerHTML = `
@@ -651,33 +652,40 @@ function renderCreateModeLayout() {
 
     // RIGHT COLUMN: YOUR PLAYLIST
     document.getElementById("workspaceRightColumn").innerHTML = `
-    <h2 class="workspace-section-title">Your Playlist</h2>
+        <h2 class="workspace-section-title">Your Playlist</h2>
 
-    <label class="workspace-label">Playlist Name</label>
-    <input 
-        id="workspaceNameInput"
-        type="text"
-        placeholder="Enter playlist name..."
-        oninput="workspacePlaylistName = this.value"
-        oninput="console.log('WRITE — workspacePlaylistName set to:', this.value); workspacePlaylistName = this.value"
-        class="workspace-name-box"
-    />
+        <label class="workspace-label">Playlist Name</label>
+        <input 
+            id="workspaceNameInput"
+            type="text"
+            placeholder="Enter playlist name..."
+            class="workspace-name-box"
+        />
 
-    <div id="workspaceSelectedDances" class="workspace-selected-list">
-        <!-- JS will populate selected dances here -->
-    </div>
+        <div id="workspaceSelectedDances" class="workspace-selected-list">
+            <!-- JS will populate selected dances here -->
+        </div>
 
-    <div class="workspace-actions">
-        <button class="workspace-save-btn" onclick="saveWorkspacePlaylist()">Save Playlist</button>
-        <button class="workspace-cancel-btn" onclick="navigateBackFromWorkspace()">Cancel</button>
-    </div>
-`;
+        <div class="workspace-actions">
+            <button class="workspace-save-btn" onclick="saveWorkspacePlaylist()">Save Playlist</button>
+            <button class="workspace-cancel-btn" onclick="navigateBackFromWorkspace()">Cancel</button>
+        </div>
+    `;
 
+    // Attach the REAL input handler AFTER DOM is rendered
+    const nameInput = document.getElementById("workspaceNameInput");
+    if (nameInput) {
+        nameInput.addEventListener("input", (e) => {
+            console.log("WRITE — workspacePlaylistName set to:", e.target.value);
+            workspacePlaylistName = e.target.value;
+        });
+    }
 
     // INITIAL RENDER OF EMPTY LISTS
     renderWorkspaceSearchResults([]);
     renderWorkspaceSelectedDances([]);
 }
+
 
 
 function startEditMode() {
