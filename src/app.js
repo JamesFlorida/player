@@ -947,6 +947,21 @@ function handleWorkspaceSearchInput(value) {
     renderWorkspaceSearchResults();
 }
 
+function showWorkspaceMessage(text, type = "success") {
+    const msg = document.getElementById("workspaceMessage");
+    if (!msg) return;
+
+    msg.textContent = text;
+    msg.className = "workspace-message " + type;
+
+    msg.style.opacity = 1;
+
+    setTimeout(() => {
+        msg.style.opacity = 0;
+    }, 2000);
+}
+
+
 /* ============================================
    WORKSPACE — SEARCH RESULTS RENDERER
 ============================================ */
