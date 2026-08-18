@@ -458,6 +458,30 @@ input#danceSearchInput:focus {
 }
 
 /* ============================================
+   Styling for existing playlists  (LEFT COLUMN)
+============================================ */
+.workspace-playlist-item {
+    padding: 10px 14px;
+    margin: 6px 0;
+    background: #2a2a2a;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    border: 1px solid #3a3a3a;
+}
+
+.workspace-playlist-item:hover {
+    background: #3a3a3a;
+    transform: scale(1.02);
+}
+
+.workspace-playlist-item:active {
+    background: #444;
+    transform: scale(0.98);
+}
+
+
+/* ============================================
    SELECTED DANCES (RIGHT COLUMN)
 ============================================ */
 
