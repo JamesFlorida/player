@@ -930,7 +930,7 @@ function handleWorkspaceSearchInput(value) {
     }
 
     workspaceSearchResults = allDances.filter(track =>
-        track.name.toLowerCase().includes(workspaceSearchQuery)
+        track.title.toLowerCase().includes(workspaceSearchQuery)
     );
 
     renderWorkspaceSearchResults();
