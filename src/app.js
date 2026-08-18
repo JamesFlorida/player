@@ -1047,19 +1047,17 @@ function saveWorkspacePlaylist() {
     document.getElementById("workspaceNameInput")?.value);
    console.log("OVERWRITE CHECK — workspacePlaylistName right before validation:", workspacePlaylistName);
 
-    if (!workspacePlaylistName) {
-        alert("Please enter a playlist name.");
-        return;
-    }
-
-    if (workspaceSelectedDances.length === 0) {
-        alert("Please add at least one dance.");
-        return;
-    }
-
+   if (!workspacePlaylistName) {
+    showWorkspaceMessage("Please enter a playlist name.", "error");
+    return;
+}
+   if (workspaceSelectedDances.length === 0) {
+    showWorkspaceMessage("Please add at least one dance.", "warning");
+    return;
+}
     userPlaylistsData[workspacePlaylistName] = [...workspaceSelectedDances];
 
-    alert(`Playlist "${workspacePlaylistName}" saved!`);
+   showWorkspaceMessage(`Playlist "${workspacePlaylistName}" saved!`, "success");
     navigateBackFromWorkspace();
 }
 
@@ -1134,7 +1132,7 @@ function deleteWorkspacePlaylist(name) {
 
     delete userPlaylistsData[name];
 
-    alert(`Playlist "${name}" deleted.`);
+  showWorkspaceMessage(`Playlist "${name}" deleted.`, "error");
     renderWorkspaceDeleteList();
 }
 
