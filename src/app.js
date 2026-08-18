@@ -929,9 +929,17 @@ function handleWorkspaceSearchInput(value) {
         return;
     }
 
-    workspaceSearchResults = allDances.filter(track =>
-        track.name.toLowerCase().includes(workspaceSearchQuery)
-    );
+   workspaceSearchResults = allDances.filter(track => {
+    const haystack = `
+        ${track.name}
+        ${track.choreographer}
+        ${track.song}
+        ${track.artist}
+    `.toLowerCase();
+
+    return haystack.includes(workspaceSearchQuery);
+});
+
 
     renderWorkspaceSearchResults();
 }
