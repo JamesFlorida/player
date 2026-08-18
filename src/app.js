@@ -1084,9 +1084,16 @@ function selectPlaylistForEditing(name) {
         <div class="workspace-section-title">Selected Dances</div>
         <div id="workspaceSelectedDances" class="workspace-selected-list"></div>
 
-        <button class="workspace-save-btn" onclick="saveWorkspacePlaylist()">
-            Save Changes
-        </button>
+         <div class="workspace-edit-actions">
+              <button class="workspace-save-btn" onclick="saveWorkspacePlaylist()">
+               Save Changes
+              </button>
+
+              <button class="workspace-cancel-btn" onclick="cancelWorkspaceEdit()">
+               Cancel
+              </button>
+       </div>
+
     `;
 
     right.innerHTML = `
@@ -1153,6 +1160,15 @@ function openWorkspace() {
     lastNavigationMode = "workspace";
     renderWorkspaceScreen();
 }
+
+
+/* ============================================
+   CANCEL WORKSPACE EDIT
+============================================ */
+function cancelWorkspaceEdit() {
+    renderEditModeLayout();
+}
+
 
 /* ============================================
    EVENTS VIEW (placeholder)
