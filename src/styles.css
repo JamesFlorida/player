@@ -387,6 +387,33 @@ input#danceSearchInput:focus {
     padding: 10px !important;
 }
 
+/* Add styling for message bar under Banner    */
+.workspace-message {
+    margin: 10px 0 20px 0;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    opacity: 0;
+    transition: opacity 0.4s;
+    pointer-events: none;
+}
+
+.workspace-message.success {
+    background: #2d4;
+    color: #000;
+}
+
+.workspace-message.error {
+    background: #d44;
+    color: #fff;
+}
+
+.workspace-message.warning {
+    background: #e9c63f;
+    color: #000;
+}
+
+
 /* ============================================
    WORKSPACE — TWO-COLUMN LAYOUT
 ============================================ */
