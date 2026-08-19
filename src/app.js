@@ -1055,26 +1055,37 @@ function removeDanceFromWorkspace(name) {
    WORKSPACE — SAVE PLAYLIST
 ============================================ */
 function saveWorkspacePlaylist() {
-   console.log("SAVE — workspacePlaylistName:", workspacePlaylistName);
-   console.log("DEBUG — workspaceSelectedDances:", workspaceSelectedDances);
-   console.log("DEBUG — userPlaylistsData BEFORE SAVE:", userPlaylistsData);
-   console.log("DOM VALUE — workspaceNameInput:",
-    document.getElementById("workspaceNameInput")?.value);
-   console.log("OVERWRITE CHECK — workspacePlaylistName right before validation:", workspacePlaylistName);
+    console.log("SAVE — workspacePlaylistName:", workspacePlaylistName);
+    console.log("DEBUG — workspaceSelectedDances:", workspaceSelectedDances);
+    console.log("DEBUG — userPlaylistsData BEFORE SAVE:", userPlaylistsData);
+    console.log("DOM VALUE — workspaceNameInput:",
+        document.getElementById("workspaceNameInput")?.value);
+    console.log("OVERWRITE CHECK — workspacePlaylistName right before validation:", workspacePlaylistName);
 
-   if (!workspacePlaylistName) {
-    showWorkspaceMessage("Please enter a playlist name.", "error");
-    return;
-}
-   if (workspaceSelectedDances.length === 0) {
-    showWorkspaceMessage("Please add at least one dance.", "warning");
-    return;
-}
+    // VALIDATION — NAME REQUIRED
+    if (!workspacePlaylistName) {
+        showWorkspaceMessage("Please enter a playlist name.", "error");
+        return;
+    }
+
+    // VALIDATION — MUST HAVE AT LEAST ONE DANCE
+    if (workspaceSelectedDances.length === 0) {
+        showWorkspaceMessage("Please add at least one dance.", "warning");
+        return;
+    }
+
+    // SAVE PLAYLIST
     userPlaylistsData[workspacePlaylistName] = [...workspaceSelectedDances];
 
-   showWorkspaceMessage(`Playlist "${workspacePlaylistName}" saved!`, "success");
-    navigateBackFromWorkspace();
+    // SHOW SUCCESS MESSAGE *BEFORE* NAVIGATING AWAY
+    showWorkspaceMessage(`Playlist "${workspacePlaylistName}" saved!`, "success");
+
+    // ALLOW USER TO SEE THE MESSAGE, THEN RETURN TO MAIN WORKSPACE
+    setTimeout(() => {
+        navigateBackFromWorkspace();
+    }, 800);   // 800ms = perfect balance between visibility and responsiveness
 }
+
 
 /* ============================================
    WORKSPACE — SELECT PLAYLIST FOR EDITING
