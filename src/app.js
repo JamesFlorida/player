@@ -652,19 +652,18 @@ function renderWorkspaceScreen() {
       <div id="workspaceMessage" class="workspace-message"></div>
 
         <!-- WORKSPACE CONTENT -->
-        <div id="workspaceContent" style="display:none;">
+         <div id="workspaceContent" style="display:none;">
 
-            <div id="workspaceColumns" class="workspace-columns">
+             <!-- MESSAGE AREA (correct location) -->
+             <div id="workspaceMessage" class="workspace-message"></div>
 
-                <!-- LEFT COLUMN -->
-                <div id="workspaceLeftColumn" class="workspace-column-left"></div>
+             <div id="workspaceColumns" class="workspace-columns">
+                 <div id="workspaceLeftColumn" class="workspace-column-left"></div>
+                 <div id="workspaceRightColumn" class="workspace-column-right"></div>
+             </div>
 
-                <!-- RIGHT COLUMN -->
-                <div id="workspaceRightColumn" class="workspace-column-right"></div>
+         </div>
 
-            </div>
-
-        </div>
 
       </div>
     `;
