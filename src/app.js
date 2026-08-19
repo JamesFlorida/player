@@ -886,6 +886,35 @@ function updateWorkspaceModeButtons(activeMode) {
     }
 }
 
+function renderWorkspaceDeleteList() {
+    const container = document.getElementById('workspaceDeleteList');
+    if (!container) return;
+
+    if (!userPlaylistsData || Object.keys(userPlaylistsData).length === 0) {
+        container.innerHTML = `<div class="workspace-note">No playlists to delete.</div>`;
+        return;
+    }
+
+    let html = "";
+
+    Object.keys(userPlaylistsData).forEach(name => {
+        html += `
+            <div class="workspace-delete-item">
+                <span>${name}</span>
+                <button id="deleteBtn_${name}"
+                        class="workspace-delete-btn"
+                        onclick="deleteWorkspacePlaylist('${name}')">
+                    Delete
+                </button>
+            </div>
+        `;
+    });
+
+    container.innerHTML = html;
+}
+
+
+
 /* ============================================
    DELETE LIST RENDERER
 ============================================ */
