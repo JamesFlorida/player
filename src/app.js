@@ -889,28 +889,30 @@ function updateWorkspaceModeButtons(activeMode) {
 /* ============================================
    DELETE LIST RENDERER
 ============================================ */
-function renderWorkspaceDeleteList() {
-    const container = document.getElementById('workspaceDeleteList');
-    if (!container) return;
+function deleteWorkspacePlaylist(name) {
 
-    if (!userPlaylistsData || Object.keys(userPlaylistsData).length === 0) {
-        container.innerHTML = `<div class="workspace-note">No playlists to delete.</div>`;
+    const btn = document.getElementById(`deleteBtn_${name}`);
+    if (!btn) return;
+
+    // FIRST CLICK — ask for confirmation
+    if (!btn.classList.contains("workspace-delete-confirm")) {
+
+        showWorkspaceMessage(`Click DELETE again to confirm removing "${name}".`, "warning");
+
+        btn.textContent = "Confirm Delete";
+        btn.classList.add("workspace-delete-confirm");
+
         return;
     }
 
-    let html = "";
+    // SECOND CLICK — actually delete
+    delete userPlaylistsData[name];
 
-    Object.keys(userPlaylistsData).forEach(name => {
-        html += `
-            <div class="workspace-delete-item">
-                <span>${name}</span>
-                <button onclick="deleteWorkspacePlaylist('${name}')">Delete</button>
-            </div>
-        `;
-    });
+    showWorkspaceMessage(`Playlist "${name}" deleted.`, "error");
 
-    container.innerHTML = html;
+    renderWorkspaceDeleteList();
 }
+
 
 /* ============================================
    WORKSPACE — HANDLE NAME INPUT
