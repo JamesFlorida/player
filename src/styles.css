@@ -425,47 +425,65 @@ input#danceSearchInput:focus {
     padding: 20px;
 }
 
+
 /* ============================================
    WORKSPACE — MOBILE LAYOUT
 ============================================ */
 @media (max-width: 600px) {
+
+    /* Stack columns vertically instead of side-by-side */
     .workspace-columns {
-        grid-template-columns: 1fr;   /* stack columns vertically */
-        gap: 16px;                    /* slightly smaller gap */
-        padding: 12px;                /* reduce padding for small screens */
+        grid-template-columns: 1fr;   /* vertical stack */
+        gap: 16px;                    /* smaller gap */
+        padding: 12px;                /* tighter padding */
+        margin-top: 0;                /* remove extra top spacing */
     }
 
+    /* Column containers adjust for mobile */
     .workspace-column-left,
     .workspace-column-right {
-        min-height: auto;             /* allow natural height */
-        padding: 12px;                /* slightly smaller padding */
+        min-height: auto;             /* natural height */
+        padding: 12px;                /* tighter padding */
     }
 
+    /* Titles shrink slightly */
     .workspace-section-title {
-        font-size: 18px;              /* reduce title size */
-        margin-bottom: 10px;
+        font-size: 18px;
+        margin-top: 6px;              /* spacing fix */
+        margin-bottom: 8px;           /* spacing fix */
     }
 
+    /* Inputs shrink slightly */
     .workspace-search-box,
     .workspace-name-box {
-        font-size: 14px;              /* slightly smaller input text */
+        font-size: 14px;
         padding: 8px;
+        margin-bottom: 12px;          /* spacing fix */
     }
 
+    /* Save/Cancel buttons stack vertically */
     .workspace-actions {
-        flex-direction: column;       /* stack Save/Cancel buttons */
+        flex-direction: column;
         gap: 10px;
+        margin-top: 16px;             /* spacing fix */
     }
 
+    /* Full-width buttons for touch */
     .workspace-save-btn,
     .workspace-cancel-btn {
-        width: 100%;                  /* full-width buttons for touch */
+        width: 100%;
         font-size: 15px;
         padding: 12px;
+    }
+
+    /* Reduce space under the mode buttons */
+    .workspace-mode-panel {
+        margin-bottom: 12px;          /* spacing fix */
     }
 }
 
 
+/*
 .workspace-section-title {
     font-size: 22px;
     margin-bottom: 12px;
@@ -480,6 +498,7 @@ input#danceSearchInput:focus {
     border-radius: 8px;
     min-height: 480px;
 }
+*/
 
 /* ============================================
    SEARCH INPUTS
