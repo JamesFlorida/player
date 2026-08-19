@@ -425,6 +425,47 @@ input#danceSearchInput:focus {
     padding: 20px;
 }
 
+/* ============================================
+   WORKSPACE — MOBILE LAYOUT
+============================================ */
+@media (max-width: 600px) {
+    .workspace-columns {
+        grid-template-columns: 1fr;   /* stack columns vertically */
+        gap: 16px;                    /* slightly smaller gap */
+        padding: 12px;                /* reduce padding for small screens */
+    }
+
+    .workspace-column-left,
+    .workspace-column-right {
+        min-height: auto;             /* allow natural height */
+        padding: 12px;                /* slightly smaller padding */
+    }
+
+    .workspace-section-title {
+        font-size: 18px;              /* reduce title size */
+        margin-bottom: 10px;
+    }
+
+    .workspace-search-box,
+    .workspace-name-box {
+        font-size: 14px;              /* slightly smaller input text */
+        padding: 8px;
+    }
+
+    .workspace-actions {
+        flex-direction: column;       /* stack Save/Cancel buttons */
+        gap: 10px;
+    }
+
+    .workspace-save-btn,
+    .workspace-cancel-btn {
+        width: 100%;                  /* full-width buttons for touch */
+        font-size: 15px;
+        padding: 12px;
+    }
+}
+
+
 .workspace-section-title {
     font-size: 22px;
     margin-bottom: 12px;
