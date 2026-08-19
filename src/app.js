@@ -1152,7 +1152,7 @@ function selectPlaylistForEditing(name) {
 
 /* ============================================
    WORKSPACE — DELETE PLAYLIST
-============================================ */
+============================================ 
 function deleteWorkspacePlaylist(name) {
 
     // Show inline confirmation message instead of browser confirm()
@@ -1174,7 +1174,7 @@ function deleteWorkspacePlaylist(name) {
         renderWorkspaceDeleteList();
     };
 }
-
+*/
 
 /* ============================================
    WORKSPACE — NAVIGATION BACK
