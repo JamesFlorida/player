@@ -435,7 +435,10 @@ input#danceSearchInput:focus {
       #workspaceContent {
        margin-top: 4px;   /* tighten spacing */
    }
-
+   /* hide message bar when no message to display */
+   #workspaceMessage:empty {
+    display: none;
+}
 
     /* Stack columns vertically instead of side-by-side */
     .workspace-columns {
