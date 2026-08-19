@@ -1152,14 +1152,27 @@ function selectPlaylistForEditing(name) {
    WORKSPACE — DELETE PLAYLIST
 ============================================ */
 function deleteWorkspacePlaylist(name) {
-    const confirmDelete = confirm(`Delete playlist "${name}"?`);
-    if (!confirmDelete) return;
 
-    delete userPlaylistsData[name];
+    // Show inline confirmation message instead of browser confirm()
+    showWorkspaceMessage(`Click DELETE again to confirm removing "${name}".`, "warning");
 
-  showWorkspaceMessage(`Playlist "${name}" deleted.`, "error");
-    renderWorkspaceDeleteList();
+    // Replace the delete button temporarily with a confirmation button
+    const btn = document.getElementById(`deleteBtn_${name}`);
+    if (!btn) return;
+
+    btn.textContent = "Confirm Delete";
+    btn.classList.add("workspace-delete-confirm");
+
+    // Change behavior: second click actually deletes
+    btn.onclick = () => {
+        delete userPlaylistsData[name];
+
+        showWorkspaceMessage(`Playlist "${name}" deleted.`, "error");
+
+        renderWorkspaceDeleteList();
+    };
 }
+
 
 /* ============================================
    WORKSPACE — NAVIGATION BACK
