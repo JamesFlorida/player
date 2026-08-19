@@ -456,11 +456,12 @@ input#danceSearchInput:focus {
     }
 
     /* Titles shrink slightly */
-    .workspace-section-title {
-        font-size: 18px;
-        margin-top: 6px;              /* spacing fix */
-        margin-bottom: 8px;           /* spacing fix */
-    }
+  .workspace-section-title {
+    font-size: 18px;
+    margin-top: 6px;              /* spacing fix */
+    margin-bottom: 8px;           /* spacing fix */
+}
+
 
     /* Inputs shrink slightly */
     .workspace-search-box,
