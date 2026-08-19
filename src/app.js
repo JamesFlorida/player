@@ -647,9 +647,6 @@ function renderWorkspaceScreen() {
                 Delete Playlist
             </button>
         </div>
-        
-      <!-- WORKSPACE MESSAGE AREA -->
-      <div id="workspaceMessage" class="workspace-message"></div>
 
         <!-- WORKSPACE CONTENT -->
          <div id="workspaceContent" style="display:none;">
