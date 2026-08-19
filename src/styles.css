@@ -431,6 +431,12 @@ input#danceSearchInput:focus {
 ============================================ */
 @media (max-width: 600px) {
 
+   /* Reduce gap between mode buttons and search section */
+      #workspaceContent {
+       margin-top: 4px;   /* tighten spacing */
+   }
+
+
     /* Stack columns vertically instead of side-by-side */
     .workspace-columns {
         grid-template-columns: 1fr;   /* vertical stack */
