@@ -1182,8 +1182,14 @@ function openWorkspace() {
    CANCEL WORKSPACE EDIT
 ============================================ */
 function cancelWorkspaceEdit() {
+    // Make sure workspace content is visible
+    const content = document.getElementById("workspaceContent");
+    if (content) content.style.display = "block";
+
+    // Rebuild the edit mode layout
     renderEditModeLayout();
 }
+
 
 
 /* ============================================
