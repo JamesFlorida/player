@@ -504,6 +504,7 @@ input#danceSearchInput:focus {
     /* Reduce space under the mode buttons */
     .workspace-mode-panel {
         margin-bottom: 12px;          /* spacing fix */
+        column-gap: 20px;        /*space between left and right columns */
     }
 }
 
@@ -697,6 +698,7 @@ input#danceSearchInput:focus {
 ============================================ */
 
 .workspace-mode-btn {
+    margin-bottom: 12px;
     padding: 10px 16px;
     border-radius: 6px;
     border: none;
