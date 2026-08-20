@@ -1210,22 +1210,30 @@ function deleteWorkspacePlaylist(name) {
    WORKSPACE — NAVIGATION BACK
 ============================================ */
 function navigateBackFromWorkspace() {
-   console.log("NAVIGATE — lastNavigationMode:", lastNavigationMode);
-   console.log("NAVIGATE — workspaceMode:", workspaceMode);
-   console.log("NAVIGATE — selectedActivePlaylistGroup:", selectedActivePlaylistGroup);
+    console.log("NAVIGATE — lastNavigationMode:", lastNavigationMode);
+    console.log("NAVIGATE — workspaceMode:", workspaceMode);
+    console.log("NAVIGATE — selectedActivePlaylistGroup:", selectedActivePlaylistGroup);
 
+    // Reset workspace state
     workspaceMode = null;
     workspaceSelectedDances = [];
     workspaceSearchQuery = "";
     workspaceSearchResults = [];
     workspaceEditingOriginalName = "";
-    // ⭐ NEW: restore the bull header when leaving workspace
+
+    // ⭐ NEW: hide the small workspace-only logo
+    const smallLogo = document.getElementById("workspaceSmallLogo");
+    if (smallLogo) smallLogo.style.display = "none";
+
+    // ⭐ Restore the bull header (you already added this)
     const venueHeader = document.querySelector('.venue-header');
     if (venueHeader) venueHeader.style.display = 'block';
 
     lastNavigationMode = "hub";
+
     renderApplicationInterface();
 }
+
 
 /* ============================================
    OPEN WORKSPACE
