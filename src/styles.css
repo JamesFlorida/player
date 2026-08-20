@@ -548,10 +548,15 @@ input#danceSearchInput:focus {
    WORKSPACE — TABLET & MOBILE LAYOUT
 ============================================ */
 @media (max-width: 900px) {
-    .workspace-grid {
+    .workspace-columns {
+        display: grid;
         grid-template-columns: 1fr;   /* single column */
+        gap: 16px;
+        padding: 12px;
+        margin-top: 0;
     }
 }
+
 
 
 /* ============================================
