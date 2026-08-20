@@ -529,10 +529,16 @@ input#danceSearchInput:focus {
 /* ============================================
    SCROLLABLE LISTS
 ============================================ */
+/* Search results list — shorter, starts scrolling sooner */
+.workspace-search-results {
+    max-height: 220px;      /* adjust if needed */
+    overflow-y: auto;
+    padding-right: 6px;
+}
 
-.workspace-search-results,
+/* Selected dances list — taller, primary focus */
 .workspace-selected-list {
-    max-height: 420px;
+    max-height: 320px;      /* adjust if needed */
     overflow-y: auto;
     padding-right: 6px;
 }
