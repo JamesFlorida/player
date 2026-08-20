@@ -605,6 +605,8 @@ function renderWorkspacePlaylistSelection() {
 ============================================ */
 
 function renderWorkspaceScreen() {
+    console.log("RENDER WORKSPACE SCREEN");
+
     // Hide hub UI elements
     const filterBar = document.getElementById('dayFilterBar');
     if (filterBar) filterBar.style.display = 'none';
@@ -618,9 +620,9 @@ function renderWorkspaceScreen() {
     const hubNavRow = document.querySelector('.hub-nav-row');
     if (hubNavRow) hubNavRow.style.display = 'none';
 
-    // NEW: hide the venue header (bull logo) on workspace
-    const venueHeader = document.querySelector('.venue-header');
-    if (venueHeader) venueHeader.style.display = 'none';
+    // ⭐ NEW: show the small workspace-only logo
+    const smallLogo = document.getElementById("workspaceSmallLogo");
+    if (smallLogo) smallLogo.style.display = "block";
 
     // Show back button
     const backBtn = document.getElementById('navbarReturnTrigger');
@@ -653,22 +655,24 @@ function renderWorkspaceScreen() {
         </div>
 
         <!-- WORKSPACE CONTENT -->
-         <div id="workspaceContent" style="display:none;">
+        <div id="workspaceContent" style="display:none;">
 
-             <!-- MESSAGE AREA (correct location) -->
-             <div id="workspaceMessage" class="workspace-message"></div>
+            <div id="workspaceColumns" class="workspace-columns">
 
-             <div id="workspaceColumns" class="workspace-columns">
-                 <div id="workspaceLeftColumn" class="workspace-column-left"></div>
-                 <div id="workspaceRightColumn" class="workspace-column-right"></div>
-             </div>
+                <!-- LEFT COLUMN -->
+                <div id="workspaceLeftColumn" class="workspace-column-left"></div>
 
-         </div>
+                <!-- RIGHT COLUMN -->
+                <div id="workspaceRightColumn" class="workspace-column-right"></div>
 
+            </div>
+
+        </div>
 
       </div>
     `;
 }
+
 
 
 /* ============================================
