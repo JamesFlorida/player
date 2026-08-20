@@ -679,17 +679,14 @@ function renderWorkspaceScreen() {
 
 
 
-/* ============================================
-   CREATE MODE LAYOUT
-============================================ */
 function renderCreateModeLayout() {
     console.log("RENDER CREATE MODE LAYOUT");
 
     // Remove Edit Mode playlist name input if it exists
     document.getElementById("workspacePlaylistNameInput")?.remove();
 
-    // ⭐ RIGHT COLUMN FIRST: YOUR PLAYLIST (Option B)
-    document.getElementById("workspaceRightColumn").innerHTML = `
+    // ⭐ LEFT COLUMN: YOUR PLAYLIST (Option B)
+    document.getElementById("workspaceLeftColumn").innerHTML = `
         <h2 class="workspace-section-title">Your Playlist</h2>
 
         <label class="workspace-label">Playlist Name</label>
@@ -700,11 +697,8 @@ function renderCreateModeLayout() {
             class="workspace-name-box"
         />
 
-        <!-- ⭐ NEW: Scrollable playlist pane -->
-        <div class="workspace-scroll-pane playlist-scroll">
-            <div id="workspaceSelectedDances" class="workspace-selected-list">
-                <!-- JS will populate selected dances here -->
-            </div>
+        <div id="workspaceSelectedDances" class="workspace-selected-list">
+            <!-- JS will populate selected dances here -->
         </div>
 
         <div class="workspace-actions">
@@ -713,8 +707,8 @@ function renderCreateModeLayout() {
         </div>
     `;
 
-    // ⭐ LEFT COLUMN SECOND: SEARCH DANCES (Option B)
-    document.getElementById("workspaceLeftColumn").innerHTML = `
+    // ⭐ RIGHT COLUMN: SEARCH DANCES (Option B)
+    document.getElementById("workspaceRightColumn").innerHTML = `
         <h2 class="workspace-section-title">Search Dances</h2>
 
         <input 
@@ -725,11 +719,8 @@ function renderCreateModeLayout() {
             class="workspace-search-box"
         />
 
-        <!-- ⭐ NEW: Scrollable search results pane -->
-        <div class="workspace-scroll-pane search-scroll">
-            <div id="workspaceSearchResults" class="workspace-search-results">
-                <!-- JS will populate search results here -->
-            </div>
+        <div id="workspaceSearchResults" class="workspace-search-results">
+            <!-- JS will populate search results here -->
         </div>
     `;
 
@@ -746,6 +737,7 @@ function renderCreateModeLayout() {
     renderWorkspaceSearchResults([]);
     renderWorkspaceSelectedDances([]);
 }
+
 
 
 
