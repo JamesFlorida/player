@@ -33,6 +33,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    justify-content: space-between;
     font-weight: bold;
     font-size: 1.3rem;
     box-shadow: 0 4px 10px rgba(0,0,0,0.3);
