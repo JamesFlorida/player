@@ -645,17 +645,17 @@ function renderWorkspaceScreen() {
                 Create New Playlist
             </button>
 
-            <button id="modeEditBtn"
-                    class="workspace-mode-btn"
-                    onclick="startEditMode()">
-                Edit Existing Playlist
-            </button>
-
             <button id="modeDeleteBtn"
                     class="workspace-mode-btn"
                     onclick="startDeleteMode()">
                 Delete Playlist
             </button>
+
+            <button id="modeEditBtn"
+                    class="workspace-mode-btn"
+                    onclick="startEditMode()">
+                Edit Existing Playlist
+            </button>      
         </div>
 
         <!-- WORKSPACE CONTENT -->
