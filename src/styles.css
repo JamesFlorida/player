@@ -55,6 +55,12 @@ body {
     cursor: pointer;
     display: none;
 }
+/* ⭐ NEW: true centering for PLAYLISTS title */
+#applicationHeaderTitle {
+    flex: 1;
+    text-align: center;
+}
+
 
 /* ============================================
    GLOBAL APP CONTAINER
