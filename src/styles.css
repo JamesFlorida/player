@@ -504,27 +504,11 @@ input#danceSearchInput:focus {
     /* Reduce space under the mode buttons */
     .workspace-mode-panel {
         margin-bottom: 12px;          /* spacing fix */
+        display: grid;                /* ⭐ REQUIRED */
+        grid-template-columns: 1fr 1fr; /* ⭐ REQUIRED */
         column-gap: 20px;        /*space between left and right columns */
     }
 }
-
-
-/*
-.workspace-section-title {
-    font-size: 22px;
-    margin-bottom: 12px;
-    color: #fff;
-    font-weight: 600;
-}
-
-.workspace-column-left,
-.workspace-column-right {
-    background: rgba(255,255,255,0.05);
-    padding: 16px;
-    border-radius: 8px;
-    min-height: 480px;
-}
-*/
 
 /* ============================================
    SEARCH INPUTS
