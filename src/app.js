@@ -688,24 +688,7 @@ function renderCreateModeLayout() {
     // Remove Edit Mode playlist name input if it exists
     document.getElementById("workspacePlaylistNameInput")?.remove();
 
-    // LEFT COLUMN: SEARCH DANCES
-    document.getElementById("workspaceLeftColumn").innerHTML = `
-        <h2 class="workspace-section-title">Search Dances</h2>
-
-        <input 
-            id="workspaceSearchInput"
-            type="text"
-            placeholder="Search dances..."
-            oninput="handleWorkspaceSearchInput(this.value)"
-            class="workspace-search-box"
-        />
-
-        <div id="workspaceSearchResults" class="workspace-search-results">
-            <!-- JS will populate search results here -->
-        </div>
-    `;
-
-    // RIGHT COLUMN: YOUR PLAYLIST
+    // ⭐ RIGHT COLUMN FIRST: YOUR PLAYLIST (Option B)
     document.getElementById("workspaceRightColumn").innerHTML = `
         <h2 class="workspace-section-title">Your Playlist</h2>
 
@@ -717,13 +700,36 @@ function renderCreateModeLayout() {
             class="workspace-name-box"
         />
 
-        <div id="workspaceSelectedDances" class="workspace-selected-list">
-            <!-- JS will populate selected dances here -->
+        <!-- ⭐ NEW: Scrollable playlist pane -->
+        <div class="workspace-scroll-pane playlist-scroll">
+            <div id="workspaceSelectedDances" class="workspace-selected-list">
+                <!-- JS will populate selected dances here -->
+            </div>
         </div>
 
         <div class="workspace-actions">
             <button class="workspace-save-btn" onclick="saveWorkspacePlaylist()">Save Playlist</button>
             <button class="workspace-cancel-btn" onclick="navigateBackFromWorkspace()">Cancel</button>
+        </div>
+    `;
+
+    // ⭐ LEFT COLUMN SECOND: SEARCH DANCES (Option B)
+    document.getElementById("workspaceLeftColumn").innerHTML = `
+        <h2 class="workspace-section-title">Search Dances</h2>
+
+        <input 
+            id="workspaceSearchInput"
+            type="text"
+            placeholder="Search dances..."
+            oninput="handleWorkspaceSearchInput(this.value)"
+            class="workspace-search-box"
+        />
+
+        <!-- ⭐ NEW: Scrollable search results pane -->
+        <div class="workspace-scroll-pane search-scroll">
+            <div id="workspaceSearchResults" class="workspace-search-results">
+                <!-- JS will populate search results here -->
+            </div>
         </div>
     `;
 
