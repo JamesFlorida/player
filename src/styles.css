@@ -439,12 +439,11 @@ input#danceSearchInput:focus {
 @media (max-width: 600px) {
    
    /* add small bull logo to banner on workspace screen */
-   .header-small-logo {
-    height: 28px;
-    margin-left: auto;   /* pushes logo to the right */
+  .header-small-logo {
+    height: 32px;
+    width: 32px;
+    object-fit: contain;
 }
-
-   
 
    /* Reduce gap between mode buttons and search section */
       #workspaceContent {
