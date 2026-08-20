@@ -624,6 +624,10 @@ function renderWorkspaceScreen() {
     const smallLogo = document.getElementById("workspaceSmallLogo");
     if (smallLogo) smallLogo.style.display = "block";
 
+   // ⭐ NEW: hide the big bull header
+    const venueHeader = document.querySelector('.venue-header');
+    if (venueHeader) venueHeader.style.display = 'none';
+
     // Show back button
     const backBtn = document.getElementById('navbarReturnTrigger');
     backBtn.style.display = 'block';
