@@ -543,19 +543,6 @@ input#danceSearchInput:focus {
     padding-right: 6px;
 }
 
-/* ============================================
-   WORKSPACE COLUMN CONSTRAINTS
-============================================ */
-
-#workspaceLeftColumn {
-    max-height: calc(100vh - 200px);
-    overflow-y: auto;
-}
-
-#workspaceRightColumn {
-    max-height: calc(100vh - 200px);
-    overflow-y: auto;
-}
 
 /* ============================================
    WORKSPACE — TABLET & MOBILE LAYOUT
