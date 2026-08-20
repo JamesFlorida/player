@@ -544,6 +544,30 @@ input#danceSearchInput:focus {
 }
 
 /* ============================================
+   WORKSPACE COLUMN CONSTRAINTS
+============================================ */
+
+#workspaceLeftColumn {
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+}
+
+#workspaceRightColumn {
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+}
+
+/* ============================================
+   WORKSPACE — TABLET & MOBILE LAYOUT
+============================================ */
+@media (max-width: 900px) {
+    .workspace-grid {
+        grid-template-columns: 1fr;   /* single column */
+    }
+}
+
+
+/* ============================================
    SEARCH RESULT ROWS (LEFT COLUMN)
 ============================================ */
 
