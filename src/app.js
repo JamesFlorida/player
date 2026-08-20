@@ -618,6 +618,10 @@ function renderWorkspaceScreen() {
     const hubNavRow = document.querySelector('.hub-nav-row');
     if (hubNavRow) hubNavRow.style.display = 'none';
 
+    // NEW: hide the venue header (bull logo) on workspace
+    const venueHeader = document.querySelector('.venue-header');
+    if (venueHeader) venueHeader.style.display = 'none';
+
     // Show back button
     const backBtn = document.getElementById('navbarReturnTrigger');
     backBtn.style.display = 'block';
@@ -1215,6 +1219,9 @@ function navigateBackFromWorkspace() {
     workspaceSearchQuery = "";
     workspaceSearchResults = [];
     workspaceEditingOriginalName = "";
+    // ⭐ NEW: restore the bull header when leaving workspace
+    const venueHeader = document.querySelector('.venue-header');
+    if (venueHeader) venueHeader.style.display = 'block';
 
     lastNavigationMode = "hub";
     renderApplicationInterface();
