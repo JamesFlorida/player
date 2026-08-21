@@ -606,6 +606,8 @@ function renderWorkspacePlaylistSelection() {
 
 function renderWorkspaceScreen() {
     console.log("RENDER WORKSPACE SCREEN");
+    document.body.classList.add("workspace-mode");
+
 
     // Hide hub UI elements
     console.log("WS: starting hide hub elements");
@@ -1244,18 +1246,22 @@ function navigateBackFromWorkspace() {
     workspaceSearchResults = [];
     workspaceEditingOriginalName = "";
 
-    // ⭐ NEW: hide the small workspace-only logo
+    // ⭐ Hide the small workspace-only logo
     const smallLogo = document.getElementById("workspaceSmallLogo");
     if (smallLogo) smallLogo.style.display = "none";
 
-    // ⭐ Restore the bull header (you already added this)
+    // ⭐ Restore the bull header
     const venueHeader = document.querySelector('.venue-header');
     if (venueHeader) venueHeader.style.display = 'block';
+
+    // ⭐ Remove workspace-mode (this is the correct place)
+    document.body.classList.remove("workspace-mode");
 
     lastNavigationMode = "hub";
 
     renderApplicationInterface();
 }
+
 
 
 /* ============================================
