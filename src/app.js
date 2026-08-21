@@ -608,32 +608,41 @@ function renderWorkspaceScreen() {
     console.log("RENDER WORKSPACE SCREEN");
 
     // Hide hub UI elements
+    console.log("WS: starting hide hub elements");
     const filterBar = document.getElementById('dayFilterBar');
     if (filterBar) filterBar.style.display = 'none';
+    console.log("WS: filterBar =", filterBar);
 
     const diffBar = document.getElementById('difficultyFilterBar');
     if (diffBar) diffBar.style.display = 'none';
+    console.log("WS: diffBar =", diffBar);
 
     const hubSearchRow = document.querySelector('.hub-search-row');
     if (hubSearchRow) hubSearchRow.style.display = 'none';
+    console.log("WS: hubSearchRow =", hubSearchRow);
 
     const hubNavRow = document.querySelector('.hub-nav-row');
     if (hubNavRow) hubNavRow.style.display = 'none';
+    console.log("WS: hubNavRow =", hubNavRow);
 
     // ⭐ NEW: show the small workspace-only logo
     const smallLogo = document.getElementById("workspaceSmallLogo");
     if (smallLogo) smallLogo.style.display = "block";
+    
 
    // ⭐ NEW: hide the big bull header
     const venueHeader = document.querySelector('.venue-header');
     if (venueHeader) venueHeader.style.display = 'none';
 
     // Show back button
+    console.log("WS: about to show back button");
     const backBtn = document.getElementById('navbarReturnTrigger');
+    console.log("WS: backBtn =", backBtn);
     backBtn.style.display = 'block';
     backBtn.onclick = navigateBackFromWorkspace;
 
     // Render workspace shell
+    console.log("WS: about to inject workspace DOM");
     document.getElementById('masterApplicationViewport').innerHTML = `
       <div class="workspace-screen">
 
@@ -659,6 +668,7 @@ function renderWorkspaceScreen() {
         </div>
 
         <!-- WORKSPACE CONTENT -->
+        
         <div id="workspaceContent" style="display:none;">
 
             <div id="workspaceColumns" class="workspace-columns">
@@ -675,8 +685,9 @@ function renderWorkspaceScreen() {
 
       </div>
     `;
+   console.log("WS: about to show workspaceContent");
    document.getElementById('workspaceContent').style.display = 'block';
-
+   console.log("WS: FINISHED renderWorkspaceScreen");
 }
 
 
