@@ -675,6 +675,8 @@ function renderWorkspaceScreen() {
 
       </div>
     `;
+   document.getElementById('workspaceContent').style.display = 'block';
+
 }
 
 
