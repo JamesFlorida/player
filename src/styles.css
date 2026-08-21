@@ -432,6 +432,12 @@ input#danceSearchInput:focus {
     padding: 20px;
 }
 
+.workspace-screen {
+    min-height: calc(100vh - 60px); /* subtract header height */
+    padding: 20px;
+    box-sizing: border-box;
+}
+
 
 /* ============================================
    WORKSPACE — MOBILE LAYOUT
