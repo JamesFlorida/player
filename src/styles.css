@@ -438,6 +438,9 @@ input#danceSearchInput:focus {
     box-sizing: border-box;
 }
 
+#masterApplicationViewport {
+    min-height: calc(100vh - 60px);
+}
 
 /* ============================================
    WORKSPACE — MOBILE LAYOUT
