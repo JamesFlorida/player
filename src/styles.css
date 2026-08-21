@@ -265,10 +265,16 @@ object {
 /* ============================================
    WORKSPACE HEADER OVERRIDE
    ============================================ */
-.workspace-screen .header-bar {
+/* ============================================
+   WORKSPACE HEADER OVERRIDE
+   ============================================ */
+.workspace-mode .header-bar {
     background-color: #0066ff !important;   /* bright blue */
     color: #fff;
 }
+
+
+
 
 
 /* ============================================
