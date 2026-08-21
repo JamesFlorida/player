@@ -307,6 +307,14 @@ object {
    ============================================ */
 
 /* Top navigation cards: My Playlists / Create Playlist / Events */
+.hub-hidden {
+    display: none !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+
 .hub-nav-card {
     background-color: var(--card-bg);
     border-radius: 10px;
