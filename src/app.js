@@ -611,18 +611,22 @@ function renderWorkspaceScreen() {
     console.log("WS: starting hide hub elements");
     const filterBar = document.getElementById('dayFilterBar');
     if (filterBar) filterBar.style.display = 'none';
+    if (filterBar) filterBar.classList.add("hub-hidden");
     console.log("WS: filterBar =", filterBar);
 
     const diffBar = document.getElementById('difficultyFilterBar');
     if (diffBar) diffBar.style.display = 'none';
+    if (diffBar) diffBar.classList.add("hub-hidden");
     console.log("WS: diffBar =", diffBar);
 
     const hubSearchRow = document.querySelector('.hub-search-row');
     if (hubSearchRow) hubSearchRow.style.display = 'none';
+    if (hubSearchRow) hubSearchRow.classList.add("hub-hidden");
     console.log("WS: hubSearchRow =", hubSearchRow);
 
     const hubNavRow = document.querySelector('.hub-nav-row');
     if (hubNavRow) hubNavRow.style.display = 'none';
+    if (hubNavRow) hubNavRow.classList.add("hub-hidden");
     console.log("WS: hubNavRow =", hubNavRow);
 
     // ⭐ NEW: show the small workspace-only logo
