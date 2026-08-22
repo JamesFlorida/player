@@ -122,9 +122,9 @@
     text-align: center;
 }
 
-/* Stockyard Body Background (Purple) */
+/* Stockyard Body Background (Black) */
 body {
-    background-color: #800080 !important;
+    background-color: #000 !important;
 }
 
 /* STOCKYARD — Dropdown Branding */
