@@ -124,8 +124,7 @@
 
 /* Pure Black Background */
 body {
-    background-color: #000 !important;
-    outline: 30px solid green !important;
+    background-color: #800080 !important;
 }
 /* STOCKYARD — Dropdown Branding */
 #daySelect,
