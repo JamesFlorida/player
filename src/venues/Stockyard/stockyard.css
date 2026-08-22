@@ -148,7 +148,7 @@ body {
 
 /* Workspace Header (use Stockyard color, not bright blue) */
 .workspace-mode .header-bar {
-    background-color: #71716F;
+    background-color: #000;
 }
 
 /* Workspace Background (remove red test color) */
