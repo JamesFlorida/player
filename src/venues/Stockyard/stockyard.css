@@ -19,7 +19,7 @@
     transform: scale(1.05);
 }
 
-/* Header Bar */
+/* Header Bar (Stockyard Theme) */
 .header-bar {
     background-color: #71716F;
     color: #fff;
@@ -51,9 +51,9 @@
     opacity: 0.8;
 }
 
-/* App Background */
+/* App Background — allow purple body to show */
 .app-container {
-    background-color: #111 !important;
+    background-color: transparent;
 }
 
 /* Playlist Tiles (Venue Theme) */
@@ -122,10 +122,11 @@
     text-align: center;
 }
 
-/* Pure Black Background */
+/* Stockyard Body Background (Purple) */
 body {
     background-color: #800080 !important;
 }
+
 /* STOCKYARD — Dropdown Branding */
 #daySelect,
 #difficultySelect {
@@ -139,4 +140,18 @@ body {
 #difficultySelect:focus {
     border-color: #ffcc88 !important;
     box-shadow: 0 0 10px rgba(255, 180, 60, 0.6) !important;
+}
+
+/* ========================================================= */
+/* WORKSPACE — Stockyard Overrides                           */
+/* ========================================================= */
+
+/* Workspace Header (use Stockyard color, not bright blue) */
+.workspace-mode .header-bar {
+    background-color: #71716F;
+}
+
+/* Workspace Background (remove red test color) */
+.workspace-screen {
+    background-color: transparent;
 }
