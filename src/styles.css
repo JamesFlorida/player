@@ -459,7 +459,7 @@ input#danceSearchInput:focus {
     min-height: calc(100vh - 60px);
     padding: 20px;
     box-sizing: border-box;
-    background-color: red !important;   /* TEMPORARY TEST COLOR */
+    background-color: rgba(0,0,0,0.4);
     position: relative;
     z-index: 10;
 }
