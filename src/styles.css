@@ -262,20 +262,6 @@ object {
     }
 }
 
-/* ============================================
-   WORKSPACE HEADER OVERRIDE
-   ============================================ */
-/* ============================================
-   WORKSPACE HEADER OVERRIDE
-   ============================================ */
-.workspace-mode .header-bar {
-    background-color: #0066ff !important;   /* bright blue */
-    color: #fff;
-}
-
-
-
-
 
 /* ============================================
    HUB FILTER ROW — GLOBAL LAYOUT
@@ -459,7 +445,6 @@ input#danceSearchInput:focus {
     min-height: calc(100vh - 60px);
     padding: 20px;
     box-sizing: border-box;
-    background-color: rgba(0,0,0,0.4);
     position: relative;
     z-index: 10;
 }
