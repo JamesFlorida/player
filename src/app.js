@@ -1335,9 +1335,12 @@ function navigateBackFromWorkspace() {
    OPEN WORKSPACE
 ============================================ */
 function openWorkspace() {
+    workspaceMode = "neutral";   // ⭐ FIX
+
     lastNavigationMode = "workspace";
     renderWorkspaceScreen();
 }
+
 
 
 /* ============================================
