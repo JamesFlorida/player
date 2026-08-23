@@ -289,6 +289,7 @@ function renderApplicationInterface() {
        -------------------------------------------- */
     if (lastNavigationMode === "workspace") {
         renderWorkspaceScreen();
+        attachWorkspaceListeners();
         return;
     }
 
@@ -849,6 +850,16 @@ function startDeleteMode() {
     renderDeleteModeLayout();
 }
 
+function attachWorkspaceListeners() {
+    const createBtn = document.getElementById("modeCreateBtn");
+    if (createBtn) createBtn.addEventListener("click", startCreateMode);
+
+    const deleteBtn = document.getElementById("modeDeleteBtn");
+    if (deleteBtn) deleteBtn.addEventListener("click", startDeleteMode);
+
+    const editBtn = document.getElementById("modeEditBtn");
+    if (editBtn) editBtn.addEventListener("click", startEditMode);
+}
 
 /* ============================================
    EDIT MODE LAYOUT
@@ -1202,6 +1213,7 @@ function saveWorkspacePlaylist() {
     // ⭐ CLEAR CREATE MODE UI
     workspaceMode = "neutral";
     renderWorkspaceScreen();
+    attachWorkspaceListeners();
 
   
    // ⭐ RE-RENDER WORKSPACE TO SHOW NEUTRAL MODE
@@ -1340,6 +1352,7 @@ function openWorkspace() {
 
     lastNavigationMode = "workspace";
     renderWorkspaceScreen();
+    attachWorkspaceListeners();
 }
 
 
