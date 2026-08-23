@@ -1202,6 +1202,9 @@ function saveWorkspacePlaylist() {
     // ⭐ CLEAR CREATE MODE UI
     document.getElementById("workspaceLeftColumn").innerHTML = "";
     document.getElementById("workspaceRightColumn").innerHTML = "";
+  
+   // ⭐ RE-RENDER WORKSPACE TO SHOW NEUTRAL MODE
+    renderWorkspaceScreen();
 }
 
 
