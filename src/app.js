@@ -694,6 +694,16 @@ function renderWorkspaceScreen() {
    console.log("WS: about to show workspaceContent");
    document.getElementById('workspaceContent').style.display = 'block';
    console.log("WS: FINISHED renderWorkspaceScreen");
+   // ⭐ RESTORE WORKSPACE MODE AFTER SHELL INJECTION
+if (workspaceMode === "edit") {
+    startEditMode();
+} else if (workspaceMode === "delete") {
+    startDeleteMode();
+} else {
+    // Default to create mode if null or unknown
+    startCreateMode();
+}
+
 }
 
 
