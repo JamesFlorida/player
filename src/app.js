@@ -695,15 +695,20 @@ function renderWorkspaceScreen() {
    document.getElementById('workspaceContent').style.display = 'block';
    console.log("WS: FINISHED renderWorkspaceScreen");
    // ⭐ RESTORE WORKSPACE MODE AFTER SHELL INJECTION
+   // ⭐ RESTORE WORKSPACE MODE AFTER SHELL INJECTION
 if (workspaceMode === "edit") {
     startEditMode();
 } else if (workspaceMode === "delete") {
     startDeleteMode();
+} else if (workspaceMode === "create") {
+    startCreateMode();
 } else {
-   workspaceMode = "neutral";
+    // ⭐ NEUTRAL MODE — do NOT auto-start any mode
+    workspaceMode = "neutral";
     updateWorkspaceModeButtons("neutral");
-    // Do NOT call startCreateMode()
+    // Leave columns empty, selector hidden, buttons active
 }
+
 
 }
 
