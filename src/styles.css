@@ -403,6 +403,11 @@ input#danceSearchInput:focus {
     padding: 10px !important;
 }
 
+/* Hide playlist selector except in Edit mode */
+#workspacePlaylistSelection {
+    display: none;
+}
+
 
 /* Add styling for message bar under Banner    */
 .workspace-message {
