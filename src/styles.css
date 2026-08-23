@@ -403,6 +403,12 @@ input#danceSearchInput:focus {
     padding: 10px !important;
 }
 
+/* Hide edit selector unless Edit mode is active */
+#editSelectorContainer {
+    display: none;
+}
+
+
 /* Add styling for message bar under Banner    */
 .workspace-message {
     margin: 10px 0 20px 0;
