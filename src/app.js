@@ -1200,8 +1200,9 @@ function saveWorkspacePlaylist() {
     updateWorkspaceModeButtons("neutral");
 
     // ⭐ CLEAR CREATE MODE UI
-    document.getElementById("workspaceLeftColumn").innerHTML = "";
-    document.getElementById("workspaceRightColumn").innerHTML = "";
+    workspaceMode = "neutral";
+    renderWorkspaceScreen();
+
   
    // ⭐ RE-RENDER WORKSPACE TO SHOW NEUTRAL MODE
     // ❌ no renderWorkspaceScreen() here
