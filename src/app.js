@@ -700,8 +700,9 @@ if (workspaceMode === "edit") {
 } else if (workspaceMode === "delete") {
     startDeleteMode();
 } else {
-    // Default to create mode if null or unknown
-    startCreateMode();
+   workspaceMode = "neutral";
+    updateWorkspaceModeButtons("neutral");
+    // Do NOT call startCreateMode()
 }
 
 }
@@ -767,20 +768,41 @@ function renderCreateModeLayout() {
     renderWorkspaceSelectedDances([]);
 }
 
-
-
-
 function startEditMode() {
-   const sel = document.getElementById('workspacePlaylistSelection');
-   if (sel) sel.style.display = 'block';
-   document.getElementById("workspaceLeftColumn").innerHTML = "";
-   document.getElementById("workspaceRightColumn").innerHTML = "";
+
+    // ⭐ If no playlists exist, show message and return to NEUTRAL mode
+    if (!userPlaylistsData || Object.keys(userPlaylistsData).length === 0) {
+        showWorkspaceMessage("No playlists available to edit.", "warning");
+        workspaceMode = "neutral";
+        updateWorkspaceModeButtons("neutral");
+        return;
+    }
+
+    // ⭐ Show selector
+    const sel = document.getElementById('workspacePlaylistSelection');
+    if (sel) sel.style.display = 'block';
+
+    // ⭐ Clear columns
+    document.getElementById("workspaceLeftColumn").innerHTML = "";
+    document.getElementById("workspaceRightColumn").innerHTML = "";
+
+    // ⭐ Set mode
     workspaceMode = "edit";
     document.getElementById('applicationHeaderTitle').innerText = "Edit Playlist";
+
+    // ⭐ Update buttons
     updateWorkspaceModeButtons("edit");
+
+    // ⭐ Show workspace content
     document.getElementById("workspaceContent").style.display = "block";
+
+    // ⭐ Render edit layout
     renderEditModeLayout();
 }
+
+
+
+
 
 function startCreateMode() {
    console.log("CREATE MODE START — workspaceMode:", workspaceMode);
@@ -796,16 +818,37 @@ function startCreateMode() {
 }
 
 function startDeleteMode() {
-   const sel = document.getElementById('workspacePlaylistSelection');
-   if (sel) sel.style.display = 'none';
-   document.getElementById("workspaceLeftColumn").innerHTML = "";
-   document.getElementById("workspaceRightColumn").innerHTML = "";
+
+    // ⭐ If no playlists exist, show message and return to NEUTRAL mode
+    if (!userPlaylistsData || Object.keys(userPlaylistsData).length === 0) {
+        showWorkspaceMessage("No playlists available to delete.", "warning");
+        workspaceMode = "neutral";
+        updateWorkspaceModeButtons("neutral");
+        return;
+    }
+
+    // ⭐ Hide selector (delete mode uses its own list)
+    const sel = document.getElementById('workspacePlaylistSelection');
+    if (sel) sel.style.display = 'none';
+
+    // ⭐ Clear columns
+    document.getElementById("workspaceLeftColumn").innerHTML = "";
+    document.getElementById("workspaceRightColumn").innerHTML = "";
+
+    // ⭐ Set mode
     workspaceMode = "delete";
     document.getElementById('applicationHeaderTitle').innerText = "Delete Playlist";
+
+    // ⭐ Update buttons
     updateWorkspaceModeButtons("delete");
+
+    // ⭐ Show workspace content
     document.getElementById("workspaceContent").style.display = "block";
+
+    // ⭐ Render delete layout
     renderDeleteModeLayout();
 }
+
 
 /* ============================================
    EDIT MODE LAYOUT
