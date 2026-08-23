@@ -1254,8 +1254,8 @@ function navigateBackFromWorkspace() {
     console.log("NAVIGATE — workspaceMode:", workspaceMode);
     console.log("NAVIGATE — selectedActivePlaylistGroup:", selectedActivePlaylistGroup);
    
-    // Reset workspace state
-    workspaceMode = null;
+    // Reset workspace state but
+   // Do NOT reset workspaceMode — preserve the user's mode
     workspaceSelectedDances = [];
     workspaceSearchQuery = "";
     workspaceSearchResults = [];
