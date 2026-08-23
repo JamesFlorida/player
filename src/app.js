@@ -1173,9 +1173,6 @@ function saveWorkspacePlaylist() {
     console.log("SAVE — workspacePlaylistName:", workspacePlaylistName);
     console.log("DEBUG — workspaceSelectedDances:", workspaceSelectedDances);
     console.log("DEBUG — userPlaylistsData BEFORE SAVE:", userPlaylistsData);
-    console.log("DOM VALUE — workspaceNameInput:",
-        document.getElementById("workspaceNameInput")?.value);
-    console.log("OVERWRITE CHECK — workspacePlaylistName right before validation:", workspacePlaylistName);
 
     // VALIDATION — NAME REQUIRED
     if (!workspacePlaylistName) {
@@ -1195,8 +1192,16 @@ function saveWorkspacePlaylist() {
     // SHOW SUCCESS MESSAGE
     showWorkspaceMessage(`Playlist "${workspacePlaylistName}" saved!`, "success");
 
-    // REFRESH EDIT/DELETE LISTS SO THEY SEE THE NEW PLAYLIST
+    // ⭐ REFRESH PLAYLIST LIST
     renderWorkspacePlaylistSelection();
+
+    // ⭐ RETURN TO NEUTRAL MODE
+    workspaceMode = "neutral";
+    updateWorkspaceModeButtons("neutral");
+
+    // ⭐ CLEAR CREATE MODE UI
+    document.getElementById("workspaceLeftColumn").innerHTML = "";
+    document.getElementById("workspaceRightColumn").innerHTML = "";
 }
 
 
