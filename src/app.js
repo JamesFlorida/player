@@ -579,7 +579,12 @@ function renderDanceCardsList(tracks, containerElement) {
 ============================================ */
 function renderWorkspacePlaylistSelection() {
     const container = document.getElementById('workspacePlaylistSelection');
-    if (!container) return;
+    if (!container) {
+        console.log("WS: playlistSelection container NOT FOUND");
+        return;
+    }
+
+    console.log("WS: renderWorkspacePlaylistSelection — userPlaylistsData:", userPlaylistsData);
 
     if (!userPlaylistsData || Object.keys(userPlaylistsData).length === 0) {
         container.innerHTML = `<div class="workspace-note">No user playlists available.</div>`;
@@ -599,6 +604,7 @@ function renderWorkspacePlaylistSelection() {
 
     container.innerHTML = html;
 }
+
 
 /* ============================================
    WORKSPACE SCREEN (MAIN ENTRY)
