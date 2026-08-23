@@ -761,6 +761,8 @@ function renderCreateModeLayout() {
 
 
 function startEditMode() {
+   const sel = document.getElementById('workspacePlaylistSelection');
+   if (sel) sel.style.display = 'block';
    document.getElementById("workspaceLeftColumn").innerHTML = "";
    document.getElementById("workspaceRightColumn").innerHTML = "";
     workspaceMode = "edit";
@@ -772,6 +774,8 @@ function startEditMode() {
 
 function startCreateMode() {
    console.log("CREATE MODE START — workspaceMode:", workspaceMode);
+   const sel = document.getElementById('workspacePlaylistSelection');
+   if (sel) sel.style.display = 'none';
    document.getElementById("workspaceLeftColumn").innerHTML = "";
    document.getElementById("workspaceRightColumn").innerHTML = "";
     workspaceMode = "create";
@@ -782,6 +786,8 @@ function startCreateMode() {
 }
 
 function startDeleteMode() {
+   const sel = document.getElementById('workspacePlaylistSelection');
+   if (sel) sel.style.display = 'none';
    document.getElementById("workspaceLeftColumn").innerHTML = "";
    document.getElementById("workspaceRightColumn").innerHTML = "";
     workspaceMode = "delete";
@@ -1277,6 +1283,9 @@ function openWorkspace() {
    CANCEL WORKSPACE EDIT
 ============================================ */
 function cancelWorkspaceEdit() {
+   const sel = document.getElementById('workspacePlaylistSelection');
+   if (sel) sel.style.display = 'none';
+
     // Make sure workspace content is visible
     const content = document.getElementById("workspaceContent");
     if (content) content.style.display = "block";
