@@ -609,80 +609,64 @@ function renderWorkspacePlaylistSelection() {
 /* ============================================
    WORKSPACE SCREEN (MAIN ENTRY)
 ============================================ */
-
 function renderWorkspaceScreen() {
     console.log("RENDER WORKSPACE SCREEN");
     document.body.classList.add("workspace-mode");
-
 
     // Hide hub UI elements
     console.log("WS: starting hide hub elements");
     const filterBar = document.getElementById('dayFilterBar');
     if (filterBar) filterBar.style.display = 'none';
     if (filterBar) filterBar.classList.add("hub-hidden");
-    console.log("WS: filterBar =", filterBar);
 
     const diffBar = document.getElementById('difficultyFilterBar');
     if (diffBar) diffBar.style.display = 'none';
     if (diffBar) diffBar.classList.add("hub-hidden");
-    console.log("WS: diffBar =", diffBar);
 
     const hubSearchRow = document.querySelector('.hub-search-row');
     if (hubSearchRow) hubSearchRow.style.display = 'none';
     if (hubSearchRow) hubSearchRow.classList.add("hub-hidden");
-    console.log("WS: hubSearchRow =", hubSearchRow);
 
     const hubNavRow = document.querySelector('.hub-nav-row');
     if (hubNavRow) hubNavRow.style.display = 'none';
     if (hubNavRow) hubNavRow.classList.add("hub-hidden");
-    console.log("WS: hubNavRow =", hubNavRow);
 
-    // ⭐ NEW: show the small workspace-only logo
+    // Show small workspace logo
     const smallLogo = document.getElementById("workspaceSmallLogo");
     if (smallLogo) smallLogo.style.display = "block";
-    
 
-   // ⭐ NEW: hide the big bull header
+    // Hide big bull header
     const venueHeader = document.querySelector('.venue-header');
     if (venueHeader) venueHeader.style.display = 'none';
 
     // Show back button
     console.log("WS: about to show back button");
     const backBtn = document.getElementById('navbarReturnTrigger');
-    console.log("WS: backBtn =", backBtn);
     backBtn.style.display = 'block';
     backBtn.onclick = navigateBackFromWorkspace;
 
-    // Render workspace shell
+    // Inject workspace DOM
     console.log("WS: about to inject workspace DOM");
     document.getElementById('masterApplicationViewport').innerHTML = `
       <div class="workspace-screen">
 
         <!-- MODE SELECTION PANEL -->
         <div id="workspaceModePanel" class="workspace-mode-panel">
-            <button id="modeCreateBtn"
-                    class="workspace-mode-btn"
-                    onclick="startCreateMode()">
+            <button id="modeCreateBtn" class="workspace-mode-btn">
                 Create New Playlist
             </button>
 
-            <button id="modeDeleteBtn"
-                    class="workspace-mode-btn"
-                    onclick="startDeleteMode()">
+            <button id="modeDeleteBtn" class="workspace-mode-btn">
                 Delete Playlist
             </button>
 
-            <button id="modeEditBtn"
-                    class="workspace-mode-btn"
-                    onclick="startEditMode()">
+            <button id="modeEditBtn" class="workspace-mode-btn">
                 Edit Existing Playlist
-            </button>      
+            </button>
         </div>
 
         <!-- WORKSPACE CONTENT -->
-        
         <div id="workspaceContent" style="display:none;">
-
             <div id="workspaceColumns" class="workspace-columns">
 
                 <!-- LEFT COLUMN -->
@@ -692,31 +676,42 @@ function renderWorkspaceScreen() {
                 <div id="workspaceRightColumn" class="workspace-column-right"></div>
 
             </div>
-
         </div>
 
       </div>
     `;
-   console.log("WS: about to show workspaceContent");
-   document.getElementById('workspaceContent').style.display = 'block';
-   console.log("WS: FINISHED renderWorkspaceScreen");
-   // ⭐ RESTORE WORKSPACE MODE AFTER SHELL INJECTION
-   // ⭐ RESTORE WORKSPACE MODE AFTER SHELL INJECTION
-if (workspaceMode === "edit") {
-    startEditMode();
-} else if (workspaceMode === "delete") {
-    startDeleteMode();
-} else if (workspaceMode === "create") {
-    startCreateMode();
-} else {
-    // ⭐ NEUTRAL MODE — do NOT auto-start any mode
-    workspaceMode = "neutral";
-    updateWorkspaceModeButtons("neutral");
-    // Leave columns empty, selector hidden, buttons active
+
+    // ⭐ SAFE EVENT LISTENERS — prevent auto-triggering Create mode
+    const createBtn = document.getElementById("modeCreateBtn");
+    if (createBtn) createBtn.addEventListener("click", startCreateMode);
+
+    const deleteBtn = document.getElementById("modeDeleteBtn");
+    if (deleteBtn) deleteBtn.addEventListener("click", startDeleteMode);
+
+    const editBtn = document.getElementById("modeEditBtn");
+    if (editBtn) editBtn.addEventListener("click", startEditMode);
+
+    console.log("WS: about to show workspaceContent");
+    document.getElementById('workspaceContent').style.display = 'block';
+    console.log("WS: FINISHED renderWorkspaceScreen");
+
+    // ⭐ RESTORE WORKSPACE MODE AFTER SHELL INJECTION
+    if (workspaceMode === "edit") {
+        startEditMode();
+    } else if (workspaceMode === "delete") {
+        startDeleteMode();
+    } else if (workspaceMode === "create") {
+        startCreateMode();
+    } else {
+        // ⭐ NEUTRAL MODE — do NOT auto-start any mode
+        workspaceMode = "neutral";
+        updateWorkspaceModeButtons("neutral");
+    }
 }
 
 
-}
+
+
 
 
 
