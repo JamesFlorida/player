@@ -700,9 +700,7 @@ function renderWorkspaceScreen() {
 
 function renderCreateModeLayout() {
     console.log("RENDER CREATE MODE LAYOUT");
-   // Hide edit selector container when in create mode
-    document.getElementById('editSelectorContainer').style.display = 'none';
-
+  
     // Remove Edit Mode playlist name input if it exists
     document.getElementById("workspacePlaylistNameInput")?.remove();
 
@@ -763,7 +761,6 @@ function renderCreateModeLayout() {
 
 
 function startEditMode() {
-   document.getElementById('editSelectorContainer').style.display = 'block';
    document.getElementById("workspaceLeftColumn").innerHTML = "";
    document.getElementById("workspaceRightColumn").innerHTML = "";
     workspaceMode = "edit";
@@ -775,7 +772,6 @@ function startEditMode() {
 
 function startCreateMode() {
    console.log("CREATE MODE START — workspaceMode:", workspaceMode);
-   document.getElementById('editSelectorContainer').style.display = 'none';
    document.getElementById("workspaceLeftColumn").innerHTML = "";
    document.getElementById("workspaceRightColumn").innerHTML = "";
     workspaceMode = "create";
@@ -1283,7 +1279,6 @@ function openWorkspace() {
 function cancelWorkspaceEdit() {
     // Make sure workspace content is visible
     const content = document.getElementById("workspaceContent");
-    document.getElementById('editSelectorContainer').style.display = 'none';
     if (content) content.style.display = "block";
 
     // Rebuild the edit mode layout
