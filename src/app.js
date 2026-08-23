@@ -1204,7 +1204,7 @@ function saveWorkspacePlaylist() {
     document.getElementById("workspaceRightColumn").innerHTML = "";
   
    // ⭐ RE-RENDER WORKSPACE TO SHOW NEUTRAL MODE
-    renderWorkspaceScreen();
+    // ❌ no renderWorkspaceScreen() here
 }
 
 
@@ -1306,11 +1306,12 @@ function navigateBackFromWorkspace() {
     console.log("NAVIGATE — selectedActivePlaylistGroup:", selectedActivePlaylistGroup);
    
     // Reset workspace state but
-   // Do NOT reset workspaceMode — preserve the user's mode
-    workspaceSelectedDances = [];
-    workspaceSearchQuery = "";
-    workspaceSearchResults = [];
-    workspaceEditingOriginalName = "";
+   workspaceSelectedDances = [];
+   workspaceSearchQuery = "";
+   workspaceSearchResults = [];
+   workspaceEditingOriginalName = "";
+   workspacePlaylistName = "";
+   workspaceMode = "neutral";
 
     // ⭐ Hide the small workspace-only logo
     const smallLogo = document.getElementById("workspaceSmallLogo");
