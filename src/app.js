@@ -1139,14 +1139,13 @@ function saveWorkspacePlaylist() {
     // SAVE PLAYLIST
     userPlaylistsData[workspacePlaylistName] = [...workspaceSelectedDances];
 
-    // SHOW SUCCESS MESSAGE *BEFORE* NAVIGATING AWAY
+    // SHOW SUCCESS MESSAGE
     showWorkspaceMessage(`Playlist "${workspacePlaylistName}" saved!`, "success");
 
-    // ALLOW USER TO SEE THE MESSAGE, THEN RETURN TO MAIN WORKSPACE
-    setTimeout(() => {
-        navigateBackFromWorkspace();
-    }, 800);   // 800ms = perfect balance between visibility and responsiveness
+    // REFRESH EDIT/DELETE LISTS SO THEY SEE THE NEW PLAYLIST
+    renderWorkspacePlaylistSelection();
 }
+
 
 
 /* ============================================
