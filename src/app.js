@@ -614,7 +614,6 @@ function renderWorkspaceScreen() {
     document.body.classList.add("workspace-mode");
 
     // Hide hub UI elements
-    console.log("WS: starting hide hub elements");
     const filterBar = document.getElementById('dayFilterBar');
     if (filterBar) filterBar.style.display = 'none';
     if (filterBar) filterBar.classList.add("hub-hidden");
@@ -640,13 +639,11 @@ function renderWorkspaceScreen() {
     if (venueHeader) venueHeader.style.display = 'none';
 
     // Show back button
-    console.log("WS: about to show back button");
     const backBtn = document.getElementById('navbarReturnTrigger');
     backBtn.style.display = 'block';
     backBtn.onclick = navigateBackFromWorkspace;
 
     // Inject workspace DOM
-    console.log("WS: about to inject workspace DOM");
     document.getElementById('masterApplicationViewport').innerHTML = `
       <div class="workspace-screen">
 
@@ -681,7 +678,7 @@ function renderWorkspaceScreen() {
       </div>
     `;
 
-    // ⭐ SAFE EVENT LISTENERS — prevent auto-triggering Create mode
+    // ⭐ SAFE EVENT LISTENERS — prevent auto-triggering Create/Delete/Edit
     const createBtn = document.getElementById("modeCreateBtn");
     if (createBtn) createBtn.addEventListener("click", startCreateMode);
 
@@ -691,9 +688,7 @@ function renderWorkspaceScreen() {
     const editBtn = document.getElementById("modeEditBtn");
     if (editBtn) editBtn.addEventListener("click", startEditMode);
 
-    console.log("WS: about to show workspaceContent");
     document.getElementById('workspaceContent').style.display = 'block';
-    console.log("WS: FINISHED renderWorkspaceScreen");
 
     // ⭐ RESTORE WORKSPACE MODE AFTER SHELL INJECTION
     if (workspaceMode === "edit") {
@@ -703,7 +698,6 @@ function renderWorkspaceScreen() {
     } else if (workspaceMode === "create") {
         startCreateMode();
     } else {
-        // ⭐ NEUTRAL MODE — do NOT auto-start any mode
         workspaceMode = "neutral";
         updateWorkspaceModeButtons("neutral");
     }
