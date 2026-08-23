@@ -679,15 +679,6 @@ function renderWorkspaceScreen() {
       </div>
     `;
 
-    // ⭐ SAFE EVENT LISTENERS — prevent auto-triggering Create/Delete/Edit
-    const createBtn = document.getElementById("modeCreateBtn");
-    if (createBtn) createBtn.addEventListener("click", startCreateMode);
-
-    const deleteBtn = document.getElementById("modeDeleteBtn");
-    if (deleteBtn) deleteBtn.addEventListener("click", startDeleteMode);
-
-    const editBtn = document.getElementById("modeEditBtn");
-    if (editBtn) editBtn.addEventListener("click", startEditMode);
 
     document.getElementById('workspaceContent').style.display = 'block';
 
