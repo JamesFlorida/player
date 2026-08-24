@@ -290,6 +290,7 @@ function renderApplicationInterface() {
     if (lastNavigationMode === "workspace") {
         renderWorkspaceScreen();
         attachWorkspaceListeners();
+        setTimeout(attachWorkspaceListeners, 0);
         return;
     }
 
@@ -1204,6 +1205,7 @@ function saveWorkspacePlaylist() {
     // ⭐ CLEAR CREATE MODE UI
     workspaceMode = "neutral";
     renderWorkspaceScreen();
+    setTimeout(attachWorkspaceListeners, 0);
     attachWorkspaceListeners();
 
   
@@ -1343,6 +1345,7 @@ function openWorkspace() {
 
     lastNavigationMode = "workspace";
     renderWorkspaceScreen();
+    setTimeout(attachWorkspaceListeners, 0);
     attachWorkspaceListeners();
 }
 
