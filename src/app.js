@@ -774,7 +774,6 @@ function renderCreateModeLayout() {
 function startEditMode() {
     console.log("Start Edit Mode");
 
-    // If no playlists exist
     if (!userPlaylistsData || Object.keys(userPlaylistsData).length === 0) {
         showWorkspaceMessage("No playlists available to edit.", "warning");
         workspaceMode = "neutral";
@@ -782,12 +781,16 @@ function startEditMode() {
         return;
     }
 
-    // ⭐ Set mode FIRST
-    workspaceMode = "edit";
+    // Build Edit layout ONLY
+    document.getElementById("applicationHeaderTitle").innerText = "Edit Playlist";
+    updateWorkspaceModeButtons("edit");
 
-    // ⭐ Re-render the workspace shell
-    renderWorkspaceScreen();
+    document.getElementById("workspaceLeftColumn").innerHTML = "";
+    document.getElementById("workspaceRightColumn").innerHTML = "";
+
+    renderEditModeLayout();
 }
+
 
 function startCreateMode() {
    console.log("Start Create Mode — workspaceMode:", workspaceMode);
