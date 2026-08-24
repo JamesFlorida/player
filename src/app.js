@@ -580,6 +580,7 @@ function renderDanceCardsList(tracks, containerElement) {
    WORKSPACE PLAYLIST SELECTION (EDIT MODE)
 ============================================ */
 function renderWorkspacePlaylistSelection() {
+    console.log("Render Workspace Playlist Selection");
     const container = document.getElementById('workspacePlaylistSelection');
     if (!container) {
         console.log("WS: playlistSelection container NOT FOUND");
@@ -764,7 +765,7 @@ function renderCreateModeLayout() {
 }
 
 function startEditMode() {
-
+    console.log("Start Edit Mode");
     // ⭐ If no playlists exist, show message and return to NEUTRAL mode
     if (!userPlaylistsData || Object.keys(userPlaylistsData).length === 0) {
         showWorkspaceMessage("No playlists available to edit.", "warning");
@@ -800,7 +801,7 @@ function startEditMode() {
 
 
 function startCreateMode() {
-   console.log("CREATE MODE START — workspaceMode:", workspaceMode);
+   console.log("Start Create Mode — workspaceMode:", workspaceMode);
    const sel = document.getElementById('workspacePlaylistSelection');
    if (sel) sel.style.display = 'none';
    document.getElementById("workspaceLeftColumn").innerHTML = "";
@@ -859,6 +860,7 @@ function attachWorkspaceListeners() {
    EDIT MODE LAYOUT
 ============================================ */
 function renderEditModeLayout() {
+    console.log("Render Edit Model Layout");
     const left = document.getElementById('workspaceLeftColumn');
     const right = document.getElementById('workspaceRightColumn');
 
@@ -1140,6 +1142,7 @@ function removeDanceFromWorkspace(name) {
    WORKSPACE — SAVE PLAYLIST
 ============================================ */
 function saveWorkspacePlaylist() {
+    console.log("Save Workspace Playlist");
     console.log("SAVE — workspacePlaylistName:", workspacePlaylistName);
     console.log("DEBUG — workspaceSelectedDances:", workspaceSelectedDances);
     console.log("DEBUG — userPlaylistsData BEFORE SAVE:", userPlaylistsData);
@@ -1322,6 +1325,7 @@ function openWorkspace() {
    CANCEL WORKSPACE EDIT
 ============================================ */
 function cancelWorkspaceEdit() {
+   console.log("Cancel Workspace Edit");
    const sel = document.getElementById('workspacePlaylistSelection');
    if (sel) sel.style.display = 'none';
 
