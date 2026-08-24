@@ -846,8 +846,14 @@ function attachWorkspaceListeners() {
     if (deleteBtn) deleteBtn.addEventListener("click", startDeleteMode);
 
     const editBtn = document.getElementById("modeEditBtn");
-    if (editBtn) editBtn.addEventListener("click", startEditMode);
+    if (editBtn) {
+        editBtn.addEventListener("click", () => {
+            workspaceMode = "edit";
+            renderWorkspaceScreen();
+        });
+    }
 }
+
 
 /* ============================================
    EDIT MODE LAYOUT
