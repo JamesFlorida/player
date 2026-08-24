@@ -1174,9 +1174,9 @@ function saveWorkspacePlaylist() {
 
     // ⭐ CLEAR CREATE MODE UI
     workspaceMode = "neutral";
-    renderWorkspaceScreen();
-    setTimeout(attachWorkspaceListeners, 0);
-    attachWorkspaceListeners();
+     renderWorkspaceScreen();
+     attachWorkspaceListeners();
+     setTimeout(attachWorkspaceListeners, 0);
 
   
    // ⭐ RE-RENDER WORKSPACE TO SHOW NEUTRAL MODE
@@ -1311,12 +1311,10 @@ function navigateBackFromWorkspace() {
    OPEN WORKSPACE
 ============================================ */
 function openWorkspace() {
-    workspaceMode = "neutral";   // ⭐ FIX
-
     lastNavigationMode = "workspace";
     renderWorkspaceScreen();
-    setTimeout(attachWorkspaceListeners, 0);
     attachWorkspaceListeners();
+    setTimeout(attachWorkspaceListeners, 0);
 }
 
 
