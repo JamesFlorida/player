@@ -666,6 +666,8 @@ function renderWorkspaceScreen() {
 
         <!-- WORKSPACE CONTENT -->
         <div id="workspaceContent" style="display:none;">
+           <div id="workspaceMessage" class="workspace-message"></div>
+
             <div id="workspaceColumns" class="workspace-columns">
 
                 <!-- LEFT COLUMN -->
@@ -914,65 +916,30 @@ function renderDeleteModeLayout() {
      startEditMode()
      startDeleteMode()
 ============================================ */
-
 function updateWorkspaceModeButtons(activeMode) {
     const createBtn = document.getElementById("modeCreateBtn");
     const editBtn = document.getElementById("modeEditBtn");
     const deleteBtn = document.getElementById("modeDeleteBtn");
 
-    const hasPlaylists = Object.keys(userPlaylistsData || {}).length > 0;
-
-    // Reset all buttons
     [createBtn, editBtn, deleteBtn].forEach(btn => {
         btn.classList.remove("active");
         btn.classList.remove("disabled");
     });
 
-    // Normal behavior when playlists exist
-    if (hasPlaylists) {
-        if (activeMode === "create") {
-            createBtn.classList.add("active");
-            editBtn.classList.add("disabled");
-            deleteBtn.classList.add("disabled");
-        }
-
-        if (activeMode === "edit") {
-            editBtn.classList.add("active");
-            createBtn.classList.add("disabled");
-            deleteBtn.classList.add("disabled");
-        }
-
-        if (activeMode === "delete") {
-            deleteBtn.classList.add("active");
-            createBtn.classList.add("disabled");
-            editBtn.classList.add("disabled");
-        }
-
-        return;
-    }
-
-    // Special behavior when NO playlists exist
     if (activeMode === "create") {
         createBtn.classList.add("active");
-        editBtn.classList.add("disabled");
-        deleteBtn.classList.add("disabled");
     }
 
     if (activeMode === "edit") {
-        // Edit is active, but Create is also available
         editBtn.classList.add("active");
-        // Create stays enabled so user can jump to Create Mode
-        deleteBtn.classList.add("disabled");
     }
 
     if (activeMode === "delete") {
-        // No playlists → delete makes no sense
-        deleteBtn.classList.add("disabled");
-        // Let user go to Create instead
-        createBtn.classList.add("active");
-        editBtn.classList.add("disabled");
+        deleteBtn.classList.add("active");
     }
 }
+
+
 
 function renderWorkspaceDeleteList() {
     const container = document.getElementById('workspaceDeleteList');
