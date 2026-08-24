@@ -1177,13 +1177,7 @@ function saveWorkspacePlaylist() {
     // ⭐ REFRESH PLAYLIST LIST
     renderWorkspacePlaylistSelection();
 
-    // ⭐ RETURN TO NEUTRAL MODE
-    workspaceMode = "neutral";
-    updateWorkspaceModeButtons("neutral");
-
     // ⭐ CLEAR CREATE MODE UI
-    workspaceMode = "neutral";
-     renderWorkspaceScreen();
      attachWorkspaceListeners();
      setTimeout(attachWorkspaceListeners, 0);
 
