@@ -1155,36 +1155,25 @@ function saveWorkspacePlaylist() {
     console.log("DEBUG — workspaceSelectedDances:", workspaceSelectedDances);
     console.log("DEBUG — userPlaylistsData BEFORE SAVE:", userPlaylistsData);
 
-    // VALIDATION — NAME REQUIRED
     if (!workspacePlaylistName) {
         showWorkspaceMessage("Please enter a playlist name.", "error");
         return;
     }
 
-    // VALIDATION — MUST HAVE AT LEAST ONE DANCE
     if (workspaceSelectedDances.length === 0) {
         showWorkspaceMessage("Please add at least one dance.", "warning");
         return;
     }
 
-    // SAVE PLAYLIST
-    console.log("WRITE: saveWorkspacePlaylist — writing to userPlaylistsData:", workspacePlaylistName, workspaceSelectedDances);
+    // SAVE
     userPlaylistsData[workspacePlaylistName] = [...workspaceSelectedDances];
-
-    // SHOW SUCCESS MESSAGE
     showWorkspaceMessage(`Playlist "${workspacePlaylistName}" saved!`, "success");
 
-    // ⭐ REFRESH PLAYLIST LIST
-    renderWorkspacePlaylistSelection();
-
-    // ⭐ CLEAR CREATE MODE UI
-     attachWorkspaceListeners();
-     setTimeout(attachWorkspaceListeners, 0);
-
-  
-   // ⭐ RE-RENDER WORKSPACE TO SHOW NEUTRAL MODE
-    // ❌ no renderWorkspaceScreen() here
+    // ⭐ Switch to EDIT mode so the selector appears
+    workspaceMode = "edit";
+    renderWorkspaceScreen();
 }
+
 
 
 
