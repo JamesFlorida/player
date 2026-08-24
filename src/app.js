@@ -701,8 +701,6 @@ function renderWorkspaceScreen() {
        startCreateMode();
    } else {
        console.log("NEUTRAL: renderWorkspaceScreen — workspaceMode neutral, wiping columns");
-       workspaceMode = "neutral";
-       updateWorkspaceModeButtons("neutral");
    }
 }
 
@@ -773,6 +771,8 @@ function renderCreateModeLayout() {
 
 function startEditMode() {
     console.log("Start Edit Mode");
+    workspaceMode = "edit";
+    updateWorkspaceModeButtons("edit");
 
     if (!userPlaylistsData || Object.keys(userPlaylistsData).length === 0) {
         showWorkspaceMessage("No playlists available to edit.", "warning");
@@ -1300,7 +1300,6 @@ function openWorkspace() {
     renderWorkspaceScreen();
     attachWorkspaceListeners();
     console.log("ENTER: openWorkspace — workspaceMode AFTER =", workspaceMode);
-    setTimeout(attachWorkspaceListeners, 0);
 }
 
 
