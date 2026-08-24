@@ -581,6 +581,8 @@ function renderDanceCardsList(tracks, containerElement) {
 ============================================ */
 function renderWorkspacePlaylistSelection() {
     console.log("Render Workspace Playlist Selection");
+    console.log("DOM CHECK: workspacePlaylistSelection exists?", !!document.getElementById('workspacePlaylistSelection'));
+
     const container = document.getElementById('workspacePlaylistSelection');
     if (!container) {
         console.log("WS: playlistSelection container NOT FOUND");
@@ -614,6 +616,7 @@ function renderWorkspacePlaylistSelection() {
 ============================================ */
 function renderWorkspaceScreen() {
     console.log("RENDER WORKSPACE SCREEN");
+   console.log("CHECK: renderWorkspaceScreen — workspaceMode =", workspaceMode);
     document.body.classList.add("workspace-mode");
 
     // Hide hub UI elements
@@ -688,15 +691,19 @@ function renderWorkspaceScreen() {
 
     // ⭐ RESTORE WORKSPACE MODE AFTER SHELL INJECTION
     if (workspaceMode === "edit") {
-        startEditMode();
-    } else if (workspaceMode === "delete") {
-        startDeleteMode();
-    } else if (workspaceMode === "create") {
-        startCreateMode();
-    } else {
-        workspaceMode = "neutral";
-        updateWorkspaceModeButtons("neutral");
-    }
+       console.log("RESTORE: renderWorkspaceScreen restoring EDIT mode");
+    startEditMode();
+   } else if (workspaceMode === "delete") {
+       console.log("RESTORE: renderWorkspaceScreen restoring DELETE mode");
+       startDeleteMode();
+   } else if (workspaceMode === "create") {
+       console.log("RESTORE: renderWorkspaceScreen restoring CREATE mode");
+       startCreateMode();
+   } else {
+       console.log("NEUTRAL: renderWorkspaceScreen — workspaceMode neutral, wiping columns");
+       workspaceMode = "neutral";
+       updateWorkspaceModeButtons("neutral");
+   }
 }
 
 
@@ -804,6 +811,7 @@ function startCreateMode() {
    console.log("Start Create Mode — workspaceMode:", workspaceMode);
    const sel = document.getElementById('workspacePlaylistSelection');
    if (sel) sel.style.display = 'none';
+   console.log("WIPE: startCreateMode — clearing left/right columns");
    document.getElementById("workspaceLeftColumn").innerHTML = "";
    document.getElementById("workspaceRightColumn").innerHTML = "";
     workspaceMode = "create";
@@ -863,7 +871,7 @@ function renderEditModeLayout() {
     console.log("Render Edit Model Layout");
     const left = document.getElementById('workspaceLeftColumn');
     const right = document.getElementById('workspaceRightColumn');
-
+    console.log("DOM: renderEditModeLayout — injecting workspacePlaylistSelection container");
     left.innerHTML = `
         <div class="workspace-section-title">Select Playlist</div>
         <div id="workspacePlaylistSelection" class="workspace-playlist-selection"></div>
@@ -1160,6 +1168,7 @@ function saveWorkspacePlaylist() {
     }
 
     // SAVE PLAYLIST
+    console.log("WRITE: saveWorkspacePlaylist — writing to userPlaylistsData:", workspacePlaylistName, workspaceSelectedDances);
     userPlaylistsData[workspacePlaylistName] = [...workspaceSelectedDances];
 
     // SHOW SUCCESS MESSAGE
@@ -1277,6 +1286,7 @@ function deleteWorkspacePlaylist(name) {
    WORKSPACE — NAVIGATION BACK
 ============================================ */
 function navigateBackFromWorkspace() {
+    console.log("WIPE: navigateBackFromWorkspace — clearing workspaceSelectedDances and workspace state");
     console.log("NAVIGATE — lastNavigationMode:", lastNavigationMode);
     console.log("NAVIGATE — workspaceMode:", workspaceMode);
     console.log("NAVIGATE — selectedActivePlaylistGroup:", selectedActivePlaylistGroup);
@@ -1311,9 +1321,11 @@ function navigateBackFromWorkspace() {
    OPEN WORKSPACE
 ============================================ */
 function openWorkspace() {
+    console.log("ENTER: openWorkspace — workspaceMode BEFORE =", workspaceMode);
     lastNavigationMode = "workspace";
     renderWorkspaceScreen();
     attachWorkspaceListeners();
+    console.log("ENTER: openWorkspace — workspaceMode AFTER =", workspaceMode);
     setTimeout(attachWorkspaceListeners, 0);
 }
 
