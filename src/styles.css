@@ -526,13 +526,15 @@ body:not(.workspace-mode-edit) #workspacePlaylistSelection {
     }
 
     /* Reduce space under the mode buttons */
+ @media (max-width: 600px) {
     .workspace-mode-panel {
-        margin-bottom: 12px;          /* spacing fix */
-        display: grid;                /* ⭐ REQUIRED */
-        grid-template-columns: 1fr 1fr; /* ⭐ REQUIRED */
-        column-gap: 20px;        /*space between left and right columns */
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);  /* ⭐ THREE columns */
+        gap: 10px;                               /* spacing between buttons */
+        margin-bottom: 12px;
     }
 }
+   
 
 /* ============================================
    SEARCH INPUTS
