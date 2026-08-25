@@ -760,10 +760,7 @@ body:not(.workspace-mode-edit) #workspacePlaylistSelection {
     background: rgba(0, 255, 0, 0.25);   /* green tint */
 }
 
-#workspacePlaylistSelection {
-    background-color: yellow !important;
-    border: 3px solid red !important;
-}
+
 
 #workspacePlaylistSelection {
     background: rgba(0, 0, 255, 0.25);   /* blue tint */
