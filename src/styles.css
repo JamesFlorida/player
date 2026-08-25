@@ -534,7 +534,17 @@ body:not(.workspace-mode-edit) #workspacePlaylistSelection {
         margin-bottom: 12px;
     }
 }
-   
+ .workspace-mode-btn {
+    margin-bottom: 12px;
+    padding: 10px 16px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    background: #444;   /* default medium gray */
+    color: #fff;
+}
+ 
 
 /* ============================================
    SEARCH INPUTS
