@@ -856,11 +856,7 @@ function renderEditModeLayout() {
         <div id="workspacePlaylistSelection" class="workspace-playlist-selection"></div>
     `;
 
-    right.innerHTML = `
-        <div class="workspace-note">
-            Choose a playlist from the left to edit.
-        </div>
-    `;
+    right.innerHTML = "";
 
     renderWorkspacePlaylistSelection();
 }
