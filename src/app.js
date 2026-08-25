@@ -688,6 +688,7 @@ function renderWorkspaceScreen() {
 
 
     document.getElementById('workspaceContent').style.display = 'block';
+    attachWorkspaceListeners();  
 }
 
 
