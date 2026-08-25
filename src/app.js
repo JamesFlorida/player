@@ -688,20 +688,6 @@ function renderWorkspaceScreen() {
 
 
     document.getElementById('workspaceContent').style.display = 'block';
-
-    // ⭐ RESTORE WORKSPACE MODE AFTER SHELL INJECTION
-    if (workspaceMode === "edit") {
-       console.log("RESTORE: renderWorkspaceScreen restoring EDIT mode");
-    startEditMode();
-   } else if (workspaceMode === "delete") {
-       console.log("RESTORE: renderWorkspaceScreen restoring DELETE mode");
-       startDeleteMode();
-   } else if (workspaceMode === "create") {
-       console.log("RESTORE: renderWorkspaceScreen restoring CREATE mode");
-       startCreateMode();
-   } else {
-       console.log("NEUTRAL: renderWorkspaceScreen — workspaceMode neutral, wiping columns");
-   }
 }
 
 
@@ -850,6 +836,7 @@ function attachWorkspaceListeners() {
         editBtn.addEventListener("click", () => {
             workspaceMode = "edit";
             renderWorkspaceScreen();
+            startEditMode();
         });
     }
 }
