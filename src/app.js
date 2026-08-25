@@ -656,15 +656,15 @@ function renderWorkspaceScreen() {
         <!-- MODE SELECTION PANEL -->
         <div id="workspaceModePanel" class="workspace-mode-panel">
             <button id="modeCreateBtn" class="workspace-mode-btn">
-                Create New Playlist
+                Create
             </button>
 
             <button id="modeDeleteBtn" class="workspace-mode-btn">
-                Delete Playlist
+                Delete
             </button>
 
             <button id="modeEditBtn" class="workspace-mode-btn">
-                Edit Existing Playlist
+                Edit
             </button>
         </div>
 
