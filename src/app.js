@@ -759,11 +759,21 @@ function renderCreateModeLayout() {
 function startEditMode() {
     console.log("Start Edit Mode");
     workspaceMode = "edit";
+
+    // ⭐ Set body class for Edit Mode (so CSS can show the playlist selector)
+    document.body.classList.add("workspace-mode-edit");
+    document.body.classList.remove("workspace-mode-delete");
+    document.body.classList.remove("workspace-mode-create");
+
     updateWorkspaceModeButtons("edit");
 
     if (!userPlaylistsData || Object.keys(userPlaylistsData).length === 0) {
         showWorkspaceMessage("No playlists available to edit.", "warning");
         workspaceMode = "neutral";
+
+        // Remove edit class since we are aborting
+        document.body.classList.remove("workspace-mode-edit");
+
         updateWorkspaceModeButtons("neutral");
         return;
     }
@@ -777,6 +787,7 @@ function startEditMode() {
 
     renderEditModeLayout();
 }
+
 
 
 function startCreateMode() {
