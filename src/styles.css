@@ -560,13 +560,20 @@ body:not(.workspace-mode-edit) #workspacePlaylistSelection {
   max-height: 220px;
   overflow-y: auto;
   padding-right: 6px;
+  background: #111;              /* subtle dark panel */
+  border-radius: 6px;
+  border: 1px solid #333;
 }
 
 .workspace-selected-list {
   max-height: 320px;
   overflow-y: auto;
   padding-right: 6px;
+  background: #111;              /* same panel style */
+  border-radius: 6px;
+  border: 1px solid #333;
 }
+
 
 /* ============================================================
    WORKSPACE — TABLET (700px AND BELOW)
