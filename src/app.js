@@ -976,10 +976,11 @@ function deleteWorkspacePlaylist(name) {
             <button class="workspace-save-btn" onclick="confirmDeletePlaylist('${name}')">
                 Confirm Delete
             </button>
-
-            <button class="workspace-cancel-btn" onclick="renderDeleteModeLayout()">
+            
+           <button class="workspace-cancel-btn" onclick="renderWorkspaceDeleteList()">
                 Cancel
             </button>
+ 
         </div>
     `;
 }
@@ -1513,3 +1514,5 @@ window.startEditMode = startEditMode;
 window.startDeleteMode = startDeleteMode;
 window.openUserPlaylistView = openUserPlaylistView;
 window.cancelWorkspaceEdit = cancelWorkspaceEdit;
+window.confirmDeletePlaylist = confirmDeletePlaylist;
+
