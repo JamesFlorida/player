@@ -720,7 +720,7 @@ function renderCreateModeLayout() {
         </div>
 
         <div class="workspace-actions">
-            <button class="workspace-save-btn" onclick="saveWorkspacePlaylist()">Save Playlist</button>
+            <button class="workspace-save-btn" onclick="saveWorkspacePlaylist()">Save</button>
             <button class="workspace-cancel-btn" onclick="navigateBackFromWorkspace()">Cancel</button>
         </div>
     `;
