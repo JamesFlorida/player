@@ -754,6 +754,37 @@ body:not(.workspace-mode-edit) #workspacePlaylistSelection {
   pointer-events: none;
 }
 /* ==========================================
+   WORKSPACE — VERTICAL COMPRESSION OVERRIDES
+   ========================================== */
+
+.workspace-mode-btn {
+  margin-bottom: 6px;
+  padding: 6px 12px;
+}
+
+.workspace-section-title {
+  margin: 4px 0 6px 0;
+  padding: 0;
+  font-size: 16px;
+}
+
+.workspace-name-box {
+  margin-bottom: 8px;
+  padding: 8px;
+}
+
+.workspace-actions {
+  margin-top: 10px;
+}
+
+.workspace-search-box {
+  margin-top: 8px;
+  margin-bottom: 8px;
+  padding: 8px;
+}
+
+
+/* ==========================================
    WORKSPACE — HEIGHT-BASED LIST SIZING
    ========================================== */
 
