@@ -559,19 +559,19 @@ body:not(.workspace-mode-edit) #workspacePlaylistSelection {
 .workspace-search-results {
   max-height: 220px;
   overflow-y: auto;
-  padding-right: 6px;
-  background: #151515;        /* subtle dark panel */
-  border-radius: 6px;
-  border: 1px solid #333;     /* faint outline */
+  padding: 6px;
+  background: #1f1f1f;          /* lighter gray panel */
+  border-radius: 8px;
+  border: 1px solid #444;       /* visible outline */
 }
 
 .workspace-selected-list {
   max-height: 320px;
   overflow-y: auto;
-  padding-right: 6px;
-  background: #151515;        /* same panel style */
-  border-radius: 6px;
-  border: 1px solid #333;
+  padding: 6px;
+  background: #1f1f1f;          /* same lighter panel */
+  border-radius: 8px;
+  border: 1px solid #444;
 }
 
 /* ============================================================
