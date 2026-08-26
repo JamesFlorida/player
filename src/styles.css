@@ -582,6 +582,15 @@ body:not(.workspace-mode-edit) #workspacePlaylistSelection {
   overflow-y: auto;
 }
 
+.workspace-delete-confirm-box {
+  background: #1f1f1f;
+  border: 1px solid #444;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 16px;
+  font-size: 15px;
+}
+
 /* ============================================================
    WORKSPACE — TABLET (700px AND BELOW)
    ============================================================ */
