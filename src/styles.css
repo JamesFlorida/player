@@ -754,34 +754,49 @@ body:not(.workspace-mode-edit) #workspacePlaylistSelection {
   pointer-events: none;
 }
 /* ==========================================
-   WORKSPACE — VERTICAL COMPRESSION OVERRIDES
+   WORKSPACE — AGGRESSIVE VERTICAL COMPRESSION
    ========================================== */
 
+/* Mode buttons */
 .workspace-mode-btn {
-  margin-bottom: 6px;
-  padding: 6px 12px;
+  margin-bottom: 4px;
+  padding: 4px 10px;
+  font-size: 14px;
 }
 
+/* Section titles */
 .workspace-section-title {
-  margin: 4px 0 6px 0;
+  margin: 2px 0 4px 0;
   padding: 0;
-  font-size: 16px;
+  font-size: 15px;
 }
 
+/* Playlist name input */
 .workspace-name-box {
-  margin-bottom: 8px;
-  padding: 8px;
+  margin-bottom: 6px;
+  padding: 6px;
+  font-size: 14px;
 }
 
+/* Save/Cancel row */
 .workspace-actions {
-  margin-top: 10px;
+  margin-top: 8px;
 }
 
-.workspace-search-box {
-  margin-top: 8px;
-  margin-bottom: 8px;
-  padding: 8px;
+.workspace-save-btn,
+.workspace-cancel-btn {
+  padding: 8px 12px;
+  font-size: 14px;
 }
+
+/* Search input */
+.workspace-search-box {
+  margin-top: 6px;
+  margin-bottom: 6px;
+  padding: 6px;
+  font-size: 14px;
+}
+
 
 
 /* ==========================================
