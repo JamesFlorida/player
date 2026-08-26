@@ -1,798 +1,730 @@
-/* ============================================
-   GLOBAL THEME VARIABLES (BASE)
-   ============================================ */
+
+/* ============================================================
+   GLOBAL — THEME VARIABLES
+   ============================================================ */
 :root {
-    --brand-green: #2ecc71;
-    --dark-gray: #1e1e1e;
-    --card-bg: #2b2b2b;
-    --btn-blue: #34495e;
-    --venue-bg-image: none;
+  --brand-green: #2ecc71;
+  --dark-gray: #1e1e1e;
+  --card-bg: #2b2b2b;
+  --btn-blue: #34495e;
+  --venue-bg-image: none;
 }
 
-/* ============================================
-   GLOBAL BODY
-   ============================================ */
+/* ============================================================
+   GLOBAL — BODY & BASE PAGE SETTINGS
+   ============================================================ */
 body {
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    background-color: var(--dark-gray);
-    background-image: var(--venue-bg-image);
-    background-size: cover;
-    background-repeat: no-repeat;
-    color: white;
-    margin: 0;
-    padding: 0;
-    -webkit-tap-highlight-color: transparent;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--dark-gray);
+  background-image: var(--venue-bg-image);
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: white;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
 }
 
-/* ============================================
-   GLOBAL HEADER BAR
-   ============================================ */
+/* ============================================================
+   GLOBAL — HEADER BAR (ALL SCREENS)
+   ============================================================ */
 .header-bar {
-    background-color: #333;
-    padding: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    justify-content: space-between;
-    font-weight: bold;
-    font-size: 1.3rem;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    height: 60px;
-    box-sizing: border-box;
-    color: #fff;
+  background-color: #333;
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: bold;
+  font-size: 1.3rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: 60px;
+  box-sizing: border-box;
+  color: #fff;
 }
 
 .back-nav-btn {
-    position: absolute;
-    left: 15px;
-    padding: 6px 14px;
-    border-radius: 6px;
-    font-size: 0.9rem;
-    font-weight: bold;
-    cursor: pointer;
-    display: none;
+  position: absolute;
+  left: 15px;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  cursor: pointer;
+  display: none;
 }
-/* ⭐ NEW: true centering for PLAYLISTS title */
+
+/* Center the PLAYLISTS title */
 #applicationHeaderTitle {
-    flex: 1;
-    text-align: center;
+  flex: 1;
+  text-align: center;
 }
 
-
-/* ============================================
-   GLOBAL APP CONTAINER
-   ============================================ */
+/* ============================================================
+   GLOBAL — APP CONTAINER
+   ============================================================ */
 .app-container {
-    padding: 20px;
-    max-width: 650px;
-    margin: 0 auto;
-    box-sizing: border-box;
+  padding: 20px;
+  max-width: 650px;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
-/* ============================================
-   GLOBAL PLAYLIST HUB GRID
-   ============================================ */
+/* ============================================================
+   GLOBAL — PLAYLIST HUB GRID
+   ============================================================ */
 .playlist-selection-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-    padding-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  padding-top: 10px;
 }
 
-/* ============================================
-   GLOBAL PLAYLIST HUB CARD LAYOUT
-   ============================================ */
+/* ============================================================
+   GLOBAL — PLAYLIST HUB CARD LAYOUT
+   ============================================================ */
 .playlist-hub-card {
-    border-radius: 12px;
-    padding: 30px 20px;
-    text-align: center;
-    font-size: 1.2rem;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
-    min-height: 100px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    box-sizing: border-box;
+  border-radius: 12px;
+  padding: 30px 20px;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
 }
 
 .playlist-track-counter {
-    font-size: 0.85rem;
-    margin-top: 8px;
-    font-weight: normal;
+  font-size: 0.85rem;
+  margin-top: 8px;
+  font-weight: normal;
 }
 
-/* ============================================
-   GLOBAL DANCE LIST LAYOUT
-   ============================================ */
+/* ============================================================
+   GLOBAL — DANCE LIST LAYOUT
+   ============================================================ */
 .dance-entry-card {
-    border-radius: 12px;
-    padding: 22px;
-    margin-bottom: 20px;
-    box-sizing: border-box;
+  border-radius: 12px;
+  padding: 22px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
 }
 
 .title-line {
-    font-size: 1.3rem;
-    font-weight: bold;
-    margin-bottom: 6px;
-    text-align: center;
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-bottom: 6px;
+  text-align: center;
 }
 
 .meta-line {
-    font-size: 0.95rem;
-    margin-bottom: 22px;
-    text-align: center;
-    line-height: 1.4;
+  font-size: 0.95rem;
+  margin-bottom: 22px;
+  text-align: center;
+  line-height: 1.4;
 }
 
 /* Button grid */
 .button-bar-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
 }
 
 /* Action buttons */
 .action-touch-btn {
-    padding: 14px 2px;
-    border-radius: 8px;
-    font-weight: bold;
-    font-size: 0.85rem;
-    cursor: pointer;
-    text-align: center;
-    text-decoration: none;
-    display: block;
-    box-sizing: border-box;
+  padding: 14px 2px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 0.85rem;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  box-sizing: border-box;
 }
 
 .action-touch-btn.disabled {
-    cursor: not-allowed;
-    pointer-events: none;
+  cursor: not-allowed;
+  pointer-events: none;
 }
 
-/* ============================================
-   GLOBAL OVERLAY LAYOUT
-   ============================================ */
+/* ============================================================
+   GLOBAL — OVERLAY LAYOUT
+   ============================================================ */
 .inapp-overlay-window {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: black;
-    z-index: 99999;
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  z-index: 99999;
 }
 
 .overlay-control-header {
-    height: 55px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 20px;
-    box-sizing: border-box;
+  height: 55px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  box-sizing: border-box;
 }
 
 .overlay-title {
-    font-weight: bold;
-    font-size: 1rem;
+  font-weight: bold;
+  font-size: 1rem;
 }
 
 .done-close-btn {
-    padding: 9px 20px;
-    font-weight: bold;
-    font-size: 0.95rem;
-    border-radius: 6px;
-    cursor: pointer;
+  padding: 9px 20px;
+  font-weight: bold;
+  font-size: 0.95rem;
+  border-radius: 6px;
+  cursor: pointer;
 }
 
 .overlay-viewport-iframe,
 object {
-    width: 100%;
-    height: calc(100% - 55px);
-    border: none;
+  width: 100%;
+  height: calc(100% - 55px);
+  border: none;
 }
 
-/* ============================================
-   OPTIONAL GLOBAL ELEMENTS
-   ============================================ */
+/* ============================================================
+   GLOBAL — OPTIONAL VENUE ELEMENTS
+   ============================================================ */
 .venue-banner {
-    max-width: 100%;
-    display: block;
-    margin: 0 auto;
+  max-width: 100%;
+  display: block;
+  margin: 0 auto;
 }
 
 .venue-instructor-photo {
-    max-width: 100%;
-    border-radius: 12px;
-    margin: 10px auto 0 auto;
-    display: block;
+  max-width: 100%;
+  border-radius: 12px;
+  margin: 10px auto 0 auto;
+  display: block;
 }
 
 .venue-watermark {
-    position: fixed;
-    bottom: 10px;
-    right: 10px;
-    opacity: 0.15;
-    width: 120px;
-    pointer-events: none;
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  opacity: 0.15;
+  width: 120px;
+  pointer-events: none;
 }
 
 .venue-footer {
-    text-align: center;
-    font-size: 0.85rem;
-    padding: 10px 0 20px 0;
+  text-align: center;
+  font-size: 0.85rem;
+  padding: 10px 0 20px 0;
 }
 
 .venue-splash-screen {
-    position: fixed;
-    inset: 0;
-    background: #000;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    z-index: 100000;
+  position: fixed;
+  inset: 0;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 100000;
 }
 
 .venue-splash-screen img {
-    max-width: 80%;
-    margin-bottom: 20px;
+  max-width: 80%;
+  margin-bottom: 20px;
 }
 
 .venue-splash-screen span {
-    font-size: 1.1rem;
-    font-weight: bold;
+  font-size: 1.1rem;
+  font-weight: bold;
 }
 
-/* ============================================
-   RESPONSIVE HEADER
-   ============================================ */
+/* ============================================================
+   PHONE — GLOBAL HEADER (SMALL DEVICES ONLY)
+   ============================================================ */
 @media (max-width: 380px) {
-    .header-bar {
-        height: 48px !important;
-        padding: 10px !important;
-        font-size: 1.1rem !important;
-    }
+  .header-bar {
+    height: 48px !important;
+    padding: 10px !important;
+    font-size: 1.1rem !important;
+  }
 }
 
-/* ============================================
-   HUB FILTER ROW — GLOBAL LAYOUT
-   ============================================ */
+/* ============================================================
+   HUB SCREEN — FILTER ROW (ALL DEVICES)
+   ============================================================ */
 .hub-filter-row {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    justify-content: space-between;
-    padding: 8px 16px 0 16px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px 0 16px;
 }
 
 #daySelect,
 #difficultySelect {
-    flex: 1;
-    height: 50px;
+  flex: 1;
+  height: 50px;
 }
 
-/* ============================================
-   HUB SEARCH ROW — GLOBAL LAYOUT
-   ============================================ */
+/* ============================================================
+   HUB SCREEN — SEARCH ROW (ALL DEVICES)
+   ============================================================ */
 .hub-search-row {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    padding: 8px 16px 0 16px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 8px 16px 0 16px;
 }
 
 .hub-search-row input {
-    flex: 1;
+  flex: 1;
 }
 
-/* ============================================
-   HUB NAV ROW — GLOBAL LAYOUT
-   ============================================ */
+/* ============================================================
+   HUB SCREEN — NAVIGATION ROW (ALL DEVICES)
+   ============================================================ */
 .hub-nav-row {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    padding: 16px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  padding: 16px;
 }
-/* ============================================
-   HUB CARD LAYOUT — GLOBAL
-   ============================================ */
 
-/* Top navigation cards: My Playlists / Create Playlist / Events */
+/* ============================================================
+   HUB SCREEN — CARD LAYOUT (ALL DEVICES)
+   ============================================================ */
 .hub-hidden {
-    display: none !important;
-    height: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
+  display: none !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
-
 
 .hub-nav-card {
-    background-color: var(--card-bg);
-    border-radius: 10px;
-    padding: 18px;
-    text-align: center;
-    font-size: 1rem;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
-    user-select: none;
+  background-color: var(--card-bg);
+  border-radius: 10px;
+  padding: 18px;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  user-select: none;
 }
 
-/* Playlist cards (Stock-010, Stock-011, etc.) */
 .hub-playlist-card {
-    background-color: var(--card-bg);
-    border-radius: 12px;
-    padding: 20px;
-    margin-bottom: 16px;
-    cursor: pointer;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    box-sizing: border-box;
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 16px;
+  cursor: pointer;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  box-sizing: border-box;
 }
 
-/* Playlist name text */
 .hub-playlist-name {
-    font-size: 1.2rem;
-    font-weight: bold;
-    margin-bottom: 6px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 6px;
 }
 
-/* Playlist count text */
 .hub-playlist-count {
-    font-size: 0.9rem;
-    opacity: 0.85;
+  font-size: 0.9rem;
+  opacity: 0.85;
 }
 
-/* Container for playlist cards */
 .playlist-container {
-    padding: 0 16px 20px 16px;
-}
-.search-results-container {
-    display: none;        /* hidden until search is active */
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 10px;
+  padding: 0 16px 20px 16px;
 }
 
-/* ============================================
-   GLOBAL POLISH OVERRIDES
-   ============================================ */
+.search-results-container {
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+/* ============================================================
+   GLOBAL — POLISH OVERRIDES (INPUTS & BUTTONS)
+   ============================================================ */
 select.sync-btn,
 input#danceSearchInput {
-    background-color: #111 !important;
-    color: #fff !important;
-    border: 2px solid #800000 !important;
-    box-shadow: 0 0 6px rgba(255, 180, 60, 0.4) !important;
+  background-color: #111 !important;
+  color: #fff !important;
+  border: 2px solid #800000 !important;
+  box-shadow: 0 0 6px rgba(255, 180, 60, 0.4) !important;
 }
 
 select.sync-btn:focus,
 input#danceSearchInput:focus {
-    border-color: #ffcc88 !important;
-    box-shadow: 0 0 10px rgba(255, 180, 60, 0.6) !important;
+  border-color: #ffcc88 !important;
+  box-shadow: 0 0 10px rgba(255, 180, 60, 0.6) !important;
 }
 
 .sync-btn {
-    height: 42px !important;
-    font-size: 0.85rem !important;
-    padding: 0 12px !important;
+  height: 42px !important;
+  font-size: 0.85rem !important;
+  padding: 0 12px !important;
 }
 
 .playlist-hub-card {
-    min-height: 80px !important;
-    font-size: 1rem !important;
-    padding: 14px !important;
+  min-height: 80px !important;
+  font-size: 1rem !important;
+  padding: 14px !important;
 }
 
 .hub-nav-row .playlist-hub-card {
-    min-height: 65px !important;
-    font-size: 0.95rem !important;
-    padding: 10px !important;
+  min-height: 65px !important;
+  font-size: 0.95rem !important;
+  padding: 10px !important;
 }
+
+/* ============================================================
+   WORKSPACE — GLOBAL (DESKTOP / LAPTOP / TABLET DEFAULT)
+   ============================================================ */
 
 /* Hide selector in all modes EXCEPT edit */
 body:not(.workspace-mode-edit) #workspacePlaylistSelection {
-    display: none;
+  display: none;
 }
 
-/* Add styling for message bar under Banner    */
+/* Message bar under header */
 .workspace-message {
-    margin: 10px 0 20px 0;
-    padding: 8px 12px;
-    border-radius: 6px;
-    font-size: 14px;
-    opacity: 0;
-    transition: opacity 0.4s;
-    pointer-events: none;
+  margin: 10px 0 20px 0;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  opacity: 0;
+  transition: opacity 0.4s;
+  pointer-events: none;
 }
 
 .workspace-message.success {
-    background: #2d4;
-    color: #000;
+  background: #2d4;
+  color: #000;
 }
 
 .workspace-message.error {
-    background: #d44;
-    color: #fff;
+  background: #d44;
+  color: #fff;
 }
 
 .workspace-message.warning {
-    background: #e9c63f;
-    color: #000;
+  background: #e9c63f;
+  color: #000;
 }
 
-
-/* ============================================
-   WORKSPACE — TWO-COLUMN LAYOUT
-============================================ */
-
+/* Two-column desktop/tablet layout */
 .workspace-columns {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-    padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  padding: 20px;
 }
 
 .workspace-screen {
-    min-height: calc(100vh - 60px);
-    padding: 20px;
-    box-sizing: border-box;
-    position: relative;
-    z-index: 10;
+  min-height: calc(100vh - 60px);
+  padding: 20px;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 10;
 }
-
 
 #masterApplicationViewport {
-    min-height: calc(100vh - 60px);
+  min-height: calc(100vh - 60px);
 }
 
-/* ============================================
-   WORKSPACE — MOBILE LAYOUT
-============================================ */
-@media (max-width: 600px) {
-
-   /* add small bull logo to banner on workspace screen */
+/* ============================================================
+   WORKSPACE — PHONE (WORKSPACE SCREEN ONLY)
+   ============================================================ */
+@media only screen and (max-width: 600px) and (hover: none) and (pointer: coarse) {
+  /* Phone: small bull logo */
   .header-small-logo {
     height: 32px;
     width: 32px;
     object-fit: contain;
-}
+  }
 
-   /* Reduce gap between mode buttons and search section */
-      #workspaceContent {
-       margin-top: 4px;   /* tighten spacing */
-   }
-   /* hide message bar when no message to display */
-   #workspaceMessage:empty {
+  /* Phone: tighten spacing under header */
+  #workspaceContent {
+    margin-top: 4px;
+  }
+
+  /* Phone: hide empty message bar */
+  #workspaceMessage:empty {
     display: none;
-}
+  }
 
-    /* Stack columns vertically instead of side-by-side */
-    .workspace-columns {
-        grid-template-columns: 1fr;   /* vertical stack */
-        gap: 16px;                    /* smaller gap */
-        padding: 12px;                /* tighter padding */
-        margin-top: 0;                /* remove extra top spacing */
-    }
+  /* Phone: stack columns vertically */
+  .workspace-columns {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 12px;
+    margin-top: 0;
+  }
 
-    /* Column containers adjust for mobile */
-    .workspace-column-left,
-    .workspace-column-right {
-        min-height: auto;             /* natural height */
-        padding: 12px;                /* tighter padding */
-    }
+  /* Phone: column padding */
+  .workspace-column-left,
+  .workspace-column-right {
+    min-height: auto;
+    padding: 12px;
+  }
 
-    /* Titles shrink slightly */
+  /* Phone: section titles */
   .workspace-section-title {
     font-size: 18px;
-    margin-top: 6px;              /* spacing fix */
-    margin-bottom: 8px;           /* spacing fix */
-}
+    margin-top: 6px;
+    margin-bottom: 8px;
+  }
 
+  /* Phone: inputs */
+  .workspace-search-box,
+  .workspace-name-box {
+    font-size: 14px;
+    padding: 8px;
+    margin-bottom: 12px;
+  }
 
-    /* Inputs shrink slightly */
-    .workspace-search-box,
-    .workspace-name-box {
-        font-size: 14px;
-        padding: 8px;
-        margin-bottom: 12px;          /* spacing fix */
-    }
+  /* Phone: Save/Cancel buttons stack vertically */
+  .workspace-actions {
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 16px;
+  }
 
-    /* Save/Cancel buttons stack vertically */
-    .workspace-actions {
-        flex-direction: column;
-        gap: 10px;
-        margin-top: 16px;             /* spacing fix */
-    }
+  .workspace-save-btn,
+  .workspace-cancel-btn {
+    width: 100%;
+    font-size: 15px;
+    padding: 12px;
+  }
 
-    /* Full-width buttons for touch */
-    .workspace-save-btn,
-    .workspace-cancel-btn {
-        width: 100%;
-        font-size: 15px;
-        padding: 12px;
-    }
-
-    /* Reduce space under the mode buttons */
-@media only screen and (max-width: 600px) and (hover: none) and (pointer: coarse) {
-    .workspace-mode-panel {
+  /* Phone: mode buttons (Create / Edit / Delete) */
+  .workspace-mode-panel {
     margin-bottom: 12px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
-   }
+  }
 
-   .workspace-mode-btn {
+  .workspace-mode-btn {
     margin-bottom: 12px;
-    padding: 10px 16px;
+    padding: 6px 10px;
     border-radius: 6px;
     border: none;
     cursor: pointer;
-    font-size: 16px;
-    background: #444;   /* default medium gray */
-    color: #fff;
-}
-   .workspace-mode-btn {
-    padding: 6px 10px;
     font-size: 14px;
+    background: #444;
+    color: #fff;
+  }
 }
 
- 
-
-/* ============================================
-   SEARCH INPUTS
-============================================ */
-
+/* ============================================================
+   WORKSPACE — SEARCH INPUTS (GLOBAL)
+   ============================================================ */
 .workspace-search-box,
 .workspace-name-box {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 16px;
-    border-radius: 6px;
-    border: 1px solid #666;
-    background: #111;
-    color: #fff;
-    font-size: 15px;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 16px;
+  border-radius: 6px;
+  border: 1px solid #666;
+  background: #111;
+  color: #fff;
+  font-size: 15px;
 }
 
-/* ============================================
-   SCROLLABLE LISTS
-============================================ */
-/* Search results list — shorter, starts scrolling sooner */
+/* ============================================================
+   WORKSPACE — SCROLLABLE LISTS (GLOBAL)
+   ============================================================ */
 .workspace-search-results {
-    max-height: 220px;      /* adjust if needed */
-    overflow-y: auto;
-    padding-right: 6px;
+  max-height: 220px;
+  overflow-y: auto;
+  padding-right: 6px;
 }
 
-/* Selected dances list — taller, primary focus */
 .workspace-selected-list {
-    max-height: 320px;      /* adjust if needed */
-    overflow-y: auto;
-    padding-right: 6px;
+  max-height: 320px;
+  overflow-y: auto;
+  padding-right: 6px;
 }
 
-
-/* ============================================
-   WORKSPACE — TABLET & MOBILE LAYOUT
-============================================ */
+/* ============================================================
+   WORKSPACE — TABLET (700px AND BELOW)
+   ============================================================ */
 @media (max-width: 700px) {
-    .workspace-columns {
-        display: grid;
-        grid-template-columns: 1fr;   /* single column */
-        gap: 16px;
-        padding: 12px;
-        margin-top: 0;
-    }
+  .workspace-columns {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 12px;
+    margin-top: 0;
+  }
 }
 
-
-
-/* ============================================
-   SEARCH RESULT ROWS (LEFT COLUMN)
-============================================ */
-
+/* ============================================================
+   WORKSPACE — LEFT COLUMN (SEARCH RESULTS)
+   ============================================================ */
 .workspace-dance-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 6px 0;
-    border-bottom: 1px solid #333;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px solid #333;
 }
 
 .workspace-dance-title {
-    color: #fff;
-    font-size: 15px;
+  color: #fff;
+  font-size: 15px;
 }
 
-/* ============================================
-   Styling for existing playlists  (LEFT COLUMN)
-============================================ */
+/* ============================================================
+   WORKSPACE — LEFT COLUMN (EXISTING PLAYLISTS)
+   ============================================================ */
 .workspace-playlist-item {
-    padding: 10px 14px;
-    margin: 6px 0;
-    background: #2a2a2a;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background 0.2s, transform 0.1s;
-    border: 1px solid #3a3a3a;
+  padding: 10px 14px;
+  margin: 6px 0;
+  background: #2a2a2a;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  border: 1px solid #3a3a3a;
 }
 
 .workspace-playlist-item:hover {
-    background: #3a3a3a;
-    transform: scale(1.02);
+  background: #3a3a3a;
+  transform: scale(1.02);
 }
 
 .workspace-playlist-item:active {
-    background: #444;
-    transform: scale(0.98);
+  background: #444;
+  transform: scale(0.98);
 }
 
-
-/* ============================================
-   SELECTED DANCES (RIGHT COLUMN)
-============================================ */
-
+/* ============================================================
+   WORKSPACE — RIGHT COLUMN (SELECTED DANCES)
+   ============================================================ */
 .workspace-selected-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px 0;
-    border-bottom: 1px solid #333;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #333;
 }
 
 .workspace-selected-row span {
-    color: #fff;
-    font-size: 15px;
+  color: #fff;
+  font-size: 15px;
 }
 
 .workspace-selected-row:hover {
-    background: rgba(255,255,255,0.05);
+  background: rgba(255, 255, 255, 0.05);
 }
 
-/* ============================================
-   INLINE BUTTONS (+ and –)
-============================================ */
-
+/* ============================================================
+   WORKSPACE — INLINE BUTTONS (+ / –)
+   ============================================================ */
 .workspace-add-btn,
 .workspace-remove-btn {
-    background: #c00;
-    color: #fff;
-    border: none;
-    padding: 4px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
+  background: #c00;
+  color: #fff;
+  border: none;
+  padding: 4px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
 }
 
 .workspace-add-btn {
-    background: #0a0; /* green for add */
+  background: #0a0;
 }
 
 .workspace-add-btn:hover {
-    background: #0c0;
+  background: #0c0;
 }
 
 .workspace-remove-btn {
-    background: #c00; /* red for remove */
+  background: #c00;
 }
 
 .workspace-remove-btn:hover {
-    background: #e00;
+  background: #e00;
 }
 
-/* ============================================
-   ACTION BUTTONS (Save / Cancel)
-============================================ */
-
+/* ============================================================
+   WORKSPACE — ACTION BUTTONS (Save / Cancel)
+   ============================================================ */
 .workspace-actions {
-    margin-top: 20px;
-    display: flex;
-    gap: 12px;
+  margin-top: 20px;
+  display: flex;
+  gap: 12px;
 }
 
 .workspace-save-btn,
 .workspace-cancel-btn {
-    padding: 10px 16px;
-    border-radius: 6px;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
+  padding: 10px 16px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
 }
 
 .workspace-save-btn {
-    background: #c00;
-    color: #fff;
+  background: #c00;
+  color: #fff;
 }
 
 .workspace-save-btn:hover {
-    background: #e00;
+  background: #e00;
 }
 
 .workspace-cancel-btn {
-    background: #555;
-    color: #fff;
+  background: #555;
+  color: #fff;
 }
 
 .workspace-cancel-btn:hover {
-    background: #666;
+  background: #666;
 }
 
-/* ============================================
-   WORKSPACE MODE BUTTONS (Create / Edit / Delete)
-   --------------------------------------------
-   This section styles the three top action buttons
-   used to switch between workspace modes.
-   
-   - .workspace-mode-btn ........ Base button style
-   - .active .................... Highlights the current mode
-   - .disabled .................. Grays out inactive modes and blocks clicks
-
-   These classes are applied dynamically by JS when
-   the user selects Create, Edit, or Delete mode.
-============================================ */
-
+/* ============================================================
+   WORKSPACE — MODE BUTTONS (Create / Edit / Delete)
+   ============================================================ */
 .workspace-mode-btn {
-    margin-bottom: 12px;
-    padding: 10px 16px;
-    border-radius: 6px;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    background: #444;   /* default medium gray */
-    color: #fff;
+  margin-bottom: 12px;
+  padding: 10px 16px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  background: #444;
+  color: #fff;
 }
 
 .workspace-mode-btn.active {
-    background: #c00;   /* red highlight for active mode */
+  background: #c00;
 }
 
 .workspace-mode-btn.disabled {
-    background: #222;   /* darker gray for disabled mode */
-    color: #777;        /* muted text */
-    cursor: default;    /* no pointer hand */
-    pointer-events: none; /* prevents clicking */
+  background: #222;
+  color: #777;
+  cursor: default;
+  pointer-events: none;
 }
-/* ============================================================
-   DEBUG COLORS — TEMPORARY VISIBILITY HELPERS
-   ============================================================ */
-
-#workspaceLeftColumn {
-    background: rgba(255, 0, 0, 0.25);   /* red tint */
-}
-
-#workspaceRightColumn {
-    background: rgba(0, 255, 0, 0.25);   /* green tint */
-}
-
-
-
-#workspacePlaylistSelection {
-    background: rgba(0, 0, 255, 0.25);   /* blue tint */
-}
-
-#workspaceSelectedDances {
-    background: rgba(255, 255, 0, 0.25); /* yellow tint */
-}
-
-#workspaceSearchResults {
-    background: rgba(255, 0, 255, 0.25); /* magenta tint */
-}
-
-#workspaceMessage {
-    background: rgba(0, 255, 255, 0.25); /* cyan tint */
-}
-
-
-
