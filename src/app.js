@@ -881,12 +881,6 @@ function renderDeleteModeLayout() {
         <div id="workspaceDeleteList" class="workspace-delete-list"></div>
     `;
 
-    right.innerHTML = `
-        <div class="workspace-note">
-            Select a playlist on the left to delete.
-        </div>
-    `;
-
     renderWorkspaceDeleteList();
 }
 
