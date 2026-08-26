@@ -989,7 +989,7 @@ function deleteWorkspacePlaylist(name) {
 function confirmDeletePlaylist(name) {
     delete userPlaylistsData[name];
     showWorkspaceMessage(`Playlist "${name}" deleted.`, "error");
-    renderDeleteModeLayout();
+    renderWorkspaceScreen();
 }
 
 
