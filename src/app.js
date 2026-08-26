@@ -706,15 +706,12 @@ function renderCreateModeLayout() {
     // ⭐ LEFT COLUMN: YOUR PLAYLIST (Option B)
     document.getElementById("workspaceLeftColumn").innerHTML = `
         <h2 class="workspace-section-title">Your Playlist</h2>
-
-         <label class="workspace-label">Playlist Name</label>
-         <input 
-          id="workspaceNameInput"
-          type="text"
-          placeholder="Enter playlist name..."
-          class="workspace-name-box"
-      />
-
+    <input 
+       id="workspaceNameInput"
+       type="text"
+       placeholder="Enter playlist name..."
+       class="workspace-name-box"
+   />
         <div id="workspaceSelectedDances" class="workspace-selected-list">
             <!-- JS will populate selected dances here -->
         </div>
@@ -1175,13 +1172,13 @@ function selectPlaylistForEditing(name) {
     const right = document.getElementById('workspaceRightColumn');
 
     left.innerHTML = `
-        <div class="workspace-section-title">Playlist Name</div>
+        <h2 class="workspace-section-title">Your Playlist</h2>
 
         <input id="workspacePlaylistNameInput"
-               class="workspace-name-input"
-               type="text"
-               placeholder="Enter playlist name"
-               value="${workspacePlaylistName}"
+          class="workspace-name-input"
+          type="text"
+          placeholder="Enter playlist name"
+          value="${workspacePlaylistName}"
         />
 
         <div class="workspace-section-title">Selected Dances</div>
