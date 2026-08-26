@@ -503,18 +503,20 @@ body:not(.workspace-mode-edit) #workspacePlaylistSelection {
   }
 
   /* Phone: Save/Cancel buttons stack vertically */
-  .workspace-actions {
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 16px;
-  }
+ .workspace-actions {
+  flex-direction: row;      /* side-by-side */
+  gap: 10px;
+  margin-top: 16px;
+}
 
   .workspace-save-btn,
   .workspace-cancel-btn {
-    width: 100%;
-    font-size: 15px;
-    padding: 12px;
-  }
+  width: 50%;               /* equal width buttons */
+  font-size: 15px;
+  padding: 12px;
+}
+
+
 
   /* Phone: mode buttons (Create / Edit / Delete) */
   .workspace-mode-panel {
