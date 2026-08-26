@@ -962,25 +962,31 @@ function renderWorkspaceDeleteList() {
 ============================================ */
 function deleteWorkspacePlaylist(name) {
 
-    const btn = document.getElementById(`deleteBtn_${name}`);
-    if (!btn) return;
+    // Render a confirmation UI in the RIGHT column
+    const right = document.getElementById("workspaceRightColumn");
 
-    // FIRST CLICK — ask for confirmation
-    if (!btn.classList.contains("workspace-delete-confirm")) {
+    right.innerHTML = `
+        <h2 class="workspace-section-title">Confirm Delete</h2>
 
-        showWorkspaceMessage(`Click DELETE again to confirm removing "${name}".`, "warning");
+        <div class="workspace-delete-confirm-box">
+            Are you sure you want to delete "<strong>${name}</strong>"?
+        </div>
 
-        btn.textContent = "Confirm Delete";
-        btn.classList.add("workspace-delete-confirm");
+        <div class="workspace-actions">
+            <button class="workspace-save-btn" onclick="confirmDeletePlaylist('${name}')">
+                Confirm Delete
+            </button>
 
-        return;
-    }
+            <button class="workspace-cancel-btn" onclick="renderDeleteModeLayout()">
+                Cancel
+            </button>
+        </div>
+    `;
+}
 
-    // SECOND CLICK — actually delete
+function confirmDeletePlaylist(name) {
     delete userPlaylistsData[name];
-
     showWorkspaceMessage(`Playlist "${name}" deleted.`, "error");
-
     renderWorkspaceDeleteList();
 }
 
