@@ -875,7 +875,8 @@ function renderEditModeLayout() {
 function renderDeleteModeLayout() {
     const left = document.getElementById('workspaceLeftColumn');
     const right = document.getElementById('workspaceRightColumn');
-
+    // Wipe the right column so old confirmation UI disappears
+    right.innerHTML = "";
     left.innerHTML = `
         <div class="workspace-section-title">Delete Playlist</div>
         <div id="workspaceDeleteList" class="workspace-delete-list"></div>
