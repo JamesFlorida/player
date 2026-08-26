@@ -516,8 +516,6 @@ body:not(.workspace-mode-edit) #workspacePlaylistSelection {
   padding: 12px;
 }
 
-
-
   /* Phone: mode buttons (Create / Edit / Delete) */
   .workspace-mode-panel {
     margin-bottom: 12px;
@@ -572,6 +570,16 @@ body:not(.workspace-mode-edit) #workspacePlaylistSelection {
   background: #1f1f1f;          /* same lighter panel */
   border-radius: 8px;
   border: 1px solid #444;
+}
+
+.workspace-delete-list {
+  background: #1f1f1f;          /* visible dark panel */
+  border-radius: 8px;
+  border: 1px solid #444;       /* subtle outline */
+  padding: 10px;
+  margin-top: 10px;
+  max-height: 260px;
+  overflow-y: auto;
 }
 
 /* ============================================================
