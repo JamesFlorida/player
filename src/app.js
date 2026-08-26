@@ -707,13 +707,13 @@ function renderCreateModeLayout() {
     document.getElementById("workspaceLeftColumn").innerHTML = `
         <h2 class="workspace-section-title">Your Playlist</h2>
 
-        <label class="workspace-label">Playlist Name</label>
-        <input 
-            id="workspaceNameInput"
-            type="text"
-            placeholder="Enter playlist name..."
-            class="workspace-name-box"
-        />
+         <label class="workspace-label">Playlist Name</label>
+         <input 
+          id="workspaceNameInput"
+          type="text"
+          placeholder="Enter playlist name..."
+          class="workspace-name-box"
+      />
 
         <div id="workspaceSelectedDances" class="workspace-selected-list">
             <!-- JS will populate selected dances here -->
