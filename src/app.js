@@ -776,6 +776,9 @@ function renderCreateModeLayout() {
             <div id="workspaceSearchResults" class="workspace-search-results"></div>
         `;
 
+        // ⭐ Remove any existing footer before creating a new one
+         const oldFooter = document.getElementById("workspaceFooter");
+         if (oldFooter) oldFooter.remove();
         // ⭐ FIXED BOTTOM SAVE/CANCEL BAND
         // Insert a footer if it doesn't exist yet
         let footer = document.getElementById("workspaceFooter");
@@ -803,6 +806,10 @@ function renderCreateModeLayout() {
 
 function startEditMode() {
     console.log("Start Edit Mode");
+    // ⭐ Remove footer if present (Create Mode only)
+   const footer = document.getElementById("workspaceFooter");
+   if (footer) footer.remove();
+
     workspaceMode = "edit";
 
     // ⭐ Set body class for Edit Mode (so CSS can show the playlist selector)
@@ -872,6 +879,10 @@ function startDeleteMode() {
     workspaceMode = "delete";
     document.getElementById('applicationHeaderTitle').innerText = "Delete Playlist";
 
+    // ⭐ Remove footer if present (Create Mode only)
+    const footer = document.getElementById("workspaceFooter");
+    if (footer) footer.remove();
+
     // ⭐ Update buttons
     updateWorkspaceModeButtons("delete");
 
@@ -882,6 +893,7 @@ function startDeleteMode() {
     renderDeleteModeLayout();
 }
 
+
 function beginWorkspacePhase2() {
     if (!workspacePlaylistName) {
         showWorkspaceMessage("Please enter a playlist name.", "error");
@@ -889,6 +901,9 @@ function beginWorkspacePhase2() {
     }
 
     workspacePhase = 2;
+    document.getElementById('applicationHeaderTitle').innerText =
+    `Create Playlist: ${workspacePlaylistName}`;
+
     renderCreateModeLayout();
 }
 
@@ -1318,7 +1333,18 @@ function navigateBackFromWorkspace() {
     console.log("NAVIGATE — lastNavigationMode:", lastNavigationMode);
     console.log("NAVIGATE — workspaceMode:", workspaceMode);
     console.log("NAVIGATE — selectedActivePlaylistGroup:", selectedActivePlaylistGroup);
-   
+   // ⭐ EMPTY PLAYLIST WARNING (Phase 2 only)
+   if (workspaceMode === "create" &&
+       workspacePhase === 2 &&
+       workspaceSelectedDances.length === 0) {
+
+       const confirmLeave = confirm(
+        "This playlist has no dances.\nEmpty playlists cannot be saved.\nLeave without saving?"
+       );
+
+    if (!confirmLeave) return;
+}
+
     // Reset workspace state but
    workspaceSelectedDances = [];
    workspaceSearchQuery = "";
