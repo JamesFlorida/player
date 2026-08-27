@@ -1603,4 +1603,5 @@ window.openUserPlaylistView = openUserPlaylistView;
 window.cancelWorkspaceEdit = cancelWorkspaceEdit;
 window.confirmDeletePlaylist = confirmDeletePlaylist;
 window.renderWorkspaceDeleteList = renderWorkspaceDeleteList;
+window.beginWorkspacePhase2 = beginWorkspacePhase2;
 window.renderDeleteModeLayout = renderDeleteModeLayout;
