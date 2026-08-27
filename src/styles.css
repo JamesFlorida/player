@@ -913,13 +913,5 @@ body:not(.workspace-mode-edit) #workspacePlaylistSelection {
         overflow-y: auto;
     }
 }
-/* ============================================================
-   PHASE 2 — SAFELY COLLAPSE MODE PANEL
-   ============================================================ */
-body.workspace-mode #workspaceModePanel {
-    margin: 0;
-    padding: 0;
-    height: 0;
-    overflow: hidden;
-}
+
 
