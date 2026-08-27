@@ -790,15 +790,6 @@ body:not(.workspace-mode-edit) #workspacePlaylistSelection {
   background: #666;
 }
 
-/* ============================================================
-   PHASE 2 — REMOVE MODE PANEL SPACE
-   ============================================================ */
-#workspaceModePanel {
-    display: none !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    height: 0 !important;
-}
 
 
 /* ============================================================
