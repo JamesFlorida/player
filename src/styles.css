@@ -447,6 +447,48 @@ body:not(.workspace-mode-edit) #workspacePlaylistSelection {
   z-index: 10;
 }
 
+/* ============================================================
+   SCROLLABLE WORKSPACE CONTENT ABOVE FIXED FOOTER
+   ============================================================ */
+.workspace-screen {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 60px); /* header height already accounted for */
+    overflow: hidden;
+}
+
+#workspaceContent {
+    flex: 1;
+    overflow-y: auto;
+    padding-bottom: 120px; /* space so last items don't hide behind footer */
+}
+
+
+/* ============================================================
+   FIXED BOTTOM FOOTER FOR PHASE 2
+   ============================================================ */
+.workspace-footer-fixed {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    background: #111;
+    border-top: 1px solid #444;
+
+    padding: 10px 16px;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+
+    z-index: 9999;
+}
+
+.workspace-footer-fixed button {
+    flex: 1;
+}
+
+
 #masterApplicationViewport {
   min-height: calc(100vh - 60px);
 }
@@ -602,6 +644,25 @@ body:not(.workspace-mode-edit) #workspacePlaylistSelection {
     padding: 12px;
     margin-top: 0;
   }
+}
+/* ============================================================
+   EXTRA TIGHT HEIGHT TIER FOR VERY SMALL SCREENS
+   ============================================================ */
+@media (max-height: 600px) {
+    .workspace-selected-list,
+    .workspace-search-results {
+        max-height: 180px;
+        overflow-y: auto;
+    }
+
+    .workspace-section-title {
+        margin-bottom: 6px;
+    }
+
+    .workspace-name-box,
+    .workspace-search-box {
+        margin-bottom: 8px;
+    }
 }
 
 /* ============================================================
