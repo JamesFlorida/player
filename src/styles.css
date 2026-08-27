@@ -791,6 +791,17 @@ body:not(.workspace-mode-edit) #workspacePlaylistSelection {
 }
 
 /* ============================================================
+   PHASE 2 — REMOVE MODE PANEL SPACE
+   ============================================================ */
+#workspaceModePanel {
+    display: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    height: 0 !important;
+}
+
+
+/* ============================================================
    WORKSPACE — MODE BUTTONS (Create / Edit / Delete)
    ============================================================ */
 .workspace-mode-btn {
