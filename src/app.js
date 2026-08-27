@@ -882,6 +882,17 @@ function startDeleteMode() {
     renderDeleteModeLayout();
 }
 
+function beginWorkspacePhase2() {
+    if (!workspacePlaylistName) {
+        showWorkspaceMessage("Please enter a playlist name.", "error");
+        return;
+    }
+
+    workspacePhase = 2;
+    renderCreateModeLayout();
+}
+
+
 function attachWorkspaceListeners() {
     const createBtn = document.getElementById("modeCreateBtn");
     if (createBtn) createBtn.addEventListener("click", startCreateMode);
