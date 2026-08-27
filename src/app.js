@@ -42,6 +42,7 @@ let activeUserPlaylistView = null;
    WORKSPACE STATE
 ============================================ */
 let workspaceMode = null;                 // "create", "edit", "delete"
+let workspacePhase = 1;  // 1 = name playlist, 2 = build playlist
 let workspacePlaylistName = "";           // Name of playlist being edited/created
 let workspaceSelectedDances = [];         // Dance names inside playlist
 let workspaceSearchQuery = "";            // Workspace search text
@@ -698,60 +699,107 @@ function renderWorkspaceScreen() {
 
 
 function renderCreateModeLayout() {
-    console.log("RENDER CREATE MODE LAYOUT");
-  
-    // Remove Edit Mode playlist name input if it exists
-    document.getElementById("workspacePlaylistNameInput")?.remove();
+    console.log("RENDER CREATE MODE LAYOUT — Phase:", workspacePhase);
 
-    // ⭐ LEFT COLUMN: YOUR PLAYLIST (Option B)
-    document.getElementById("workspaceLeftColumn").innerHTML = `
-        <h2 class="workspace-section-title">Your Playlist</h2>
-    <input 
-       id="workspaceNameInput"
-       type="text"
-       placeholder="Enter playlist name..."
-       class="workspace-name-box"
-   />
-        <div id="workspaceSelectedDances" class="workspace-selected-list">
-            <!-- JS will populate selected dances here -->
-        </div>
+    // Always clear columns before rendering
+    const left = document.getElementById("workspaceLeftColumn");
+    const right = document.getElementById("workspaceRightColumn");
 
-        <div class="workspace-actions">
-            <button class="workspace-save-btn" onclick="saveWorkspacePlaylist()">Save</button>
-            <button class="workspace-cancel-btn" onclick="navigateBackFromWorkspace()">Cancel</button>
-        </div>
-    `;
+    left.innerHTML = "";
+    right.innerHTML = "";
 
-    // ⭐ RIGHT COLUMN: SEARCH DANCES (Option B)
-    document.getElementById("workspaceRightColumn").innerHTML = `
-        <h2 class="workspace-section-title">Search Dances</h2>
+    /* ============================================================
+       PHASE 1 — NAME PLAYLIST
+       ============================================================ */
+    if (workspacePhase === 1) {
 
-        <input 
-            id="workspaceSearchInput"
-            type="text"
-            placeholder="Search dances..."
-            oninput="handleWorkspaceSearchInput(this.value)"
-            class="workspace-search-box"
-        />
+        left.innerHTML = `
+            <h2 class="workspace-section-title">Create Playlist</h2>
 
-        <div id="workspaceSearchResults" class="workspace-search-results">
-            <!-- JS will populate search results here -->
-        </div>
-    `;
+            <input 
+                id="workspaceNameInput"
+                type="text"
+                placeholder="Enter playlist name..."
+                class="workspace-name-box"
+            />
 
-    // Attach the REAL input handler AFTER DOM is rendered
-    const nameInput = document.getElementById("workspaceNameInput");
-    if (nameInput) {
-        nameInput.addEventListener("input", (e) => {
-            console.log("WRITE — workspacePlaylistName set to:", e.target.value);
-            workspacePlaylistName = e.target.value;
-        });
+            <button class="workspace-create-btn"
+                    onclick="beginWorkspacePhase2()">
+                Create Playlist
+            </button>
+        `;
+
+        // Right column stays empty in Phase 1
+        right.innerHTML = "";
+
+        // Attach name input handler
+        const nameInput = document.getElementById("workspaceNameInput");
+        if (nameInput) {
+            nameInput.addEventListener("input", (e) => {
+                workspacePlaylistName = e.target.value.trim();
+            });
+        }
+
+        return; // ⭐ STOP — Phase 1 complete
     }
 
-    // INITIAL RENDER OF EMPTY LISTS
-    renderWorkspaceSearchResults([]);
-    renderWorkspaceSelectedDances([]);
+    /* ============================================================
+       PHASE 2 — BUILD PLAYLIST
+       ============================================================ */
+    if (workspacePhase === 2) {
+
+        // ⭐ Remove mode buttons (Create/Edit/Delete)
+        const modePanel = document.getElementById("workspaceModePanel");
+        if (modePanel) modePanel.style.display = "none";
+
+        // ⭐ LEFT COLUMN — Selected dances
+        left.innerHTML = `
+            <h2 class="workspace-section-title">
+                Playlist: ${workspacePlaylistName}
+            </h2>
+
+            <div id="workspaceSelectedDances" class="workspace-selected-list"></div>
+        `;
+
+        // ⭐ RIGHT COLUMN — Search
+        right.innerHTML = `
+            <h2 class="workspace-section-title">Search Dances</h2>
+
+            <input 
+                id="workspaceSearchInput"
+                type="text"
+                placeholder="Search dances..."
+                oninput="handleWorkspaceSearchInput(this.value)"
+                class="workspace-search-box"
+            />
+
+            <div id="workspaceSearchResults" class="workspace-search-results"></div>
+        `;
+
+        // ⭐ FIXED BOTTOM SAVE/CANCEL BAND
+        // Insert a footer if it doesn't exist yet
+        let footer = document.getElementById("workspaceFooter");
+        if (!footer) {
+            const screen = document.querySelector(".workspace-screen");
+            footer = document.createElement("div");
+            footer.id = "workspaceFooter";
+            footer.className = "workspace-footer-fixed";
+            screen.appendChild(footer);
+        }
+
+        footer.innerHTML = `
+            <button class="workspace-save-btn" onclick="saveWorkspacePlaylist()">Save</button>
+            <button class="workspace-cancel-btn" onclick="cancelWorkspaceEdit()">Cancel</button>
+        `;
+
+        // ⭐ INITIAL RENDER OF LISTS
+        renderWorkspaceSelectedDances();
+        renderWorkspaceSearchResults();
+
+        return; // ⭐ STOP — Phase 2 complete
+    }
 }
+
 
 function startEditMode() {
     console.log("Start Edit Mode");
@@ -794,7 +842,8 @@ function startCreateMode() {
    console.log("WIPE: startCreateMode — clearing left/right columns");
    document.getElementById("workspaceLeftColumn").innerHTML = "";
    document.getElementById("workspaceRightColumn").innerHTML = "";
-    workspaceMode = "create";
+   workspaceMode = "create";
+   workspacePhase = 1;   // ⭐ Always begin in Phase 1 (Name Playlist)
     document.getElementById('applicationHeaderTitle').innerText = "Create Playlist";
     updateWorkspaceModeButtons("create");
     document.getElementById("workspaceContent").style.display = "block";
