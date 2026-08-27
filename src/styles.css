@@ -790,8 +790,6 @@ body:not(.workspace-mode-edit) #workspacePlaylistSelection {
   background: #666;
 }
 
-
-
 /* ============================================================
    WORKSPACE — MODE BUTTONS (Create / Edit / Delete)
    ============================================================ */
@@ -816,6 +814,18 @@ body:not(.workspace-mode-edit) #workspacePlaylistSelection {
   cursor: default;
   pointer-events: none;
 }
+
+/* ============================================================
+   PHASE 2 — SAFELY COLLAPSE MODE PANEL
+   ============================================================ */
+body.workspace-mode #workspaceModePanel {
+    margin: 0;
+    padding: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+
 /* ==========================================
    WORKSPACE — AGGRESSIVE VERTICAL COMPRESSION
    ========================================== */
