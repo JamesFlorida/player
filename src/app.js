@@ -774,6 +774,11 @@ function renderCreateModeLayout() {
         `;
          const content = document.getElementById("workspaceContent");
          if (content) content.style.background = "rgba(255,0,0,0.25)";
+         if (content) {
+          content.style.marginTop = "0";
+          content.style.paddingTop = "0";
+         }
+
 
         // ⭐ Remove any existing footer before creating a new one
          const oldFooter = document.getElementById("workspaceFooter");
