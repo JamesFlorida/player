@@ -1337,33 +1337,6 @@ function selectPlaylistForEditing(name) {
     renderWorkspaceSearchResults();
 }
 
-
-/* ============================================
-   WORKSPACE — DELETE PLAYLIST
-============================================ 
-function deleteWorkspacePlaylist(name) {
-
-    // Show inline confirmation message instead of browser confirm()
-    showWorkspaceMessage(`Click DELETE again to confirm removing "${name}".`, "warning");
-
-    // Replace the delete button temporarily with a confirmation button
-    const btn = document.getElementById(`deleteBtn_${name}`);
-    if (!btn) return;
-
-    btn.textContent = "Confirm Delete";
-    btn.classList.add("workspace-delete-confirm");
-
-    // Change behavior: second click actually deletes
-    btn.onclick = () => {
-        delete userPlaylistsData[name];
-
-        showWorkspaceMessage(`Playlist "${name}" deleted.`, "error");
-
-        renderWorkspaceDeleteList();
-    };
-}
-*/
-
 /* ============================================
    WORKSPACE — NAVIGATION BACK
 ============================================ */
@@ -1393,15 +1366,19 @@ function navigateBackFromWorkspace() {
     workspacePlaylistName = "";
     workspaceMode = "neutral";
 
-    // ⭐ Hide workspace header
+    // ⭐ Hide workspace header container
     const wsHeader = document.querySelector('.workspace-header');
     if (wsHeader) wsHeader.style.display = 'none';
 
-    // ⭐ Hide small workspace logo
+    // ⭐ Hide workspace title (this was the missing piece)
+    const wsTitle = document.getElementById('applicationHeaderTitle');
+    if (wsTitle) wsTitle.style.display = 'none';
+
+    // ⭐ Hide small workspace-only logo
     const smallLogo = document.getElementById("workspaceSmallLogo");
     if (smallLogo) smallLogo.style.display = "none";
 
-    // ⭐ Restore venue header
+    // ⭐ Restore venue header (big bull)
     const venueHeader = document.querySelector('.venue-header');
     if (venueHeader) venueHeader.style.display = 'block';
 
@@ -1416,12 +1393,13 @@ function navigateBackFromWorkspace() {
         headerBar.style.maxHeight = '';
     }
 
-    // ⭐ Remove workspace-mode
+    // ⭐ Remove workspace-mode class
     document.body.classList.remove("workspace-mode");
 
     lastNavigationMode = "hub";
     renderApplicationInterface();
 }
+
 
 /* ============================================
    OPEN WORKSPACE
