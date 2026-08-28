@@ -748,9 +748,6 @@ function renderCreateModeLayout() {
        ============================================================ */
     if (workspacePhase === 2) {
         console.log("Phase:", workspacePhase);
-     
-        // ⭐ Remove mode buttons (Create/Edit/Delete)
-        const modePanel = document.getElementById("workspaceModePanel");
        
         // ⭐ LEFT COLUMN — Selected dances
         left.innerHTML = `
