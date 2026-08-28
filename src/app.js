@@ -748,10 +748,7 @@ function renderCreateModeLayout() {
        ============================================================ */
     if (workspacePhase === 2) {
         console.log("Phase:", workspacePhase);
-       // ⭐ Remove Phase‑1 content wrapper (fixes top gap)
-       const content = document.getElementById("workspaceContent");
-       if (content) content.innerHTML = "";
-
+     
         // ⭐ Remove mode buttons (Create/Edit/Delete)
         const modePanel = document.getElementById("workspaceModePanel");
         if (modePanel) modePanel.style.display = "none";
