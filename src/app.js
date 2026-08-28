@@ -1382,7 +1382,6 @@ function navigateBackFromWorkspace() {
     const venueHeader = document.querySelector('.venue-header');
     if (venueHeader) venueHeader.style.display = 'block';
 
-    // ⭐ Restore header-bar (undo workspace collapse)
     // ⭐ Restore header-bar (remove leftover workspace inline styles)
     const headerBar = document.querySelector('.header-bar');
     if (headerBar) {
