@@ -903,6 +903,7 @@ function beginWorkspacePhase2() {
     workspacePhase = 2;
 
     // ⭐ Collapse mode panel only in Phase 2 (safe)
+    console.log("Collapse mode panel in phase 2");
     const modePanel = document.getElementById("workspaceModePanel");
     if (modePanel) {
         modePanel.style.margin = "0";
@@ -1377,6 +1378,7 @@ function navigateBackFromWorkspace() {
     document.body.classList.remove("workspace-mode");
 
     // ⭐ Restore mode panel on exit (safe)
+    console.log("Restore mode panel on exit");
     const modePanel = document.getElementById("workspaceModePanel");
     if (modePanel) {
         modePanel.style.margin = "";
