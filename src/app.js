@@ -1392,11 +1392,15 @@ function navigateBackFromWorkspace() {
     const smallLogo = document.getElementById("workspaceSmallLogo");
     if (smallLogo) smallLogo.style.display = "none";
 
+    // ⭐ Hide workspace header entirely
+    const wsHeader = document.querySelector('.workspace-header');
+    if (wsHeader) wsHeader.style.display = 'none';
+
     // ⭐ Restore the bull header
     const venueHeader = document.querySelector('.venue-header');
     if (venueHeader) venueHeader.style.display = 'block';
 
-    // ⭐ Restore header-bar (fixes PLAYLISTS overlap)
+    // ⭐ Restore header-bar spacing (needed for hub screen)
     const headerBar = document.querySelector('.header-bar');
     if (headerBar) {
         headerBar.style.display = 'block';
@@ -1407,9 +1411,8 @@ function navigateBackFromWorkspace() {
         headerBar.style.maxHeight = '';
     }
 
-    // ⭐ Restore hub title
-    const hubTitle = document.getElementById('applicationHeaderTitle');
-    if (hubTitle) hubTitle.innerText = "PLAYLISTS";
+    // ⭐ DO NOT set applicationHeaderTitle — hub does not use it
+    // (Remove the line that sets PLAYLISTS)
 
     // ⭐ Remove workspace-mode
     document.body.classList.remove("workspace-mode");
@@ -1417,6 +1420,7 @@ function navigateBackFromWorkspace() {
     lastNavigationMode = "hub";
     renderApplicationInterface();
 }
+
 
 
 
