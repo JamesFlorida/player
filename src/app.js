@@ -1396,12 +1396,28 @@ function navigateBackFromWorkspace() {
     const venueHeader = document.querySelector('.venue-header');
     if (venueHeader) venueHeader.style.display = 'block';
 
-    // ⭐ Remove workspace-mode (this is the correct place)
+    // ⭐ Restore header-bar (fixes PLAYLISTS overlap)
+    const headerBar = document.querySelector('.header-bar');
+    if (headerBar) {
+        headerBar.style.display = 'block';
+        headerBar.style.margin = '';
+        headerBar.style.padding = '';
+        headerBar.style.height = '';
+        headerBar.style.minHeight = '';
+        headerBar.style.maxHeight = '';
+    }
+
+    // ⭐ Restore hub title
+    const hubTitle = document.getElementById('applicationHeaderTitle');
+    if (hubTitle) hubTitle.innerText = "PLAYLISTS";
+
+    // ⭐ Remove workspace-mode
     document.body.classList.remove("workspace-mode");
 
     lastNavigationMode = "hub";
     renderApplicationInterface();
 }
+
 
 
 
