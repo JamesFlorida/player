@@ -751,7 +751,12 @@ function renderCreateModeLayout() {
      
         // ⭐ Remove mode buttons (Create/Edit/Delete)
         const modePanel = document.getElementById("workspaceModePanel");
-        if (modePanel) modePanel.style.display = "none";
+       if (modePanel) {
+          modePanel.style.display = "none";
+          modePanel.style.margin = "0";
+          modePanel.style.padding = "0";
+          modePanel.style.height = "0";
+         }
 
         // ⭐ LEFT COLUMN — Selected dances
         left.innerHTML = `
