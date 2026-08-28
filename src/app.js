@@ -1383,15 +1383,12 @@ function navigateBackFromWorkspace() {
     if (venueHeader) venueHeader.style.display = 'block';
 
     // ⭐ Restore header-bar (undo workspace collapse)
+    // ⭐ Restore header-bar (remove leftover workspace inline styles)
     const headerBar = document.querySelector('.header-bar');
     if (headerBar) {
-        headerBar.style.display = 'block';
-        headerBar.style.margin = '';
-        headerBar.style.padding = '';
-        headerBar.style.height = '';
-        headerBar.style.minHeight = '';
-        headerBar.style.maxHeight = '';
-    }
+       headerBar.removeAttribute("style");   // ← THIS FIXES THE BLANK SPACE
+   }
+
 
     // ⭐ Remove workspace-mode class
     document.body.classList.remove("workspace-mode");
