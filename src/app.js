@@ -642,8 +642,17 @@ function renderWorkspaceScreen() {
     if (smallLogo) smallLogo.style.display = "block";
 
     // Hide big bull header
+    // Hide big bull header completely (remove leftover space)
     const venueHeader = document.querySelector('.venue-header');
-    if (venueHeader) venueHeader.style.display = 'none';
+    if (venueHeader) {
+       venueHeader.style.display = 'none';
+       venueHeader.style.margin = '0';
+       venueHeader.style.padding = '0';
+       venueHeader.style.height = '0';
+       venueHeader.style.minHeight = '0';
+       venueHeader.style.maxHeight = '0';
+    }
+
 
     // Show back button
     const backBtn = document.getElementById('navbarReturnTrigger');
@@ -691,12 +700,6 @@ function renderWorkspaceScreen() {
     document.getElementById('workspaceContent').style.display = 'block';
     attachWorkspaceListeners();  
 }
-
-
-
-
-
-
 
 function renderCreateModeLayout() {
     console.log("RENDER CREATE MODE LAYOUT — Phase:", workspacePhase);
