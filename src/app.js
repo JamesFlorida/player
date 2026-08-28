@@ -618,6 +618,9 @@ function renderWorkspacePlaylistSelection() {
 /* ============================================
    WORKSPACE SCREEN (MAIN ENTRY)
 ============================================ */
+/* ============================================
+   WORKSPACE SCREEN (MAIN ENTRY)
+============================================ */
 function renderWorkspaceScreen() {
     console.log("RENDER WORKSPACE SCREEN");
     console.log("CHECK: renderWorkspaceScreen — workspaceMode =", workspaceMode);
@@ -625,50 +628,51 @@ function renderWorkspaceScreen() {
 
     // Hide hub UI elements
     const filterBar = document.getElementById('dayFilterBar');
-    if (filterBar) filterBar.style.display = 'none';
-    if (filterBar) filterBar.classList.add("hub-hidden");
+    if (filterBar) {
+        filterBar.style.display = 'none';
+        filterBar.classList.add("hub-hidden");
+    }
 
     const diffBar = document.getElementById('difficultyFilterBar');
-    if (diffBar) diffBar.style.display = 'none';
-    if (diffBar) diffBar.classList.add("hub-hidden");
+    if (diffBar) {
+        diffBar.style.display = 'none';
+        diffBar.classList.add("hub-hidden");
+    }
 
     const hubSearchRow = document.querySelector('.hub-search-row');
-    if (hubSearchRow) hubSearchRow.style.display = 'none';
-    if (hubSearchRow) hubSearchRow.classList.add("hub-hidden");
+    if (hubSearchRow) {
+        hubSearchRow.style.display = 'none';
+        hubSearchRow.classList.add("hub-hidden");
+    }
 
     const hubNavRow = document.querySelector('.hub-nav-row');
-    if (hubNavRow) hubNavRow.style.display = 'none';
-    if (hubNavRow) hubNavRow.classList.add("hub-hidden");
+    if (hubNavRow) {
+        hubNavRow.style.display = 'none';
+        hubNavRow.classList.add("hub-hidden");
+    }
 
     // Show small workspace logo
     const smallLogo = document.getElementById("workspaceSmallLogo");
     if (smallLogo) smallLogo.style.display = "block";
 
-    // Remove spacing from header-bar but keep it visible
-    const headerBar = document.querySelector('.header-bar');
-    if (headerBar) {
-        headerBar.style.marginBottom = '0';
-        headerBar.style.paddingBottom = '0';
-        headerBar.style.height = 'auto';     // keep natural height
-        headerBar.style.minHeight = 'auto';
-        headerBar.style.maxHeight = 'none';
-    }
-
-    // Hide venue header completely
+    // Hide venue header (no aggressive collapse)
     const venueHeader = document.querySelector('.venue-header');
     if (venueHeader) {
         venueHeader.style.display = 'none';
-        venueHeader.style.margin = '0';
-        venueHeader.style.padding = '0';
-        venueHeader.style.height = '0';
-        venueHeader.style.minHeight = '0';
-        venueHeader.style.maxHeight = '0';
+    }
+
+    // Show workspace header as flex (for centered title)
+    const wsHeader = document.querySelector('.workspace-header');
+    if (wsHeader) {
+        wsHeader.style.display = 'flex';
     }
 
     // Show back button
     const backBtn = document.getElementById('navbarReturnTrigger');
-    backBtn.style.display = 'block';
-    backBtn.onclick = navigateBackFromWorkspace;
+    if (backBtn) {
+        backBtn.style.display = 'block';
+        backBtn.onclick = navigateBackFromWorkspace;
+    }
 
     // Inject workspace DOM
     document.getElementById('masterApplicationViewport').innerHTML = `
@@ -702,6 +706,7 @@ function renderWorkspaceScreen() {
     document.getElementById('workspaceContent').style.display = 'block';
     attachWorkspaceListeners();  
 }
+
 
 
 
