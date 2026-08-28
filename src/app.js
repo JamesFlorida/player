@@ -615,6 +615,9 @@ function renderWorkspacePlaylistSelection() {
 /* ============================================
    WORKSPACE SCREEN (MAIN ENTRY)
 ============================================ */
+/* ============================================
+   WORKSPACE SCREEN (MAIN ENTRY)
+============================================ */
 function renderWorkspaceScreen() {
     console.log("RENDER WORKSPACE SCREEN");
     console.log("CHECK: renderWorkspaceScreen — workspaceMode =", workspaceMode);
@@ -641,18 +644,17 @@ function renderWorkspaceScreen() {
     const smallLogo = document.getElementById("workspaceSmallLogo");
     if (smallLogo) smallLogo.style.display = "block";
 
-    // Collapse the entire header-bar (removes the gap)
+    // Remove spacing from header-bar but keep it visible
     const headerBar = document.querySelector('.header-bar');
     if (headerBar) {
-        headerBar.style.display = 'none';
-        headerBar.style.margin = '0';
-        headerBar.style.padding = '0';
-        headerBar.style.height = '0';
-        headerBar.style.minHeight = '0';
-        headerBar.style.maxHeight = '0';
+        headerBar.style.marginBottom = '0';
+        headerBar.style.paddingBottom = '0';
+        headerBar.style.height = 'auto';     // keep natural height
+        headerBar.style.minHeight = 'auto';
+        headerBar.style.maxHeight = 'none';
     }
 
-    // Hide venue header (redundant once header-bar is collapsed, but safe)
+    // Hide venue header completely
     const venueHeader = document.querySelector('.venue-header');
     if (venueHeader) {
         venueHeader.style.display = 'none';
@@ -700,6 +702,7 @@ function renderWorkspaceScreen() {
     document.getElementById('workspaceContent').style.display = 'block';
     attachWorkspaceListeners();  
 }
+
 
 
 
@@ -855,19 +858,37 @@ function startEditMode() {
 
 
 function startCreateMode() {
-   console.log("Start Create Mode — workspaceMode:", workspaceMode);
-   const sel = document.getElementById('workspacePlaylistSelection');
-   if (sel) sel.style.display = 'none';
-   console.log("WIPE: startCreateMode — clearing left/right columns");
-   document.getElementById("workspaceLeftColumn").innerHTML = "";
-   document.getElementById("workspaceRightColumn").innerHTML = "";
-   workspaceMode = "create";
-   workspacePhase = 1;   // ⭐ Always begin in Phase 1 (Name Playlist)
+    console.log("Start Create Mode — workspaceMode:", workspaceMode);
+
+    // Hide the mode selection buttons (Create / Edit / Delete)
+    const modePanel = document.getElementById('workspaceModePanel');
+    if (modePanel) modePanel.style.display = 'none';
+
+    // Hide playlist selection dropdown if present
+    const sel = document.getElementById('workspacePlaylistSelection');
+    if (sel) sel.style.display = 'none';
+
+    console.log("WIPE: startCreateMode — clearing left/right columns");
+    document.getElementById("workspaceLeftColumn").innerHTML = "";
+    document.getElementById("workspaceRightColumn").innerHTML = "";
+
+    // Set mode + phase
+    workspaceMode = "create";
+    workspacePhase = 1;   // Always begin in Phase 1 (Name Playlist)
+
+    // Update header title
     document.getElementById('applicationHeaderTitle').innerText = "Create Playlist";
+
+    // Update workspace header buttons (if any)
     updateWorkspaceModeButtons("create");
+
+    // Show workspace content
     document.getElementById("workspaceContent").style.display = "block";
+
+    // Render Phase 1 or Phase 2 depending on state
     renderCreateModeLayout();
 }
+
 
 function startDeleteMode() {
 
