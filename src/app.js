@@ -641,10 +641,10 @@ function renderWorkspaceScreen() {
     const smallLogo = document.getElementById("workspaceSmallLogo");
     if (smallLogo) smallLogo.style.display = "block";
 
-    // Hide big bull header
     // Hide big bull header completely (remove leftover space)
     const venueHeader = document.querySelector('.venue-header');
     if (venueHeader) {
+       venueHeader.style.background = "rgba(0,255,255,0.25)";  // cyan
        venueHeader.style.display = 'none';
        venueHeader.style.margin = '0';
        venueHeader.style.padding = '0';
