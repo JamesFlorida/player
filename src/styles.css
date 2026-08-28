@@ -405,7 +405,7 @@ body:not(.workspace-mode-edit) #workspacePlaylistSelection {
   display: none;
 }
 .workspace-header {
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: space-between;
 }
