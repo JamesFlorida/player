@@ -409,6 +409,10 @@ body:not(.workspace-mode-edit) #workspacePlaylistSelection {
     align-items: center;
     justify-content: space-between;
 }
+#applicationHeaderTitle {
+    display: none;
+}
+
 
 #applicationHeaderTitle {
     flex: 1;
