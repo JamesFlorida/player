@@ -712,7 +712,7 @@ function renderCreateModeLayout() {
        PHASE 1 — NAME PLAYLIST
        ============================================================ */
     if (workspacePhase === 1) {
-
+        console.log("Phase:", workspacePhase);
         left.innerHTML = `
             <h2 class="workspace-section-title">Create Playlist</h2>
 
@@ -747,6 +747,10 @@ function renderCreateModeLayout() {
        PHASE 2 — BUILD PLAYLIST
        ============================================================ */
     if (workspacePhase === 2) {
+        console.log("Phase:", workspacePhase);
+       // ⭐ Remove Phase‑1 content wrapper (fixes top gap)
+       const content = document.getElementById("workspaceContent");
+       if (content) content.innerHTML = "";
 
         // ⭐ Remove mode buttons (Create/Edit/Delete)
         const modePanel = document.getElementById("workspaceModePanel");
@@ -893,7 +897,6 @@ function startDeleteMode() {
     renderDeleteModeLayout();
 }
 
-
 function beginWorkspacePhase2() {
     if (!workspacePlaylistName) {
         showWorkspaceMessage("Please enter a playlist name.", "error");
@@ -901,16 +904,6 @@ function beginWorkspacePhase2() {
     }
 
     workspacePhase = 2;
-
-    // ⭐ Collapse mode panel only in Phase 2 (safe)
-    console.log("Collapse mode panel in phase 2");
-    const modePanel = document.getElementById("workspaceModePanel");
-    if (modePanel) {
-        modePanel.style.margin = "0";
-        modePanel.style.padding = "0";
-        modePanel.style.height = "0";
-        modePanel.style.overflow = "hidden";
-    }
 
     document.getElementById('applicationHeaderTitle').innerText =
         `Create Playlist: ${workspacePlaylistName}`;
@@ -1358,7 +1351,7 @@ function navigateBackFromWorkspace() {
         if (!confirmLeave) return;
     }
 
-    // Reset workspace state but
+    // Reset workspace state
     workspaceSelectedDances = [];
     workspaceSearchQuery = "";
     workspaceSearchResults = [];
@@ -1377,19 +1370,10 @@ function navigateBackFromWorkspace() {
     // ⭐ Remove workspace-mode (this is the correct place)
     document.body.classList.remove("workspace-mode");
 
-    // ⭐ Restore mode panel on exit (safe)
-    console.log("Restore mode panel on exit");
-    const modePanel = document.getElementById("workspaceModePanel");
-    if (modePanel) {
-        modePanel.style.margin = "";
-        modePanel.style.padding = "";
-        modePanel.style.height = "";
-        modePanel.style.overflow = "";
-    }
-
     lastNavigationMode = "hub";
     renderApplicationInterface();
 }
+
 
 
 
