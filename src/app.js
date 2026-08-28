@@ -641,10 +641,20 @@ function renderWorkspaceScreen() {
     const smallLogo = document.getElementById("workspaceSmallLogo");
     if (smallLogo) smallLogo.style.display = "block";
 
-    // Hide big bull header completely (remove leftover space)
+    // Collapse the entire header-bar (removes the gap)
+    const headerBar = document.querySelector('.header-bar');
+    if (headerBar) {
+        headerBar.style.display = 'none';
+        headerBar.style.margin = '0';
+        headerBar.style.padding = '0';
+        headerBar.style.height = '0';
+        headerBar.style.minHeight = '0';
+        headerBar.style.maxHeight = '0';
+    }
+
+    // Hide venue header (redundant once header-bar is collapsed, but safe)
     const venueHeader = document.querySelector('.venue-header');
     if (venueHeader) {
-        venueHeader.style.background = "rgba(0,255,255,0.25)";  // cyan
         venueHeader.style.display = 'none';
         venueHeader.style.margin = '0';
         venueHeader.style.padding = '0';
@@ -658,29 +668,15 @@ function renderWorkspaceScreen() {
     backBtn.style.display = 'block';
     backBtn.onclick = navigateBackFromWorkspace;
 
-    // ⭐ DIAGNOSTIC: Color the workspace header (magenta)
-    const wsHeader = document.querySelector('.workspace-header');
-    if (wsHeader) {
-        wsHeader.style.background = "rgba(255,0,255,0.25)"; // magenta
-    }
-
     // Inject workspace DOM
     document.getElementById('masterApplicationViewport').innerHTML = `
       <div class="workspace-screen">
 
         <!-- MODE SELECTION PANEL -->
         <div id="workspaceModePanel" class="workspace-mode-panel">
-            <button id="modeCreateBtn" class="workspace-mode-btn">
-                Create
-            </button>
-
-            <button id="modeDeleteBtn" class="workspace-mode-btn">
-                Delete
-            </button>
-
-            <button id="modeEditBtn" class="workspace-mode-btn">
-                Edit
-            </button>
+            <button id="modeCreateBtn" class="workspace-mode-btn">Create</button>
+            <button id="modeDeleteBtn" class="workspace-mode-btn">Delete</button>
+            <button id="modeEditBtn" class="workspace-mode-btn">Edit</button>
         </div>
 
         <!-- WORKSPACE CONTENT -->
@@ -704,6 +700,7 @@ function renderWorkspaceScreen() {
     document.getElementById('workspaceContent').style.display = 'block';
     attachWorkspaceListeners();  
 }
+
 
 
 function renderCreateModeLayout() {
