@@ -617,7 +617,7 @@ function renderWorkspacePlaylistSelection() {
 ============================================ */
 function renderWorkspaceScreen() {
     console.log("RENDER WORKSPACE SCREEN");
-   console.log("CHECK: renderWorkspaceScreen — workspaceMode =", workspaceMode);
+    console.log("CHECK: renderWorkspaceScreen — workspaceMode =", workspaceMode);
     document.body.classList.add("workspace-mode");
 
     // Hide hub UI elements
@@ -644,20 +644,25 @@ function renderWorkspaceScreen() {
     // Hide big bull header completely (remove leftover space)
     const venueHeader = document.querySelector('.venue-header');
     if (venueHeader) {
-       venueHeader.style.background = "rgba(0,255,255,0.25)";  // cyan
-       venueHeader.style.display = 'none';
-       venueHeader.style.margin = '0';
-       venueHeader.style.padding = '0';
-       venueHeader.style.height = '0';
-       venueHeader.style.minHeight = '0';
-       venueHeader.style.maxHeight = '0';
+        venueHeader.style.background = "rgba(0,255,255,0.25)";  // cyan
+        venueHeader.style.display = 'none';
+        venueHeader.style.margin = '0';
+        venueHeader.style.padding = '0';
+        venueHeader.style.height = '0';
+        venueHeader.style.minHeight = '0';
+        venueHeader.style.maxHeight = '0';
     }
-
 
     // Show back button
     const backBtn = document.getElementById('navbarReturnTrigger');
     backBtn.style.display = 'block';
     backBtn.onclick = navigateBackFromWorkspace;
+
+    // ⭐ DIAGNOSTIC: Color the workspace header (magenta)
+    const wsHeader = document.querySelector('.workspace-header');
+    if (wsHeader) {
+        wsHeader.style.background = "rgba(255,0,255,0.25)"; // magenta
+    }
 
     // Inject workspace DOM
     document.getElementById('masterApplicationViewport').innerHTML = `
@@ -696,10 +701,10 @@ function renderWorkspaceScreen() {
       </div>
     `;
 
-
     document.getElementById('workspaceContent').style.display = 'block';
     attachWorkspaceListeners();  
 }
+
 
 function renderCreateModeLayout() {
     console.log("RENDER CREATE MODE LAYOUT — Phase:", workspacePhase);
