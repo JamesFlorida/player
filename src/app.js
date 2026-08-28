@@ -1393,19 +1393,19 @@ function navigateBackFromWorkspace() {
     workspacePlaylistName = "";
     workspaceMode = "neutral";
 
-    // ⭐ Hide the small workspace-only logo
-    const smallLogo = document.getElementById("workspaceSmallLogo");
-    if (smallLogo) smallLogo.style.display = "none";
-
-    // ⭐ Hide workspace header entirely
+    // ⭐ Hide workspace header
     const wsHeader = document.querySelector('.workspace-header');
     if (wsHeader) wsHeader.style.display = 'none';
 
-    // ⭐ Restore the bull header
+    // ⭐ Hide small workspace logo
+    const smallLogo = document.getElementById("workspaceSmallLogo");
+    if (smallLogo) smallLogo.style.display = "none";
+
+    // ⭐ Restore venue header
     const venueHeader = document.querySelector('.venue-header');
     if (venueHeader) venueHeader.style.display = 'block';
 
-    // ⭐ Restore header-bar spacing (needed for hub screen)
+    // ⭐ Restore header-bar (undo workspace collapse)
     const headerBar = document.querySelector('.header-bar');
     if (headerBar) {
         headerBar.style.display = 'block';
@@ -1416,21 +1416,12 @@ function navigateBackFromWorkspace() {
         headerBar.style.maxHeight = '';
     }
 
-    // ⭐ DO NOT set applicationHeaderTitle — hub does not use it
-    // (Remove the line that sets PLAYLISTS)
-
     // ⭐ Remove workspace-mode
     document.body.classList.remove("workspace-mode");
 
     lastNavigationMode = "hub";
     renderApplicationInterface();
 }
-
-
-
-
-
-
 
 /* ============================================
    OPEN WORKSPACE
