@@ -158,6 +158,7 @@ function initializeVenueBranding() {
    NAVIGATION HELPERS
 ============================================ */
 function navigateToPlaylistHubMenu() {
+    applicationHeaderTitle.style.display = "none";
     selectedActivePlaylistGroup = null;
     activeDayView = null;
     activeDifficultyView = null;
