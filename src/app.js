@@ -901,11 +901,22 @@ function beginWorkspacePhase2() {
     }
 
     workspacePhase = 2;
+
+    // ⭐ Collapse mode panel only in Phase 2 (safe)
+    const modePanel = document.getElementById("workspaceModePanel");
+    if (modePanel) {
+        modePanel.style.margin = "0";
+        modePanel.style.padding = "0";
+        modePanel.style.height = "0";
+        modePanel.style.overflow = "hidden";
+    }
+
     document.getElementById('applicationHeaderTitle').innerText =
-    `Create Playlist: ${workspacePlaylistName}`;
+        `Create Playlist: ${workspacePlaylistName}`;
 
     renderCreateModeLayout();
 }
+
 
 
 function attachWorkspaceListeners() {
@@ -1333,25 +1344,26 @@ function navigateBackFromWorkspace() {
     console.log("NAVIGATE — lastNavigationMode:", lastNavigationMode);
     console.log("NAVIGATE — workspaceMode:", workspaceMode);
     console.log("NAVIGATE — selectedActivePlaylistGroup:", selectedActivePlaylistGroup);
-   // ⭐ EMPTY PLAYLIST WARNING (Phase 2 only)
-   if (workspaceMode === "create" &&
-       workspacePhase === 2 &&
-       workspaceSelectedDances.length === 0) {
 
-       const confirmLeave = confirm(
-        "This playlist has no dances.\nEmpty playlists cannot be saved.\nLeave without saving?"
-       );
+    // ⭐ EMPTY PLAYLIST WARNING (Phase 2 only)
+    if (workspaceMode === "create" &&
+        workspacePhase === 2 &&
+        workspaceSelectedDances.length === 0) {
 
-    if (!confirmLeave) return;
-}
+        const confirmLeave = confirm(
+            "This playlist has no dances.\nEmpty playlists cannot be saved.\nLeave without saving?"
+        );
+
+        if (!confirmLeave) return;
+    }
 
     // Reset workspace state but
-   workspaceSelectedDances = [];
-   workspaceSearchQuery = "";
-   workspaceSearchResults = [];
-   workspaceEditingOriginalName = "";
-   workspacePlaylistName = "";
-   workspaceMode = "neutral";
+    workspaceSelectedDances = [];
+    workspaceSearchQuery = "";
+    workspaceSearchResults = [];
+    workspaceEditingOriginalName = "";
+    workspacePlaylistName = "";
+    workspaceMode = "neutral";
 
     // ⭐ Hide the small workspace-only logo
     const smallLogo = document.getElementById("workspaceSmallLogo");
@@ -1364,10 +1376,19 @@ function navigateBackFromWorkspace() {
     // ⭐ Remove workspace-mode (this is the correct place)
     document.body.classList.remove("workspace-mode");
 
-    lastNavigationMode = "hub";
+    // ⭐ Restore mode panel on exit (safe)
+    const modePanel = document.getElementById("workspaceModePanel");
+    if (modePanel) {
+        modePanel.style.margin = "";
+        modePanel.style.padding = "";
+        modePanel.style.height = "";
+        modePanel.style.overflow = "";
+    }
 
+    lastNavigationMode = "hub";
     renderApplicationInterface();
 }
+
 
 
 
