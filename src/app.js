@@ -384,7 +384,7 @@ function renderApplicationInterface() {
     document.getElementById('navbarReturnTrigger').style.display = 'none';
     document.getElementById('navbarReturnTrigger').onclick = null;
 
-    document.getElementById('applicationHeaderTitle').innerText = " PLAYLISTS ";
+    document.getElementById('applicationHeaderTitle').innerText = " Stockyard Line Dancers App ";
 
    /* --------------------------------------------
    USER PLAYLIST VIEW
