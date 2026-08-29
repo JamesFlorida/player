@@ -685,7 +685,6 @@ function renderWorkspacePlaylistSelection() {
 function renderWorkspaceScreen() {
      activateWorkspaceHeader("Manage User Playlists");
     console.log("RENDER WORKSPACE SCREEN");
-    document.querySelector('.header-bar').style.display = 'none';
     console.log("CHECK: renderWorkspaceScreen — workspaceMode =", workspaceMode);
     document.body.classList.add("workspace-mode");
 
