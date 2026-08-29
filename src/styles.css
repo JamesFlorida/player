@@ -51,15 +51,15 @@ body {
 }
 
 .back-nav-btn {
-  position: absolute;
-  left: 15px;
   padding: 6px 14px;
   border-radius: 6px;
   font-size: 0.9rem;
   font-weight: bold;
   cursor: pointer;
   display: none;
+  flex: 0 0 auto;   /* ⭐ stays left, does not stretch */
 }
+
 
 /* Center the PLAYLISTS title */
 #applicationHeaderTitle {
