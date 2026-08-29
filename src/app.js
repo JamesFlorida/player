@@ -875,7 +875,7 @@ function renderCreateModeLayout() {
 
         footer.innerHTML = `
             <button class="workspace-save-btn" onclick="saveWorkspacePlaylist()">Save</button>
-            <button class="workspace-cancel-btn" onclick="renderWorkspaceScreen()">Cancel</button>
+            <button class="workspace-cancel-btn" onclick="cancelWorkspace()">Cancel</button>
         `;
 
         // ⭐ INITIAL RENDER OF LISTS
@@ -1158,7 +1158,7 @@ function deleteWorkspacePlaylist(name) {
                 Confirm Delete
             </button>
             
-           <button class="workspace-cancel-btn" onclick="renderWorkspaceDeleteList()">
+           <button class="workspace-cancel-btn" onclick="cancelWorkspace()">
                 Cancel
             </button>
  
@@ -1371,7 +1371,7 @@ function selectPlaylistForEditing(name) {
                Save Changes
               </button>
 
-              <button class="workspace-cancel-btn" onclick="cancelWorkspaceEdit()">
+              <button class="workspace-cancel-btn" onclick="cancelWorkspace()">
                Cancel
               </button>
        </div>
@@ -1478,22 +1478,14 @@ function openWorkspace() {
 
 
 /* ============================================
-   CANCEL WORKSPACE EDIT
+   CANCEL WORKSPACE 
 ============================================ */
-function cancelWorkspaceEdit() {
-   console.log("Cancel Workspace Edit");
-   const sel = document.getElementById('workspacePlaylistSelection');
-   if (sel) sel.style.display = 'none';
-
-    // Make sure workspace content is visible
-    const content = document.getElementById("workspaceContent");
-    if (content) content.style.display = "block";
-
-    // Rebuild the edit mode layout
-    renderEditModeLayout();
+function cancelWorkspace() {
+    workspaceMode = null;
+    workspacePhase = null;
+    workspacePlaylistName = "";
+    renderWorkspaceScreen();
 }
-
-
 
 /* ============================================
    EVENTS VIEW (placeholder)
@@ -1693,8 +1685,8 @@ window.startCreateMode = startCreateMode;
 window.startEditMode = startEditMode;
 window.startDeleteMode = startDeleteMode;
 window.openUserPlaylistView = openUserPlaylistView;
-window.cancelWorkspaceEdit = cancelWorkspaceEdit;
 window.confirmDeletePlaylist = confirmDeletePlaylist;
 window.renderWorkspaceDeleteList = renderWorkspaceDeleteList;
 window.beginWorkspacePhase2 = beginWorkspacePhase2;
 window.renderDeleteModeLayout = renderDeleteModeLayout;
+window.cancelWorkspace = cancelWorkspace;
