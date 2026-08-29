@@ -963,7 +963,8 @@ function startCreateMode() {
 function startDeleteMode() {
     console.log("Start Delete Mode — workspaceMode:", workspaceMode);
     activateWorkspaceHeader("Delete Playlist");
-    // ⭐ If no playlists exist, show message and return to NEUTRAL mode
+
+    // If no playlists exist
     if (!userPlaylistsData || Object.keys(userPlaylistsData).length === 0) {
         showWorkspaceMessage("No playlists available to delete.", "warning");
         workspaceMode = "neutral";
@@ -971,31 +972,39 @@ function startDeleteMode() {
         return;
     }
 
-    // ⭐ Hide selector (delete mode uses its own list)
+    // Hide mode-selection panel
+    const modePanel = document.getElementById('workspaceModePanel');
+    if (modePanel) modePanel.style.display = 'none';
+
+    // Hide selector
     const sel = document.getElementById('workspacePlaylistSelection');
     if (sel) sel.style.display = 'none';
 
-    // ⭐ Clear columns
+    // Clear columns
     document.getElementById("workspaceLeftColumn").innerHTML = "";
     document.getElementById("workspaceRightColumn").innerHTML = "";
 
-    // ⭐ Set mode
+    // Set mode + phase
     workspaceMode = "delete";
+    workspacePhase = 1;
+
+    // Update header
     document.getElementById('applicationHeaderTitle').innerText = "Delete Playlist";
 
-    // ⭐ Remove footer if present (Create Mode only)
+    // Remove footer (from Create Mode)
     const footer = document.getElementById("workspaceFooter");
     if (footer) footer.remove();
 
-    // ⭐ Update buttons
+    // Update workspace buttons
     updateWorkspaceModeButtons("delete");
 
-    // ⭐ Show workspace content
+    // Show workspace content
     document.getElementById("workspaceContent").style.display = "block";
 
-    // ⭐ Render delete layout
+    // Render delete layout
     renderDeleteModeLayout();
 }
+
 
 function beginWorkspacePhase2() {
     if (!workspacePlaylistName) {
@@ -1055,15 +1064,21 @@ function renderEditModeLayout() {
 function renderDeleteModeLayout() {
     const left = document.getElementById('workspaceLeftColumn');
     const right = document.getElementById('workspaceRightColumn');
-    // Wipe the right column so old confirmation UI disappears
-    right.innerHTML = "";
+
     left.innerHTML = `
         <div class="workspace-section-title">Delete Playlist</div>
         <div id="workspaceDeleteList" class="workspace-delete-list"></div>
     `;
 
+    right.innerHTML = `
+        <button class="workspace-cancel-btn" onclick="cancelWorkspace()">
+            Cancel
+        </button>
+    `;
+
     renderWorkspaceDeleteList();
 }
+
 
 /* ============================================
    WORKSPACE MODE BUTTON STATE HANDLER
