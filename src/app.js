@@ -154,6 +154,62 @@ function initializeVenueBranding() {
         }
     }
 }
+function activateWorkspaceHeader(modeTitle) {
+    // Hide the big venue header (bull banner)
+    const venueHeader = document.querySelector('.venue-header');
+    if (venueHeader) venueHeader.style.display = 'none';
+
+    // Show the shared header-bar
+    const headerBar = document.querySelector('.header-bar');
+    if (headerBar) headerBar.style.display = 'flex';
+
+    // Show and wire the back button for workspace exit
+    const backBtn = document.getElementById('navbarReturnTrigger');
+    if (backBtn) {
+        backBtn.style.display = 'block';
+        backBtn.onclick = navigateBackFromWorkspace;
+    }
+
+    // Set workspace title
+    const titleEl = document.getElementById('applicationHeaderTitle');
+    if (titleEl) {
+        titleEl.style.display = 'inline';
+        titleEl.innerText = modeTitle;
+    }
+
+    // Show the small workspace logo
+    const smallLogo = document.getElementById("workspaceSmallLogo");
+    if (smallLogo) smallLogo.style.display = "block";
+}
+
+function restoreHubHeader() {
+    // Show the big venue header (bull banner)
+    const venueHeader = document.querySelector('.venue-header');
+    if (venueHeader) venueHeader.style.display = 'block';
+
+    // Show the shared header-bar
+    const headerBar = document.querySelector('.header-bar');
+    if (headerBar) headerBar.style.display = 'flex';
+
+    // Hide the small workspace logo
+    const smallLogo = document.getElementById("workspaceSmallLogo");
+    if (smallLogo) smallLogo.style.display = "none";
+
+    // Hide the back button
+    const backBtn = document.getElementById('navbarReturnTrigger');
+    if (backBtn) {
+        backBtn.style.display = 'none';
+        backBtn.onclick = null;
+    }
+
+    // Restore hub title (venueConfig controls this)
+    const titleEl = document.getElementById('applicationHeaderTitle');
+    if (titleEl) {
+        titleEl.style.display = 'inline';
+        titleEl.innerText = venueConfig.headerTitle || venueConfig.name || "";
+    }
+}
+
 /* ============================================
    NAVIGATION HELPERS
 ============================================ */
@@ -384,6 +440,7 @@ function renderApplicationInterface() {
     document.getElementById('navbarReturnTrigger').style.display = 'none';
     document.getElementById('navbarReturnTrigger').onclick = null;
     if (lastNavigationMode === "hub") {
+    restoreHubHeader();
     document.getElementById('applicationHeaderTitle').innerText =
         venueConfig.headerTitle || venueConfig.name || "";
    }
@@ -626,6 +683,7 @@ function renderWorkspacePlaylistSelection() {
    WORKSPACE SCREEN (MAIN ENTRY)
 ============================================ */
 function renderWorkspaceScreen() {
+     activateWorkspaceHeader("Manage User Playlists");
     console.log("RENDER WORKSPACE SCREEN");
     document.querySelector('.header-bar').style.display = 'none';
     console.log("CHECK: renderWorkspaceScreen — workspaceMode =", workspaceMode);
@@ -832,6 +890,7 @@ function renderCreateModeLayout() {
 
 function startEditMode() {
     console.log("Start Edit Mode");
+   activateWorkspaceHeader("Edit Playlist");
     // ⭐ Remove footer if present (Create Mode only)
    const footer = document.getElementById("workspaceFooter");
    if (footer) footer.remove();
@@ -870,6 +929,7 @@ function startEditMode() {
 
 function startCreateMode() {
     console.log("Start Create Mode — workspaceMode:", workspaceMode);
+    activateWorkspaceHeader("Create Playlist");
 
     // Hide the mode selection buttons (Create / Edit / Delete)
     const modePanel = document.getElementById('workspaceModePanel');
@@ -902,7 +962,8 @@ function startCreateMode() {
 
 
 function startDeleteMode() {
-
+    console.log("Start Delete Mode — workspaceMode:", workspaceMode);
+    activateWorkspaceHeader("Delete Playlist");
     // ⭐ If no playlists exist, show message and return to NEUTRAL mode
     if (!userPlaylistsData || Object.keys(userPlaylistsData).length === 0) {
         showWorkspaceMessage("No playlists available to delete.", "warning");
@@ -1351,6 +1412,7 @@ function navigateBackFromWorkspace() {
     console.log("NAVIGATE — lastNavigationMode:", lastNavigationMode);
     console.log("NAVIGATE — workspaceMode:", workspaceMode);
     console.log("NAVIGATE — selectedActivePlaylistGroup:", selectedActivePlaylistGroup);
+    restoreHubHeader();
 
     // ⭐ EMPTY PLAYLIST WARNING (Phase 2 only)
     if (workspaceMode === "create" &&
