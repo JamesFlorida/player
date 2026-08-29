@@ -420,7 +420,9 @@ body:not(.workspace-mode-edit) #workspacePlaylistSelection {
     padding: 30px 20px;
 }
 .workspace-section-title {
-    margin-bottom: 20px;
+    font-size: 1.4rem;      /* bigger, readable */
+    font-weight: 600;
+    margin-bottom: 20px;    /* adds breathing room */
 }
 
 
@@ -624,12 +626,11 @@ body:not(.workspace-mode-edit) #workspacePlaylistSelection {
 }
 .workspace-name-box {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     font-size: 1rem;
-    margin-bottom: 20px;
+    margin-bottom: 20px;    /* spacing under input */
     border-radius: 6px;
 }
-
 
 /* ============================================================
    WORKSPACE — SCROLLABLE LISTS (GLOBAL)
@@ -828,17 +829,22 @@ body:not(.workspace-mode-edit) #workspacePlaylistSelection {
   background: #666;
 }
 .workspace-create-btn {
-    background: #007bff;
+    background: #444;           /* same dark theme as other buttons */
     color: white;
-    padding: 10px 18px;
+    padding: 12px 18px;
     border: none;
     border-radius: 6px;
     font-size: 1rem;
-    font-weight: bold;
+    font-weight: 600;
     cursor: pointer;
-    margin-top: 16px;
-    width: 100%;
+    width: 100%;                /* matches input width */
+    margin-top: 10px;
 }
+
+.workspace-create-btn:hover {
+    background: #555;
+}
+
 
 .workspace-create-btn:hover {
     background: #0069d9;
