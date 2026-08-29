@@ -383,9 +383,12 @@ function renderApplicationInterface() {
 
     document.getElementById('navbarReturnTrigger').style.display = 'none';
     document.getElementById('navbarReturnTrigger').onclick = null;
+    if (lastNavigationMode === "hub") {
+    document.getElementById('applicationHeaderTitle').innerText =
+        venueConfig.headerTitle || venueConfig.name || "";
+   }
 
-    document.getElementById('applicationHeaderTitle').innerText = " Stockyard Line Dancers App ";
-
+    
    /* --------------------------------------------
    USER PLAYLIST VIEW
    -------------------------------------------- */
@@ -624,6 +627,7 @@ function renderWorkspacePlaylistSelection() {
 ============================================ */
 function renderWorkspaceScreen() {
     console.log("RENDER WORKSPACE SCREEN");
+    document.querySelector('.header-bar').style.display = 'none';
     console.log("CHECK: renderWorkspaceScreen — workspaceMode =", workspaceMode);
     document.body.classList.add("workspace-mode");
 
