@@ -415,6 +415,15 @@ body:not(.workspace-mode-edit) #workspacePlaylistSelection {
     align-items: center;
     justify-content: space-between;
 }
+
+#workspaceLeftColumn {
+    padding: 30px 20px;
+}
+.workspace-section-title {
+    margin-bottom: 20px;
+}
+
+
 /*
 #applicationHeaderTitle {
     display: none;
@@ -613,6 +622,14 @@ body:not(.workspace-mode-edit) #workspacePlaylistSelection {
   color: #fff;
   font-size: 15px;
 }
+.workspace-name-box {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    margin-bottom: 20px;
+    border-radius: 6px;
+}
+
 
 /* ============================================================
    WORKSPACE — SCROLLABLE LISTS (GLOBAL)
@@ -810,6 +827,23 @@ body:not(.workspace-mode-edit) #workspacePlaylistSelection {
 .workspace-cancel-btn:hover {
   background: #666;
 }
+.workspace-create-btn {
+    background: #007bff;
+    color: white;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 16px;
+    width: 100%;
+}
+
+.workspace-create-btn:hover {
+    background: #0069d9;
+}
+
 
 /* ============================================================
    WORKSPACE — MODE BUTTONS (Create / Edit / Delete)
