@@ -419,12 +419,11 @@ body:not(.workspace-mode-edit) #workspacePlaylistSelection {
 #workspaceLeftColumn {
     padding: 30px 20px;
 }
-.workspace-section-title {
+#workspaceLeftColumn .workspace-section-title {
     font-size: 1.4rem;      /* bigger, readable */
     font-weight: 600;
     margin-bottom: 20px;    /* adds breathing room */
 }
-
 
 /*
 #applicationHeaderTitle {
@@ -614,16 +613,13 @@ body:not(.workspace-mode-edit) #workspacePlaylistSelection {
    WORKSPACE — SEARCH INPUTS (GLOBAL)
    ============================================================ */
 .workspace-search-box,
-.workspace-name-box {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 16px;
-  border-radius: 6px;
-  border: 1px solid #666;
-  background: #111;
-  color: #fff;
-  font-size: 15px;
+#workspaceLeftColumn .workspace-name-box {
+    margin-top: 12px;
+    margin-bottom: 20px;
+    padding: 12px;
+    font-size: 1rem;
 }
+
 .workspace-name-box {
     width: 100%;
     padding: 12px;
@@ -694,15 +690,16 @@ body:not(.workspace-mode-edit) #workspacePlaylistSelection {
         overflow-y: auto;
     }
 
-    .workspace-section-title {
+    body.workspace-compressed .workspace-section-title {
         margin-bottom: 6px;
     }
 
-    .workspace-name-box,
-    .workspace-search-box {
+    body.workspace-compressed .workspace-name-box,
+    body.workspace-compressed .workspace-search-box {
         margin-bottom: 8px;
     }
 }
+
 
 /* ============================================================
    WORKSPACE — LEFT COLUMN (SEARCH RESULTS)
@@ -828,8 +825,8 @@ body:not(.workspace-mode-edit) #workspacePlaylistSelection {
 .workspace-cancel-btn:hover {
   background: #666;
 }
-.workspace-create-btn {
-    background: #444;           /* same dark theme as other buttons */
+#workspaceLeftColumn .workspace-create-btn {
+    background: #444;
     color: white;
     padding: 12px 18px;
     border: none;
@@ -837,19 +834,13 @@ body:not(.workspace-mode-edit) #workspacePlaylistSelection {
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
-    width: 100%;                /* matches input width */
-    margin-top: 10px;
+    width: 100%;
+    margin-top: 20px;
 }
 
-.workspace-create-btn:hover {
+#workspaceLeftColumn .workspace-create-btn:hover {
     background: #555;
 }
-
-
-.workspace-create-btn:hover {
-    background: #0069d9;
-}
-
 
 /* ============================================================
    WORKSPACE — MODE BUTTONS (Create / Edit / Delete)
@@ -888,40 +879,37 @@ body:not(.workspace-mode-edit) #workspacePlaylistSelection {
   font-size: 14px;
 }
 
-/* Section titles */
-.workspace-section-title {
+body.workspace-compressed .workspace-section-title {
   margin: 2px 0 4px 0;
   padding: 0;
   font-size: 15px;
 }
 
 /* Playlist name input */
-.workspace-name-box {
+body.workspace-compressed .workspace-name-box {
   margin-bottom: 6px;
   padding: 6px;
   font-size: 14px;
 }
 
 /* Save/Cancel row */
-.workspace-actions {
+body.workspace-compressed .workspace-actions {
   margin-top: 8px;
 }
 
-.workspace-save-btn,
-.workspace-cancel-btn {
+body.workspace-compressed .workspace-save-btn,
+body.workspace-compressed .workspace-cancel-btn {
   padding: 8px 12px;
   font-size: 14px;
 }
 
 /* Search input */
-.workspace-search-box {
+body.workspace-compressed .workspace-search-box {
   margin-top: 6px;
   margin-bottom: 6px;
   padding: 6px;
   font-size: 14px;
 }
-
-
 
 /* ==========================================
    WORKSPACE — HEIGHT-BASED LIST SIZING
