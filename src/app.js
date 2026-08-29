@@ -1387,7 +1387,7 @@ function navigateBackFromWorkspace() {
     // ⭐ Restore header-bar (remove leftover workspace inline styles)
     const headerBar = document.querySelector('.header-bar');
     if (headerBar) {
-       headerBar.removeAttribute("style");   // ← THIS FIXES THE BLANK SPACE
+       headerBar.style.display = "none";
    }
 
 
