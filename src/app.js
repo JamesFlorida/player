@@ -657,12 +657,11 @@ function renderWorkspaceScreen() {
     if (smallLogo) smallLogo.style.display = "block";
 
     // Hide venue header (no aggressive collapse)
-   /*
+
     const venueHeader = document.querySelector('.venue-header');
     if (venueHeader) {
         venueHeader.style.display = 'none';
     }
-    */
 
     // Show workspace header as flex (for centered title)
     const wsHeader = document.querySelector('.workspace-header');
