@@ -875,7 +875,7 @@ function renderCreateModeLayout() {
 
         footer.innerHTML = `
             <button class="workspace-save-btn" onclick="saveWorkspacePlaylist()">Save</button>
-            <button class="workspace-cancel-btn" onclick="cancelWorkspaceEdit()">Cancel</button>
+            <button class="workspace-cancel-btn" onclick="renderWorkspaceScreen()">Cancel</button>
         `;
 
         // ⭐ INITIAL RENDER OF LISTS
