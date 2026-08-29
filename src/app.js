@@ -886,45 +886,51 @@ function renderCreateModeLayout() {
     }
 }
 
-
 function startEditMode() {
     console.log("Start Edit Mode");
-   activateWorkspaceHeader("Edit Playlist");
-    // ⭐ Remove footer if present (Create Mode only)
-   const footer = document.getElementById("workspaceFooter");
-   if (footer) footer.remove();
+    activateWorkspaceHeader("Edit Playlist");
 
+    // Hide mode-selection panel (missing before)
+    const modePanel = document.getElementById('workspaceModePanel');
+    if (modePanel) modePanel.style.display = 'none';
+
+    // Remove footer if present (Create Mode only)
+    const footer = document.getElementById("workspaceFooter");
+    if (footer) footer.remove();
+
+    // Set workspace mode + phase
     workspaceMode = "edit";
+    workspacePhase = 1;
 
-    // ⭐ Set body class for Edit Mode (so CSS can show the playlist selector)
+    // Body classes
     document.body.classList.add("workspace-mode-edit");
     document.body.classList.remove("workspace-mode-delete");
     document.body.classList.remove("workspace-mode-create");
 
     updateWorkspaceModeButtons("edit");
 
+    // If no playlists exist
     if (!userPlaylistsData || Object.keys(userPlaylistsData).length === 0) {
         showWorkspaceMessage("No playlists available to edit.", "warning");
         workspaceMode = "neutral";
-
-        // Remove edit class since we are aborting
         document.body.classList.remove("workspace-mode-edit");
-
         updateWorkspaceModeButtons("neutral");
         return;
     }
 
-    // Build Edit layout ONLY
-    document.getElementById("applicationHeaderTitle").innerText = "Edit Playlist";
-    updateWorkspaceModeButtons("edit");
-
+    // Clear columns
     document.getElementById("workspaceLeftColumn").innerHTML = "";
     document.getElementById("workspaceRightColumn").innerHTML = "";
 
+    // Update header
+    document.getElementById('applicationHeaderTitle').innerText = "Edit Playlist";
+
+    // Show workspace content
+    document.getElementById("workspaceContent").style.display = "block";
+
+    // Render edit layout
     renderEditModeLayout();
 }
-
-
 
 function startCreateMode() {
     console.log("Start Create Mode — workspaceMode:", workspaceMode);
@@ -1044,19 +1050,25 @@ function attachWorkspaceListeners() {
    EDIT MODE LAYOUT
 ============================================ */
 function renderEditModeLayout() {
-    console.log("Render Edit Model Layout");
+    console.log("Render Edit Mode Layout");
+
     const left = document.getElementById('workspaceLeftColumn');
     const right = document.getElementById('workspaceRightColumn');
-    console.log("DOM: renderEditModeLayout — injecting workspacePlaylistSelection container");
+
     left.innerHTML = `
         <div class="workspace-section-title">Select Playlist</div>
         <div id="workspacePlaylistSelection" class="workspace-playlist-selection"></div>
     `;
 
-    right.innerHTML = "";
+    right.innerHTML = `
+        <button class="workspace-cancel-btn" onclick="cancelWorkspace()">
+            Cancel
+        </button>
+    `;
 
     renderWorkspacePlaylistSelection();
 }
+
 
 /* ============================================
    DELETE MODE LAYOUT
