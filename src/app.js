@@ -743,10 +743,18 @@ function renderWorkspaceScreen() {
 
         <!-- MODE SELECTION PANEL -->
         <div id="workspaceModePanel" class="workspace-mode-panel">
-            <button id="modeCreateBtn" class="workspace-mode-btn">Create</button>
-            <button id="modeDeleteBtn" class="workspace-mode-btn">Delete</button>
-            <button id="modeEditBtn" class="workspace-mode-btn">Edit</button>
-        </div>
+
+       <button id="modeCreateBtn" class="workspace-mode-btn">Create Playlist</button>
+       <div class="workspace-mode-desc">Start a new playlist and give it a name.</div>
+
+       <button id="modeDeleteBtn" class="workspace-mode-btn">Delete Playlist</button>
+       <div class="workspace-mode-desc">Remove one of your personal playlists.</div>
+
+       <button id="modeEditBtn" class="workspace-mode-btn">Edit Playlist</button>
+       <div class="workspace-mode-desc">Add or remove dances from a playlist you created.</div>
+
+   </div>
+
 
         <!-- WORKSPACE CONTENT -->
         <div id="workspaceContent" style="display:none;">
