@@ -66,14 +66,14 @@
     border-radius: 8px;
     padding: 12px;
     color: #fff;
-    box-shadow: 0 0 10px rgba(255, 180, 60, 0.35);
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.9);
     transition: transform 0.1s ease-in-out;
 }
 
 .playlist-tile:hover {
     transform: scale(1.03);
     border-color: #800000;
-    box-shadow: 0 0 14px rgba(255, 180, 60, 0.5);
+    box-shadow: 3 3 14px rgba(255, 0, 0, 0.9);
 }
 
 /* Overlay Windows */
@@ -136,13 +136,13 @@ body {
     background-color: #111 !important;
     color: #fff !important;
     border: 2px solid #800000 !important;
-    box-shadow: 0 0 6px rgba(255, 180, 60, 0.4) !important;
+    box-shadow: 3 3 6px rgba(255, 0, 0, 0.9) !important;
 }
 
 #daySelect:focus,
 #difficultySelect:focus {
     border-color: #ffcc88 !important;
-    box-shadow: 0 0 10px rgba(255, 180, 60, 0.6) !important;
+    box-shadow: 3 3 10px rgba(255, 0, 0, 0.9) !important;
 }
 
 /* ========================================================= */
