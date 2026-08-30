@@ -1,119 +1,81 @@
+console.log(">>> APP.JS LOADED (NEW VERSION)");
+import { danceData } from './venues/Stockyard/danceData-stockyard.js';
+
+/* ============================================
+   IMPORTS     
+============================================ */
 import { globalDanceList } from "./globalDanceList.js";
 import { venueDanceMap } from "./venues/Stockyard/venueDanceMap.js";
 import { venueConfig } from "./venues/Stockyard/venueConfig.js";
 
 /* ============================================
-   MERGE GLOBAL + VENUE DANCE DATA
+   MERGE GLOBAL + VENUE DANCE DATA 
 ============================================ */
 let localDanceDatabase = [];
 
-venueDanceMap.forEach(mapEntry => {
-    const baseDance = globalDanceList.find(d => d.id === mapEntry.id);
-    if (baseDance) {
+venueDanceMap.forEach(entry => {
+    const base = globalDanceList.find(d => d.id === entry.id);
+    if (base) {
         localDanceDatabase.push({
-            ...baseDance,
-            playlist: mapEntry.playlist,
-            daytaught: mapEntry.daytaught
+            ...base,
+            playlist: entry.playlist,
+            daytaught: entry.daytaught
         });
     }
 });
 
-console.log("Merged dance count:", localDanceDatabase.length);
-console.log(localDanceDatabase);
-
 /* ============================================
-   APP STATE
+   CORE APP STATE
 ============================================ */
-let selectedActivePlaylistGroup = null;   // Which playlist is currently open (Dancelist Screen)
-let activeSearchQueryString = "";         // Hub search (will be removed later)
-let activeDayFilter = "ALL";              // Hub filter
+let overlayActive = false; //REMOVE
+let selectedActivePlaylistGroup = null;   // Which playlist is open
+let activeSearchQueryString = "";         // Hub search
+let activeDayFilter = "ALL";              // Hub day filter
 let activeDayView = null;                 // Hub day view
 let activeDifficultyView = null;          // Hub difficulty view
 let activeDifficultyFilter = "";          // Hub difficulty filter
-
 let lastNavigationMode = null;            // "hub", "playlist", "workspace"
+let activeUserPlaylistView = null;
+
 
 /* ============================================
    WORKSPACE STATE
 ============================================ */
-let workspaceMode = null;                 // "create" or "edit"
-let workspacePlaylistName = "";           // Name of the playlist being edited/created
-let workspaceSelectedDances = [];         // Array of dance IDs inside the playlist
-let workspaceSearchQuery = "";            // Search bar text inside Workspace
-let workspaceSearchResults = [];          // Search results inside Workspace
-let workspaceEditingOriginalName = "";    // For renaming playlists safely
-let userPlaylists = {};
-let allDances = localDanceDatabase;
-
-function startCreatingNewPlaylist() {
-    // Create a blank playlist object
-    selectedActivePlaylistGroup = {
-        name: "",
-        dances: []
-    };
-
-    // Switch navigation mode
-    lastNavigationMode = "workspace";
-
-    // Re-render Workspace in "edit mode"
-    renderWorkspaceScreen();
-}
-
-window.startCreatingNewPlaylist = startCreatingNewPlaylist;
-
-
-/* ============================================
-   DAY FILTER
-============================================ */
- function setDayFilter(day) {
-    activeDayFilter = day;
-    activeDayView = (day === "ALL") ? null : day;
-    selectedActivePlaylistGroup = null;
-    renderApplicationInterface();
-}
-
-/* ============================================
-   DIFFICULTY FILTER
-============================================ */
- function setDifficultyFilter(level) {
-    if (!level) {
-        activeDifficultyView = null;
-        activeDifficultyFilter = "";
-        navigateToPlaylistHubMenu();
-        return;
-    }
-
-    activeDifficultyView = level;
-    activeDifficultyFilter = level;
-
-    selectedActivePlaylistGroup = null;
-    activeDayView = null;
-
-    activeSearchQueryString = "";
-    document.getElementById('danceSearchInput').value = "";
-
-    renderApplicationInterface();
-}
+let workspaceMode = null;                 // "create", "edit", "delete"
+let workspacePhase = 1;  // 1 = name playlist, 2 = build playlist
+let workspacePlaylistName = "";           // Name of playlist being edited/created
+let workspaceSelectedDances = [];         // Dance names inside playlist
+let workspaceSearchQuery = "";            // Workspace search text
+let workspaceSearchResults = [];          // Workspace search results
+let workspaceEditingOriginalName = "";    // For safe renaming
+let userPlaylistsData = {};                   // User-created playlists
+let allDances = danceData;       // Shared dataset
 
 /* ============================================
    VENUE BRANDING
 ============================================ */
- function initializeVenueBranding() {
+function initializeVenueBranding() {
     const headerTitleEl = document.getElementById('applicationHeaderTitle');
     if (headerTitleEl) {
-        headerTitleEl.innerText = venueConfig.headerTitle || venueConfig.name || "LineDance Player";
+        headerTitleEl.innerText =
+            venueConfig.headerTitle ||
+            venueConfig.name ||
+            "LineDance Player";
     }
 
     const searchInput = document.getElementById('danceSearchInput');
     if (searchInput) {
-        searchInput.placeholder = venueConfig.searchPlaceholder || "Search dances...";
+        searchInput.placeholder =
+            venueConfig.searchPlaceholder ||
+            "Search dances...";
     }
 
     const emailBanner = document.getElementById('venueEmailBanner');
     if (emailBanner) {
         const venueName = venueConfig.name || "LineDance Player";
         const email = venueConfig.email || "";
-        emailBanner.innerText = email ? `✉ ${venueName} Feedback & Music Requests: ${email}` : "";
+        emailBanner.innerText =
+            email ? `✉ ${venueName} Feedback & Music Requests: ${email}` : "";
     }
 
     if (venueConfig.theme) {
@@ -125,7 +87,10 @@ window.startCreatingNewPlaylist = startCreatingNewPlaylist;
     }
 
     if (venueConfig.assets.backgroundImageUrl) {
-        document.documentElement.style.setProperty('--venue-bg-image', `url(${venueConfig.assets.backgroundImageUrl})`);
+        document.documentElement.style.setProperty(
+            '--venue-bg-image',
+            `url(${venueConfig.assets.backgroundImageUrl})`
+        );
     } else {
         document.documentElement.style.setProperty('--venue-bg-image', 'none');
     }
@@ -173,10 +138,15 @@ window.startCreatingNewPlaylist = startCreatingNewPlaylist;
     const splashEl = document.getElementById('venueSplash');
     const splashImgEl = document.getElementById('venueSplashImage');
     const splashTextEl = document.getElementById('venueSplashText');
+
     if (splashEl && splashImgEl && splashTextEl) {
         if (venueConfig.assets.splashImageUrl) {
             splashImgEl.src = venueConfig.assets.splashImageUrl;
-            splashTextEl.innerText = venueConfig.headerTitle || venueConfig.name || "LineDance Player";
+            splashTextEl.innerText =
+                venueConfig.headerTitle ||
+                venueConfig.name ||
+                "LineDance Player";
+
             splashEl.style.display = 'flex';
             setTimeout(() => splashEl.style.display = 'none', 1500);
         } else {
@@ -184,397 +154,206 @@ window.startCreatingNewPlaylist = startCreatingNewPlaylist;
         }
     }
 }
+function activateWorkspaceHeader(modeTitle) {
+    // Hide the big venue header (bull banner)
+    const venueHeader = document.querySelector('.venue-header');
+    if (venueHeader) venueHeader.style.display = 'none';
 
-/* ============================================
-   NAVIGATION
-============================================ */
-function navigateToPlaylistHubMenu() {
-    selectedActivePlaylistGroup = null;
+    // Show the shared header-bar
+    const headerBar = document.querySelector('.header-bar');
+    if (headerBar) headerBar.style.display = 'flex';
 
-    activeDayView = null;
-    activeDayFilter = "ALL";   // ⭐ FIXED
+    // Show and wire the back button for workspace exit
+    const backBtn = document.getElementById('navbarReturnTrigger');
+    if (backBtn) {
+        backBtn.style.display = 'block';
+        backBtn.onclick = navigateBackFromWorkspace;
+    }
 
-    activeDifficultyView = null;
-    activeDifficultyFilter = "";
+    // Set workspace title
+    const titleEl = document.getElementById('applicationHeaderTitle');
+    if (titleEl) {
+        titleEl.style.display = 'inline';
+        titleEl.innerText = modeTitle;
+    }
 
-    const searchInput = document.getElementById('danceSearchInput');
-    if (searchInput) searchInput.value = "";
-
-    const filterBar = document.getElementById('dayFilterBar');
-    if (filterBar) filterBar.style.display = 'block';
-
-    const diffBar = document.getElementById('difficultyFilterBar');
-    if (diffBar) diffBar.style.display = 'block';
-
-    document.getElementById('navbarReturnTrigger').style.display = 'none';
-    document.getElementById('applicationHeaderTitle').innerText = "Playlists";
-
-    renderApplicationInterface();
+    // Show the small workspace logo
+    const smallLogo = document.getElementById("workspaceSmallLogo");
+    if (smallLogo) smallLogo.style.display = "block";
 }
 
-function openSpecificPlaylistView(groupName) {
-    // Do NOT clear search state in Phase 2
-    // activeSearchQueryString stays exactly as-is
+function restoreHubHeader() {
+    // Show the big venue header (bull banner)
+    const venueHeader = document.querySelector('.venue-header');
+    if (venueHeader) venueHeader.style.display = 'block';
 
-    // Restore search bar text
-    const searchInput = document.getElementById('danceSearchInput');
-    if (searchInput) searchInput.value = activeSearchQueryString;
+    // Show the shared header-bar
+    const headerBar = document.querySelector('.header-bar');
+    if (headerBar) headerBar.style.display = 'flex';
 
-    // Set playlist group
-    selectedActivePlaylistGroup = groupName;
+    // Hide the small workspace logo
+    const smallLogo = document.getElementById("workspaceSmallLogo");
+    if (smallLogo) smallLogo.style.display = "none";
 
-    // Clear day/difficulty modes
-    activeDayView = null;
-    activeDayFilter = "ALL";
-    activeDifficultyView = null;
-    activeDifficultyFilter = "";
+    // Hide the back button
+    const backBtn = document.getElementById('navbarReturnTrigger');
+    if (backBtn) {
+        backBtn.style.display = 'none';
+        backBtn.onclick = null;
+    }
 
-    // Hide filters in playlist view
-    const filterBar = document.getElementById('dayFilterBar');
-    if (filterBar) filterBar.style.display = 'none';
-
-    const diffBar = document.getElementById('difficultyFilterBar');
-    if (diffBar) diffBar.style.display = 'none';
-
-    // Show return trigger
-   document.getElementById('navbarReturnTrigger').style.display = 'block';
-   document.getElementById('navbarReturnTrigger').onclick = navigateToPlaylistHubMenu;
-
-
-    // Restore playlist header
-    document.getElementById('applicationHeaderTitle').innerText = groupName;
-
-    // Render playlist screen
-    renderApplicationInterface();
-}
-
-
-function openSearchResultsWorkspace(matches) {
-   
-
-    // Render the workspace search results screen
-    renderWorkspaceSearchResults(matches);
-}
-
-function returnToSearchResults() {
-    // Clear single dance mode
-    selectedActivePlaylistGroup = null;
-
-    // Restore search bar text
-    const searchBox = document.getElementById('danceSearchInput');
-    if (searchBox) searchBox.value = activeSearchQueryString;
-
-    // If search query exists → re-render workspace search results
-    if (activeSearchQueryString && activeSearchQueryString.length > 0) {
-        const matches = localDanceDatabase.filter(track =>
-            track.name.toLowerCase().includes(activeSearchQueryString.toLowerCase())
-        );
-
-        // Restore header title
-        document.getElementById('applicationHeaderTitle').innerText = "Search Results";
-
-        renderWorkspaceSearchResults(matches);
-    } else {
-        // If no query exists, return to hub
-        returnToHub();
+    // Restore hub title (venueConfig controls this)
+    const titleEl = document.getElementById('applicationHeaderTitle');
+    if (titleEl) {
+        titleEl.style.display = 'inline';
+        titleEl.innerText = venueConfig.headerTitle || venueConfig.name || "";
     }
 }
 
-function openDanceFromPlaylist(danceId) {
-    lastNavigationMode = "playlist";
-
-    // Preserve search state (Phase 2)
-    const searchBox = document.getElementById('danceSearchInput');
-    if (searchBox) searchBox.value = activeSearchQueryString;
-
-    // Find the dance
-    const dance = localDanceDatabase.find(d => d.id === danceId);
-    if (!dance) return;
-
-    // ⭐ Stay in playlist mode
-    selectedActivePlaylistGroup = dance.playlist;
-
-    // ⭐ DO NOT re-render the screen here
-    // renderApplicationInterface();   <-- REMOVE THIS LINE
-}
-
-function navigateBackFromWorkspace() {
+/* ============================================
+   NAVIGATION HELPERS
+============================================ */
+function navigateToPlaylistHubMenu() {
+    /*  applicationHeaderTitle.style.display = "none";  */
+    selectedActivePlaylistGroup = null;
+    activeDayView = null;
+    activeDifficultyView = null;
     lastNavigationMode = "hub";
     renderApplicationInterface();
 }
 
-function openDanceFromSearchToSingleDance(danceId) {
-    lastNavigationMode = "search";
-    // Do NOT clear search state in Phase 2
-    // activeSearchQueryString stays exactly as-is
-
-    // Restore search bar text
-    const searchBox = document.getElementById('danceSearchInput');
-    if (searchBox) searchBox.value = activeSearchQueryString;
-
-    // Find the dance
-    const dance = localDanceDatabase.find(d => d.id === danceId);
-    if (!dance) return;
-
-    
-
-    // Clear playlist mode (but preserve search context)
-    selectedActivePlaylistGroup = null;
-
-    // Restore header title to dance name
-    document.getElementById('applicationHeaderTitle').innerText = dance.name;
-
-    // Render the workspace screen
-    renderApplicationInterface();
-}
-
-
 function returnToHub() {
-    // Clear workspace state
-   
     selectedActivePlaylistGroup = null;
-
-    // Clear search state
-    activeSearchQueryString = "";
-    const searchBox = document.getElementById('danceSearchInput');
-    if (searchBox) searchBox.value = "";
-
-    // Restore hub header
-    document.getElementById('applicationHeaderTitle').innerText =
-        venueConfig.headerTitle || venueConfig.name || "LineDance Player";
-
-    // Render hub screen
+    activeDayView = null;
+    activeDifficultyView = null;
+    lastNavigationMode = "hub";
     renderApplicationInterface();
 }
 
-function openDanceFromSearchToPlaylist(danceId) {
-    // Do NOT clear search state in Phase 2
-    // activeSearchQueryString stays exactly as-is
+function returnToSearchResults() {
+    lastNavigationMode = "search";
+    renderApplicationInterface();
+}
 
-    // Restore search bar text
-    const searchBox = document.getElementById('danceSearchInput');
-    if (searchBox) searchBox.value = activeSearchQueryString;
+/* ============================================
+   HUB SEARCH INPUT
+============================================ */
+function handleLiveSearchInput() {
+    const query = document.getElementById('danceSearchInput').value.trim().toLowerCase();
+    activeSearchQueryString = query;
 
-    // Find the dance
+    const resultsContainer = document.querySelector('.search-results-container');
+    if (!resultsContainer) return;
+
+    if (!query) {
+        resultsContainer.innerHTML = "";
+        return;
+    }
+
+    const matches = localDanceDatabase.filter(track =>
+        track.name.toLowerCase().includes(query)
+    );
+
+    renderSimpleSearchCards(matches, resultsContainer);
+}
+
+/* ============================================
+   DAY FILTER
+============================================ */
+function setDayFilter(day) {
+    activeDayFilter = day;
+    activeDayView = day === "ALL" ? null : day;
+    lastNavigationMode = "day";
+    renderApplicationInterface();
+}
+
+/* ============================================
+   DIFFICULTY FILTER
+============================================ */
+function setDifficultyFilter(level) {
+    activeDifficultyFilter = level;
+    activeDifficultyView = level || null;
+    lastNavigationMode = "difficulty";
+    renderApplicationInterface();
+}
+
+/* ============================================
+   OPEN PLAYLIST VIEW
+============================================ */
+function openSpecificPlaylistView(name) {
+   console.log(">>> PLAYLIST CARD CLICKED:", name);
+    selectedActivePlaylistGroup = name;
+    activeDayView = null;
+    activeDifficultyView = null;
+    lastNavigationMode = "playlist";
+    renderApplicationInterface();
+}
+
+function openUserPlaylistView(name) {
+    console.log(">>> USER PLAYLIST CARD CLICKED:", name);
+
+    // Clear venue playlist mode
+    selectedActivePlaylistGroup = null;
+
+    // Activate user playlist mode
+    activeUserPlaylistView = name;
+
+    activeDayView = null;
+    activeDifficultyView = null;
+    lastNavigationMode = "user-playlist";
+
+    renderApplicationInterface();
+}
+
+
+/* ============================================
+   OPEN DANCE FROM PLAYLIST
+============================================ */
+function openDanceFromPlaylist(danceId) {
+    // Dance cards should not navigate anywhere in the new architecture.
+    // All actions happen through the 4 buttons on the card.
+    return;
+}
+/* ============================================
+   OPEN DANCE FROM SEARCH
+============================================ */
+function openDanceFromSearchToSingleDance(danceId) {
     const dance = localDanceDatabase.find(d => d.id === danceId);
     if (!dance) return;
 
-    // Set playlist group
-    selectedActivePlaylistGroup = dance.playlist;
-
-   
-
-    // Restore playlist header
-    document.getElementById('applicationHeaderTitle').innerText = dance.playlist;
-
-    // Render playlist screen
-    renderApplicationInterface();
-
-    // Scroll to the dance card
-    setTimeout(() => {
-        const el = document.getElementById(`dance-card-${danceId}`);
-        if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
-    }, 50);
+    window.selectedSingleDance = dance;
+    lastNavigationMode = "search";
+    renderSingleDanceScreen(dance);
 }
-
 
 /* ============================================
-   SEARCH (CORRECTED)
-============================================ */
- function handleLiveSearchInput() {
-    const searchBox = document.getElementById('danceSearchInput');
-    activeSearchQueryString = searchBox.value.toLowerCase().trim();
-
-    // ⭐ If search is empty → fully restore hub screen
-   if (activeSearchQueryString.length === 0) {
-  
-    selectedActivePlaylistGroup = null;
-
-    // Restore hub header
-    document.getElementById('applicationHeaderTitle').innerText =
-        venueConfig.headerTitle || venueConfig.name || "LineDance Player";
-
-    // Restore hub screen
-    renderApplicationInterface();
-    return;
-      }
-
-
-    // ⭐ Otherwise → show search results
-    updateSearchResults();
-}
-
- function updateSearchResults() {
-    const viewport = document.getElementById('masterApplicationViewport');
-    if (!viewport) return;
-
-    const matches = localDanceDatabase.filter(d =>
-        (d.name || "").toLowerCase().includes(activeSearchQueryString) ||
-        (d.choreographer || "").toLowerCase().includes(activeSearchQueryString)
-    );
-
-    // ⭐ NEW: render results in the Workspace Search Results Screen
-    openSearchResultsWorkspace(matches);
-}
-
-function startEditingExistingPlaylist() {
-
-    // If no playlist is selected, do nothing for now
-    // (Step 8 will add a proper selection UI)
-    if (!selectedActivePlaylistGroup) {
-        alert("No playlist selected to edit.");
-        return;
-    }
-
-    // Switch Workspace into edit mode
-    workspaceMode = "edit";
-    workspacePlaylistName = selectedActivePlaylistGroup.name;
-
-    // Re-render Workspace with the playlist loaded
-    renderWorkspaceScreen();
-}
-
-function selectPlaylistForEditing(name) {
-    selectedActivePlaylistGroup = userPlaylists[name];
-    workspaceMode = "edit";
-    workspacePlaylistName = name;
-
-    renderWorkspaceScreen();
-}
-
-
-function saveWorkspacePlaylist() {
-
-    // Validate name
-    if (!workspacePlaylistName || workspacePlaylistName.trim() === "") {
-        alert("Please enter a playlist name.");
-        return;
-    }
-
-    // Validate selected dances
-    if (!selectedActivePlaylistGroup || !selectedActivePlaylistGroup.dances || selectedActivePlaylistGroup.dances.length === 0) {
-        alert("Please add at least one dance to the playlist.");
-        return;
-    }
-
-    // Save or overwrite playlist
-    userPlaylists[workspacePlaylistName] = {
-        name: workspacePlaylistName,
-        dances: [...selectedActivePlaylistGroup.dances]
-    };
-
-    alert(`Playlist "${workspacePlaylistName}" saved.`);
-
-    // Return to Hub or stay in Workspace?
-    // For now, stay in Workspace and refresh the selection list
-    renderWorkspaceScreen();
-}
-
-function deleteWorkspacePlaylist() {
-
-    // Must be editing a playlist
-    if (!selectedActivePlaylistGroup || !workspacePlaylistName) {
-        alert("No playlist selected to delete.");
-        return;
-    }
-
-    // Prevent deleting Stock playlists
-    if (workspacePlaylistName.startsWith("Stock-")) {
-        alert("Stock playlists cannot be deleted.");
-        return;
-    }
-
-    // Confirm deletion
-    const confirmDelete = confirm(`Delete playlist "${workspacePlaylistName}"?`);
-    if (!confirmDelete) return;
-
-    // Delete from userPlaylists
-    delete userPlaylists[workspacePlaylistName];
-
-    // Reset workspace state
-    selectedActivePlaylistGroup = { name: "", dances: [] };
-    workspacePlaylistName = "";
-    workspaceMode = "create";
-
-    alert("Playlist deleted.");
-
-    // Refresh Workspace
-    renderWorkspaceScreen();
-}
-
-function handleWorkspaceSearchInput() {
-    const query = document.getElementById('workspaceSearchInput').value.trim().toLowerCase();
-
-    // If empty, clear results
-    if (!query) {
-        document.getElementById('workspaceSearchResults').innerHTML = "";
-        return;
-    }
-
-    // Search dances (same dataset used by Hub search)
-    const matches = allDances.filter(d =>
-        d.name.toLowerCase().includes(query)
-    );
-
-    // Render results
-    renderWorkspaceSearchResults(matches);
-}
-
-function addDanceToWorkspace(danceName) {
-
-    if (!selectedActivePlaylistGroup) {
-        selectedActivePlaylistGroup = { name: "", dances: [] };
-    }
-
-    // Prevent duplicates
-    if (!selectedActivePlaylistGroup.dances.includes(danceName)) {
-        selectedActivePlaylistGroup.dances.push(danceName);
-    }
-
-    renderWorkspaceSelectedList();
-}
-
-function removeDanceFromWorkspace(danceName) {
-    if (!selectedActivePlaylistGroup) return;
-
-    selectedActivePlaylistGroup.dances =
-        selectedActivePlaylistGroup.dances.filter(d => d !== danceName);
-
-    renderWorkspaceSelectedList();
-}
-
-
-function handleWorkspaceNameInput() {
-    const input = document.getElementById("workspacePlaylistNameInput");
-    workspacePlaylistName = input.value;
-    selectedActivePlaylistGroup.name = workspacePlaylistName;
-}
-
-
-
-
-
-
-
-/* ============================================
-   MAIN RENDERER (CLEANED + CORRECTED)
+   MAIN RENDERER
 ============================================ */
 function renderApplicationInterface() {
+    if (overlayActive) {
+        console.log(">>> renderApplicationInterface BLOCKED (overlay active)");
+        return;
+    }
+
+    console.log(">>> renderApplicationInterface RUNNING");
+
     const viewport = document.getElementById('masterApplicationViewport');
     if (!viewport) return;
 
     viewport.innerHTML = '';
-   
-       /* --------------------------------------------
-   WORKSPACE SCREEN
-   -------------------------------------------- */
-if (lastNavigationMode === "workspace") {
-    renderWorkspaceScreen();
-    return;
-}
 
     /* --------------------------------------------
-       1. PLAYLIST VIEW (if user is inside a playlist)
+       WORKSPACE SCREEN
+       -------------------------------------------- */
+    if (lastNavigationMode === "workspace") {
+        renderWorkspaceScreen();
+        attachWorkspaceListeners();
+        setTimeout(attachWorkspaceListeners, 0);
+        return;
+    }
+
+    /* --------------------------------------------
+       PLAYLIST VIEW
        -------------------------------------------- */
     if (selectedActivePlaylistGroup !== null) {
 
@@ -588,15 +367,16 @@ if (lastNavigationMode === "workspace") {
 
         renderDanceCardsList(filteredTracks, viewport);
         updateHubVisibility();
-        return;
+        return;   // ⭐ prevents hub screen from overwriting playlist
     }
 
     /* --------------------------------------------
-       2. DAY VIEW
+       DAY VIEW
        -------------------------------------------- */
     if (activeDayView !== null) {
 
         document.getElementById('navbarReturnTrigger').style.display = 'block';
+        document.getElementById('navbarReturnTrigger').onclick = navigateToPlaylistHubMenu;
         document.getElementById('applicationHeaderTitle').innerText = activeDayView + " Dances";
 
         const dayTracks = localDanceDatabase.filter(track =>
@@ -604,23 +384,25 @@ if (lastNavigationMode === "workspace") {
         );
 
         if (!dayTracks.length) {
-            viewport.innerHTML = '<p style="text-align:center;color:#aaa;margin-top:20px;">No dances taught on this day.</p>';
+            viewport.innerHTML = `
+                <p style="text-align:center;color:#aaa;margin-top:20px;">
+                    No dances taught on this day.
+                </p>`;
             return;
         }
 
         renderDanceCardsList(dayTracks, viewport);
         updateHubVisibility();
-        return;
+        return;   // ⭐ prevents hub screen from overwriting day view
     }
 
     /* --------------------------------------------
-       3. DIFFICULTY VIEW
+       DIFFICULTY VIEW
        -------------------------------------------- */
     if (activeDifficultyView !== null) {
 
         document.getElementById('navbarReturnTrigger').style.display = 'block';
         document.getElementById('navbarReturnTrigger').onclick = navigateToPlaylistHubMenu;
-
         document.getElementById('applicationHeaderTitle').innerText =
             activeDifficultyView + " Dances";
 
@@ -631,17 +413,20 @@ if (lastNavigationMode === "workspace") {
         );
 
         if (!difficultyTracks.length) {
-            viewport.innerHTML = '<p style="text-align:center;color:#aaa;margin-top:20px;">No dances found for this difficulty level.</p>';
+            viewport.innerHTML = `
+                <p style="text-align:center;color:#aaa;margin-top:20px;">
+                    No dances found for this difficulty level.
+                </p>`;
             return;
         }
 
         renderDanceCardsList(difficultyTracks, viewport);
         updateHubVisibility();
-        return;
+        return;   // ⭐ prevents hub screen from overwriting difficulty view
     }
 
     /* --------------------------------------------
-       4. HUB SCREEN (default)
+       HUB SCREEN (default)
        -------------------------------------------- */
     const filterBar = document.getElementById('dayFilterBar');
     if (filterBar) filterBar.style.display = 'block';
@@ -654,26 +439,91 @@ if (lastNavigationMode === "workspace") {
 
     document.getElementById('navbarReturnTrigger').style.display = 'none';
     document.getElementById('navbarReturnTrigger').onclick = null;
+    if (lastNavigationMode === "hub") {
+    restoreHubHeader();
+    document.getElementById('applicationHeaderTitle').innerText =
+        venueConfig.headerTitle || venueConfig.name || "";
+   }
 
-    document.getElementById('applicationHeaderTitle').innerText = "Playlists";
+    
+   /* --------------------------------------------
+   USER PLAYLIST VIEW
+   -------------------------------------------- */
+if (lastNavigationMode === "user-playlist" && activeUserPlaylistView !== null) {
 
+   const tracks = (userPlaylistsData[activeUserPlaylistView] || [])
+    .map(title => allDances.find(t =>
+        t.name.trim().toLowerCase() === title.trim().toLowerCase()
+    ))
+    .filter(t => t);
+
+
+   console.log("DEBUG — activeUserPlaylistView:", activeUserPlaylistView);
+   console.log("DEBUG — raw playlist titles:", userPlaylistsData[activeUserPlaylistView]);
+   console.log("DEBUG — database titles:", localDanceDatabase.map(t => t.title));
+
+    document.getElementById('navbarReturnTrigger').style.display = 'block';
+    document.getElementById('navbarReturnTrigger').onclick = navigateToPlaylistHubMenu;
+    document.getElementById('applicationHeaderTitle').innerText = activeUserPlaylistView;
+
+    if (!tracks.length) {
+        viewport.innerHTML = `
+            <p style="text-align:center;color:#aaa;margin-top:20px;">
+                No dances found in this playlist.
+            </p>`;
+        return;
+    }
+
+    renderDanceCardsList(tracks, viewport);
+    updateHubVisibility();
+    return;
+}
+
+
+    /* --------------------------------------------
+       VENUE PLAYLISTS
+       -------------------------------------------- */
     let groupNames;
     if (venueConfig.playlistGroups?.length > 0) {
         groupNames = [...venueConfig.playlistGroups];
     } else {
-        groupNames = [...new Set(localDanceDatabase.map(track => track.playlist || "General"))].sort();
+        groupNames = [...new Set(localDanceDatabase.map(track =>
+            track.playlist || "General"
+        ))].sort();
     }
 
-    const playlistCardsHTML = groupNames.map(name => {
+    const venuePlaylistCardsHTML = groupNames.map(name => {
         const count = localDanceDatabase.filter(t => t.playlist === name).length;
         return `
-            <div class="hub-playlist-card" onclick="openSpecificPlaylistView('${name}')">
+            <div class="hub-playlist-card"
+                 onclick="openSpecificPlaylistView('${name}')">
                 <div class="hub-playlist-name">${name}</div>
                 <div class="hub-playlist-count">${count} dances</div>
             </div>
         `;
     }).join('');
 
+    /* --------------------------------------------
+       USER PLAYLISTS
+       -------------------------------------------- */
+    const userPlaylistNames = Object.keys(userPlaylistsData || {});
+    const userPlaylistCardsHTML =
+        userPlaylistNames.length > 0
+            ? userPlaylistNames.map(name => {
+                const count = userPlaylistsData[name].length;
+                return `
+                    <div class="hub-playlist-card user-playlist-card"
+                         onclick="openUserPlaylistView('${name}')">
+                        <div class="hub-playlist-name">${name}</div>
+                        <div class="hub-playlist-count">${count} dances</div>
+                    </div>
+                `;
+            }).join('')
+            : "";
+
+    /* --------------------------------------------
+       RENDER HUB SCREEN
+       -------------------------------------------- */
     viewport.innerHTML = `
         <div class="hub-screen">
 
@@ -696,81 +546,124 @@ if (lastNavigationMode === "workspace") {
             </div>
 
             <div class="hub-nav-row">
-             <div class="hub-nav-card" onclick="openWorkspace()">Manage User Playlists</div>
-             <div class="hub-nav-card" onclick="openEventsView()">Events</div>
+                <div class="hub-nav-card" onclick="openWorkspace()">
+                    Manage User Playlists
+                </div>
+                <div class="hub-nav-card" onclick="openEventsView()">
+                    Events
+                </div>
             </div>
 
             <div class="playlist-container">
-                ${playlistCardsHTML}
-            </div>
-            <div class="search-results-container"></div>
 
+                ${userPlaylistCardsHTML
+                    ? `<div class="hub-section-title">Your Playlists</div>${userPlaylistCardsHTML}`
+                    : ""}
+
+                <div class="hub-section-title">Venue Playlists</div>
+                ${venuePlaylistCardsHTML}
+
+            </div>
+
+            <div class="search-results-container"></div>
         </div>
     `;
 }
 
+
+
 /* ============================================
-   DANCE CARD RENDERING
+   DANCE CARD RENDERER
 ============================================ */
-function renderDanceCardsList(tracksList, containerElement) {
-    tracksList.forEach(track => {
+function renderDanceCardsList(tracks, containerElement) {
+    console.log(">>> renderDanceCardsList running with", tracks.length, "tracks");
 
-        if (activeDayFilter !== "ALL" && track.daytaught !== activeDayFilter) {
-            return;
-        }
+    containerElement.innerHTML = "";
 
+    if (!tracks.length) {
+        containerElement.innerHTML = `
+            <p style="text-align:center;color:#aaa;margin-top:20px;">
+                No dances found.
+            </p>`;
+        return;
+    }
+
+    tracks.forEach(track => {
         const card = document.createElement('div');
         card.className = 'dance-entry-card';
-        card.id = `dance-card-${track.id}`;
-        card.onclick = () => openDanceFromPlaylist(track.id);
-         
-        const btnSteps = track.steps
-            ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.steps}', '${track.name} - Steps')">Steps</button>`
-            : `<button class="action-touch-btn disabled">None</button>`;
 
-        const btnTeach = track.teach
-            ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.teach}', '${track.name} - Teach')">Teach</button>`
-            : `<button class="action-touch-btn disabled">None</button>`;
-
-        const btnDemo = track.demo
-            ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.demo}', '${track.name} - Demo')">Demo</button>`
-            : `<button class="action-touch-btn disabled">None</button>`;
-
-        const btnMusic = track.music
-            ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${track.music}', '${track.name} - Play')">Music</button>`
-            : `<button class="action-touch-btn disabled">None</button>`;
+        // Prevent card click from firing when buttons are clicked
+        card.addEventListener('click', (event) => {
+            event.stopPropagation();
+        });
 
         card.innerHTML = `
             <div class="title-line">${track.name} • By: ${track.choreographer}</div>
-            <div class="meta-line">Song: ${track.song} - ${track.artist} (${track.playlist})</div>
-            <div class="button-bar-grid">
-                ${btnSteps}
-                ${btnTeach}
-                ${btnDemo}
-                ${btnMusic}
+            <div class="meta-line">Song: ${track.song} - ${track.artist}</div>
+
+            <div class="dance-button-row">
+                <button class="playlist-btn steps-btn">Steps</button>
+                <button class="playlist-btn teach-btn">Teach</button>
+                <button class="playlist-btn demo-btn">Demo</button>
+                <button class="playlist-btn music-btn">Music</button>
             </div>
         `;
+
+        console.log(">>> HTML GENERATED:", card.innerHTML);
+
+        // Attach event listeners with stopPropagation to prevent card navigation
+        card.querySelector('.steps-btn').addEventListener('click', (event) => {
+            event.stopPropagation();
+            launchMediaOverlay(track.steps, `${track.name} - Steps`);
+        });
+
+        card.querySelector('.teach-btn').addEventListener('click', (event) => {
+            event.stopPropagation();
+            launchMediaOverlay(track.teach, `${track.name} - Teach`);
+        });
+
+        card.querySelector('.demo-btn').addEventListener('click', (event) => {
+            event.stopPropagation();
+            launchMediaOverlay(track.demo, `${track.name} - Demo`);
+        });
+
+        card.querySelector('.music-btn').addEventListener('click', (event) => {
+            event.stopPropagation();
+            launchMediaOverlay(track.music, `${track.name} - Music`);
+        });
+
         containerElement.appendChild(card);
     });
 }
 
+
+
+/* ============================================
+   WORKSPACE PLAYLIST SELECTION (EDIT MODE)
+============================================ */
 function renderWorkspacePlaylistSelection() {
+    console.log("Render Workspace Playlist Selection");
+    console.log("DOM CHECK: workspacePlaylistSelection exists?", !!document.getElementById('workspacePlaylistSelection'));
 
     const container = document.getElementById('workspacePlaylistSelection');
-    if (!container) return;
+    if (!container) {
+        console.log("WS: playlistSelection container NOT FOUND");
+        return;
+    }
 
-    // If no user playlists exist yet
-    if (!userPlaylists || Object.keys(userPlaylists).length === 0) {
+    console.log("WS: renderWorkspacePlaylistSelection — userPlaylistsData:", userPlaylistsData);
+
+    if (!userPlaylistsData || Object.keys(userPlaylistsData).length === 0) {
         container.innerHTML = `<div class="workspace-note">No user playlists available.</div>`;
         return;
     }
 
-    // Build a simple list of user playlists
     let html = `<div class="workspace-note">Select a playlist to edit:</div>`;
 
-    Object.keys(userPlaylists).forEach(name => {
+    Object.keys(userPlaylistsData).forEach(name => {
         html += `
-            <div class="workspace-playlist-item" onclick="selectPlaylistForEditing('${name}')">
+            <div class="workspace-playlist-item"
+                 onclick="selectPlaylistForEditing('${name}')">
                 ${name}
             </div>
         `;
@@ -778,232 +671,987 @@ function renderWorkspacePlaylistSelection() {
 
     container.innerHTML = html;
 }
+
+
+/* ============================================
+   WORKSPACE SCREEN (MAIN ENTRY)
+============================================ */
+/* ============================================
+   WORKSPACE SCREEN (MAIN ENTRY)
+============================================ */
+/* ============================================
+   WORKSPACE SCREEN (MAIN ENTRY)
+============================================ */
 function renderWorkspaceScreen() {
+     activateWorkspaceHeader("Manage User Playlists");
+    console.log("RENDER WORKSPACE SCREEN");
+    console.log("CHECK: renderWorkspaceScreen — workspaceMode =", workspaceMode);
+    document.body.classList.add("workspace-mode");
 
-    // Header Title
-    document.getElementById('applicationHeaderTitle').innerText =
-        workspaceMode === "edit"
-            ? `Edit Playlist: ${workspacePlaylistName}`
-            : `Create Playlist`;
-
-    // Hide Hub filters and search
+    // Hide hub UI elements
     const filterBar = document.getElementById('dayFilterBar');
-    if (filterBar) filterBar.style.display = 'none';
+    if (filterBar) {
+        filterBar.style.display = 'none';
+        filterBar.classList.add("hub-hidden");
+    }
 
     const diffBar = document.getElementById('difficultyFilterBar');
-    if (diffBar) diffBar.style.display = 'none';
+    if (diffBar) {
+        diffBar.style.display = 'none';
+        diffBar.classList.add("hub-hidden");
+    }
 
     const hubSearchRow = document.querySelector('.hub-search-row');
-    if (hubSearchRow) hubSearchRow.style.display = 'none';
+    if (hubSearchRow) {
+        hubSearchRow.style.display = 'none';
+        hubSearchRow.classList.add("hub-hidden");
+    }
 
     const hubNavRow = document.querySelector('.hub-nav-row');
-    if (hubNavRow) hubNavRow.style.display = 'none';
+    if (hubNavRow) {
+        hubNavRow.style.display = 'none';
+        hubNavRow.classList.add("hub-hidden");
+    }
+
+    // Show small workspace logo
+    const smallLogo = document.getElementById("workspaceSmallLogo");
+    if (smallLogo) smallLogo.style.display = "block";
+
+    // Hide venue header (no aggressive collapse)
+
+    const venueHeader = document.querySelector('.venue-header');
+    if (venueHeader) {
+        venueHeader.style.display = 'none';
+    }
+
+    // Show workspace header as flex (for centered title)
+    const wsHeader = document.querySelector('.workspace-header');
+    if (wsHeader) {
+        wsHeader.style.display = 'flex';
+    }
 
     // Show back button
-    document.getElementById('navbarReturnTrigger').style.display = 'block';
-    document.getElementById('navbarReturnTrigger').onclick = navigateBackFromWorkspace;
+    const backBtn = document.getElementById('navbarReturnTrigger');
+    if (backBtn) {
+        backBtn.style.display = 'block';
+        backBtn.onclick = navigateBackFromWorkspace;
+    }
 
-    // ⭐ INSERT HTML FIRST — VERY IMPORTANT
+    // Inject workspace DOM
     document.getElementById('masterApplicationViewport').innerHTML = `
       <div class="workspace-screen">
 
-        <!-- ⭐ MODE SELECTION PANEL (always shown first) -->
+        <!-- MODE SELECTION PANEL -->
         <div id="workspaceModePanel" class="workspace-mode-panel">
-            <button onclick="startCreateMode()">Create New Playlist</button>
-            <button onclick="startEditMode()">Edit Existing Playlist</button>
-            <button onclick="startDeleteMode()">Delete Playlist</button>
-        </div>
 
-        <!-- ⭐ WORKSPACE CONTENT (hidden until a mode is chosen) -->
+       <button id="modeCreateBtn" class="workspace-mode-btn">Create Playlist</button>
+       <div class="workspace-mode-desc">Start a new playlist and give it a name.</div>
+
+       <button id="modeDeleteBtn" class="workspace-mode-btn">Delete Playlist</button>
+       <div class="workspace-mode-desc">Remove one of your personal playlists.</div>
+
+       <button id="modeEditBtn" class="workspace-mode-btn">Edit Playlist</button>
+       <div class="workspace-mode-desc">Add or remove dances from a playlist you created.</div>
+
+   </div>
+
+
+        <!-- WORKSPACE CONTENT -->
         <div id="workspaceContent" style="display:none;">
+           <div id="workspaceMessage" class="workspace-message"></div>
 
-            <!-- ⭐ TWO-COLUMN LAYOUT -->
             <div id="workspaceColumns" class="workspace-columns">
 
-                <!-- LEFT COLUMN: Search + Add -->
+                <!-- LEFT COLUMN -->
                 <div id="workspaceLeftColumn" class="workspace-column-left"></div>
 
-                <!-- RIGHT COLUMN: Playlist Name + Selected Dances -->
+                <!-- RIGHT COLUMN -->
                 <div id="workspaceRightColumn" class="workspace-column-right"></div>
 
             </div>
-
         </div>
 
       </div>
-    `;  // ⭐ HTML STRING ENDS HERE — DO NOT PUT JS BELOW THIS LINE INSIDE THE STRING
+    `;
+
+    document.getElementById('workspaceContent').style.display = 'block';
+    attachWorkspaceListeners();  
+}
 
 
-    // ⭐ MODE FUNCTIONS — nested inside renderWorkspaceScreen,
-    // but OUTSIDE the HTML string (correct placement)
 
-    window.startCreateMode = function () {
-        workspaceMode = "create";
-        workspacePlaylistName = "";
-        selectedActivePlaylistGroup = { name: "", dances: [] };
 
-        document.getElementById("workspaceContent").style.display = "block";
-        renderCreateModeLayout();
-    };
-
-    window.startEditMode = function () {
-        workspaceMode = "edit";
-        document.getElementById("workspaceContent").style.display = "block";
-        renderEditModeLayout();
-    };
-
-    window.startDeleteMode = function () {
-        workspaceMode = "delete";
-        document.getElementById("workspaceContent").style.display = "block";
-        renderDeleteModeLayout();
-    };
-
-} // ⭐ END OF renderWorkspaceScreen()
 
 function renderCreateModeLayout() {
+    console.log("RENDER CREATE MODE LAYOUT — Phase:", workspacePhase);
 
-    // LEFT COLUMN: Search + Add
-    document.getElementById("workspaceLeftColumn").innerHTML = `
-        <div class="workspace-search-row">
-            <input type="text" id="workspaceSearchInput"
-                   placeholder="Search dances..."
-                   oninput="handleWorkspaceSearchInput()">
-        </div>
+    // Always clear columns before rendering
+    const left = document.getElementById("workspaceLeftColumn");
+    const right = document.getElementById("workspaceRightColumn");
 
-        <div id="workspaceSearchResults" class="workspace-search-results"></div>
-    `;
+    left.innerHTML = "";
+    right.innerHTML = "";
 
-    // RIGHT COLUMN: Playlist name + selected dances
-    document.getElementById("workspaceRightColumn").innerHTML = `
-        <div class="workspace-name-row">
-            <input type="text" id="workspacePlaylistNameInput"
-                   placeholder="Playlist name..."
-                   value="${workspacePlaylistName}"
-                   oninput="handleWorkspaceNameInput()">
-        </div>
+    /* ============================================================
+       PHASE 1 — NAME PLAYLIST
+       ============================================================ */
+    if (workspacePhase === 1) {
+        console.log("Phase:", workspacePhase);
+        left.innerHTML = `
+            <h2 class="workspace-section-title">Create Playlist</h2>
 
-        <div id="workspaceSelectedList" class="workspace-selected-list"></div>
+            <input 
+                id="workspaceNameInput"
+                type="text"
+                placeholder="Enter playlist name..."
+                class="workspace-name-box"
+            />
 
-        <div class="workspace-action-row">
-            <button onclick="saveWorkspacePlaylist()">Save Playlist</button>
-        </div>
-    `;
-
-    // Render initial empty lists
-    renderWorkspaceSearchResults();
-    renderWorkspaceSelectedList();
-}
-
-function renderWorkspaceSelectedList() {
-    const container = document.getElementById("workspaceSelectedList");
-    container.innerHTML = "";
-
-    selectedActivePlaylistGroup.dances.forEach(danceName => {
-        const row = document.createElement("div");
-        row.className = "workspace-selected-row";
-        row.innerHTML = `
-            <span>${danceName}</span>
-            <button onclick="removeDanceFromWorkspace('${danceName}')">–</button>
+            <button class="workspace-create-btn"
+                    onclick="beginWorkspacePhase2()">
+                Create Playlist
+            </button>
         `;
-        container.appendChild(row);
-    });
-}
 
+        // Right column stays empty in Phase 1
+        right.innerHTML = "";
 
+        // Attach name input handler
+        const nameInput = document.getElementById("workspaceNameInput");
+        if (nameInput) {
+            nameInput.addEventListener("input", (e) => {
+                workspacePlaylistName = e.target.value.trim();
+            });
+        }
 
-function renderWorkspaceSearchResults() {
-    const query = document.getElementById("workspaceSearchInput").value.toLowerCase();
-    const results = allDances.filter(d => d.name.toLowerCase().includes(query));
-
-    const container = document.getElementById("workspaceSearchResults");
-    container.innerHTML = "";
-
-    results.forEach(dance => {
-        const row = document.createElement("div");
-        row.className = "workspace-search-result-row";
-        row.innerHTML = `
-            <span>${dance.name}</span>
-            <button onclick="addDanceToWorkspace('${dance.name}')">+</button>
-        `;
-        container.appendChild(row);
-    });
-}
-    
-
-function renderSingleDanceScreen(dance) {
-    const viewport = document.getElementById('masterApplicationViewport');
-    document.getElementById('applicationHeaderTitle').innerText = dance.name;
-    if (!viewport) return;
-
-    let navHTML = "";
-
-    if (lastNavigationMode === "playlist") {
-        navHTML = `
-            <div class="nav-line" onclick="openSpecificPlaylistView(selectedSingleDance.playlist)">
-                ← Playlist
-            </div>
-            <div class="nav-line" onclick="returnToHub()">
-                ← Hub
-            </div>
-        `;
-    } else {
-        navHTML = `
-            <div class="nav-line" onclick="returnToSearchResults()">
-                ← Results
-            </div>
-            <div class="nav-line" onclick="returnToHub()">
-                ← Hub
-            </div>
-        `;
+        return; // ⭐ STOP — Phase 1 complete
     }
 
-    viewport.innerHTML = `
-        <div class="single-dance-screen">
+    /* ============================================================
+       PHASE 2 — BUILD PLAYLIST
+       ============================================================ */
+    if (workspacePhase === 2) {
+        console.log("Phase:", workspacePhase);
+       
+        // ⭐ LEFT COLUMN — Selected dances
+        left.innerHTML = `
+            <h2 class="workspace-section-title">
+                Playlist: ${workspacePlaylistName}
+            </h2>
 
-            <div class="title-line">${dance.name} • By: ${dance.choreographer}</div>
-            <div class="meta-line">Song: ${dance.song} - ${dance.artist}</div>
-            <div class="meta-line">(Playlist: ${dance.playlist})</div>
+            <div id="workspaceSelectedDances" class="workspace-selected-list"></div>
+        `;
 
-            <div class="button-bar-grid">
-                ${dance.steps
-                    ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${dance.steps}', '${dance.name} - Steps')">Steps</button>`
-                    : `<button class="action-touch-btn disabled">None</button>`}
+        // ⭐ RIGHT COLUMN — Search
+        right.innerHTML = `
+            <h2 class="workspace-section-title">Search Dances</h2>
 
-                ${dance.teach
-                    ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${dance.teach}', '${dance.name} - Teach')">Teach</button>`
-                    : `<button class="action-touch-btn disabled">None</button>`}
+            <input 
+                id="workspaceSearchInput"
+                type="text"
+                placeholder="Search dances..."
+                oninput="handleWorkspaceSearchInput(this.value)"
+                class="workspace-search-box"
+            />
 
-                ${dance.demo
-                    ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${dance.demo}', '${dance.name} - Demo')">Demo</button>`
-                    : `<button class="action-touch-btn disabled">None</button>`}
+            <div id="workspaceSearchResults" class="workspace-search-results"></div>
+        `;
+         const content = document.getElementById("workspaceContent");
+         if (content) content.style.background = "rgba(255,0,0,0.25)";
+         if (content) {
+          content.style.marginTop = "0";
+          content.style.paddingTop = "0";
+         }
+         const screen = document.querySelector(".workspace-screen");
+         if (screen) screen.style.background = "rgba(255,255,0,0.25)";
 
-                ${dance.music
-                    ? `<button class="action-touch-btn" onclick="launchMediaOverlay('${dance.music}', '${dance.name} - Play')">Music</button>`
-                    : `<button class="action-touch-btn disabled">None</button>`}
-            </div>
 
-            ${navHTML}
 
-        </div>
-    `;
+        // ⭐ Remove any existing footer before creating a new one
+         const oldFooter = document.getElementById("workspaceFooter");
+         if (oldFooter) oldFooter.remove();
+        // ⭐ FIXED BOTTOM SAVE/CANCEL BAND
+        // Insert a footer if it doesn't exist yet
+        let footer = document.getElementById("workspaceFooter");
+        if (!footer) {
+            const screen = document.querySelector(".workspace-screen");
+            footer = document.createElement("div");
+            footer.id = "workspaceFooter";
+            footer.className = "workspace-footer-fixed";
+            screen.appendChild(footer);
+        }
+
+        footer.innerHTML = `
+            <button class="workspace-save-btn" onclick="saveWorkspacePlaylist()">Save</button>
+            <button class="workspace-cancel-btn" onclick="cancelWorkspace()">Cancel</button>
+        `;
+
+        // ⭐ INITIAL RENDER OF LISTS
+        renderWorkspaceSelectedDances();
+        renderWorkspaceSearchResults();
+
+        return; // ⭐ STOP — Phase 2 complete
+    }
+}
+
+function startEditMode() {
+    console.log("Start Edit Mode");
+    activateWorkspaceHeader("Edit Playlist");
+
+    // Hide mode-selection panel (missing before)
+    const modePanel = document.getElementById('workspaceModePanel');
+    if (modePanel) modePanel.style.display = 'none';
+
+    // Remove footer if present (Create Mode only)
+    const footer = document.getElementById("workspaceFooter");
+    if (footer) footer.remove();
+
+    // Set workspace mode + phase
+    workspaceMode = "edit";
+    workspacePhase = 1;
+
+    // Body classes
+    document.body.classList.add("workspace-mode-edit");
+    document.body.classList.remove("workspace-mode-delete");
+    document.body.classList.remove("workspace-mode-create");
+
+    updateWorkspaceModeButtons("edit");
+
+    // If no playlists exist
+    if (!userPlaylistsData || Object.keys(userPlaylistsData).length === 0) {
+        showWorkspaceMessage("No playlists available to edit.", "warning");
+        workspaceMode = "neutral";
+        document.body.classList.remove("workspace-mode-edit");
+        updateWorkspaceModeButtons("neutral");
+        return;
+    }
+
+    // Clear columns
+    document.getElementById("workspaceLeftColumn").innerHTML = "";
+    document.getElementById("workspaceRightColumn").innerHTML = "";
+
+    // Update header
+    document.getElementById('applicationHeaderTitle').innerText = "Edit Playlist";
+
+    // Show workspace content
+    document.getElementById("workspaceContent").style.display = "block";
+
+    // Render edit layout
+    renderEditModeLayout();
+}
+
+function startCreateMode() {
+    console.log("Start Create Mode — workspaceMode:", workspaceMode);
+    activateWorkspaceHeader("Create Playlist");
+
+    // Hide the mode selection buttons (Create / Edit / Delete)
+    const modePanel = document.getElementById('workspaceModePanel');
+    if (modePanel) modePanel.style.display = 'none';
+
+    // Hide playlist selection dropdown if present
+    const sel = document.getElementById('workspacePlaylistSelection');
+    if (sel) sel.style.display = 'none';
+
+    console.log("WIPE: startCreateMode — clearing left/right columns");
+    document.getElementById("workspaceLeftColumn").innerHTML = "";
+    document.getElementById("workspaceRightColumn").innerHTML = "";
+
+    // Set mode + phase
+    workspaceMode = "create";
+    workspacePhase = 1;   // Always begin in Phase 1 (Name Playlist)
+
+    // Update header title
+    document.getElementById('applicationHeaderTitle').innerText = "Create Playlist";
+
+    // Update workspace header buttons (if any)
+    updateWorkspaceModeButtons("create");
+
+    // Show workspace content
+    document.getElementById("workspaceContent").style.display = "block";
+
+    // Render Phase 1 or Phase 2 depending on state
+    renderCreateModeLayout();
+}
+
+
+function startDeleteMode() {
+    console.log("Start Delete Mode — workspaceMode:", workspaceMode);
+    activateWorkspaceHeader("Delete Playlist");
+
+    // If no playlists exist
+    if (!userPlaylistsData || Object.keys(userPlaylistsData).length === 0) {
+        showWorkspaceMessage("No playlists available to delete.", "warning");
+        workspaceMode = "neutral";
+        updateWorkspaceModeButtons("neutral");
+        return;
+    }
+
+    // Hide mode-selection panel
+    const modePanel = document.getElementById('workspaceModePanel');
+    if (modePanel) modePanel.style.display = 'none';
+
+    // Hide selector
+    const sel = document.getElementById('workspacePlaylistSelection');
+    if (sel) sel.style.display = 'none';
+
+    // Clear columns
+    document.getElementById("workspaceLeftColumn").innerHTML = "";
+    document.getElementById("workspaceRightColumn").innerHTML = "";
+
+    // Set mode + phase
+    workspaceMode = "delete";
+    workspacePhase = 1;
+
+    // Update header
+    document.getElementById('applicationHeaderTitle').innerText = "Delete Playlist";
+
+    // Remove footer (from Create Mode)
+    const footer = document.getElementById("workspaceFooter");
+    if (footer) footer.remove();
+
+    // Update workspace buttons
+    updateWorkspaceModeButtons("delete");
+
+    // Show workspace content
+    document.getElementById("workspaceContent").style.display = "block";
+
+    // Render delete layout
+    renderDeleteModeLayout();
+}
+
+
+function beginWorkspacePhase2() {
+    if (!workspacePlaylistName) {
+        showWorkspaceMessage("Please enter a playlist name.", "error");
+        return;
+    }
+
+    workspacePhase = 2;
+
+    document.getElementById('applicationHeaderTitle').innerText =
+        `Create Playlist: ${workspacePlaylistName}`;
+
+    renderCreateModeLayout();
+}
+
+
+
+function attachWorkspaceListeners() {
+    const createBtn = document.getElementById("modeCreateBtn");
+    if (createBtn) createBtn.addEventListener("click", startCreateMode);
+
+    const deleteBtn = document.getElementById("modeDeleteBtn");
+    if (deleteBtn) deleteBtn.addEventListener("click", startDeleteMode);
+
+    const editBtn = document.getElementById("modeEditBtn");
+    if (editBtn) {
+        editBtn.addEventListener("click", () => {
+            workspaceMode = "edit";
+            renderWorkspaceScreen();
+            startEditMode();
+        });
+    }
 }
 
 
 /* ============================================
-   OVERLAY LOGIC
+   EDIT MODE LAYOUT
 ============================================ */
+function renderEditModeLayout() {
+    console.log("Render Edit Mode Layout");
+
+    const left = document.getElementById('workspaceLeftColumn');
+    const right = document.getElementById('workspaceRightColumn');
+
+    left.innerHTML = `
+        <div class="workspace-section-title">Select Playlist</div>
+        <div id="workspacePlaylistSelection" class="workspace-playlist-selection"></div>
+    `;
+
+    right.innerHTML = `
+        <button class="workspace-cancel-btn" onclick="cancelWorkspace()">
+            Cancel
+        </button>
+    `;
+
+    renderWorkspacePlaylistSelection();
+}
+
+
+/* ============================================
+   DELETE MODE LAYOUT
+============================================ */
+function renderDeleteModeLayout() {
+    const left = document.getElementById('workspaceLeftColumn');
+    const right = document.getElementById('workspaceRightColumn');
+
+    left.innerHTML = `
+        <div class="workspace-section-title">Delete Playlist</div>
+        <div id="workspaceDeleteList" class="workspace-delete-list"></div>
+    `;
+
+    right.innerHTML = `
+        <button class="workspace-cancel-btn" onclick="cancelWorkspace()">
+            Cancel
+        </button>
+    `;
+
+    renderWorkspaceDeleteList();
+}
+
+
+/* ============================================
+   WORKSPACE MODE BUTTON STATE HANDLER
+   --------------------------------------------
+   This helper function updates the visual state
+   of the three workspace mode buttons:
+     • Create New Playlist
+     • Edit Existing Playlist
+     • Delete Playlist
+
+   It applies:
+     - .active   → highlights the selected mode
+     - .disabled → grays out inactive modes and
+                   prevents clicking
+
+   Called by:
+     startCreateMode()
+     startEditMode()
+     startDeleteMode()
+============================================ */
+function updateWorkspaceModeButtons(activeMode) {
+    const createBtn = document.getElementById("modeCreateBtn");
+    const editBtn = document.getElementById("modeEditBtn");
+    const deleteBtn = document.getElementById("modeDeleteBtn");
+
+    [createBtn, editBtn, deleteBtn].forEach(btn => {
+        btn.classList.remove("active");
+        btn.classList.remove("disabled");
+    });
+
+    if (activeMode === "create") {
+        createBtn.classList.add("active");
+    }
+
+    if (activeMode === "edit") {
+        editBtn.classList.add("active");
+    }
+
+    if (activeMode === "delete") {
+        deleteBtn.classList.add("active");
+    }
+}
+
+
+
+function renderWorkspaceDeleteList() {
+    const container = document.getElementById('workspaceDeleteList');
+    if (!container) return;
+
+    if (!userPlaylistsData || Object.keys(userPlaylistsData).length === 0) {
+        container.innerHTML = `<div class="workspace-note">No playlists to delete.</div>`;
+        return;
+    }
+
+    let html = "";
+
+    Object.keys(userPlaylistsData).forEach(name => {
+        html += `
+            <div class="workspace-delete-item">
+                <span>${name}</span>
+                <button id="deleteBtn_${name}"
+                        class="workspace-delete-btn"
+                        onclick="deleteWorkspacePlaylist('${name}')">
+                    Delete
+                </button>
+            </div>
+        `;
+    });
+
+    container.innerHTML = html;
+}
+
+
+
+/* ============================================
+   DELETE LIST RENDERER
+============================================ */
+function deleteWorkspacePlaylist(name) {
+
+    // Render a confirmation UI in the RIGHT column
+    const right = document.getElementById("workspaceRightColumn");
+
+    right.innerHTML = `
+        <h2 class="workspace-section-title">Confirm Delete</h2>
+
+        <div class="workspace-delete-confirm-box">
+            Are you sure you want to delete "<strong>${name}</strong>"?
+        </div>
+
+        <div class="workspace-actions">
+            <button class="workspace-save-btn" onclick="confirmDeletePlaylist('${name}')">
+                Confirm Delete
+            </button>
+            
+           <button class="workspace-cancel-btn" onclick="cancelWorkspace()">
+                Cancel
+            </button>
+ 
+        </div>
+    `;
+}
+
+function confirmDeletePlaylist(name) {
+    delete userPlaylistsData[name];
+    showWorkspaceMessage(`Playlist "${name}" deleted.`, "error");
+    renderWorkspaceScreen();
+}
+
+
+/* ============================================
+   WORKSPACE — HANDLE NAME INPUT
+============================================ */
+function handleWorkspaceNameInput(value) {
+    workspacePlaylistName = value.trim();
+}
+
+/* ============================================
+   WORKSPACE — SEARCH INPUT
+============================================ */
+function handleWorkspaceSearchInput(value) {
+    workspaceSearchQuery = value.trim().toLowerCase();
+
+    if (!workspaceSearchQuery) {
+        workspaceSearchResults = [];
+        renderWorkspaceSearchResults();
+        return;
+    }
+
+   workspaceSearchResults = allDances.filter(track => {
+    const haystack = `
+        ${track.name}
+        ${track.choreographer}
+        ${track.song}
+        ${track.artist}
+    `.toLowerCase();
+
+    return haystack.includes(workspaceSearchQuery);
+});
+
+
+    renderWorkspaceSearchResults();
+}
+
+function showWorkspaceMessage(text, type = "success") {
+    const msg = document.getElementById("workspaceMessage");
+    if (!msg) return;
+
+    msg.textContent = text;
+    msg.className = "workspace-message " + type;
+
+    msg.style.opacity = 1;
+
+    setTimeout(() => {
+        msg.style.opacity = 0;
+    }, 2000);
+}
+
+
+/* ============================================
+   WORKSPACE — SEARCH RESULTS RENDERER
+============================================ */
+function renderWorkspaceSearchResults() {
+    const container = document.getElementById('workspaceSearchResults');
+    if (!container) return;
+
+    container.innerHTML = "";
+
+    if (!workspaceSearchResults.length) {
+        container.innerHTML = `
+            <div class="workspace-note">No matching dances found.</div>
+        `;
+        return;
+    }
+
+    workspaceSearchResults.forEach(track => {
+        const row = document.createElement('div');
+        row.className = 'workspace-dance-row';
+
+        row.innerHTML = `
+            <span class="workspace-dance-title">
+                ${track.name} • ${track.choreographer}
+            </span>
+
+            <button class="workspace-add-btn"
+                onclick="addDanceToWorkspace('${track.name}')">
+                +
+            </button>
+        `;
+
+        container.appendChild(row);
+    });
+}
+
+
+/* ============================================
+   WORKSPACE — SELECTED LIST RENDERER
+============================================ */
+function renderWorkspaceSelectedDances() {
+    const container = document.getElementById('workspaceSelectedDances');
+    if (!container) return;
+
+    container.innerHTML = "";
+
+    if (!workspaceSelectedDances.length) {
+        container.innerHTML = `
+            <div class="workspace-note">No dances selected.</div>
+        `;
+        return;
+    }
+
+    workspaceSelectedDances.forEach(name => {
+        const row = document.createElement('div');
+        row.className = 'workspace-selected-row';
+
+        row.innerHTML = `
+            <span>${name}</span>
+            <button class="workspace-remove-btn"
+                    onclick="removeDanceFromWorkspace('${name}')">
+                Remove
+            </button>
+        `;
+
+        container.appendChild(row);
+    });
+}
+
+/* ============================================
+   WORKSPACE — ADD DANCE
+============================================ */
+function addDanceToWorkspace(name) {
+    if (!workspaceSelectedDances.includes(name)) {
+        workspaceSelectedDances.push(name);
+        renderWorkspaceSelectedDances();
+    }
+}
+
+/* ============================================
+   WORKSPACE — REMOVE DANCE
+============================================ */
+function removeDanceFromWorkspace(name) {
+    const index = workspaceSelectedDances.indexOf(name);
+    if (index !== -1) {
+        workspaceSelectedDances.splice(index, 1);
+        renderWorkspaceSelectedDances();
+    }
+}
+
+/* ============================================
+   WORKSPACE — SAVE PLAYLIST
+============================================ */
+function saveWorkspacePlaylist() {
+    console.log("Save Workspace Playlist");
+    console.log("SAVE — workspacePlaylistName:", workspacePlaylistName);
+    console.log("DEBUG — workspaceSelectedDances:", workspaceSelectedDances);
+    console.log("DEBUG — userPlaylistsData BEFORE SAVE:", userPlaylistsData);
+
+    if (!workspacePlaylistName) {
+        showWorkspaceMessage("Please enter a playlist name.", "error");
+        return;
+    }
+
+    if (workspaceSelectedDances.length === 0) {
+        showWorkspaceMessage("Please add at least one dance.", "warning");
+        return;
+    }
+
+    // SAVE
+    userPlaylistsData[workspacePlaylistName] = [...workspaceSelectedDances];
+    showWorkspaceMessage(`Playlist "${workspacePlaylistName}" saved!`, "success");
+
+    // ⭐ Switch to EDIT mode so the selector appears
+    workspaceMode = "edit";
+    renderWorkspaceScreen();
+}
+
+
+
+
+/* ============================================
+   WORKSPACE — SELECT PLAYLIST FOR EDITING
+============================================ */
+function selectPlaylistForEditing(name) {
+    workspacePlaylistName = name;
+    workspaceEditingOriginalName = name;
+    workspaceSelectedDances = [...userPlaylistsData[name]];
+
+    const left = document.getElementById('workspaceLeftColumn');
+    const right = document.getElementById('workspaceRightColumn');
+
+    left.innerHTML = `
+        <h2 class="workspace-section-title">Your Playlist</h2>
+
+        <input id="workspacePlaylistNameInput"
+          class="workspace-name-input"
+          type="text"
+          placeholder="Enter playlist name"
+          value="${workspacePlaylistName}"
+        />
+
+        <div class="workspace-section-title">Selected Dances</div>
+        <div id="workspaceSelectedDances" class="workspace-selected-list"></div>
+
+         <div class="workspace-edit-actions">
+              <button class="workspace-save-btn" onclick="saveWorkspacePlaylist()">
+               Save Changes
+              </button>
+
+              <button class="workspace-cancel-btn" onclick="cancelWorkspace()">
+               Cancel
+              </button>
+       </div>
+
+    `;
+
+    right.innerHTML = `
+        <div class="workspace-section-title">Search Dances</div>
+
+        <input id="workspaceSearchInput"
+               class="workspace-search-input"
+               type="text"
+               placeholder="Search..."
+               oninput="handleWorkspaceSearchInput(this.value)" />
+
+        <div id="workspaceSearchResults" class="workspace-search-results"></div>
+    `;
+
+    // Attach REAL input handler AFTER DOM is rendered
+    const editNameInput = document.getElementById("workspacePlaylistNameInput");
+    if (editNameInput) {
+        editNameInput.addEventListener("input", (e) => {
+            console.log("WRITE — workspacePlaylistName set to:", e.target.value);
+            workspacePlaylistName = e.target.value;
+        });
+    }
+
+    renderWorkspaceSelectedDances();
+    renderWorkspaceSearchResults();
+}
+
+/* ============================================
+   WORKSPACE — NAVIGATION BACK
+============================================ */
+function navigateBackFromWorkspace() {
+    console.log("WIPE: navigateBackFromWorkspace — clearing workspaceSelectedDances and workspace state");
+    console.log("NAVIGATE — lastNavigationMode:", lastNavigationMode);
+    console.log("NAVIGATE — workspaceMode:", workspaceMode);
+    console.log("NAVIGATE — selectedActivePlaylistGroup:", selectedActivePlaylistGroup);
+    restoreHubHeader();
+
+    // ⭐ EMPTY PLAYLIST WARNING (Phase 2 only)
+    if (workspaceMode === "create" &&
+        workspacePhase === 2 &&
+        workspaceSelectedDances.length === 0) {
+
+        const confirmLeave = confirm(
+            "This playlist has no dances.\nEmpty playlists cannot be saved.\nLeave without saving?"
+        );
+
+        if (!confirmLeave) return;
+    }
+
+    // Reset workspace state
+    workspaceSelectedDances = [];
+    workspaceSearchQuery = "";
+    workspaceSearchResults = [];
+    workspaceEditingOriginalName = "";
+    workspacePlaylistName = "";
+    workspaceMode = "neutral";
+
+    // ⭐ Hide workspace header container
+    const wsHeader = document.querySelector('.workspace-header');
+    if (wsHeader) wsHeader.style.display = 'none';
+
+    // ⭐ Hide workspace title (this was the missing piece)
+    const wsTitle = document.getElementById('applicationHeaderTitle');
+    if (wsTitle) wsTitle.style.display = 'none';
+
+    // ⭐ Hide small workspace-only logo
+    const smallLogo = document.getElementById("workspaceSmallLogo");
+    if (smallLogo) smallLogo.style.display = "none";
+
+    // ⭐ Restore venue header (big bull)
+    const venueHeader = document.querySelector('.venue-header');
+    if (venueHeader) venueHeader.style.display = 'block';
+
+    // ⭐ Restore header-bar (remove leftover workspace inline styles)
+    const headerBar = document.querySelector('.header-bar');
+    if (headerBar) {
+       headerBar.style.display = "none";
+   }
+
+
+    // ⭐ Remove workspace-mode class
+    document.body.classList.remove("workspace-mode");
+
+    lastNavigationMode = "hub";
+    renderApplicationInterface();
+}
+
+
+/* ============================================
+   OPEN WORKSPACE
+============================================ */
+function openWorkspace() {
+    console.log("ENTER: openWorkspace — workspaceMode BEFORE =", workspaceMode);
+    lastNavigationMode = "workspace";
+    renderWorkspaceScreen();
+    attachWorkspaceListeners();
+    console.log("ENTER: openWorkspace — workspaceMode AFTER =", workspaceMode);
+}
+
+
+
+/* ============================================
+   CANCEL WORKSPACE 
+============================================ */
+function cancelWorkspace() {
+    workspaceMode = null;
+    workspacePhase = null;
+    workspacePlaylistName = "";
+    renderWorkspaceScreen();
+}
+
+/* ============================================
+   EVENTS VIEW (placeholder)
+============================================ */
+function openEventsView() {
+    const viewport = document.getElementById('masterApplicationViewport');
+    viewport.innerHTML = `
+        <div class="events-view">
+            <h2>Events</h2>
+            <p>Event listings will appear here.</p>
+        </div>
+    `;
+}
+
+/* ============================================
+   SINGLE DANCE SCREEN
+============================================ */
+function renderSingleDanceScreen(dance) {
+    const viewport = document.getElementById('masterApplicationViewport');
+    if (!viewport) return;
+
+    document.getElementById('navbarReturnTrigger').style.display = 'block';
+    document.getElementById('navbarReturnTrigger').onclick = returnToSearchResults;
+
+    document.getElementById('applicationHeaderTitle').innerText = dance.name;
+
+    viewport.innerHTML = `
+        <div class="single-dance-screen">
+            <h2>${dance.name}</h2>
+            <p><strong>Choreographer:</strong> ${dance.choreographer}</p>
+            <p><strong>Song:</strong> ${dance.song} - ${dance.artist}</p>
+            <p><strong>Playlist:</strong> ${dance.playlist}</p>
+            <p><strong>Level:</strong> ${dance.level || "N/A"}</p>
+            <p><strong>Day Taught:</strong> ${dance.daytaught || "N/A"}</p>
+        </div>
+    `;
+}
+
+/* ============================================
+   SIMPLE SEARCH CARDS (Hub Search)
+============================================ */
+function renderSimpleSearchCards(matches, container) {
+    container.innerHTML = "";
+
+    if (!matches.length) {
+        container.innerHTML = `
+            <p style="text-align:center;color:#aaa;margin-top:20px;">
+                No results found.
+            </p>`;
+        return;
+    }
+
+    matches.forEach(track => {
+        const card = document.createElement('div');
+        card.className = 'search-result-card';
+        card.onclick = () => openDanceFromSearchToSingleDance(track.id);
+
+        card.innerHTML = `
+            <div class="search-result-title">${track.name}</div>
+            <div class="search-result-meta">${track.choreographer}</div>
+        `;
+
+        container.appendChild(card);
+    });
+}
+
+/* ============================================
+   HUB VISIBILITY UPDATER
+============================================ */
+function updateHubVisibility() {
+    const filterBar = document.getElementById('dayFilterBar');
+    const diffBar = document.getElementById('difficultyFilterBar');
+    const navRow = document.querySelector('.hub-nav-row');
+
+    if (filterBar) filterBar.style.display = 'none';
+    if (diffBar) diffBar.style.display = 'none';
+    if (navRow) navRow.style.display = 'none';
+}
+
+/* ============================================
+   INITIALIZE APP
+============================================ */
+window.onload = function () {
+    initializeVenueBranding();
+    renderApplicationInterface();
+};
+
+function openSteps(danceId) {
+    const dance = localDanceDatabase.find(d => d.id === danceId);
+    if (!dance || !dance.stepsUrl) return;
+    launchMediaOverlay(dance.stepsUrl, "Steps");
+}
+
+function openTeach(danceId) {
+    const dance = localDanceDatabase.find(d => d.id === danceId);
+    if (!dance || !dance.teachUrl) return;
+    launchMediaOverlay(dance.teachUrl, "Teach");
+}
+
+function openDemo(danceId) {
+    const dance = localDanceDatabase.find(d => d.id === danceId);
+    if (!dance || !dance.demoUrl) return;
+    launchMediaOverlay(dance.demoUrl, "Demo");
+}
+
+function openMusic(danceId) {
+    const dance = localDanceDatabase.find(d => d.id === danceId);
+    if (!dance || !dance.musicUrl) return;
+    launchMediaOverlay(dance.musicUrl, "Music");
+}
+
+
 function launchMediaOverlay(targetUrl, displayTitle) {
+   overlayActive = true; //REMOVE 
+
+   console.log("launchMediaOverlay URL:", targetUrl);
+
     if (!targetUrl) return;
 
+    // Force HTTPS for YouTube and other embeds
     targetUrl = targetUrl.replace('http://', 'https://');
 
     const container = document.getElementById('playerOverlayFrame');
+
     if (!container) return;
 
     container.style.display = 'none';
     container.innerHTML = '';
 
-    if (displayTitle.includes("Steps")) {
+    if (displayTitle.includes("steps") || displayTitle.includes("Steps")) {
+        // STEPS: use <object> for CopperKnob / step sheets
         container.innerHTML = `
             <div class="overlay-control-header">
                 <span class="overlay-title" id="overlayPanelTitle">${displayTitle}</span>
@@ -1012,6 +1660,7 @@ function launchMediaOverlay(targetUrl, displayTitle) {
             <object data="${targetUrl}" class="overlay-viewport-iframe" type="text/html"></object>
         `;
     } else {
+        // YOUTUBE: use <iframe> with proper sandbox + allow
         container.innerHTML = `
             <div class="overlay-control-header">
                 <span class="overlay-title" id="overlayPanelTitle">${displayTitle}</span>
@@ -1027,129 +1676,52 @@ function launchMediaOverlay(targetUrl, displayTitle) {
     }
     container.style.display = 'block';
 }
-
 function shutOverlayViewer() {
+   overlayActive = false;  //REMOVE
+
     const container = document.getElementById('playerOverlayFrame');
     if (container) {
-        container.style.display = 'none';
         container.innerHTML = '';
+        container.style.display = 'none';
     }
 
     // Re-render correct screen based on current state
     renderApplicationInterface();
 }
 
-/* ============================================
-   HUB VISIBILITY
-============================================ */
-function updateHubVisibility() {
-    const isHub =
-        selectedActivePlaylistGroup === null &&
-        activeDayView === null &&
-        activeDifficultyView === null;
-
-    const filterRow = document.querySelector('.hub-filter-row');
-    const searchRow = document.querySelector('.hub-search-row');
-    const navRow = document.querySelector('.hub-nav-row');
-
-    if (filterRow) filterRow.style.display = isHub ? 'flex' : 'none';
-    if (searchRow) searchRow.style.display = isHub ? 'flex' : 'none';
-    if (navRow) navRow.style.display = isHub ? 'grid' : 'none';
-}
-
-
 
 /* ============================================
-   USER PLAYLISTS (PLACEHOLDER)
+   GLOBAL EXPORTS (Required for HTML onclick)
 ============================================ */
-
-function openEventsView() {
-    alert("Events (coming soon)");
-}
-
-function openWorkspace() {
-    // Initialize Workspace for creating a new playlist
-    workspaceMode = "create";
-    workspacePlaylistName = "";
-    workspaceSelectedDances = [];
-    workspaceSearchQuery = "";
-    workspaceSearchResults = [];
-    workspaceEditingOriginalName = "";
-
-    lastNavigationMode = "workspace";
-    renderApplicationInterface();
-}
-
-
-/* ============================================
-   CACHE BUSTER RELOAD
-============================================ */
-function forceCacheBusterReload() {
-    const uniqueTimestamp = new Date().getTime();
-    window.location.href =
-        window.location.origin + window.location.pathname + '?v=' + uniqueTimestamp;
-}
-/* ============================================
-   SIMPLE SEARCH CARD RENDERER
-============================================ */
-function renderSimpleSearchCards(matches, containerElement) {
-    containerElement.innerHTML = "";
-
-    if (!matches.length) {
-        containerElement.innerHTML = `
-            <p style="text-align:center;color:#aaa;margin-top:20px;">
-                No matching dances found.
-            </p>
-        `;
-        return;
-    }
-
-    matches.forEach(track => {
-        const card = document.createElement('div');
-        card.className = 'dance-entry-card simple-search-card';
-        card.onclick = () => openDanceFromSearchToSingleDance(track.id);
-
-        card.innerHTML = `
-            <div class="title-line">${track.name} • By: ${track.choreographer}</div>
-            <div class="meta-line">Song: ${track.song} - ${track.artist}</div>
-            <div class="meta-line">(Playlist: ${track.playlist})</div>
-        `;
-
-        containerElement.appendChild(card);
-    });
-}
-
-
-/* ============================================
-   APP BOOTSTRAP
-============================================ */
-window.onload = function () {
-    initializeVenueBranding();
-    renderApplicationInterface();
-};
-
-/* ============================================
-   GLOBAL EXPORTS
-============================================ */
-window.launchMediaOverlay = launchMediaOverlay;
-window.shutOverlayViewer = shutOverlayViewer;
 window.navigateToPlaylistHubMenu = navigateToPlaylistHubMenu;
 window.openSpecificPlaylistView = openSpecificPlaylistView;
 window.handleLiveSearchInput = handleLiveSearchInput;
 window.setDayFilter = setDayFilter;
 window.setDifficultyFilter = setDifficultyFilter;
-window.forceCacheBusterReload = forceCacheBusterReload;
 window.renderSimpleSearchCards = renderSimpleSearchCards;
-window.openDanceFromSearchToPlaylist = openDanceFromSearchToPlaylist;
+window.openDanceFromSearchToSingleDance = openDanceFromSearchToSingleDance;
 window.openDanceFromPlaylist = openDanceFromPlaylist;
 window.openWorkspace = openWorkspace;
-window.navigateBackFromWorkspace = navigateBackFromWorkspace
-window.startCreatingNewPlaylist = startCreatingNewPlaylist;
+window.navigateBackFromWorkspace = navigateBackFromWorkspace;
 window.selectPlaylistForEditing = selectPlaylistForEditing;
-window.startEditingExistingPlaylist = startEditingExistingPlaylist;
 window.handleWorkspaceNameInput = handleWorkspaceNameInput;
 window.saveWorkspacePlaylist = saveWorkspacePlaylist;
 window.deleteWorkspacePlaylist = deleteWorkspacePlaylist;
 window.handleWorkspaceSearchInput = handleWorkspaceSearchInput;
 window.addDanceToWorkspace = addDanceToWorkspace;
 window.removeDanceFromWorkspace = removeDanceFromWorkspace;
+window.openSteps = openSteps;
+window.openTeach = openTeach;
+window.openDemo = openDemo;
+window.openMusic = openMusic;
+window.launchMediaOverlay = launchMediaOverlay;
+window.shutOverlayViewer = shutOverlayViewer;
+window.startCreateMode = startCreateMode;
+window.startEditMode = startEditMode;
+window.startDeleteMode = startDeleteMode;
+window.openUserPlaylistView = openUserPlaylistView;
+window.confirmDeletePlaylist = confirmDeletePlaylist;
+window.renderWorkspaceDeleteList = renderWorkspaceDeleteList;
+window.beginWorkspacePhase2 = beginWorkspacePhase2;
+window.renderDeleteModeLayout = renderDeleteModeLayout;
+window.cancelWorkspace = cancelWorkspace;
