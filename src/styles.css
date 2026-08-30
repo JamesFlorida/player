@@ -36,14 +36,12 @@ body {
     margin: 0 auto;
 }
 .workspace-mode-desc {
-    margin-top: 4px;       /* tighter connection to button */
-    margin-bottom: 22px;   /* larger separation before next button */
+    margin-top: 4px;
+    margin-bottom: 28px;   /* strong separation */
     font-size: 0.9rem;
     color: #ccc;
     padding-left: 4px;
 }
-
-
 
 /* ============================================
    GLOBAL HEADER BAR (workspace only)
@@ -627,7 +625,7 @@ body:not(.workspace-mode-edit) #workspacePlaylistSelection {
 
    .workspace-mode-desc {
     margin-top: 4px;
-    margin-bottom: 16px;
+    margin-bottom: 20px;
    }
 
 }
@@ -866,20 +864,20 @@ body:not(.workspace-mode-edit) #workspacePlaylistSelection {
 }
 
 /* ============================================================
-   WORKSPACE — MODE BUTTONS (Create / Edit / Delete)
+   WORKSPACE — MODE BUTTONS (DESKTOP/TABLET)
    ============================================================ */
 .workspace-mode-btn {
-    width: 100%;
-    padding: 18px 24px;     /* increased vertical height */
-    margin-bottom: 4px;     /* small gap before description */
-    border-radius: 8px;
-    border: 1px solid #555;
-    cursor: pointer;
-    font-size: 1.15rem;     /* slightly larger text */
-    background: #222;
-    color: #fff;
-    text-align: left;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+  width: 100%;
+  padding: 18px 24px;     /* increased vertical height */
+  margin-bottom: 4px;     /* small gap before description */
+  border-radius: 8px;
+  border: 1px solid #555;
+  cursor: pointer;
+  font-size: 1.15rem;
+  background: #222;
+  color: #fff;
+  text-align: left;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.4);
 }
 
 .workspace-mode-btn:hover {
@@ -897,6 +895,7 @@ body:not(.workspace-mode-edit) #workspacePlaylistSelection {
   cursor: default;
   pointer-events: none;
 }
+
 
 
 
