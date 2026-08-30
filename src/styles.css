@@ -31,7 +31,7 @@ body {
 .workspace-mode-panel {
     display: grid;
     grid-template-columns: 1fr;
-    row-gap: 24px;
+    /* removed row-gap: 20px */
     max-width: 600px;
     margin: 0 auto;
 }
@@ -614,7 +614,7 @@ body.workspace-mode-select #workspaceContent {
     margin-bottom: 12px;
     display: grid;
     grid-template-columns: 1fr;   /* one button per row */
-    row-gap: 20px;                /* spacing between button groups */
+    /* removed  row-gap: 20px; */        
 }
 
     .workspace-mode-btn {
