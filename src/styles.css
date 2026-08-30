@@ -36,11 +36,13 @@ body {
     margin: 0 auto;
 }
 .workspace-mode-desc {
-    margin-top: 6px;
+    margin-top: 4px;       /* tighter connection to button */
+    margin-bottom: 22px;   /* larger separation before next button */
     font-size: 0.9rem;
     color: #ccc;
     padding-left: 4px;
 }
+
 
 
 /* ============================================
@@ -605,12 +607,12 @@ body:not(.workspace-mode-edit) #workspacePlaylistSelection {
 }
 
   /* Phone: mode buttons (Create / Edit / Delete) */
-  .workspace-mode-panel {
+ .workspace-mode-panel {
     margin-bottom: 12px;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-  }
+    grid-template-columns: 1fr;   /* one button per row */
+    row-gap: 20px;                /* spacing between button groups */
+}
 
   .workspace-mode-btn {
     margin-bottom: 12px;
@@ -622,6 +624,11 @@ body:not(.workspace-mode-edit) #workspacePlaylistSelection {
     background: #444;
     color: #fff;
   }
+   .workspace-mode-desc {
+    margin-top: 4px;
+    margin-bottom: 16px;
+   }
+
 }
 
 /* ============================================================
