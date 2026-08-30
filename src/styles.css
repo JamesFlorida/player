@@ -903,12 +903,7 @@ body:not(.workspace-mode-edit) #workspacePlaylistSelection {
    WORKSPACE — AGGRESSIVE VERTICAL COMPRESSION
    ========================================== */
 
-/* Mode buttons */
-.workspace-mode-btn {
-  margin-bottom: 4px;
-  padding: 4px 10px;
-  font-size: 14px;
-}
+
 
 body.workspace-compressed .workspace-section-title {
   margin: 2px 0 4px 0;
