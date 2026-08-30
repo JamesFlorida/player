@@ -1012,9 +1012,9 @@ body.workspace-compressed .workspace-search-box {
     }
 }
 
-/* FINAL authoritative spacing for workspace descriptions */
+/* FINAL authoritative spacing for workspace descriptions
 .workspace-mode-desc {
-    margin-top: 6px !important;      /* pulls description closer to its button */
-    margin-bottom: 14px !important;  /* pushes it away from the next button */
+    margin-top: 6px !important;    
+    margin-bottom: 14px !important; 
 }
-
+ */
