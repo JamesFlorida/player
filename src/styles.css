@@ -88,6 +88,7 @@ body {
    ============================================================ */
 .app-container {
   padding: 20px;
+  padding-bottom: 1px;
   max-width: 650px;
   margin: 0 auto;
   box-sizing: border-box;
