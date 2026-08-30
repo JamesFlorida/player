@@ -508,7 +508,12 @@ body:not(.workspace-mode-edit) #workspacePlaylistSelection {
     overflow-y: auto;
     padding-bottom: 120px; /* space so last items don't hide behind footer */
 }
-
+/* Disable scroll container on mode-selection screen */
+body.workspace-mode-select #workspaceContent {
+    overflow-y: visible !important;
+    flex: none !important;
+    padding-bottom: 0 !important;
+}
 
 /* ============================================================
    FIXED BOTTOM FOOTER FOR PHASE 2
