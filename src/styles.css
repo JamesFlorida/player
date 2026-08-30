@@ -900,6 +900,21 @@ body.workspace-mode-select #workspaceContent {
   cursor: default;
   pointer-events: none;
 }
+/* Group each button + description as a single unit */
+#workspaceModePanel > div {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    margin-bottom: 28px;   /* spacing between units */
+}
+
+/* Description styling */
+.workspace-mode-desc {
+    margin-top: 6px;       /* small gap under button */
+    margin-bottom: 0;      /* no extra gap inside unit */
+    font-size: 1rem;       /* readable, balanced */
+    line-height: 1.3;
+}
 
 
 
