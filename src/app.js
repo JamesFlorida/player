@@ -1256,9 +1256,11 @@ function showWorkspaceMessage(text, type = "success") {
     }, 2000);
 }
 
-
 /* ============================================
    WORKSPACE — SEARCH RESULTS RENDERER
+============================================ */
+/* ============================================
+   WORKSPACE — SEARCH RESULTS RENDERER (UPDATED)
 ============================================ */
 function renderWorkspaceSearchResults() {
     const container = document.getElementById('workspaceSearchResults');
@@ -1282,11 +1284,13 @@ function renderWorkspaceSearchResults() {
                 ${track.name} • ${track.choreographer}
             </span>
 
-            <button class="workspace-add-btn"
-                onclick="addDanceToWorkspace('${track.name}')">
-                +
-            </button>
+            <button class="workspace-add-btn">+</button>
         `;
+
+        // Entire-row tap behavior
+        row.onclick = () => {
+            addDanceToWorkspace(track.name);
+        };
 
         container.appendChild(row);
     });
@@ -1295,6 +1299,9 @@ function renderWorkspaceSearchResults() {
 
 /* ============================================
    WORKSPACE — SELECTED LIST RENDERER
+============================================ */
+/* ============================================
+   WORKSPACE — SELECTED LIST RENDERER (UPDATED)
 ============================================ */
 function renderWorkspaceSelectedDances() {
     const container = document.getElementById('workspaceSelectedDances');
@@ -1315,11 +1322,13 @@ function renderWorkspaceSelectedDances() {
 
         row.innerHTML = `
             <span>${name}</span>
-            <button class="workspace-remove-btn"
-                    onclick="removeDanceFromWorkspace('${name}')">
-                Remove
-            </button>
+            <button class="workspace-remove-btn">Remove</button>
         `;
+
+        // Entire-row tap behavior
+        row.onclick = () => {
+            removeDanceFromWorkspace(name);
+        };
 
         container.appendChild(row);
     });
