@@ -790,21 +790,24 @@ body.workspace-mode-select #workspaceContent {
 /* ============================================================
    WORKSPACE — RIGHT COLUMN (SELECTED DANCES)
    ============================================================ */
+/* Tap-to-remove row (right column) */
 .workspace-selected-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 8px 0;
-  border-bottom: 1px solid #333;
-}
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #333;
 
+    /* Tap feedback */
+    transition: background-color 50ms ease, transform 50ms ease;
+}
+.workspace-selected-row:active {
+    background-color: rgba(255, 255, 255, 0.08);
+    transform: scale(0.98);
+}
 .workspace-selected-row span {
   color: #fff;
   font-size: 15px;
-}
-
-.workspace-selected-row:hover {
-  background: rgba(255, 255, 255, 0.05);
 }
 
 /* ============================================================
