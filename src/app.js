@@ -941,6 +941,10 @@ function startEditMode() {
 
 function startCreateMode() {
     console.log("Start Create Mode — workspaceMode:", workspaceMode);
+    workspaceSelectedDances = [];   // ⭐ Reset selected dances for new playlist
+    workspaceSearchResults = [];    // optional but recommended
+    workspacePlaylistName = "";     // optional but recommended
+
     activateWorkspaceHeader("Create Playlist");
 
     // Hide the mode selection buttons (Create / Edit / Delete)
