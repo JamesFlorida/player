@@ -711,7 +711,7 @@ body.workspace-mode-select #workspaceContent {
 /* Unified list containers — columns handle scrolling */
 .workspace-search-results,
 .workspace-selected-list {
-    background: rgba(255,255,255,0.06); /* subtle dark overlay */
+    background: rgba(255,255,255,0.15); /* subtle dark overlay */
     padding: 10px;
     border-radius: 8px;
     margin-top: 10px;
