@@ -683,7 +683,7 @@ function renderWorkspacePlaylistSelection() {
    WORKSPACE SCREEN (MAIN ENTRY)
 ============================================ */
 function renderWorkspaceScreen() {
-     activateWorkspaceHeader("Manage User Playlists");
+    activateWorkspaceHeader("Manage User Playlists");
     console.log("RENDER WORKSPACE SCREEN");
     console.log("CHECK: renderWorkspaceScreen — workspaceMode =", workspaceMode);
     document.body.classList.add("workspace-mode");
@@ -717,14 +717,13 @@ function renderWorkspaceScreen() {
     const smallLogo = document.getElementById("workspaceSmallLogo");
     if (smallLogo) smallLogo.style.display = "block";
 
-    // Hide venue header (no aggressive collapse)
-
+    // Hide venue header
     const venueHeader = document.querySelector('.venue-header');
     if (venueHeader) {
         venueHeader.style.display = 'none';
     }
 
-    // Show workspace header as flex (for centered title)
+    // Show workspace header
     const wsHeader = document.querySelector('.workspace-header');
     if (wsHeader) {
         wsHeader.style.display = 'flex';
@@ -744,21 +743,20 @@ function renderWorkspaceScreen() {
         <!-- MODE SELECTION PANEL -->
         <div id="workspaceModePanel" class="workspace-mode-panel">
 
-       <button id="modeCreateBtn" class="workspace-mode-btn">Create Playlist</button>
-       <div class="workspace-mode-desc">Start a new playlist and give it a name.</div>
+            <button id="modeCreateBtn" class="workspace-mode-btn">Create Playlist</button>
+            <div class="workspace-mode-desc">Start a new playlist and give it a name.</div>
 
-       <button id="modeDeleteBtn" class="workspace-mode-btn">Delete Playlist</button>
-       <div class="workspace-mode-desc">Remove one of your personal playlists.</div>
+            <button id="modeDeleteBtn" class="workspace-mode-btn">Delete Playlist</button>
+            <div class="workspace-mode-desc">Remove one of your personal playlists.</div>
 
-       <button id="modeEditBtn" class="workspace-mode-btn">Edit Playlist</button>
-       <div class="workspace-mode-desc">Add or remove dances from a playlist you created.</div>
+            <button id="modeEditBtn" class="workspace-mode-btn">Edit Playlist</button>
+            <div class="workspace-mode-desc">Add or remove dances from a playlist you created.</div>
 
-   </div>
-
+        </div>
 
         <!-- WORKSPACE CONTENT -->
         <div id="workspaceContent" style="display:none;">
-           <div id="workspaceMessage" class="workspace-message"></div>
+            <div id="workspaceMessage" class="workspace-message"></div>
 
             <div id="workspaceColumns" class="workspace-columns">
 
@@ -774,9 +772,19 @@ function renderWorkspaceScreen() {
       </div>
     `;
 
-    document.getElementById('workspaceContent').style.display = 'block';
-    attachWorkspaceListeners();  
+    /* ⭐ IMPORTANT FIX ⭐
+       Only show workspaceContent when actually in Create/Edit/Delete mode.
+       This prevents the ghost scroll bar on the Manage User Playlists screen.
+    */
+    if (workspaceMode === "create" || workspaceMode === "edit" || workspaceMode === "delete") {
+        document.getElementById('workspaceContent').style.display = 'block';
+    } else {
+        document.getElementById('workspaceContent').style.display = 'none';
+    }
+
+    attachWorkspaceListeners();
 }
+
 
 
 
