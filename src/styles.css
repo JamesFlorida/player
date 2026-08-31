@@ -709,14 +709,14 @@ body.workspace-mode-select #workspaceContent {
    WORKSPACE — SCROLLABLE LISTS (GLOBAL)
    ============================================================ */
 /* Unified list containers — columns handle scrolling */
- .workspace-search-results,
- .workspace-selected-list {
-    padding: 0;
-    margin: 0;
-    border: none;
-    background: transparent;
+.workspace-search-results,
+.workspace-selected-list {
+    background: rgba(0, 0, 0, 0.15); /* subtle dark overlay */
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 10px;
+    border: 1px solid rgba(255,255,255,0.08); /* faint outline */
 }
-
 
 .workspace-delete-list {
   background: #1f1f1f;          /* visible dark panel */
