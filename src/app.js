@@ -885,6 +885,7 @@ function renderCreateModeLayout() {
        workspaceSearchResults = allDances.filter(track =>
           !workspaceSelectedDances.includes(track.name)
       );
+        workspaceSearchResults = [];
         renderWorkspaceSelectedDances();
         renderWorkspaceSearchResults();
 
