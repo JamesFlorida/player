@@ -1238,20 +1238,20 @@ function handleWorkspaceSearchInput(value) {
         return;
     }
 
-   workspaceSearchResults = allDances.filter(track => {
-    const haystack = `
-        ${track.name}
-        ${track.choreographer}
-        ${track.song}
-        ${track.artist}
-    `.toLowerCase();
+    // ⭐ Only search fields visible in the workspace UI
+    workspaceSearchResults = allDances.filter(track => {
+        const name = (track.name || "").toLowerCase();
+        const choreo = (track.choreographer || "").toLowerCase();
 
-    return haystack.includes(workspaceSearchQuery);
-});
-
+        return (
+            name.includes(workspaceSearchQuery) ||
+            choreo.includes(workspaceSearchQuery)
+        );
+    });
 
     renderWorkspaceSearchResults();
 }
+
 
 function showWorkspaceMessage(text, type = "success") {
     const msg = document.getElementById("workspaceMessage");
