@@ -887,6 +887,9 @@ function renderCreateModeLayout() {
         `;
 
         // ⭐ INITIAL RENDER OF LISTS
+       workspaceSearchResults = allDances.filter(track =>
+          !workspaceSelectedDances.includes(track.name)
+      );
         renderWorkspaceSelectedDances();
         renderWorkspaceSearchResults();
 
