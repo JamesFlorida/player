@@ -1085,18 +1085,36 @@ function renderEditModeLayout() {
     const left = document.getElementById('workspaceLeftColumn');
     const right = document.getElementById('workspaceRightColumn');
 
+    // Clear columns
     left.innerHTML = `
         <div class="workspace-section-title">Select Playlist</div>
         <div id="workspacePlaylistSelection" class="workspace-playlist-selection"></div>
     `;
 
     right.innerHTML = `
-        <button class="workspace-cancel-btn" onclick="cancelWorkspace()">
-            Cancel
-        </button>
+        <!-- Right column intentionally empty -->
     `;
 
     renderWorkspacePlaylistSelection();
+
+    // ⭐ Remove any existing footer before creating a new one
+    const oldFooter = document.getElementById("workspaceFooter");
+    if (oldFooter) oldFooter.remove();
+
+    // ⭐ Create the fixed bottom footer (same as Create Mode)
+    let footer = document.getElementById("workspaceFooter");
+    if (!footer) {
+        const screen = document.querySelector(".workspace-screen");
+        footer = document.createElement("div");
+        footer.id = "workspaceFooter";
+        footer.className = "workspace-footer-fixed";
+        screen.appendChild(footer);
+    }
+
+    footer.innerHTML = `
+        <button class="workspace-save-btn workspace-footer-btn" onclick="saveEditedPlaylist()">Save Changes</button>
+        <button class="workspace-cancel-btn workspace-footer-btn" onclick="cancelWorkspace()">Cancel</button>
+    `;
 }
 
 
