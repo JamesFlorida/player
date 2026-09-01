@@ -621,7 +621,6 @@ body.workspace-mode-select #workspaceContent {
     flex-wrap: nowrap;
 }
 
-
   /* Phone: column padding */
   .workspace-column-left,
   .workspace-column-right {
@@ -703,6 +702,14 @@ body.workspace-mode-select #workspaceContent {
     font-size: 1rem;
     margin-bottom: 20px;    /* spacing under input */
     border-radius: 6px;
+}
+
+/* ============================================================
+   WORKSPACE — CREATE PLAYLIST (PHASE 1) INPUT WIDTH FIX
+   ============================================================ */
+#workspaceLeftColumn .workspace-name-box {
+    max-width: 360px;      /* wider box */
+    padding-right: 14px;   /* breathing room for placeholder */
 }
 
 /* ============================================================
@@ -1052,8 +1059,6 @@ body.workspace-mode-select #workspaceContent {
 /* ==========================================
    WORKSPACE — AGGRESSIVE VERTICAL COMPRESSION
    ========================================== */
-
-
 
 body.workspace-compressed .workspace-section-title {
   margin: 2px 0 4px 0;
