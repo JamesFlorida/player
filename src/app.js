@@ -785,18 +785,14 @@ function renderWorkspaceScreen() {
     attachWorkspaceListeners();
 }
 
-
-
-
-
-
 function renderCreateModeLayout() {
     console.log("RENDER CREATE MODE LAYOUT — Phase:", workspacePhase);
 
-    // Always clear columns before rendering
     const left = document.getElementById("workspaceLeftColumn");
     const right = document.getElementById("workspaceRightColumn");
+    const columns = document.querySelector(".workspace-columns");
 
+    // Always clear columns before rendering
     left.innerHTML = "";
     right.innerHTML = "";
 
@@ -805,6 +801,21 @@ function renderCreateModeLayout() {
        ============================================================ */
     if (workspacePhase === 1) {
         console.log("Phase:", workspacePhase);
+
+        // ⭐ Enable Phase‑1 full‑width mode
+        document.body.classList.add("workspace-phase1");
+
+        // ⭐ Collapse two-column layout
+        if (columns) {
+            columns.style.display = "block";   // no flexbox
+        }
+
+        // ⭐ Expand left column
+        left.style.width = "100%";
+
+        // ⭐ Hide right column entirely
+        right.style.display = "none";
+
         left.innerHTML = `
             <h2 class="workspace-section-title">Create Playlist</h2>
 
@@ -820,9 +831,6 @@ function renderCreateModeLayout() {
                 Create Playlist
             </button>
         `;
-
-        // Right column stays empty in Phase 1
-        right.innerHTML = "";
 
         // Attach name input handler
         const nameInput = document.getElementById("workspaceNameInput");
@@ -840,7 +848,18 @@ function renderCreateModeLayout() {
        ============================================================ */
     if (workspacePhase === 2) {
         console.log("Phase:", workspacePhase);
-       
+
+        // ⭐ Disable Phase‑1 full‑width mode
+        document.body.classList.remove("workspace-phase1");
+
+        // ⭐ Restore two-column layout
+        if (columns) {
+            columns.style.display = "flex";
+        }
+
+        // Restore right column visibility
+        right.style.display = "";
+
         // ⭐ LEFT COLUMN — Selected dances
         left.innerHTML = `
             <h2 class="workspace-section-title">
@@ -864,17 +883,18 @@ function renderCreateModeLayout() {
 
             <div id="workspaceSearchResults" class="workspace-search-results"></div>
         `;
-         const content = document.getElementById("workspaceContent");
-         if (content) {
-          content.style.marginTop = "0";
-          content.style.paddingTop = "0";
-         }
-         const screen = document.querySelector(".workspace-screen");
+
+        const content = document.getElementById("workspaceContent");
+        if (content) {
+            content.style.marginTop = "0";
+            content.style.paddingTop = "0";
+        }
+
         // ⭐ Remove any existing footer before creating a new one
-         const oldFooter = document.getElementById("workspaceFooter");
-         if (oldFooter) oldFooter.remove();
+        const oldFooter = document.getElementById("workspaceFooter");
+        if (oldFooter) oldFooter.remove();
+
         // ⭐ FIXED BOTTOM SAVE/CANCEL BAND
-        // Insert a footer if it doesn't exist yet
         let footer = document.getElementById("workspaceFooter");
         if (!footer) {
             const screen = document.querySelector(".workspace-screen");
@@ -890,9 +910,10 @@ function renderCreateModeLayout() {
         `;
 
         // ⭐ INITIAL RENDER OF LISTS
-       workspaceSearchResults = allDances.filter(track =>
-          !workspaceSelectedDances.includes(track.name)
-      );
+        workspaceSearchResults = allDances.filter(track =>
+            !workspaceSelectedDances.includes(track.name)
+        );
+
         workspaceSearchResults = [];
         renderWorkspaceSelectedDances();
         renderWorkspaceSearchResults();
