@@ -1032,16 +1032,27 @@ function startDeleteMode() {
 
 
 function beginWorkspacePhase2() {
-    if (!workspacePlaylistName) {
-        showWorkspaceMessage("Please enter a playlist name.", "error");
+    // Normalize name
+    const normalizedName = (workspacePlaylistName || "").trim();
+
+    // Empty name check
+    if (!normalizedName) {
+        alert("Please enter a playlist name before continuing.");
         return;
     }
 
+    // ⭐ Prevent overwriting an existing playlist (PHASE 1 CHECK)
+    if (userPlaylistsData.hasOwnProperty(normalizedName)) {
+        alert(
+            `A playlist named "${normalizedName}" already exists.\n\n` +
+            `Please choose a different name.`
+        );
+        return; // STOP — do not enter Phase 2
+    }
+
+    // Safe to continue
+    workspacePlaylistName = normalizedName;
     workspacePhase = 2;
-
-    document.getElementById('applicationHeaderTitle').innerText =
-        `Create Playlist: ${workspacePlaylistName}`;
-
     renderCreateModeLayout();
 }
 
