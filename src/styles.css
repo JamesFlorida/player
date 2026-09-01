@@ -788,6 +788,28 @@ body.workspace-mode-select #workspaceContent {
 
     transition: background-color 50ms ease, transform 50ms ease;
 }
+/* ============================================================
+   WORKSPACE — DISABLED SEARCH RESULT ROW (NEW)
+   ============================================================ */
+.workspace-dance-row.disabled {
+    background-color: #2a2a2a;   /* darker gray */
+    opacity: 0.55;               /* dim entire row */
+    cursor: not-allowed;
+}
+
+.workspace-dance-row.disabled .workspace-dance-title {
+    color: #aaa;                 /* muted text */
+}
+
+/* Larger + button for clarity */
+.workspace-add-btn {
+    font-size: 22px;
+    font-weight: bold;
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+}
+
 
 .workspace-dance-row:active {
     background-color: rgba(255, 255, 255, 0.08);
