@@ -1298,9 +1298,6 @@ function showWorkspaceMessage(text, type = "success") {
 }
 
 /* ============================================
-   WORKSPACE — SEARCH RESULTS RENDERER
-============================================ */
-/* ============================================
    WORKSPACE — SEARCH RESULTS RENDERER (UPDATED)
 ============================================ */
 function renderWorkspaceSearchResults() {
@@ -1320,23 +1317,35 @@ function renderWorkspaceSearchResults() {
         const row = document.createElement('div');
         row.className = 'workspace-dance-row';
 
+        const isAlreadySelected = workspaceSelectedDances.includes(track.name);
+
+        // ⭐ Button logic — disable if already selected
+        const addButtonHTML = isAlreadySelected
+            ? `<button class="workspace-add-btn disabled" disabled>✓</button>`
+            : `<button class="workspace-add-btn">+</button>`;
+
         row.innerHTML = `
             <span class="workspace-dance-title">
                 ${track.name} • ${track.choreographer}
             </span>
-
-            <button class="workspace-add-btn">+</button>
+            ${addButtonHTML}
         `;
 
-        // Entire-row tap behavior
-        row.onclick = () => {
-            addDanceToWorkspace(track.name);
-        };
+        // ⭐ Entire-row tap behavior
+        if (!isAlreadySelected) {
+            row.onclick = () => {
+                addDanceToWorkspace(track.name);
+            };
+        } else {
+            // Prevent dead-click feeling
+            row.onclick = () => {
+                // No action — row is disabled
+            };
+        }
 
         container.appendChild(row);
     });
 }
-
 
 /* ============================================
    WORKSPACE — SELECTED LIST RENDERER
