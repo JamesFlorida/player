@@ -1438,6 +1438,7 @@ function selectPlaylistForEditing(name) {
     const left = document.getElementById('workspaceLeftColumn');
     const right = document.getElementById('workspaceRightColumn');
 
+    // ⭐ LEFT COLUMN — NO SAVE/CANCEL HERE ANYMORE
     left.innerHTML = `
         <h2 class="workspace-section-title">Your Playlist</h2>
 
@@ -1450,19 +1451,9 @@ function selectPlaylistForEditing(name) {
 
         <div class="workspace-section-title">Selected Dances</div>
         <div id="workspaceSelectedDances" class="workspace-selected-list"></div>
-
-         <div class="workspace-edit-actions">
-              <button class="workspace-save-btn" onclick="saveWorkspacePlaylist()">
-               Save Changes
-              </button>
-
-              <button class="workspace-cancel-btn" onclick="cancelWorkspace()">
-               Cancel
-              </button>
-       </div>
-
     `;
 
+    // ⭐ RIGHT COLUMN — Search
     right.innerHTML = `
         <div class="workspace-section-title">Search Dances</div>
 
@@ -1475,7 +1466,22 @@ function selectPlaylistForEditing(name) {
         <div id="workspaceSearchResults" class="workspace-search-results"></div>
     `;
 
-    // Attach REAL input handler AFTER DOM is rendered
+    // ⭐ Remove the selection-screen footer
+    const oldFooter = document.getElementById("workspaceFooter");
+    if (oldFooter) oldFooter.remove();
+
+    // ⭐ Create the correct footer for actual edit mode
+    const screen = document.querySelector(".workspace-screen");
+    const footer = document.createElement("div");
+    footer.id = "workspaceFooter";
+    footer.className = "workspace-footer-fixed";
+    footer.innerHTML = `
+        <button class="workspace-save-btn workspace-footer-btn" onclick="saveWorkspacePlaylist()">Save Changes</button>
+        <button class="workspace-cancel-btn workspace-footer-btn" onclick="cancelWorkspace()">Cancel</button>
+    `;
+    screen.appendChild(footer);
+
+    // ⭐ Attach REAL input handler AFTER DOM is rendered
     const editNameInput = document.getElementById("workspacePlaylistNameInput");
     if (editNameInput) {
         editNameInput.addEventListener("input", (e) => {
