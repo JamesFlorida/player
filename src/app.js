@@ -1847,4 +1847,5 @@ window.renderWorkspaceDeleteList = renderWorkspaceDeleteList;
 window.beginWorkspacePhase2 = beginWorkspacePhase2;
 window.renderDeleteModeLayout = renderDeleteModeLayout;
 window.cancelWorkspace = cancelWorkspace;
-window.window.openEventsView = openEventsView;
+window.openEventsView = openEventsView;
+window.returnToHub = returnToHub;
