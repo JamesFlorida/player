@@ -1075,7 +1075,6 @@ function attachWorkspaceListeners() {
     }
 }
 
-
 /* ============================================
    EDIT MODE LAYOUT
 ============================================ */
@@ -1085,7 +1084,6 @@ function renderEditModeLayout() {
     const left = document.getElementById('workspaceLeftColumn');
     const right = document.getElementById('workspaceRightColumn');
 
-    // Clear columns
     left.innerHTML = `
         <div class="workspace-section-title">Select Playlist</div>
         <div id="workspacePlaylistSelection" class="workspace-playlist-selection"></div>
@@ -1101,7 +1099,7 @@ function renderEditModeLayout() {
     const oldFooter = document.getElementById("workspaceFooter");
     if (oldFooter) oldFooter.remove();
 
-    // ⭐ Create the fixed bottom footer (same as Create Mode)
+    // ⭐ Create the fixed bottom footer
     let footer = document.getElementById("workspaceFooter");
     if (!footer) {
         const screen = document.querySelector(".workspace-screen");
@@ -1115,8 +1113,11 @@ function renderEditModeLayout() {
         <button class="workspace-save-btn workspace-footer-btn" onclick="saveEditedPlaylist()">Save Changes</button>
         <button class="workspace-cancel-btn workspace-footer-btn" onclick="cancelWorkspace()">Cancel</button>
     `;
-}
 
+    // ⭐ Hide Save button on playlist-selection screen
+    const saveBtn = footer.querySelector(".workspace-save-btn");
+    if (saveBtn) saveBtn.style.display = "none";
+}
 
 /* ============================================
    DELETE MODE LAYOUT
