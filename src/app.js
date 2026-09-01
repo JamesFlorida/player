@@ -2,7 +2,7 @@ console.log(">>> APP.JS LOADED (NEW VERSION)");
 import { danceData } from './venues/Stockyard/danceData-stockyard.js';
 
 /* ============================================
-   IMPORTS     
+   IMPORTS      
 ============================================ */
 import { globalDanceList } from "./globalDanceList.js";
 import { venueDanceMap } from "./venues/Stockyard/venueDanceMap.js";
