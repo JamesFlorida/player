@@ -844,7 +844,7 @@ function renderCreateModeLayout() {
     }
 
     /* ============================================================
-       PHASE 2 — BUILD PLAYLIST
+       PHASE 2 — BUILD / EDIT PLAYLIST
        ============================================================ */
     if (workspacePhase === 2) {
         console.log("Phase:", workspacePhase);
@@ -860,7 +860,7 @@ function renderCreateModeLayout() {
         // Restore right column visibility
         right.style.display = "";
 
-        // ⭐ LEFT COLUMN — Selected dances
+        // ⭐ LEFT COLUMN — Selected dances (playlist name now NON-editable)
         left.innerHTML = `
             <h2 class="workspace-section-title">
                 Playlist: ${workspacePlaylistName}
