@@ -1096,23 +1096,26 @@ function attachWorkspaceListeners() {
     }
 }
 
-/* ============================================
-   EDIT MODE LAYOUT
-============================================ */
 function renderEditModeLayout() {
     console.log("Render Edit Mode Layout");
 
     const left = document.getElementById('workspaceLeftColumn');
     const right = document.getElementById('workspaceRightColumn');
 
+    // Clear columns
+    left.innerHTML = "";
+    right.innerHTML = "";
+
+    /* ============================================================
+       EDIT MODE — SELECT PLAYLIST
+       ============================================================ */
     left.innerHTML = `
         <div class="workspace-section-title">Select Playlist</div>
         <div id="workspacePlaylistSelection" class="workspace-playlist-selection"></div>
     `;
 
-    right.innerHTML = `
-        <!-- Right column intentionally empty -->
-    `;
+    // Right column intentionally empty
+    right.innerHTML = ``;
 
     renderWorkspacePlaylistSelection();
 
@@ -1135,7 +1138,7 @@ function renderEditModeLayout() {
         <button class="workspace-cancel-btn workspace-footer-btn" onclick="cancelWorkspace()">Cancel</button>
     `;
 
-    // ⭐ Hide Save button on playlist-selection screen
+    // ⭐ Hide Save button until a playlist is selected
     const saveBtn = footer.querySelector(".workspace-save-btn");
     if (saveBtn) saveBtn.style.display = "none";
 }
