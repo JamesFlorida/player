@@ -655,7 +655,7 @@ body.workspace-mode-select #workspaceContent {
 
   .workspace-save-btn,
   .workspace-cancel-btn {
-  width: 50%;               /* equal width buttons */
+  /*  width: 50%;                equal width buttons */
   font-size: 15px;
   padding: 12px;
 }
