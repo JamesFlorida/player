@@ -1491,6 +1491,8 @@ function selectPlaylistForEditing(name) {
     }
 
     renderWorkspaceSelectedDances();
+   // ⭐ Clear old search results from previous screens
+    workspaceSearchResults = [];
     renderWorkspaceSearchResults();
 }
 
