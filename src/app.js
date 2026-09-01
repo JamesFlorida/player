@@ -1296,7 +1296,6 @@ function showWorkspaceMessage(text, type = "success") {
         msg.style.opacity = 0;
     }, 2000);
 }
-
 /* ============================================
    WORKSPACE — SEARCH RESULTS RENDERER (UPDATED)
 ============================================ */
@@ -1315,13 +1314,17 @@ function renderWorkspaceSearchResults() {
 
     workspaceSearchResults.forEach(track => {
         const row = document.createElement('div');
-        row.className = 'workspace-dance-row';
 
         const isAlreadySelected = workspaceSelectedDances.includes(track.name);
 
-        // ⭐ Button logic — disable if already selected
+        // ⭐ Row class (dim entire row if already selected)
+        row.className = isAlreadySelected
+            ? 'workspace-dance-row disabled'
+            : 'workspace-dance-row';
+
+        // ⭐ Button logic — remove button entirely if already selected
         const addButtonHTML = isAlreadySelected
-            ? `<button class="workspace-add-btn disabled" disabled>✓</button>`
+            ? ''   // no button at all
             : `<button class="workspace-add-btn">+</button>`;
 
         row.innerHTML = `
@@ -1337,19 +1340,14 @@ function renderWorkspaceSearchResults() {
                 addDanceToWorkspace(track.name);
             };
         } else {
-            // Prevent dead-click feeling
-            row.onclick = () => {
-                // No action — row is disabled
-            };
+            row.onclick = () => {}; // disabled
         }
 
         container.appendChild(row);
     });
 }
 
-/* ============================================
-   WORKSPACE — SELECTED LIST RENDERER
-============================================ */
+
 /* ============================================
    WORKSPACE — SELECTED LIST RENDERER (UPDATED)
 ============================================ */
