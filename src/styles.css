@@ -1224,6 +1224,33 @@ body.workspace-phase1 .workspace-name-box {
     padding-right: 16px;  /* placeholder breathing room */
 }
 
+/* ============================================================
+   PHONE — FULL WIDTH APP + WORKSPACE COLUMNS (FINAL FIX)
+   ============================================================ */
+@media (max-width: 600px) {
+
+    /* Remove global container inset */
+    .app-container {
+        max-width: 100% !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* Remove workspace column inset */
+    .workspace-columns {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        gap: 8px !important; /* optional: tighten gap slightly */
+    }
+
+    /* Remove left/right column padding */
+    .workspace-column-left,
+    .workspace-column-right {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+}
 
 
 /* FINAL authoritative spacing for workspace descriptions
