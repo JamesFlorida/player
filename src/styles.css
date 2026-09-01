@@ -1251,6 +1251,14 @@ body.workspace-phase1 .workspace-name-box {
         padding-right: 0 !important;
     }
 }
+/* ============================================================
+   WORKSPACE — EXTEND LISTS TO FOOTER (FINAL FIX)
+   ============================================================ */
+.workspace-selected-list,
+.workspace-search-results {
+    height: calc(100vh - 200px);   /* adjust if needed */
+    overflow-y: auto;
+}
 
 
 /* FINAL authoritative spacing for workspace descriptions
