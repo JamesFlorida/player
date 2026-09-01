@@ -1,4 +1,4 @@
-console.log(">>> APP.JS LOADED (NEW VERSION)");
+console.log("TOP OF APP.JS LOADED");
 import { danceData } from './venues/Stockyard/danceData-stockyard.js';
 
 /* ============================================
@@ -597,9 +597,10 @@ if (lastNavigationMode === "user-playlist" && activeUserPlaylistView !== null) {
         </div>
     `;
 }
+console.log("JUST BEFORE EVENTS FUNCTIONS LOADED");
 
 function openEventsView() {
-    console.log("Open Events View");
+    console.log("fIRST LINE IN Open Events View");
 
     setHubHeaderTitle("Events");   // ✔ correct function
 
