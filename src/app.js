@@ -1333,15 +1333,24 @@ function renderWorkspaceSearchResults() {
             </span>
             ${addButtonHTML}
         `;
-
+       
         // ⭐ Entire-row tap behavior
         if (!isAlreadySelected) {
-            row.onclick = () => {
-                addDanceToWorkspace(track.name);
-            };
-        } else {
-            row.onclick = () => {}; // disabled
-        }
+          row.onclick = () => {
+           addDanceToWorkspace(track.name);
+
+           // ⭐ Instant visual feedback BEFORE re-render
+           row.classList.add("disabled");
+
+           const btn = row.querySelector(".workspace-add-btn");
+           if (btn) btn.remove();
+
+           row.style.transition = "opacity 120ms ease";
+           row.style.opacity = "0.55";
+          };
+      } else {
+         row.onclick = () => {}; // disabled
+      }
 
         container.appendChild(row);
     });
