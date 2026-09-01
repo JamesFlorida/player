@@ -672,13 +672,6 @@ function renderWorkspacePlaylistSelection() {
     container.innerHTML = html;
 }
 
-
-/* ============================================
-   WORKSPACE SCREEN (MAIN ENTRY)
-============================================ */
-/* ============================================
-   WORKSPACE SCREEN (MAIN ENTRY)
-============================================ */
 /* ============================================
    WORKSPACE SCREEN (MAIN ENTRY)
 ============================================ */
@@ -1464,9 +1457,6 @@ function saveWorkspacePlaylist() {
     renderWorkspaceScreen();
 }
 
-
-
-
 /* ============================================
    WORKSPACE — SELECT PLAYLIST FOR EDITING
 ============================================ */
@@ -1478,18 +1468,10 @@ function selectPlaylistForEditing(name) {
     const left = document.getElementById('workspaceLeftColumn');
     const right = document.getElementById('workspaceRightColumn');
 
-    // ⭐ LEFT COLUMN — NO SAVE/CANCEL HERE ANYMORE
+    // ⭐ LEFT COLUMN — CLEAN, NON-EDITABLE PLAYLIST NAME
     left.innerHTML = `
-        <h2 class="workspace-section-title">Your Playlist</h2>
+        <h2 class="workspace-section-title">Playlist: ${workspacePlaylistName}</h2>
 
-        <input id="workspacePlaylistNameInput"
-          class="workspace-name-input"
-          type="text"
-          placeholder="Enter playlist name"
-          value="${workspacePlaylistName}"
-        />
-
-        <div class="workspace-section-title">Selected Dances</div>
         <div id="workspaceSelectedDances" class="workspace-selected-list"></div>
     `;
 
@@ -1521,17 +1503,10 @@ function selectPlaylistForEditing(name) {
     `;
     screen.appendChild(footer);
 
-    // ⭐ Attach REAL input handler AFTER DOM is rendered
-    const editNameInput = document.getElementById("workspacePlaylistNameInput");
-    if (editNameInput) {
-        editNameInput.addEventListener("input", (e) => {
-            console.log("WRITE — workspacePlaylistName set to:", e.target.value);
-            workspacePlaylistName = e.target.value;
-        });
-    }
-
+    // ⭐ Render selected dances
     renderWorkspaceSelectedDances();
-   // ⭐ Clear old search results from previous screens
+
+    // ⭐ Clear old search results from previous screens
     workspaceSearchResults = [];
     renderWorkspaceSearchResults();
 }
