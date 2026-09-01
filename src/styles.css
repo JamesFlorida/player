@@ -1259,6 +1259,61 @@ body.workspace-phase1 .workspace-name-box {
     height: calc(100vh - 200px);   /* adjust if needed */
     overflow-y: auto;
 }
+/* ============================================================
+   EVENTS — CARD LAYOUT
+   ============================================================ */
+.events-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-bottom: 20px;
+}
+
+.event-card {
+    background: #222;
+    border-radius: 10px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.event-image {
+    width: 100%;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.event-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.event-title {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.event-date {
+    font-size: 15px;
+    color: #ccc;
+}
+
+.event-price {
+    font-size: 14px;
+    color: #bbb;
+}
+
+.event-link {
+    margin-top: 8px;
+    padding: 10px;
+    background: #c00;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    text-decoration: none;
+}
 
 
 /* FINAL authoritative spacing for workspace descriptions
