@@ -597,6 +597,7 @@ if (lastNavigationMode === "user-playlist" && activeUserPlaylistView !== null) {
         </div>
     `;
 }
+
 function openEventsView() {
     console.log("Open Events View");
 
