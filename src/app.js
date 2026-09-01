@@ -632,9 +632,7 @@ function renderEventsScreen() {
 
     renderEventsList();
 }
-function returnToHub() {
-    renderApplicationInterface();
-}
+
 function renderEventsList() {
     const container = document.getElementById("eventsList");
     container.innerHTML = "";
