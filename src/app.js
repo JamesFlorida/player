@@ -1003,14 +1003,6 @@ function startDeleteMode() {
     console.log("Start Delete Mode — workspaceMode:", workspaceMode);
     activateWorkspaceHeader("Delete Playlist");
 
-    // If no playlists exist
-    if (!userPlaylistsData || Object.keys(userPlaylistsData).length === 0) {
-        showWorkspaceMessage("No playlists available to delete.", "warning");
-        workspaceMode = "neutral";
-        updateWorkspaceModeButtons("neutral");
-        return;
-    }
-
     // Hide mode-selection panel
     const modePanel = document.getElementById('workspaceModePanel');
     if (modePanel) modePanel.style.display = 'none';
@@ -1020,8 +1012,10 @@ function startDeleteMode() {
     if (sel) sel.style.display = 'none';
 
     // Clear columns
-    document.getElementById("workspaceLeftColumn").innerHTML = "";
-    document.getElementById("workspaceRightColumn").innerHTML = "";
+    const left = document.getElementById("workspaceLeftColumn");
+    const right = document.getElementById("workspaceRightColumn");
+    left.innerHTML = "";
+    right.innerHTML = "";
 
     // Set mode + phase
     workspaceMode = "delete";
@@ -1043,7 +1037,6 @@ function startDeleteMode() {
     // Render delete layout
     renderDeleteModeLayout();
 }
-
 
 function beginWorkspacePhase2() {
     // Normalize name
@@ -1143,6 +1136,23 @@ function renderDeleteModeLayout() {
     const left = document.getElementById('workspaceLeftColumn');
     const right = document.getElementById('workspaceRightColumn');
 
+    // If no playlists exist — show proper empty screen
+    if (!userPlaylistsData || Object.keys(userPlaylistsData).length === 0) {
+        left.innerHTML = `
+            <div class="workspace-section-title">Delete Playlist</div>
+            <div class="workspace-empty-message">No playlists available to delete.</div>
+        `;
+
+        right.innerHTML = `
+            <button class="workspace-cancel-btn" onclick="cancelWorkspace()">
+                Cancel
+            </button>
+        `;
+
+        return;
+    }
+
+    // Normal delete mode
     left.innerHTML = `
         <div class="workspace-section-title">Delete Playlist</div>
         <div id="workspaceDeleteList" class="workspace-delete-list"></div>
@@ -1157,26 +1167,6 @@ function renderDeleteModeLayout() {
     renderWorkspaceDeleteList();
 }
 
-
-/* ============================================
-   WORKSPACE MODE BUTTON STATE HANDLER
-   --------------------------------------------
-   This helper function updates the visual state
-   of the three workspace mode buttons:
-     • Create New Playlist
-     • Edit Existing Playlist
-     • Delete Playlist
-
-   It applies:
-     - .active   → highlights the selected mode
-     - .disabled → grays out inactive modes and
-                   prevents clicking
-
-   Called by:
-     startCreateMode()
-     startEditMode()
-     startDeleteMode()
-============================================ */
 function updateWorkspaceModeButtons(activeMode) {
     const createBtn = document.getElementById("modeCreateBtn");
     const editBtn = document.getElementById("modeEditBtn");
