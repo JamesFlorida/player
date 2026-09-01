@@ -1674,19 +1674,6 @@ function cancelWorkspace() {
 }
 
 /* ============================================
-   EVENTS VIEW (placeholder)
-============================================ */
-function openEventsView() {
-    const viewport = document.getElementById('masterApplicationViewport');
-    viewport.innerHTML = `
-        <div class="events-view">
-            <h2>Events</h2>
-            <p>Event listings will appear here.</p>
-        </div>
-    `;
-}
-
-/* ============================================
    SINGLE DANCE SCREEN
 ============================================ */
 function renderSingleDanceScreen(dance) {
