@@ -8,6 +8,26 @@ import { globalDanceList } from "./globalDanceList.js";
 import { venueDanceMap } from "./venues/Stockyard/venueDanceMap.js";
 import { venueConfig } from "./venues/Stockyard/venueConfig.js";
 
+export const venueEvents = [
+    {
+        id: "evt_mark_chesnutt",
+        title: "Mark Chesnutt — Live at The Stockyard",
+        date: "August 28",
+        image: "./images/events/mark_chesnutt.png",
+        price: "GA $25 advance / $30 day of show — VIP $85",
+        link: "https://stockyardlive.com"
+    },
+    {
+        id: "evt_diamond_rio",
+        title: "Diamond Rio — Live at The Stockyard",
+        date: "Friday, November 13",
+        image: "./images/events/diamond_rio.png",
+        price: "GA $25 advance / $30 day of show — VIP $95",
+        link: "https://stockyardlive.com"
+    }
+];
+
+
 /* ============================================
    MERGE GLOBAL + VENUE DANCE DATA  
 ============================================ */
@@ -154,6 +174,14 @@ function initializeVenueBranding() {
         }
     }
 }
+function setHubHeaderTitle(title) {
+    const titleEl = document.getElementById('applicationHeaderTitle');
+    if (titleEl) {
+        titleEl.innerText = title;
+        titleEl.style.display = 'inline';
+    }
+}
+
 function activateWorkspaceHeader(modeTitle) {
     // Hide the big venue header (bull banner)
     const venueHeader = document.querySelector('.venue-header');
@@ -569,7 +597,69 @@ if (lastNavigationMode === "user-playlist" && activeUserPlaylistView !== null) {
         </div>
     `;
 }
+function openEventsView() {
+    console.log("Open Events View");
 
+    setHubHeaderTitle("Events");   // ✔ correct function
+
+    const viewport = document.getElementById("masterApplicationViewport");
+    viewport.innerHTML = "";
+
+    renderEventsScreen();
+}
+
+
+
+function renderEventsScreen() {
+    const viewport = document.getElementById("masterApplicationViewport");
+
+    viewport.innerHTML = `
+        <div class="events-screen">
+
+            <div class="events-left-column">
+                <h2 class="workspace-section-title">Upcoming Events</h2>
+                <div id="eventsList" class="events-list"></div>
+            </div>
+
+            <div class="events-right-column">
+                <button class="workspace-cancel-btn" onclick="returnToHub()">
+                    Back
+                </button>
+            </div>
+
+        </div>
+    `;
+
+    renderEventsList();
+}
+function returnToHub() {
+    renderApplicationInterface();
+}
+function renderEventsList() {
+    const container = document.getElementById("eventsList");
+    container.innerHTML = "";
+
+    venueEvents.forEach(evt => {
+        const card = document.createElement("div");
+        card.className = "event-card";
+
+        card.innerHTML = `
+            <img src="${evt.image}" class="event-image" />
+
+            <div class="event-info">
+                <div class="event-title">${evt.title}</div>
+                <div class="event-date">${evt.date}</div>
+                <div class="event-price">${evt.price}</div>
+
+                <a href="${evt.link}" target="_blank" class="event-link">
+                    Tickets & Info
+                </a>
+            </div>
+        `;
+
+        container.appendChild(card);
+    });
+}
 
 
 /* ============================================
