@@ -1206,6 +1206,24 @@ body.workspace-compressed .workspace-search-box {
         font-size: 1rem;
     }
 }
+/* ============================================================
+   WORKSPACE — CREATE PLAYLIST (PHASE 1) FULL-WIDTH LEFT COLUMN
+   ============================================================ */
+body.workspace-phase1 #workspaceLeftColumn {
+    width: 100%;
+    max-width: 480px;     /* safe, comfortable width */
+    margin: 0 auto;       /* center it */
+}
+
+body.workspace-phase1 #workspaceRightColumn {
+    display: none;        /* hide empty right column */
+}
+
+body.workspace-phase1 .workspace-name-box {
+    max-width: 420px;     /* finally wide enough */
+    padding-right: 16px;  /* placeholder breathing room */
+}
+
 
 
 /* FINAL authoritative spacing for workspace descriptions
