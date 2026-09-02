@@ -55,7 +55,7 @@ body {
   font-weight: bold;
   font-size: 1.3rem;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  position: sticky;
+  position: fixed;
   top: 0;
   z-index: 100;
   /*height: auto;                  ← allow natural height */
