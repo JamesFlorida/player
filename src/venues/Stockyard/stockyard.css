@@ -2,13 +2,7 @@
 /* Stockyard — Venue Branding Only                           */
 /* ========================================================= */
 
-/* Header + Logo */
-.venue-header {
-    background-color: #111;
-    text-align: center;
-    padding: 12px 0;
-}
-
+/* Header + Logo (branding only) */
 .stockyard-logo {
     height: 80px;
     filter: drop-shadow(0 0 12px rgba(255, 180, 60, 0.7));
@@ -19,31 +13,6 @@
     transform: scale(1.05);
 }
 
-/* Header Bar (Stockyard Theme) */
-.header-bar {
-    background-color: #000;
-    color: #fff;
-    padding-top: 1px;
-    padding-right: 12px;
-    padding-bottom: 1px;
-    padding-left: 12px;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    border-bottom: 3px solid #000;
-}
-
-/* Back Button */
-.back-nav-btn {
-    background-color: #000;
-    color: #fff;
-    border: 1px solid #fff;
-    padding: 6px 10px;
-    border-radius: 4px;
-    font-weight: bold;
-}
-
 /* Divider Glow */
 .header-divider {
     width: 100%;
@@ -52,11 +21,6 @@
     margin-top: 4px;
     margin-bottom: 12px;
     opacity: 0.8;
-}
-
-/* App Background — allow purple body to show */
-.app-container {
-    background-color: transparent;
 }
 
 /* Playlist Tiles (Venue Theme) */
@@ -158,30 +122,3 @@ body {
 .workspace-screen {
     background-color: transparent;
 }
-
-/* ============================================
-   FIXED HUB FOOTER BAR
-   ============================================ */
-#hubFooterBar {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 50px;
-    background: #222;
-    border-top: 2px solid #444;
-    z-index: 100;
-}
-/* ============================================
-   HUB SCROLL REGION
-   ============================================ */
-.hub-scroll-region {
-    position: absolute;
-    top: 270px;   /* bull + header + filter + nav */
-    bottom: 24px; /* footer height */
-    left: 0;
-    right: 0;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-}
-
