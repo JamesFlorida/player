@@ -1402,6 +1402,9 @@ body.workspace-mode .workspace-content {
 body.workspace-mode .workspace-columns {
     padding-top: 60px !important;
 }
+.header-bar {
+    gap: 12px !important;
+}
 
 /* FINAL authoritative spacing for workspace descriptions
 .workspace-mode-desc {
