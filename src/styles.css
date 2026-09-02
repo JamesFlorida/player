@@ -1407,48 +1407,52 @@ body.workspace-mode .workspace-columns {
     gap: 12px !important;
 }
 
-
 /* ============================================================
-   EVENTS SCREEN — USE STANDARD WORKSPACE HEADER-BAR
+   EVENTS SCREEN — CLEAN HEADER + FIXED BACK BUTTON
    ============================================================ */
 
-/* Make the existing header-bar fixed for Events */
-body.workspace-mode .header-bar {
-    position: fixed;
+/* Push Events content below the fixed hub header */
+.events-screen {
+    padding-top: 60px !important;
+}
+
+/* Solid background for header ONLY when Events is active */
+body.events-active .header-bar {
+    background-color: #222 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 60px !important;
+    position: fixed !important;
     top: 0;
     left: 0;
     width: 100%;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center; /* center EVENTS title */
     z-index: 9999;
 }
 
-/* Back button on left */
-body.workspace-mode .header-bar .header-back-btn {
-    position: absolute;
-    left: 20px;
+/* Standard back button on left (matching workspace screens) */
+body.events-active .header-bar .header-back-btn {
+    position: absolute !important;
+    left: 20px !important;
+    top: 14px !important;
+    background-color: #444 !important;
+    padding: 6px 12px !important;
+    border-radius: 6px !important;
+    color: #fff !important;
+    z-index: 10000 !important;
 }
 
-/* Small bull logo on right */
-body.workspace-mode .header-bar .header-logo {
-    position: absolute;
-    right: 20px;
+/* Small bull logo on right (same as workspace screens) */
+body.events-active .header-bar .header-logo {
+    position: absolute !important;
+    right: 20px !important;
+    top: 14px !important;
 }
 
-/* Push Events content below fixed header */
-.events-screen {
-    padding-top: 60px; !important
-}
-/* ============================================================
-   EVENTS — FIXED BACK BUTTON
-   ============================================================ */
+/* Hide the internal Events Back button (duplicate) */
 .events-screen .workspace-cancel-btn {
-    position: fixed !important;
-    top: 60px !important;     /* directly under hub header */
-    right: 20px !important;   /* matches workspace layout */
-    z-index: 9999 !important;
+    display: none !important;
 }
+
 
 
