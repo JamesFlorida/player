@@ -233,8 +233,6 @@ function navigateToPlaylistHubMenu() {
 }
 
 function returnToHub() {
-    document.body.classList.remove("events-active");   // ⭐ NEW LINE
-
     selectedActivePlaylistGroup = null;
     activeDayView = null;
     activeDifficultyView = null;
@@ -379,7 +377,7 @@ function renderApplicationInterface() {
 
         renderDanceCardsList(filteredTracks, viewport);
         updateHubVisibility();
-        return;
+        return;   // ⭐ prevents hub screen from overwriting playlist
     }
 
     /* --------------------------------------------
@@ -405,7 +403,7 @@ function renderApplicationInterface() {
 
         renderDanceCardsList(dayTracks, viewport);
         updateHubVisibility();
-        return;
+        return;   // ⭐ prevents hub screen from overwriting day view
     }
 
     /* --------------------------------------------
@@ -434,40 +432,63 @@ function renderApplicationInterface() {
 
         renderDanceCardsList(difficultyTracks, viewport);
         updateHubVisibility();
-        return;
+        return;   // ⭐ prevents hub screen from overwriting difficulty view
     }
 
     /* --------------------------------------------
-       USER PLAYLIST VIEW
+       HUB SCREEN (default)
        -------------------------------------------- */
-    if (lastNavigationMode === "user-playlist" && activeUserPlaylistView !== null) {
+    const filterBar = document.getElementById('dayFilterBar');
+    if (filterBar) filterBar.style.display = 'block';
 
-        const tracks = (userPlaylistsData[activeUserPlaylistView] || [])
-            .map(title => allDances.find(t =>
-                t.name.trim().toLowerCase() === title.trim().toLowerCase()
-            ))
-            .filter(t => t);
+    const diffBar = document.getElementById('difficultyFilterBar');
+    if (diffBar) diffBar.style.display = 'block';
 
-        console.log("DEBUG — activeUserPlaylistView:", activeUserPlaylistView);
-        console.log("DEBUG — raw playlist titles:", userPlaylistsData[activeUserPlaylistView]);
-        console.log("DEBUG — database titles:", localDanceDatabase.map(t => t.title));
+    const navRow = document.querySelector('.hub-nav-row');
+    if (navRow) navRow.style.display = 'flex';
 
-        document.getElementById('navbarReturnTrigger').style.display = 'block';
-        document.getElementById('navbarReturnTrigger').onclick = navigateToPlaylistHubMenu;
-        document.getElementById('applicationHeaderTitle').innerText = activeUserPlaylistView;
+    document.getElementById('navbarReturnTrigger').style.display = 'none';
+    document.getElementById('navbarReturnTrigger').onclick = null;
+    if (lastNavigationMode === "hub") {
+    restoreHubHeader();
+    document.getElementById('applicationHeaderTitle').innerText =
+        venueConfig.headerTitle || venueConfig.name || "";
+   }
 
-        if (!tracks.length) {
-            viewport.innerHTML = `
-                <p style="text-align:center;color:#aaa;margin-top:20px;">
-                    No dances found in this playlist.
-                </p>`;
-            return;
-        }
+    
+   /* --------------------------------------------
+   USER PLAYLIST VIEW
+   -------------------------------------------- */
+if (lastNavigationMode === "user-playlist" && activeUserPlaylistView !== null) {
 
-        renderDanceCardsList(tracks, viewport);
-        updateHubVisibility();
+   const tracks = (userPlaylistsData[activeUserPlaylistView] || [])
+    .map(title => allDances.find(t =>
+        t.name.trim().toLowerCase() === title.trim().toLowerCase()
+    ))
+    .filter(t => t);
+
+
+   console.log("DEBUG — activeUserPlaylistView:", activeUserPlaylistView);
+   console.log("DEBUG — raw playlist titles:", userPlaylistsData[activeUserPlaylistView]);
+   console.log("DEBUG — database titles:", localDanceDatabase.map(t => t.title));
+
+    document.getElementById('navbarReturnTrigger').style.display = 'block';
+    document.getElementById('navbarReturnTrigger').onclick = navigateToPlaylistHubMenu;
+    document.getElementById('applicationHeaderTitle').innerText = activeUserPlaylistView;
+
+    if (!tracks.length) {
+        viewport.innerHTML = `
+            <p style="text-align:center;color:#aaa;margin-top:20px;">
+                No dances found in this playlist.
+            </p>`;
         return;
     }
+
+    renderDanceCardsList(tracks, viewport);
+    updateHubVisibility();
+    return;
+}
+
 
     /* --------------------------------------------
        VENUE PLAYLISTS
@@ -511,91 +532,57 @@ function renderApplicationInterface() {
             : "";
 
     /* --------------------------------------------
-       HUB SCREEN (default)
-       -------------------------------------------- */
-
-    const filterBar = document.getElementById('dayFilterBar');
-    if (filterBar) filterBar.style.display = 'block';
-
-    const diffBar = document.getElementById('difficultyFilterBar');
-    if (diffBar) diffBar.style.display = 'block';
-
-    const navRow = document.querySelector('.hub-nav-row');
-    if (navRow) navRow.style.display = 'flex';
-
-    document.getElementById('navbarReturnTrigger').style.display = 'none';
-    document.getElementById('navbarReturnTrigger').onclick = null;
-
-    if (lastNavigationMode === "hub") {
-        restoreHubHeader();
-        document.getElementById('applicationHeaderTitle').innerText =
-            venueConfig.headerTitle || venueConfig.name || "";
-    }
-
-    /* --------------------------------------------
-       RENDER HUB SCREEN (with scroll region)
+       RENDER HUB SCREEN
        -------------------------------------------- */
     viewport.innerHTML = `
-        <div class="hub-scroll-region">
-            <div class="hub-screen">
+        <div class="hub-screen">
 
-                <div class="hub-filter-row">
-                    <select id="daySelect" onchange="setDayFilter(this.value)">
-                        <option value="ALL">All Days</option>
-                        <option value="Tuesday">Tuesday</option>
-                        <option value="Wednesday">Wednesday</option>
-                        <option value="Weekend">Weekend</option>
-                        <option value="Other">Other</option>
-                    </select>
+            <div class="hub-filter-row">
+                <select id="daySelect" onchange="setDayFilter(this.value)">
+                    <option value="ALL">All Days</option>
+                    <option value="Tuesday">Tuesday</option>
+                    <option value="Wednesday">Wednesday</option>
+                    <option value="Weekend">Weekend</option>
+                    <option value="Other">Other</option>
+                </select>
 
-                    <select id="difficultySelect" onchange="setDifficultyFilter(this.value)">
-                        <option value="">Difficulty</option>
-                        <option value="Beginner">Beginner</option>
-                        <option value="Improver">Improver</option>
-                        <option value="Intermediate">Intermediate</option>
-                        <option value="Advanced">Advanced</option>
-                    </select>
+                <select id="difficultySelect" onchange="setDifficultyFilter(this.value)">
+                    <option value="">Difficulty</option>
+                    <option value="Beginner">Beginner</option>
+                    <option value="Improver">Improver</option>
+                    <option value="Intermediate">Intermediate</option>
+                    <option value="Advanced">Advanced</option>
+                </select>
+            </div>
+
+            <div class="hub-nav-row">
+                <div class="hub-nav-card" onclick="openWorkspace()">
+                    Manage User Playlists
                 </div>
-
-                <div class="hub-nav-row">
-                    <div class="hub-nav-card" onclick="openWorkspace()">
-                        Manage User Playlists
-                    </div>
-                    <div class="hub-nav-card" onclick="openEventsView()">
-                        Events
-                    </div>
+                <div class="hub-nav-card" onclick="openEventsView()">
+                    Events
                 </div>
+            </div>
 
-                <div class="playlist-container">
+            <div class="playlist-container">
 
-                    ${userPlaylistCardsHTML
-                        ? `<div class="hub-section-title">Your Playlists</div>${userPlaylistCardsHTML}`
-                        : ""}
+                ${userPlaylistCardsHTML
+                    ? `<div class="hub-section-title">Your Playlists</div>${userPlaylistCardsHTML}`
+                    : ""}
 
-                    <div class="hub-section-title">Venue Playlists</div>
-                    ${venuePlaylistCardsHTML}
-
-                </div>
-
-                <div class="search-results-container"></div>
+                <div class="hub-section-title">Venue Playlists</div>
+                ${venuePlaylistCardsHTML}
 
             </div>
+
+            <div class="search-results-container"></div>
         </div>
     `;
-
-    /* --------------------------------------------
-       RESET HUB SCROLL POSITION
-       -------------------------------------------- */
-    const scrollRegion = document.querySelector('.hub-scroll-region');
-    if (scrollRegion) scrollRegion.scrollTop = 0;
 }
-
 console.log("JUST BEFORE EVENTS FUNCTIONS LOADED");
 
 function openEventsView() {
     console.log("fIRST LINE IN Open Events View");
-
-    document.body.classList.add("events-active");   // ⭐ NEW LINE
 
     setHubHeaderTitle("Events");   // ✔ correct function
 
@@ -604,6 +591,8 @@ function openEventsView() {
 
     renderEventsScreen();
 }
+
+
 
 function renderEventsScreen() {
     const viewport = document.getElementById("masterApplicationViewport");
