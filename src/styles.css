@@ -1393,6 +1393,12 @@ body.workspace-mode .workspace-content {
 body.workspace-mode .workspace-mode-panel {
     padding-top: 60px !important;
 }
+/* ============================================================
+   FINAL OVERRIDE — CREATE/EDIT/DELETE SCREEN OFFSET
+   ============================================================ */
+body.workspace-mode .workspace-content {
+    padding-top: 60px !important;
+}
 
 /* FINAL authoritative spacing for workspace descriptions
 .workspace-mode-desc {
