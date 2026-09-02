@@ -1295,6 +1295,14 @@ body.workspace-phase1 .workspace-name-box {
 }
 
 /* ============================================================
+   GLOBAL — HEADER BAR OFFSET FOR HUB SCREENS
+   ============================================================ */
+body:not(.workspace-mode) .header-bar {
+    top: 60px;   /* below the venue logo */
+}
+
+
+/* ============================================================
    EVENTS — CARD LAYOUT
    ============================================================ */
 .events-list {
