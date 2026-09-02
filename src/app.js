@@ -233,6 +233,8 @@ function navigateToPlaylistHubMenu() {
 }
 
 function returnToHub() {
+    document.body.classList.remove("events-active");   // ⭐ NEW LINE
+
     selectedActivePlaylistGroup = null;
     activeDayView = null;
     activeDifficultyView = null;
@@ -593,6 +595,8 @@ console.log("JUST BEFORE EVENTS FUNCTIONS LOADED");
 function openEventsView() {
     console.log("fIRST LINE IN Open Events View");
 
+    document.body.classList.add("events-active");   // ⭐ NEW LINE
+
     setHubHeaderTitle("Events");   // ✔ correct function
 
     const viewport = document.getElementById("masterApplicationViewport");
@@ -600,8 +604,6 @@ function openEventsView() {
 
     renderEventsScreen();
 }
-
-
 
 function renderEventsScreen() {
     const viewport = document.getElementById("masterApplicationViewport");
