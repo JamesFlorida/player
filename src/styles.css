@@ -1309,6 +1309,20 @@ body.workspace-mode .workspace-content {
 }
 
 /* ============================================================
+   FINAL OVERRIDE — HUB SCREEN SPACING
+   ============================================================ */
+body.hub-screen .app-container {
+    padding-top: 120px !important;   /* 60px venue-header + 60px header-bar */
+}
+/* ============================================================
+   FINAL OVERRIDE — WORKSPACE SCREEN SPACING
+   ============================================================ */
+body.workspace-mode .workspace-content {
+    padding-top: 60px !important;    /* below small fixed header-bar */
+}
+
+
+/* ============================================================
    EVENTS — CARD LAYOUT
    ============================================================ */
 .events-list {
@@ -1362,6 +1376,19 @@ body.workspace-mode .workspace-content {
     text-align: center;
     border-radius: 6px;
     text-decoration: none;
+}
+/* ============================================================
+   FINAL OVERRIDE — HUB SCREEN SPACING
+   ============================================================ */
+body.hub-screen .app-container {
+    padding-top: 120px !important;   /* 60px venue-header + 60px header-bar */
+}
+
+/* ============================================================
+   FINAL OVERRIDE — WORKSPACE SCREEN SPACING
+   ============================================================ */
+body.workspace-mode .workspace-content {
+    padding-top: 60px !important;    /* below small fixed header-bar */
 }
 
 
