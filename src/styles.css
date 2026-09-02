@@ -1377,6 +1377,37 @@ body.workspace-mode .workspace-content {
     border-radius: 6px;
     text-decoration: none;
 }
+
+/* ============================================================
+   FINAL OVERRIDE — HUB SCREEN SPACING
+   ============================================================ */
+body.hub-screen .app-container {
+    padding-top: 120px !important;   /* 60px venue-header + 60px header-bar */
+}
+
+/* ============================================================
+   FINAL OVERRIDE — WORKSPACE SCREEN SPACING
+   ============================================================ */
+body.workspace-mode .workspace-content {
+    padding-top: 60px !important;    /* below small fixed header-bar */
+}
+body.workspace-mode .workspace-mode-panel {
+    padding-top: 60px !important;
+}
+/* ============================================================
+   FINAL OVERRIDE — CREATE/EDIT/DELETE SCREEN OFFSET
+   ============================================================ */
+body.workspace-mode .workspace-content {
+    padding-top: 60px !important;
+}
+body.workspace-mode .workspace-columns {
+    padding-top: 60px !important;
+}
+.header-bar {
+    gap: 12px !important;
+}
+
+
 /* ============================================================
    EVENTS SCREEN — USE STANDARD WORKSPACE HEADER-BAR
    ============================================================ */
@@ -1411,39 +1442,3 @@ body.workspace-mode .header-bar .header-logo {
     padding-top: 60px;
 }
 
-
-/* ============================================================
-   FINAL OVERRIDE — HUB SCREEN SPACING
-   ============================================================ */
-body.hub-screen .app-container {
-    padding-top: 120px !important;   /* 60px venue-header + 60px header-bar */
-}
-
-/* ============================================================
-   FINAL OVERRIDE — WORKSPACE SCREEN SPACING
-   ============================================================ */
-body.workspace-mode .workspace-content {
-    padding-top: 60px !important;    /* below small fixed header-bar */
-}
-body.workspace-mode .workspace-mode-panel {
-    padding-top: 60px !important;
-}
-/* ============================================================
-   FINAL OVERRIDE — CREATE/EDIT/DELETE SCREEN OFFSET
-   ============================================================ */
-body.workspace-mode .workspace-content {
-    padding-top: 60px !important;
-}
-body.workspace-mode .workspace-columns {
-    padding-top: 60px !important;
-}
-.header-bar {
-    gap: 12px !important;
-}
-
-/* FINAL authoritative spacing for workspace descriptions
-.workspace-mode-desc {
-    margin-top: 6px !important;    
-    margin-bottom: 14px !important; 
-}
- */
