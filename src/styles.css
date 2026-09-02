@@ -1399,6 +1399,9 @@ body.workspace-mode .workspace-mode-panel {
 body.workspace-mode .workspace-content {
     padding-top: 60px !important;
 }
+body.workspace-mode .workspace-columns {
+    padding-top: 60px !important;
+}
 
 /* FINAL authoritative spacing for workspace descriptions
 .workspace-mode-desc {
