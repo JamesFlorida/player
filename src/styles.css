@@ -1439,6 +1439,16 @@ body.workspace-mode .header-bar .header-logo {
 
 /* Push Events content below fixed header */
 .events-screen {
-    padding-top: 60px;
+    padding-top: 60px; !important
 }
+/* ============================================================
+   EVENTS — FIXED BACK BUTTON
+   ============================================================ */
+.events-screen .workspace-cancel-btn {
+    position: fixed !important;
+    top: 60px !important;     /* directly under hub header */
+    right: 20px !important;   /* matches workspace layout */
+    z-index: 9999 !important;
+}
+
 
