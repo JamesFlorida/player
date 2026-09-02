@@ -1295,13 +1295,16 @@ body.workspace-phase1 .workspace-name-box {
 }
 
 /* ============================================================
-   GLOBAL — HEADER BAR OFFSET FOR HUB SCREENS
+   HUB SCREEN — CONTENT OFFSET BELOW FIXED BIG HEADER
    ============================================================ */
-body:not(.workspace-mode) .header-bar {
-    top: 60px;   /* below the venue logo */
+body.hub-screen .app-container {
+    padding-top: 120px;   /* 60px bullhead + 60px header-bar */
 }
 
-body:not(.hub-screen) .app-container {
+/* ============================================================
+   NON-HUB SCREENS — CONTENT OFFSET BELOW FIXED SMALL HEADER
+   ============================================================ */
+body.workspace-mode .workspace-content {
     padding-top: 60px;
 }
 
