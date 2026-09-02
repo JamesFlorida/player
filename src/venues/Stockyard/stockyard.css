@@ -158,3 +158,18 @@ body {
 .workspace-screen {
     background-color: transparent;
 }
+
+/* ============================================
+   FIXED HUB FOOTER BAR
+   ============================================ */
+#hubFooterBar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+    background: #222;
+    border-top: 2px solid #444;
+    z-index: 100;
+}
+
