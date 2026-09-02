@@ -26,15 +26,6 @@ body {
 }
 
 /* ============================================================
-   GLOBAL — VENUE HEADER (LOGO CONTAINER)
-   ============================================================ */
-.venue-header {
-  height: 60px;              /* standard logo height */
-  text-align: center;
-  padding: 12px 0;
-}
-
-/* ============================================================
    WORKSPACE — MODE PANEL (DESKTOP/TABLET)
    ============================================================ */
 .workspace-mode-panel {
@@ -64,7 +55,7 @@ body {
   font-weight: bold;
   font-size: 1.3rem;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  position: fixed;
+  position: sticky;
   top: 0;
   z-index: 100;
   /*height: auto;                  ← allow natural height */
@@ -1268,60 +1259,6 @@ body.workspace-phase1 .workspace-name-box {
     height: calc(100vh - 200px);   /* adjust if needed */
     overflow-y: auto;
 }
-
-/* ============================================================
-   GLOBAL — FIXED HUB FOOTER BAR
-   ============================================================ */
-#hubFooterBar {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 24px;
-    z-index: 100;
-}
-
-/* ============================================================
-   GLOBAL — HUB SCROLL REGION
-   ============================================================ */
-.hub-scroll-region {
-    position: absolute;
-    top: calc(60px + 60px + 50px + 60px); /* logo + header + filter + nav */
-    bottom: 24px;                         /* footer */
-    left: 0;
-    right: 0;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-}
-
-/* ============================================================
-   HUB SCREEN — CONTENT OFFSET BELOW FIXED BIG HEADER
-   ============================================================ */
-body.hub-screen .app-container {
-    padding-top: 120px;   /* 60px bullhead + 60px header-bar */
-}
-
-/* ============================================================
-   NON-HUB SCREENS — CONTENT OFFSET BELOW FIXED SMALL HEADER
-   ============================================================ */
-body.workspace-mode .workspace-content {
-    padding-top: 60px;
-}
-
-/* ============================================================
-   FINAL OVERRIDE — HUB SCREEN SPACING
-   ============================================================ */
-body.hub-screen .app-container {
-    padding-top: 120px !important;   /* 60px venue-header + 60px header-bar */
-}
-/* ============================================================
-   FINAL OVERRIDE — WORKSPACE SCREEN SPACING
-   ============================================================ */
-body.workspace-mode .workspace-content {
-    padding-top: 60px !important;    /* below small fixed header-bar */
-}
-
-
 /* ============================================================
    EVENTS — CARD LAYOUT
    ============================================================ */
@@ -1378,81 +1315,10 @@ body.workspace-mode .workspace-content {
     text-decoration: none;
 }
 
-/* ============================================================
-   FINAL OVERRIDE — HUB SCREEN SPACING
-   ============================================================ */
-body.hub-screen .app-container {
-    padding-top: 120px !important;   /* 60px venue-header + 60px header-bar */
-}
 
-/* ============================================================
-   FINAL OVERRIDE — WORKSPACE SCREEN SPACING
-   ============================================================ */
-body.workspace-mode .workspace-content {
-    padding-top: 60px !important;    /* below small fixed header-bar */
+/* FINAL authoritative spacing for workspace descriptions
+.workspace-mode-desc {
+    margin-top: 6px !important;    
+    margin-bottom: 14px !important; 
 }
-body.workspace-mode .workspace-mode-panel {
-    padding-top: 60px !important;
-}
-/* ============================================================
-   FINAL OVERRIDE — CREATE/EDIT/DELETE SCREEN OFFSET
-   ============================================================ */
-body.workspace-mode .workspace-content {
-    padding-top: 60px !important;
-}
-body.workspace-mode .workspace-columns {
-    padding-top: 60px !important;
-}
-.header-bar {
-    gap: 12px !important;
-}
-
-/* ============================================================
-   EVENTS SCREEN — CLEAN HEADER + FIXED BACK BUTTON
-   ============================================================ */
-
-/* Push Events content below the fixed hub header */
-.events-screen {
-    padding-top: 60px !important;
-}
-
-/* Solid background for header ONLY when Events is active */
-body.events-active .header-bar {
-    background-color: #222 !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    height: 60px !important;
-    position: fixed !important;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 9999;
-}
-
-/* Standard back button on left (matching workspace screens) */
-body.events-active .header-bar .header-back-btn {
-    position: absolute !important;
-    left: 20px !important;
-    top: 14px !important;
-    background-color: #444 !important;
-    padding: 6px 12px !important;
-    border-radius: 6px !important;
-    color: #fff !important;
-    z-index: 10000 !important;
-}
-
-/* Small bull logo on right (same as workspace screens) */
-body.events-active .header-bar .header-logo {
-    position: absolute !important;
-    right: 20px !important;
-    top: 14px !important;
-}
-
-/* Hide the internal Events Back button (duplicate) */
-.events-screen .workspace-cancel-btn {
-    display: none !important;
-}
-
-
-
+ */
