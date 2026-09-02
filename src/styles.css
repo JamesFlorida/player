@@ -1378,6 +1378,41 @@ body.workspace-mode .workspace-content {
     text-decoration: none;
 }
 /* ============================================================
+   EVENTS SCREEN — USE STANDARD WORKSPACE HEADER-BAR
+   ============================================================ */
+
+/* Make the existing header-bar fixed for Events */
+body.workspace-mode .header-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* center EVENTS title */
+    z-index: 9999;
+}
+
+/* Back button on left */
+body.workspace-mode .header-bar .header-back-btn {
+    position: absolute;
+    left: 20px;
+}
+
+/* Small bull logo on right */
+body.workspace-mode .header-bar .header-logo {
+    position: absolute;
+    right: 20px;
+}
+
+/* Push Events content below fixed header */
+.events-screen {
+    padding-top: 60px;
+}
+
+
+/* ============================================================
    FINAL OVERRIDE — HUB SCREEN SPACING
    ============================================================ */
 body.hub-screen .app-container {
