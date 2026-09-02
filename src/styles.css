@@ -1301,6 +1301,9 @@ body:not(.workspace-mode) .header-bar {
     top: 60px;   /* below the venue logo */
 }
 
+body:not(.hub-screen) .app-container {
+    padding-top: 60px;
+}
 
 /* ============================================================
    EVENTS — CARD LAYOUT
