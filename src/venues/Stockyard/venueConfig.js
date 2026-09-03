@@ -21,6 +21,6 @@ export const venueConfig = {
     }
 };
 
-console.log("Loaded NEW Stockyard config");
+console.log("Loaded NEW Stockyard venueConfig");
 
 
