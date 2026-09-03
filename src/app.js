@@ -207,10 +207,6 @@ function restoreHubHeader() {
         venueHeader.style.alignItems = 'center';
     }
 
-    // Show the shared header-bar
-    const headerBar = document.querySelector('.header-bar');
-    if (headerBar) headerBar.style.display = 'flex';
-
     // Hide the small workspace logo
     const smallLogo = document.getElementById("workspaceSmallLogo");
     if (smallLogo) smallLogo.style.display = "none";
