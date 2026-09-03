@@ -195,7 +195,11 @@ function activateWorkspaceHeader(modeTitle) {
 function restoreHubHeader() {
     // Show the big venue header (bull banner)
     const venueHeader = document.querySelector('.venue-header');
-    if (venueHeader) venueHeader.style.display = 'block';
+    if (venueHeader) {
+        venueHeader.style.display = 'flex';
+        venueHeader.style.justifyContent = 'center';
+        venueHeader.style.alignItems = 'center';
+    }
 
     // Show the shared header-bar
     const headerBar = document.querySelector('.header-bar');
@@ -212,13 +216,14 @@ function restoreHubHeader() {
         backBtn.onclick = null;
     }
 
-    // Restore hub title (venueConfig controls this)
+    // Restore hub title
     const titleEl = document.getElementById('applicationHeaderTitle');
     if (titleEl) {
         titleEl.style.display = 'inline';
         titleEl.innerText = venueConfig.headerTitle || venueConfig.name || "";
     }
 }
+
 
 /* ============================================
    NAVIGATION HELPERS
