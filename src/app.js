@@ -450,8 +450,6 @@ function renderApplicationInterface() {
     document.getElementById('navbarReturnTrigger').style.display = 'none';
     document.getElementById('navbarReturnTrigger').onclick = null;
     if (lastNavigationMode === "hub") {
-     // ⭐ Reset all mode classes so hub layout is clean
-    document.body.className = "";  
     restoreHubHeader();
     document.getElementById('applicationHeaderTitle').innerText =
         venueConfig.headerTitle || venueConfig.name || "";
