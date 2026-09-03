@@ -554,7 +554,7 @@ if (lastNavigationMode === "user-playlist" && activeUserPlaylistView !== null) {
                     <option value="Advanced">Advanced</option>
                 </select>
             </div>
-
+            <div class="hub-feedback-email">${venueConfig.email}</div>
             <div class="hub-nav-row">
                 <div class="hub-nav-card" onclick="openWorkspace()">
                     Manage User Playlists
