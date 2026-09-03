@@ -626,9 +626,15 @@ body.workspace-mode-select #workspaceContent {
     flex: 1;
 }
 
-
 #masterApplicationViewport {
-  min-height: calc(100vh - 60px);
+    position: absolute;
+    top: 60px;      /* header height */
+    bottom: 0;      /* footer height will be added later */
+    left: 0;
+    right: 0;
+
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 /* ============================================================
