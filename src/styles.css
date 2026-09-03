@@ -48,22 +48,26 @@ body {
    ============================================ */
 .header-bar {
   background-color: #000 !important;
-  padding: 0 18px;              /* ← remove vertical padding */
+  padding: 0 18px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   font-weight: bold;
   font-size: 1.3rem;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  position: sticky;
+
+  /* ⭐ FIXED HEADER */
+  position: fixed;
   top: 0;
-  z-index: 100;
-  /*height: auto;                  ← allow natural height */
+  left: 0;
+  right: 0;
+  z-index: 1000;
+
   height: 60px;
-   /* min-height: 0;                 ← collapse when empty */
   box-sizing: border-box;
   color: #fff;
 }
+
 
 .back-nav-btn {
   padding: 6px 14px;
@@ -81,6 +85,24 @@ body {
   flex: 1;
   text-align: center;
 }
+
+/* ============================================================
+   GLOBAL — FIXED FOOTER BAR
+   ============================================================ */
+#hubFooterBar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    height: 50px;
+    background: #000;
+    border-top: 2px solid #444;
+
+    z-index: 1000;
+}
+
+
 /* ============================================================
    WORKSPACE — HEADER HORIZONTAL ALIGNMENT (PATCH 19)
    ============================================================ */
