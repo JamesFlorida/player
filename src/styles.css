@@ -335,6 +335,16 @@ object {
 }
 
 /* ============================================================
+   HUB SCREEN — FEEDBACK EMAIL (ALL DEVICES)
+   ============================================================ */
+.hub-feedback-email {
+    text-align: center;
+    color: #ccc;
+    font-size: 14px;
+    margin: 6px 0 10px 0;
+}
+
+/* ============================================================
    HUB SCREEN — SEARCH ROW (ALL DEVICES)
    ============================================================ */
 .hub-search-row {
