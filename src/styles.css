@@ -47,7 +47,7 @@ body {
    GLOBAL HEADER BAR (workspace only)
    ============================================ */
 .header-bar {
-  background-color: #333;
+  background-color: #000 !important;
   padding: 0 18px;              /* ← remove vertical padding */
   display: flex;
   align-items: center;
@@ -342,14 +342,6 @@ object {
   flex: 1;
   height: 50px;
 }
-
-/* ============================================================
-   HUB SCREEN — TITLE 
-   ============================================================ */
-.hub-screen .header-bar {
-    background-color: #000 !important;
-}
-
 
 /* ============================================================
    HUB SCREEN — FEEDBACK EMAIL (ALL DEVICES)
