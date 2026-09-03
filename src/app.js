@@ -357,7 +357,12 @@ function renderApplicationInterface() {
     }
 
     console.log(">>> renderApplicationInterface RUNNING");
-
+    // ⭐ BULL LOGO IS VISIBLE IN HUB MODE
+    const venueHeaderHeight =
+    document.querySelector('.venue-header')?.offsetHeight || 0;
+    const headerBar = document.querySelector('.header-bar');
+    headerBar.style.top = venueHeaderHeight + "px";
+   
     const viewport = document.getElementById('masterApplicationViewport');
     if (!viewport) return;
 
