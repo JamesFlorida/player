@@ -450,6 +450,8 @@ function renderApplicationInterface() {
     document.getElementById('navbarReturnTrigger').style.display = 'none';
     document.getElementById('navbarReturnTrigger').onclick = null;
     if (lastNavigationMode === "hub") {
+     // ⭐ Reset all mode classes so hub layout is clean
+    document.body.className = "";  
     restoreHubHeader();
     document.getElementById('applicationHeaderTitle').innerText =
         venueConfig.headerTitle || venueConfig.name || "";
@@ -579,8 +581,8 @@ if (lastNavigationMode === "user-playlist" && activeUserPlaylistView !== null) {
         </div>
     `;
 }
-console.log("JUST BEFORE EVENTS FUNCTIONS LOADED");
 
+console.log("JUST BEFORE EVENTS FUNCTIONS LOADED");
 function openEventsView() {
     console.log("fIRST LINE IN Open Events View");
 
