@@ -347,7 +347,7 @@ object {
    HUB SCREEN — TITLE (ALL DEVICES)
    ============================================================ */
 .hub-screen #applicationHeaderTitle {
-    background: #000;
+    background: #000 !important;
 }
 
 
