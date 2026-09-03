@@ -193,6 +193,12 @@ function activateWorkspaceHeader(modeTitle) {
 }
 
 function restoreHubHeader() {
+    const venueHeaderHeight =
+    document.querySelector('.venue-header')?.offsetHeight || 0;
+
+    const headerBar = document.querySelector('.header-bar');
+    headerBar.style.top = venueHeaderHeight + "px";
+
     // Show the big venue header (bull banner)
     const venueHeader = document.querySelector('.venue-header');
     if (venueHeader) {
