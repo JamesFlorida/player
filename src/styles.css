@@ -628,7 +628,7 @@ body.workspace-mode-select #workspaceContent {
 
 #masterApplicationViewport {
     position: absolute;
-    top: 60px;      /* header height */
+    top: 160px;      /* header height */
     bottom: 0;      /* footer height will be added later */
     left: 0;
     right: 0;
