@@ -257,6 +257,15 @@ object {
 /* ============================================================
    GLOBAL — OPTIONAL VENUE ELEMENTS
    ============================================================ */
+/* Center the Stockyard bull logo in the hub header */
+.venue-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 10px;   /* optional, adjust if needed */
+}
+
+
 .venue-banner {
   max-width: 100%;
   display: block;
@@ -333,6 +342,14 @@ object {
   flex: 1;
   height: 50px;
 }
+
+/* ============================================================
+   HUB SCREEN — TITLE (ALL DEVICES)
+   ============================================================ */
+.hub-screen #applicationHeaderTitle {
+    background: transparent !important;
+}
+
 
 /* ============================================================
    HUB SCREEN — FEEDBACK EMAIL (ALL DEVICES)
