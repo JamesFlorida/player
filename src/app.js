@@ -363,7 +363,6 @@ function renderApplicationInterface() {
     );
    
     const headerBar = document.querySelector('.header-bar');
-    headerBar.style.top = venueHeaderHeight + "px";
    
     const viewport = document.getElementById('masterApplicationViewport');
     if (!viewport) return;
@@ -1629,11 +1628,7 @@ function navigateBackFromWorkspace() {
 
     // ⭐ Restore header-bar (remove leftover workspace inline styles)
     const headerBar = document.querySelector('.header-bar');
-    if (headerBar) {
-       headerBar.style.display = "none";
-   }
-
-
+    
     // ⭐ Remove workspace-mode class
     document.body.classList.remove("workspace-mode");
 
