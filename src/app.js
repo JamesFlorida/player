@@ -459,14 +459,17 @@ document.getElementById('navbarReturnTrigger').style.display = 'none';
 document.getElementById('navbarReturnTrigger').onclick = null;
 
 restoreHubHeader();
-
 viewport.innerHTML = `
     <div class="hub-screen">
 
-        <div class="hub-card" onclick="openHubPlaylist(0)">
-            <div class="hub-card-title">Your Playlists</div>
-        </div>
+        <!-- ⭐ USER PLAYLISTS (dynamic, appear at top) -->
+        ${Object.keys(userPlaylistsData || {}).map(name => `
+            <div class="hub-card" onclick="openUserPlaylistView('${name}')">
+                <div class="hub-card-title">${name}</div>
+            </div>
+        `).join('')}
 
+        <!-- ⭐ SYSTEM PLAYLISTS (always present) -->
         <div class="hub-card" onclick="openHubPlaylist(1)">
             <div class="hub-card-title">Tuesday</div>
         </div>
@@ -505,6 +508,8 @@ viewport.innerHTML = `
 
     </div>
 `;
+
+
 
 }
 
