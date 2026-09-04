@@ -463,48 +463,49 @@ restoreHubHeader();
 viewport.innerHTML = `
     <div class="hub-screen">
 
-        <div class="hub-card" onclick="openUserPlaylists()">
+        <div class="hub-card" onclick="openHubPlaylist(0)">
             <div class="hub-card-title">Your Playlists</div>
         </div>
 
-        <div class="hub-card" onclick="openDayPlaylist('Tuesday')">
+        <div class="hub-card" onclick="openHubPlaylist(1)">
             <div class="hub-card-title">Tuesday</div>
         </div>
 
-        <div class="hub-card" onclick="openDayPlaylist('Wednesday')">
+        <div class="hub-card" onclick="openHubPlaylist(2)">
             <div class="hub-card-title">Wednesday</div>
         </div>
 
-        <div class="hub-card" onclick="openDayPlaylist('Weekend')">
+        <div class="hub-card" onclick="openHubPlaylist(3)">
             <div class="hub-card-title">Weekend</div>
         </div>
 
-        <div class="hub-card" onclick="openDayPlaylist('Mixed Bag')">
+        <div class="hub-card" onclick="openHubPlaylist(4)">
             <div class="hub-card-title">Mixed Bag</div>
         </div>
 
-        <div class="hub-card" onclick="openDifficultyPlaylist('Beginner')">
+        <div class="hub-card" onclick="openHubPlaylist(5)">
             <div class="hub-card-title">Beginner</div>
         </div>
 
-        <div class="hub-card" onclick="openDifficultyPlaylist('Improver')">
+        <div class="hub-card" onclick="openHubPlaylist(6)">
             <div class="hub-card-title">Improver</div>
         </div>
 
-        <div class="hub-card" onclick="openDifficultyPlaylist('Intermediate')">
+        <div class="hub-card" onclick="openHubPlaylist(7)">
             <div class="hub-card-title">Intermediate</div>
         </div>
 
-        <div class="hub-card" onclick="openDifficultyPlaylist('Advanced')">
+        <div class="hub-card" onclick="openHubPlaylist(8)">
             <div class="hub-card-title">Advanced</div>
         </div>
 
-        <div class="hub-card" onclick="openAllDances()">
+        <div class="hub-card" onclick="openHubPlaylist(9)">
             <div class="hub-card-title">ALL Dances</div>
         </div>
 
     </div>
 `;
+
 }
 
   /* --------------------------------------------
@@ -1671,6 +1672,35 @@ window.onload = function () {
     initializeVenueBranding();
     renderApplicationInterface();
 };
+// HUB playlist categories used on the main screen
+const hubPlaylists = [
+    "Your Playlists",   // 0
+    "Tuesday",          // 1
+    "Wednesday",        // 2
+    "Weekend",          // 3
+    "Mixed Bag",        // 4
+    "Beginner",         // 5
+    "Improver",         // 6
+    "Intermediate",     // 7
+    "Advanced",         // 8
+    "ALL Dances"        // 9
+];
+
+// Bridge from HUB button → existing playlist-by-name pipeline
+function openHubPlaylist(index) {
+    const name = hubPlaylists[index];
+
+    // If this should open user playlists:
+    if (name === "Your Playlists") {
+        openWorkspace();          // existing function
+        return;
+    }
+
+    // For all other categories, reuse your existing playlist-by-name function
+    openSpecificPlaylistView(name);   // existing function that expects `name`
+}
+
+
 
 function openSteps(danceId) {
     const dance = localDanceDatabase.find(d => d.id === danceId);
