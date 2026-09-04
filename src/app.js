@@ -331,6 +331,14 @@ function openDanceFromPlaylist(danceId) {
     // All actions happen through the 4 buttons on the card.
     return;
 }
+function openManageUserPlaylists() {
+    console.log("MUP CLICKED → entering workspace mode");
+    lastNavigationMode = "workspace";
+    workspaceMode = "";   // default mode (shows Create/Edit/Delete panel)
+    renderApplicationInterface();
+}
+
+
 /* ============================================
    OPEN DANCE FROM SEARCH
 ============================================ */
