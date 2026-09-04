@@ -806,12 +806,6 @@ function renderWorkspaceScreen() {
         venueHeader.style.display = 'none';
     }
 
-    // Show workspace header
-    const wsHeader = document.querySelector('.workspace-header');
-    if (wsHeader) {
-        wsHeader.style.display = 'flex';
-    }
-
     // Show back button
     const backBtn = document.getElementById('navbarReturnTrigger');
     if (backBtn) {
@@ -1620,10 +1614,6 @@ function navigateBackFromWorkspace() {
     workspaceEditingOriginalName = "";
     workspacePlaylistName = "";
     workspaceMode = "neutral";
-
-    // ⭐ Hide workspace header container
-    const wsHeader = document.querySelector('.workspace-header');
-    if (wsHeader) wsHeader.style.display = 'none';
 
     // ⭐ Hide workspace title (this was the missing piece)
     const wsTitle = document.getElementById('applicationHeaderTitle');
