@@ -415,7 +415,7 @@ object {
 
 /* HUB viewport spacing */
 #masterApplicationViewport {
-    padding-top: 100px;   /* space for bull header */
+    padding-top: 180px;   /* space for bull header */
     overflow-y: auto;
     height: calc(100vh - 0px);
 }
