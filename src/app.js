@@ -1826,3 +1826,4 @@ window.renderDeleteModeLayout = renderDeleteModeLayout;
 window.cancelWorkspace = cancelWorkspace;
 window.openEventsView = openEventsView;
 window.returnToHub = returnToHub;
+window.openHubPlaylist = openHubPlaylist;
