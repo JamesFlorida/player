@@ -297,7 +297,7 @@ object {
 }
 
 .hub-header-logo img {
-    max-width: 260px;     /* prevents overflow */
+    max-width: 80px;     /* prevents overflow */
     height: auto;
 }
 
