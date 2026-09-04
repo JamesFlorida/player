@@ -356,6 +356,12 @@ function renderApplicationInterface() {
     // ⭐ BULL LOGO IS VISIBLE IN HUB MODE
     const venueHeaderHeight =
     document.querySelector('.venue-header')?.offsetHeight || 0;
+    // ⭐ NEW: Set CSS variable for viewport offset
+    document.documentElement.style.setProperty(
+       "--headerBarTop",
+       venueHeaderHeight + "px"
+    );
+   
     const headerBar = document.querySelector('.header-bar');
     headerBar.style.top = venueHeaderHeight + "px";
    
