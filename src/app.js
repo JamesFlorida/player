@@ -1835,3 +1835,4 @@ window.cancelWorkspace = cancelWorkspace;
 window.openEventsView = openEventsView;
 window.returnToHub = returnToHub;
 window.openHubPlaylist = openHubPlaylist;
+window.openManageUserPlaylists = openManageUserPlaylists;
