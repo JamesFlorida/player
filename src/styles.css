@@ -340,6 +340,7 @@ object {
 /* ============================================================
    PHONE — GLOBAL HEADER (SMALL DEVICES ONLY)
    ============================================================ */
+/*
 @media (max-width: 380px) {
   .header-bar {
     height: 48px !important;
@@ -347,6 +348,7 @@ object {
     font-size: 1.1rem !important;
   }
 }
+*/
 
 /* ============================================================
    HUB SCREEN — FILTER ROW (ALL DEVICES)
