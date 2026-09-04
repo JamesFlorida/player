@@ -500,11 +500,6 @@ input#danceSearchInput:focus {
 body:not(.workspace-mode-edit) #workspacePlaylistSelection {
   display: none;
 }
-.workspace-header {
-    display: none;
-    align-items: center;
-    justify-content: space-between;
-}
 
 #workspaceLeftColumn {
     flex: 1;
