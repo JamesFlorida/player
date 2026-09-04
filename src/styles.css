@@ -286,7 +286,41 @@ object {
     align-items: center;
     padding-top: 10px;   /* optional, adjust if needed */
 }
+/* HUB header additions */
+.hub-header-logo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 6px;
+}
 
+.hub-header-title {
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.hub-header-email {
+    text-align: center;
+    font-size: 0.9rem;
+    margin-bottom: 6px;
+}
+
+.hub-header-mup-row {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 12px;
+}
+
+.hub-mup-button {
+    padding: 4px 14px;
+    font-size: 0.85rem;
+    border-radius: 4px;
+    border: 1px solid #888;
+    background-color: #222;
+    color: #fff;
+    cursor: pointer;
+}
 
 .venue-banner {
   max-width: 100%;
