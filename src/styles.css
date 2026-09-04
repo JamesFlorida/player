@@ -47,27 +47,23 @@ body {
    GLOBAL HEADER BAR (workspace only)
    ============================================ */
 .header-bar {
-  background-color: #000 !important;
-  padding: 0 18px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-weight: bold;
-  font-size: 1.3rem;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-
-  /* ⭐ FIXED HEADER */
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-
-  height: 60px;
-  box-sizing: border-box;
-  color: #fff;
+    background-color: #000 !important;
+    padding: 0 18px;
+    display: none !important;     /* ⭐ Hide header-bar in HUB mode */
+    align-items: center;
+    justify-content: space-between;
+    font-weight: bold;
+    font-size: 1.3rem;
+    box-shadow: none !important;  /* Remove shadow overlay */
+    position: static !important;  /* ⭐ Prevent fixed overlay */
+    top: auto;
+    left: auto;
+    right: auto;
+    z-index: 1;
+    height: 60px;
+    box-sizing: border-box;
+    color: #fff;
 }
-
 
 .back-nav-btn {
   padding: 6px 14px;
@@ -79,12 +75,10 @@ body {
   flex: 0 0 auto;   /* ⭐ stays left, does not stretch */
 }
 
-
-/* Center the PLAYLISTS title */
 #applicationHeaderTitle {
-  flex: 1;
-  text-align: center;
+    display: none !important;
 }
+
 
 /* ============================================================
    GLOBAL — FIXED FOOTER BAR
