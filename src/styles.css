@@ -568,14 +568,15 @@ body:not(.workspace-mode-edit) #workspacePlaylistSelection {
     flex-wrap: nowrap;
 }
 
-
 .workspace-screen {
-  min-height: calc(100vh - 60px);
+  min-height: 100vh;
   padding: 20px;
   box-sizing: border-box;
   position: relative;
   z-index: 10;
 }
+
+
 
 /* ============================================================
    SCROLLABLE WORKSPACE CONTENT ABOVE FIXED FOOTER
@@ -583,7 +584,7 @@ body:not(.workspace-mode-edit) #workspacePlaylistSelection {
 .workspace-screen {
     display: flex;
     flex-direction: column;
-    height: calc(100vh - 60px); /* header height already accounted for */
+    height: 100vh;
     overflow: hidden;
 }
 
