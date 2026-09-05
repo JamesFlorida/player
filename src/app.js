@@ -767,39 +767,46 @@ function renderWorkspaceScreen() {
 
     // Inject workspace DOM
     document.getElementById('masterApplicationViewport').innerHTML = `
-      <div class="workspace-screen">
+  <div class="workspace-screen">
 
-        <!-- MODE SELECTION PANEL -->
-        <div id="workspaceModePanel" class="workspace-mode-panel">
+    <!-- WORKSPACE HEADER BAR -->
+    <div class="header-bar">
+        <button id="navbarReturnTrigger" class="header-back-btn">⟵</button>
+        <img id="workspaceSmallLogo" class="workspace-small-logo" src="StockyardLogo32x32.png">
+        <span id="applicationHeaderTitle" class="header-title"></span>
+    </div>
 
-            <button id="modeCreateBtn" class="workspace-mode-btn">Create Playlist</button>
-            <div class="workspace-mode-desc">Start a new playlist and give it a name.</div>
+    <!-- MODE SELECTION PANEL -->
+    <div id="workspaceModePanel" class="workspace-mode-panel">
 
-            <button id="modeDeleteBtn" class="workspace-mode-btn">Delete Playlist</button>
-            <div class="workspace-mode-desc">Remove one of your personal playlists.</div>
+        <button id="modeCreateBtn" class="workspace-mode-btn">Create Playlist</button>
+        <div class="workspace-mode-desc">Start a new playlist and give it a name.</div>
 
-            <button id="modeEditBtn" class="workspace-mode-btn">Edit Playlist</button>
-            <div class="workspace-mode-desc">Add or remove dances from a playlist you created.</div>
+        <button id="modeDeleteBtn" class="workspace-mode-btn">Delete Playlist</button>
+        <div class="workspace-mode-desc">Remove one of your personal playlists.</div>
+
+        <button id="modeEditBtn" class="workspace-mode-btn">Edit Playlist</button>
+        <div class="workspace-mode-desc">Add or remove dances from a playlist you created.</div>
+
+    </div>
+
+    <!-- WORKSPACE CONTENT -->
+    <div id="workspaceContent" style="display:none;">
+        <div id="workspaceMessage" class="workspace-message"></div>
+
+        <div id="workspaceColumns" class="workspace-columns">
+
+            <!-- LEFT COLUMN -->
+            <div id="workspaceLeftColumn" class="workspace-column-left"></div>
+
+            <!-- RIGHT COLUMN -->
+            <div id="workspaceRightColumn" class="workspace-column-right"></div>
 
         </div>
+    </div>
 
-        <!-- WORKSPACE CONTENT -->
-        <div id="workspaceContent" style="display:none;">
-            <div id="workspaceMessage" class="workspace-message"></div>
-
-            <div id="workspaceColumns" class="workspace-columns">
-
-                <!-- LEFT COLUMN -->
-                <div id="workspaceLeftColumn" class="workspace-column-left"></div>
-
-                <!-- RIGHT COLUMN -->
-                <div id="workspaceRightColumn" class="workspace-column-right"></div>
-
-            </div>
-        </div>
-
-      </div>
-    `;
+  </div>
+`;
 
     /* ⭐ IMPORTANT FIX ⭐
        Only show workspaceContent when actually in Create/Edit/Delete mode.
