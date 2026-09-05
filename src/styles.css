@@ -49,7 +49,7 @@ body {
 .header-bar {
     background-color: #000 !important;
     padding: 0 18px;
-    display: none !important;     /* ⭐ Hide header-bar in HUB mode */
+    display: none;     /* ⭐ Hide header-bar in HUB mode */
     align-items: center;
     justify-content: space-between;
     font-weight: bold;
