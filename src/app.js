@@ -1780,7 +1780,11 @@ function openHubPlaylist(index) {
             return;
 
         case "ALL Dances":
-            openAllDances();
+            selectedActivePlaylistGroup = "ALL Dances";
+            activeDayView = null;
+            activeDifficultyView = null;
+            lastNavigationMode = "playlist";
+            renderApplicationInterface();
             return;
 
         case "Mixed Bag":
@@ -1795,7 +1799,6 @@ function openHubPlaylist(index) {
             return;
     }
 }
-
 
 function openSteps(danceId) {
     const dance = localDanceDatabase.find(d => d.id === danceId);
