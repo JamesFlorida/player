@@ -315,7 +315,7 @@ object {
     margin-bottom: 6px;
     width: 100%;
 }
-
+/*
 .hub-header-mup-row {
     display: flex;
     justify-content: flex-end;
@@ -330,6 +330,25 @@ object {
     border: 1px solid #888;
     background-color: #222;
     color: #fff;
+    cursor: pointer;
+}
+*/
+.hub-header-mup-row {
+    display: flex;
+    gap: 12px;
+    margin: 12px 0;
+}
+
+.hub-mup-button,
+.hub-events-button {
+    flex: 1;
+    height: 60px; /* match playlist card height */
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 8px;
+    background-color: #444;
+    color: white;
+    border: none;
     cursor: pointer;
 }
 
