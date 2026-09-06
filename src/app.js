@@ -386,20 +386,33 @@ function renderApplicationInterface() {
         return;
     }
 
-   /* --------------------------------------------
-   PLAYLIST VIEW (system playlists)
+    /* --------------------------------------------
+   PLAYLIST VIEW (Mixed Bag / ALL Dances)
    -------------------------------------------- */
 if (selectedActivePlaylistGroup !== null) {
 
-    const playlistTracks = localDanceDatabase.filter(track =>
-        Array.isArray(track.playlists) &&
-        track.playlists.includes(selectedActivePlaylistGroup)
-    );
+    let playlistTracks = [];
 
-    document.getElementById('navbarReturnTrigger').style.display = 'block';
-    document.getElementById('navbarReturnTrigger').onclick = navigateToPlaylistHubMenu;
-    document.getElementById('applicationHeaderTitle').innerText =
-        selectedActivePlaylistGroup + " Playlist";
+    switch (selectedActivePlaylistGroup) {
+
+        case "Mixed Bag":
+            // Example rule: dances not in the main levels
+            playlistTracks = localDanceDatabase.filter(track => {
+                const level = (track.level || "").toLowerCase();
+                return !["beginner", "improver", "intermediate", "advanced"]
+                    .includes(level);
+            });
+            break;
+
+        case "ALL Dances":
+            playlistTracks = localDanceDatabase.slice();
+            break;
+
+        default:
+            playlistTracks = [];
+    }
+
+    activatePlaylistHeader(selectedActivePlaylistGroup + " Playlist");
 
     if (!playlistTracks.length) {
         viewport.innerHTML = `
@@ -412,8 +425,9 @@ if (selectedActivePlaylistGroup !== null) {
 
     renderDanceCardsList(playlistTracks, viewport);
     updateHubVisibility();
-    return;   // prevent hub screen from overwriting playlist
+    return;
 }
+
 
     /* --------------------------------------------
        USER PLAYLIST VIEW
