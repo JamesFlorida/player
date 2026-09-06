@@ -352,6 +352,29 @@ function openDanceFromSearchToSingleDance(danceId) {
     renderSingleDanceScreen(dance);
 }
 
+function countDay(dayName) {
+    return localDanceDatabase.filter(d => d.daytaught === dayName).length;
+}
+
+function countDifficulty(levelName) {
+    const level = levelName.toLowerCase();
+    return localDanceDatabase.filter(d =>
+        (d.level || "").toLowerCase().includes(level)
+    ).length;
+}
+
+function countAllDances() {
+    return localDanceDatabase.length;
+}
+
+function countMixedBag() {
+    return localDanceDatabase.filter(d => {
+        const level = (d.level || "").toLowerCase();
+        return !["beginner", "improver", "intermediate", "advanced"]
+            .includes(level);
+    }).length;
+}
+
 /* ============================================
    MAIN RENDERER
 ============================================ */
@@ -517,49 +540,50 @@ if (selectedActivePlaylistGroup !== null) {
             <!-- USER PLAYLISTS (dynamic, appear at top) -->
             ${Object.keys(userPlaylistsData || {}).map(name => `
                 <div class="hub-card" onclick="openUserPlaylistView('${name}')">
-                    <div class="hub-card-title">${name}</div>
-                </div>
-            `).join('')}
+                 <div class="hub-card-title">
+                  ${name} (${userPlaylistsData[name].length})
+               </div>
+       </div>
+   `).join('')}
+
 
             <!-- SYSTEM PLAYLISTS (always present) -->
             <div class="hub-card" onclick="openHubPlaylist(1)">
-                <div class="hub-card-title">Tuesday</div>
+            <div class="hub-card-title">Tuesday (${countDay("Tuesday")})</div>
             </div>
 
             <div class="hub-card" onclick="openHubPlaylist(2)">
-                <div class="hub-card-title">Wednesday</div>
+            <div class="hub-card-title">Wednesday (${countDay("Wednesday")})</div>
             </div>
 
             <div class="hub-card" onclick="openHubPlaylist(3)">
-                <div class="hub-card-title">Weekend</div>
+            <div class="hub-card-title">Weekend (${countDay("Weekend")})</div>
             </div>
 
             <div class="hub-card" onclick="openHubPlaylist(4)">
-                <div class="hub-card-title">Mixed Bag</div>
+            <div class="hub-card-title">Mixed Bag (${countMixedBag()})</div>
             </div>
 
             <div class="hub-card" onclick="openHubPlaylist(5)">
-                <div class="hub-card-title">Beginner</div>
+            <div class="hub-card-title">Beginner (${countDifficulty("Beginner")})</div>
             </div>
 
             <div class="hub-card" onclick="openHubPlaylist(6)">
-                <div class="hub-card-title">Improver</div>
+            <div class="hub-card-title">Improver (${countDifficulty("Improver")})</div>
             </div>
 
             <div class="hub-card" onclick="openHubPlaylist(7)">
-                <div class="hub-card-title">Intermediate</div>
+            <div class="hub-card-title">Intermediate (${countDifficulty("Intermediate")})</div>
             </div>
 
             <div class="hub-card" onclick="openHubPlaylist(8)">
-                <div class="hub-card-title">Advanced</div>
+            <div class="hub-card-title">Advanced (${countDifficulty("Advanced")})</div>
             </div>
 
             <div class="hub-card" onclick="openHubPlaylist(9)">
-                <div class="hub-card-title">ALL Dances</div>
+            <div class="hub-card-title">ALL Dances (${countAllDances()})</div>
             </div>
-
-        </div>
-    `;
+          `;
 }
 
 function activatePlaylistHeader(title) {
