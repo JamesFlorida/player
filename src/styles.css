@@ -1388,6 +1388,10 @@ body.workspace-phase1 .workspace-name-box {
 /* ============================================================
    EVENTS — CARD LAYOUT
    ============================================================ */
+.events-screen {
+    padding-top: 60px; /* same spacing used by playlist screens */
+}
+
 .events-list {
     display: flex;
     flex-direction: column;
