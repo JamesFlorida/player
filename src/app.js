@@ -198,6 +198,7 @@ function restoreHubHeader() {
 
     const headerBar = document.querySelector('.header-bar');
     headerBar.style.top = venueHeaderHeight + "px";
+    headerBar.style.display = "none";   // ← HIDE header-bar on hub
 
     // Show the big venue header (bull banner)
     const venueHeader = document.querySelector('.venue-header');
