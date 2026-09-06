@@ -534,18 +534,28 @@ if (selectedActivePlaylistGroup !== null) {
 
     restoreHubHeader();
 
-    viewport.innerHTML = `
-        <div class="hub-screen">
+   viewport.innerHTML = `
+    <div class="hub-screen">
 
-            <!-- USER PLAYLISTS (dynamic, appear at top) -->
-            ${Object.keys(userPlaylistsData || {}).map(name => `
-                <div class="hub-card" onclick="openUserPlaylistView('${name}')">
-                 <div class="hub-card-title">
-                  ${name} (${userPlaylistsData[name].length})
-               </div>
-       </div>
-   `).join('')}
+        <!-- MUP + EVENTS ROW -->
+        <div class="hub-top-row">
+            <button class="hub-mup-btn" onclick="openManageUserPlaylists()">
+                Manage User Playlists
+            </button>
 
+            <button class="hub-events-btn" onclick="openEventsView()">
+                Events
+            </button>
+        </div>
+
+        <!-- USER PLAYLISTS (dynamic, appear at top) -->
+        ${Object.keys(userPlaylistsData || {}).map(name => `
+            <div class="hub-card" onclick="openUserPlaylistView('${name}')">
+                <div class="hub-card-title">
+                    ${name} (${userPlaylistsData[name].length})
+                </div>
+            </div>
+        `).join('')}
 
             <!-- SYSTEM PLAYLISTS (always present) -->
             <div class="hub-card" onclick="openHubPlaylist(1)">
