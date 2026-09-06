@@ -643,16 +643,11 @@ function openAllDances() {
    
 function openEventsView() {
     console.log("fIRST LINE IN Open Events View");
-
-    setHubHeaderTitle("Events");   // ✔ correct function
-
+    activatePlaylistHeader("Events");
     const viewport = document.getElementById("masterApplicationViewport");
     viewport.innerHTML = "";
-
     renderEventsScreen();
 }
-
-
 
 function renderEventsScreen() {
     const viewport = document.getElementById("masterApplicationViewport");
