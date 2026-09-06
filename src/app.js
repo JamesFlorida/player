@@ -386,31 +386,34 @@ function renderApplicationInterface() {
         return;
     }
 
-    /* --------------------------------------------
-       PLAYLIST VIEW (system playlists)
-       -------------------------------------------- */
-    if (selectedActivePlaylistGroup !== null) {
+   /* --------------------------------------------
+   PLAYLIST VIEW (system playlists)
+   -------------------------------------------- */
+if (selectedActivePlaylistGroup !== null) {
 
-        const playlistTracks = localDanceDatabase.filter(track =>
-            Array.isArray(track.playlists) &&
-            track.playlists.includes(selectedActivePlaylistGroup)
-        );
+    const playlistTracks = localDanceDatabase.filter(track =>
+        Array.isArray(track.playlists) &&
+        track.playlists.includes(selectedActivePlaylistGroup)
+    );
 
-       activatePlaylistHeader(activeUserPlaylistView + " Playlist");
+    document.getElementById('navbarReturnTrigger').style.display = 'block';
+    document.getElementById('navbarReturnTrigger').onclick = navigateToPlaylistHubMenu;
+    document.getElementById('applicationHeaderTitle').innerText =
+        selectedActivePlaylistGroup + " Playlist";
 
-        if (!playlistTracks.length) {
-            viewport.innerHTML = `
-                <p style="text-align:center;color:#aaa;margin-top:20px;">
-                    No dances found for this playlist.
-                </p>`;
-            updateHubVisibility();
-            return;
-        }
-
-        renderDanceCardsList(playlistTracks, viewport);
+    if (!playlistTracks.length) {
+        viewport.innerHTML = `
+            <p style="text-align:center;color:#aaa;margin-top:20px;">
+                No dances found for this playlist.
+            </p>`;
         updateHubVisibility();
-        return;   // prevent hub screen from overwriting playlist
+        return;
     }
+
+    renderDanceCardsList(playlistTracks, viewport);
+    updateHubVisibility();
+    return;   // prevent hub screen from overwriting playlist
+}
 
     /* --------------------------------------------
        USER PLAYLIST VIEW
