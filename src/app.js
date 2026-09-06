@@ -361,17 +361,15 @@ function renderApplicationInterface() {
     }
 
     console.log(">>> renderApplicationInterface RUNNING");
-    // ⭐ BULL LOGO IS VISIBLE IN HUB MODE
+
     const venueHeaderHeight =
-    document.querySelector('.venue-header')?.offsetHeight || 0;
-    // ⭐ NEW: Set CSS variable for viewport offset
+        document.querySelector('.venue-header')?.offsetHeight || 0;
+
     document.documentElement.style.setProperty(
-       "--headerBarTop",
-       venueHeaderHeight + "px"
+        "--headerBarTop",
+        venueHeaderHeight + "px"
     );
-   
-    const headerBar = document.querySelector('.header-bar');
-   
+
     const viewport = document.getElementById('masterApplicationViewport');
     if (!viewport) return;
 
@@ -388,21 +386,61 @@ function renderApplicationInterface() {
     }
 
     /* --------------------------------------------
-       PLAYLIST VIEW
+       PLAYLIST VIEW (system playlists)
        -------------------------------------------- */
     if (selectedActivePlaylistGroup !== null) {
 
-        const filteredTracks = localDanceDatabase.filter(
-            track => track.playlist === selectedActivePlaylistGroup
+        const playlistTracks = localDanceDatabase.filter(track =>
+            Array.isArray(track.playlists) &&
+            track.playlists.includes(selectedActivePlaylistGroup)
         );
 
         document.getElementById('navbarReturnTrigger').style.display = 'block';
         document.getElementById('navbarReturnTrigger').onclick = navigateToPlaylistHubMenu;
-        document.getElementById('applicationHeaderTitle').innerText = selectedActivePlaylistGroup;
+        document.getElementById('applicationHeaderTitle').innerText =
+            selectedActivePlaylistGroup + " Playlist";
 
-        renderDanceCardsList(filteredTracks, viewport);
+        if (!playlistTracks.length) {
+            viewport.innerHTML = `
+                <p style="text-align:center;color:#aaa;margin-top:20px;">
+                    No dances found for this playlist.
+                </p>`;
+            updateHubVisibility();
+            return;
+        }
+
+        renderDanceCardsList(playlistTracks, viewport);
         updateHubVisibility();
-        return;   // ⭐ prevents hub screen from overwriting playlist
+        return;   // prevent hub screen from overwriting playlist
+    }
+
+    /* --------------------------------------------
+       USER PLAYLIST VIEW
+       -------------------------------------------- */
+    if (activeUserPlaylistView !== null) {
+
+        const userTracks = localDanceDatabase.filter(track =>
+            Array.isArray(track.userPlaylists) &&
+            track.userPlaylists.includes(activeUserPlaylistView)
+        );
+
+        document.getElementById('navbarReturnTrigger').style.display = 'block';
+        document.getElementById('navbarReturnTrigger').onclick = navigateToPlaylistHubMenu;
+        document.getElementById('applicationHeaderTitle').innerText =
+            activeUserPlaylistView + " Playlist";
+
+        if (!userTracks.length) {
+            viewport.innerHTML = `
+                <p style="text-align:center;color:#aaa;margin-top:20px;">
+                    No dances found for this user playlist.
+                </p>`;
+            updateHubVisibility();
+            return;
+        }
+
+        renderDanceCardsList(userTracks, viewport);
+        updateHubVisibility();
+        return;
     }
 
     /* --------------------------------------------
@@ -412,7 +450,8 @@ function renderApplicationInterface() {
 
         document.getElementById('navbarReturnTrigger').style.display = 'block';
         document.getElementById('navbarReturnTrigger').onclick = navigateToPlaylistHubMenu;
-        document.getElementById('applicationHeaderTitle').innerText = activeDayView + " Dances";
+        document.getElementById('applicationHeaderTitle').innerText =
+            activeDayView + " Dances";
 
         const dayTracks = localDanceDatabase.filter(track =>
             activeDayFilter === "ALL" ? true : track.daytaught === activeDayFilter
@@ -428,7 +467,7 @@ function renderApplicationInterface() {
 
         renderDanceCardsList(dayTracks, viewport);
         updateHubVisibility();
-        return;   // ⭐ prevents hub screen from overwriting day view
+        return;   // prevent hub screen from overwriting day view
     }
 
     /* --------------------------------------------
@@ -441,7 +480,7 @@ function renderApplicationInterface() {
         document.getElementById('applicationHeaderTitle').innerText =
             activeDifficultyView + " Dances";
 
-        const level = activeDifficultyFilter.toLowerCase();
+        const level = (activeDifficultyFilter || "").toLowerCase();
 
         const difficultyTracks = localDanceDatabase.filter(track =>
             (track.level || "").toLowerCase().includes(level)
@@ -457,68 +496,66 @@ function renderApplicationInterface() {
 
         renderDanceCardsList(difficultyTracks, viewport);
         updateHubVisibility();
-        return;   // ⭐ prevents hub screen from overwriting difficulty view
+        return;   // prevent hub screen from overwriting difficulty view
     }
+
     /* --------------------------------------------
-   NEW CLEAN HUB SCREEN (default)
-   -------------------------------------------- */
+       CLEAN HUB SCREEN (default)
+       -------------------------------------------- */
+    document.getElementById('navbarReturnTrigger').style.display = 'none';
+    document.getElementById('navbarReturnTrigger').onclick = null;
 
-document.getElementById('navbarReturnTrigger').style.display = 'none';
-document.getElementById('navbarReturnTrigger').onclick = null;
+    restoreHubHeader();
 
-restoreHubHeader();
-viewport.innerHTML = `
-    <div class="hub-screen">
+    viewport.innerHTML = `
+        <div class="hub-screen">
 
-        <!-- ⭐ USER PLAYLISTS (dynamic, appear at top) -->
-        ${Object.keys(userPlaylistsData || {}).map(name => `
-            <div class="hub-card" onclick="openUserPlaylistView('${name}')">
-                <div class="hub-card-title">${name}</div>
+            <!-- USER PLAYLISTS (dynamic, appear at top) -->
+            ${Object.keys(userPlaylistsData || {}).map(name => `
+                <div class="hub-card" onclick="openUserPlaylistView('${name}')">
+                    <div class="hub-card-title">${name}</div>
+                </div>
+            `).join('')}
+
+            <!-- SYSTEM PLAYLISTS (always present) -->
+            <div class="hub-card" onclick="openHubPlaylist(1)">
+                <div class="hub-card-title">Tuesday</div>
             </div>
-        `).join('')}
 
-        <!-- ⭐ SYSTEM PLAYLISTS (always present) -->
-        <div class="hub-card" onclick="openHubPlaylist(1)">
-            <div class="hub-card-title">Tuesday</div>
+            <div class="hub-card" onclick="openHubPlaylist(2)">
+                <div class="hub-card-title">Wednesday</div>
+            </div>
+
+            <div class="hub-card" onclick="openHubPlaylist(3)">
+                <div class="hub-card-title">Weekend</div>
+            </div>
+
+            <div class="hub-card" onclick="openHubPlaylist(4)">
+                <div class="hub-card-title">Mixed Bag</div>
+            </div>
+
+            <div class="hub-card" onclick="openHubPlaylist(5)">
+                <div class="hub-card-title">Beginner</div>
+            </div>
+
+            <div class="hub-card" onclick="openHubPlaylist(6)">
+                <div class="hub-card-title">Improver</div>
+            </div>
+
+            <div class="hub-card" onclick="openHubPlaylist(7)">
+                <div class="hub-card-title">Intermediate</div>
+            </div>
+
+            <div class="hub-card" onclick="openHubPlaylist(8)">
+                <div class="hub-card-title">Advanced</div>
+            </div>
+
+            <div class="hub-card" onclick="openHubPlaylist(9)">
+                <div class="hub-card-title">ALL Dances</div>
+            </div>
+
         </div>
-
-        <div class="hub-card" onclick="openHubPlaylist(2)">
-            <div class="hub-card-title">Wednesday</div>
-        </div>
-
-        <div class="hub-card" onclick="openHubPlaylist(3)">
-            <div class="hub-card-title">Weekend</div>
-        </div>
-
-        <div class="hub-card" onclick="openHubPlaylist(4)">
-            <div class="hub-card-title">Mixed Bag</div>
-        </div>
-
-        <div class="hub-card" onclick="openHubPlaylist(5)">
-            <div class="hub-card-title">Beginner</div>
-        </div>
-
-        <div class="hub-card" onclick="openHubPlaylist(6)">
-            <div class="hub-card-title">Improver</div>
-        </div>
-
-        <div class="hub-card" onclick="openHubPlaylist(7)">
-            <div class="hub-card-title">Intermediate</div>
-        </div>
-
-        <div class="hub-card" onclick="openHubPlaylist(8)">
-            <div class="hub-card-title">Advanced</div>
-        </div>
-
-        <div class="hub-card" onclick="openHubPlaylist(9)">
-            <div class="hub-card-title">ALL Dances</div>
-        </div>
-
-    </div>
-`;
-
-
-
+    `;
 }
 
   /* --------------------------------------------
