@@ -1743,20 +1743,44 @@ const hubPlaylists = [
     "ALL Dances"        // 9
 ];
 
-// Bridge from HUB button → existing playlist-by-name pipeline
 function openHubPlaylist(index) {
     const name = hubPlaylists[index];
 
-    // If this should open user playlists:
-    if (name === "Your Playlists") {
-        openWorkspace();          // existing function
-        return;
+    switch (name) {
+
+        case "Your Playlists":
+            openWorkspace();
+            return;
+
+        case "Tuesday":
+        case "Wednesday":
+        case "Weekend":
+            openDayPlaylist(name);
+            return;
+
+        case "Beginner":
+        case "Improver":
+        case "Intermediate":
+        case "Advanced":
+            openDifficultyPlaylist(name);
+            return;
+
+        case "ALL Dances":
+            openAllDances();
+            return;
+
+        case "Mixed Bag":
+            selectedActivePlaylistGroup = "Mixed Bag";
+            activeDayView = null;
+            activeDifficultyView = null;
+            lastNavigationMode = "playlist";
+            renderApplicationInterface();
+            return;
+
+        default:
+            return;
     }
-
-    // For all other categories, reuse your existing playlist-by-name function
-    openSpecificPlaylistView(name);   // existing function that expects `name`
 }
-
 
 
 function openSteps(danceId) {
