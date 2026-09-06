@@ -76,10 +76,10 @@ body {
 }
 
 #applicationHeaderTitle {
-    display: none !important;
+    display: none;
 }
 #navbarReturnTrigger {
-    display: none !important;
+    display: none;
 }
 
 
