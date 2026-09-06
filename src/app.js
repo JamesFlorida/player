@@ -395,10 +395,7 @@ function renderApplicationInterface() {
             track.playlists.includes(selectedActivePlaylistGroup)
         );
 
-        document.getElementById('navbarReturnTrigger').style.display = 'block';
-        document.getElementById('navbarReturnTrigger').onclick = navigateToPlaylistHubMenu;
-        document.getElementById('applicationHeaderTitle').innerText =
-            selectedActivePlaylistGroup + " Playlist";
+       activatePlaylistHeader(activeUserPlaylistView + " Playlist");
 
         if (!playlistTracks.length) {
             viewport.innerHTML = `
@@ -424,10 +421,7 @@ function renderApplicationInterface() {
             track.userPlaylists.includes(activeUserPlaylistView)
         );
 
-        document.getElementById('navbarReturnTrigger').style.display = 'block';
-        document.getElementById('navbarReturnTrigger').onclick = navigateToPlaylistHubMenu;
-        document.getElementById('applicationHeaderTitle').innerText =
-            activeUserPlaylistView + " Playlist";
+      activatePlaylistHeader(activeUserPlaylistView + " Playlist");
 
         if (!userTracks.length) {
             viewport.innerHTML = `
@@ -448,12 +442,8 @@ function renderApplicationInterface() {
        -------------------------------------------- */
     if (activeDayView !== null) {
 
-        document.getElementById('navbarReturnTrigger').style.display = 'block';
-        document.getElementById('navbarReturnTrigger').onclick = navigateToPlaylistHubMenu;
-        document.getElementById('applicationHeaderTitle').innerText =
-            activeDayView + " Dances";
-
-        const dayTracks = localDanceDatabase.filter(track =>
+      activatePlaylistHeader(activeDayView + " Dances");
+      const dayTracks = localDanceDatabase.filter(track =>
             activeDayFilter === "ALL" ? true : track.daytaught === activeDayFilter
         );
 
@@ -475,11 +465,7 @@ function renderApplicationInterface() {
        -------------------------------------------- */
     if (activeDifficultyView !== null) {
 
-        document.getElementById('navbarReturnTrigger').style.display = 'block';
-        document.getElementById('navbarReturnTrigger').onclick = navigateToPlaylistHubMenu;
-        document.getElementById('applicationHeaderTitle').innerText =
-            activeDifficultyView + " Dances";
-
+        activatePlaylistHeader(activeDifficultyView + " Dances");
         const level = (activeDifficultyFilter || "").toLowerCase();
 
         const difficultyTracks = localDanceDatabase.filter(track =>
@@ -558,6 +544,33 @@ function renderApplicationInterface() {
     `;
 }
 
+function activatePlaylistHeader(title) {
+    // Hide big venue header
+    const venueHeader = document.querySelector('.venue-header');
+    if (venueHeader) venueHeader.style.display = 'none';
+
+    // Show header-bar
+    const headerBar = document.querySelector('.header-bar');
+    if (headerBar) headerBar.style.display = 'flex';
+
+    // Show back button
+    const backBtn = document.getElementById('navbarReturnTrigger');
+    if (backBtn) {
+        backBtn.style.display = 'block';
+        backBtn.onclick = navigateToPlaylistHubMenu;
+    }
+
+    // Set title
+    const titleEl = document.getElementById('applicationHeaderTitle');
+    if (titleEl) {
+        titleEl.style.display = 'inline';
+        titleEl.innerText = title;
+    }
+
+    // Show small logo
+    const smallLogo = document.getElementById("workspaceSmallLogo");
+    if (smallLogo) smallLogo.style.display = "block";
+}
   /* --------------------------------------------
    Funtions added 9-4-26
    -------------------------------------------- */
