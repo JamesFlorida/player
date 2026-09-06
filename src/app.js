@@ -536,18 +536,6 @@ if (selectedActivePlaylistGroup !== null) {
 
    viewport.innerHTML = `
     <div class="hub-screen">
-
-        <!-- MUP + EVENTS ROW -->
-        <div class="hub-top-row">
-            <button class="hub-mup-btn" onclick="openManageUserPlaylists()">
-                Manage User Playlists
-            </button>
-
-            <button class="hub-events-btn" onclick="openEventsView()">
-                Events
-            </button>
-        </div>
-
         <!-- USER PLAYLISTS (dynamic, appear at top) -->
         ${Object.keys(userPlaylistsData || {}).map(name => `
             <div class="hub-card" onclick="openUserPlaylistView('${name}')">
