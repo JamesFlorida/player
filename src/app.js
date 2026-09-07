@@ -385,7 +385,14 @@ function renderApplicationInterface() {
         return;
     }
 
-    console.log(">>> renderApplicationInterface RUNNING");
+    console.log(">>> renderApplicationInterface RUNNING",
+                { 
+          activeUserPlaylistView,
+          selectedActivePlaylistGroup,
+          activeDayView,
+          activeDifficultyView,
+          lastNavigationMode
+        });
 
     const venueHeaderHeight =
         document.querySelector('.venue-header')?.offsetHeight || 0;
@@ -453,7 +460,7 @@ if (selectedActivePlaylistGroup !== null) {
    USER PLAYLIST VIEW
 -------------------------------------------- */
 if (activeUserPlaylistView !== null) {
-
+    console.log(">>> USER PLAYLIST BLOCK RUNNING");
     const viewport = document.getElementById("masterApplicationViewport");
     viewport.innerHTML = "";
 
@@ -539,6 +546,7 @@ if (activeUserPlaylistView !== null) {
     activeDayView === null &&
     activeDifficultyView === null
 ) {
+    console.log(">>> HUB BLOCK RUNNING");
     document.getElementById('navbarReturnTrigger').style.display = 'none';
     document.getElementById('navbarReturnTrigger').onclick = null;
 
