@@ -232,11 +232,35 @@ function restoreHubHeader() {
    NAVIGATION HELPERS
 ============================================ */
 function navigateToPlaylistHubMenu() {
-    /*  applicationHeaderTitle.style.display = "none";  */
+
+    // Clear user playlist state
+    activeUserPlaylistView = null;
     selectedActivePlaylistGroup = null;
     activeDayView = null;
     activeDifficultyView = null;
     lastNavigationMode = "hub";
+
+    /* --------------------------------------------
+       HEADER SWITCHING (CRITICAL)
+       -------------------------------------------- */
+
+    // Show HUB header (venue-header)
+    const hubHeader = document.querySelector('.venue-header');
+    if (hubHeader) hubHeader.style.display = 'flex';
+
+    // Hide PLAYLIST header (header-bar)
+    const playlistHeader = document.querySelector('.header-bar');
+    if (playlistHeader) playlistHeader.style.display = 'none';
+
+    // Hide back button
+    const backBtn = document.getElementById('navbarReturnTrigger');
+    if (backBtn) backBtn.style.display = 'none';
+
+    // Clear playlist title
+    const titleEl = document.getElementById('applicationHeaderTitle');
+    if (titleEl) titleEl.innerText = "";
+
+    // Render hub screen
     renderApplicationInterface();
 }
 
