@@ -538,42 +538,61 @@ if (selectedActivePlaylistGroup !== null) {
             </div>
         `).join('')}
 
-            <!-- SYSTEM PLAYLISTS (always present) -->
-            <div class="hub-card" onclick="openHubPlaylist(1)">
-            <div class="hub-card-title">Tuesday (${countDay("Tuesday")})</div>
-            </div>
+        <!-- SYSTEM PLAYLISTS (conditionally shown) -->
 
-            <div class="hub-card" onclick="openHubPlaylist(2)">
-            <div class="hub-card-title">Wednesday (${countDay("Wednesday")})</div>
-            </div>
+${countDay("Tuesday") > 0 ? `
+<div class="hub-card" onclick="openHubPlaylist(1)">
+    <div class="hub-card-title">Tuesday (${countDay("Tuesday")})</div>
+</div>
+` : ""}
 
-            <div class="hub-card" onclick="openHubPlaylist(3)">
-            <div class="hub-card-title">Weekend (${countDay("Weekend")})</div>
-            </div>
+${countDay("Wednesday") > 0 ? `
+<div class="hub-card" onclick="openHubPlaylist(2)">
+    <div class="hub-card-title">Wednesday (${countDay("Wednesday")})</div>
+</div>
+` : ""}
 
-            <div class="hub-card" onclick="openHubPlaylist(4)">
-            <div class="hub-card-title">Mixed Bag (${countMixedBag()})</div>
-            </div>
+${countDay("Weekend") > 0 ? `
+<div class="hub-card" onclick="openHubPlaylist(3)">
+    <div class="hub-card-title">Weekend (${countDay("Weekend")})</div>
+</div>
+` : ""}
 
-            <div class="hub-card" onclick="openHubPlaylist(5)">
-            <div class="hub-card-title">Beginner (${countDifficulty("Beginner")})</div>
-            </div>
+${countMixedBag() > 0 ? `
+<div class="hub-card" onclick="openHubPlaylist(4)">
+    <div class="hub-card-title">Mixed Bag (${countMixedBag()})</div>
+</div>
+` : ""}
 
-            <div class="hub-card" onclick="openHubPlaylist(6)">
-            <div class="hub-card-title">Improver (${countDifficulty("Improver")})</div>
-            </div>
+${countDifficulty("Beginner") > 0 ? `
+<div class="hub-card" onclick="openHubPlaylist(5)">
+    <div class="hub-card-title">Beginner (${countDifficulty("Beginner")})</div>
+</div>
+` : ""}
 
-            <div class="hub-card" onclick="openHubPlaylist(7)">
-            <div class="hub-card-title">Intermediate (${countDifficulty("Intermediate")})</div>
-            </div>
+${countDifficulty("Improver") > 0 ? `
+<div class="hub-card" onclick="openHubPlaylist(6)">
+    <div class="hub-card-title">Improver (${countDifficulty("Improver")})</div>
+</div>
+` : ""}
 
-            <div class="hub-card" onclick="openHubPlaylist(8)">
-            <div class="hub-card-title">Advanced (${countDifficulty("Advanced")})</div>
-            </div>
+${countDifficulty("Intermediate") > 0 ? `
+<div class="hub-card" onclick="openHubPlaylist(7)">
+    <div class="hub-card-title">Intermediate (${countDifficulty("Intermediate")})</div>
+</div>
+` : ""}
 
-            <div class="hub-card" onclick="openHubPlaylist(9)">
-            <div class="hub-card-title">ALL Dances (${countAllDances()})</div>
-            </div>
+${countDifficulty("Advanced") > 0 ? `
+<div class="hub-card" onclick="openHubPlaylist(8)">
+    <div class="hub-card-title">Advanced (${countDifficulty("Advanced")})</div>
+</div>
+` : ""}
+
+<!-- ALL Dances is always shown -->
+<div class="hub-card" onclick="openHubPlaylist(9)">
+    <div class="hub-card-title">ALL Dances (${countAllDances()})</div>
+</div>
+   
           `;
 }
 
