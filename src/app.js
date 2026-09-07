@@ -445,31 +445,38 @@ if (selectedActivePlaylistGroup !== null) {
     return;
 }
 
-    /* --------------------------------------------
-       USER PLAYLIST VIEW
-       -------------------------------------------- */
-    if (activeUserPlaylistView !== null) {
+  /* --------------------------------------------
+   USER PLAYLIST VIEW
+-------------------------------------------- */
+if (activeUserPlaylistView !== null) {
 
-        const userTracks = localDanceDatabase.filter(track =>
-            Array.isArray(track.userPlaylists) &&
-            track.userPlaylists.includes(activeUserPlaylistView)
-        );
+    const viewport = document.getElementById("masterApplicationViewport");
+    viewport.innerHTML = "";
 
-      activatePlaylistHeader(activeUserPlaylistView + " Playlist");
+    // Header + Back Button
+    document.getElementById('navbarReturnTrigger').style.display = 'block';
+    document.getElementById('navbarReturnTrigger').onclick = navigateToPlaylistHubMenu;
+    document.getElementById('applicationHeaderTitle').innerText = activeUserPlaylistView + " Playlist";
 
-        if (!userTracks.length) {
-            viewport.innerHTML = `
-                <p style="text-align:center;color:#aaa;margin-top:20px;">
-                    No dances found for this user playlist.
-                </p>`;
-            updateHubVisibility();
-            return;
-        }
+    // Get dance names in this user playlist
+    const tracks = userPlaylistsData[activeUserPlaylistView] || [];
 
-        renderDanceCardsList(userTracks, viewport);
-        updateHubVisibility();
+    if (!tracks.length) {
+        viewport.innerHTML = `
+            <p style="text-align:center;color:#aaa;margin-top:20px;">
+                No dances found for this user playlist.
+            </p>`;
         return;
     }
+
+    // Convert dance names → full dance objects
+    const danceObjects = localDanceDatabase.filter(d =>
+        tracks.includes(d.name)
+    );
+
+    renderDanceCardsList(danceObjects, viewport);
+    return;
+}
 
     /* --------------------------------------------
        DAY VIEW
