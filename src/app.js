@@ -455,21 +455,43 @@ if (selectedActivePlaylistGroup !== null) {
     updateHubVisibility();
     return;
 }
-
-  /* --------------------------------------------
+/* --------------------------------------------
    USER PLAYLIST VIEW
 -------------------------------------------- */
 if (activeUserPlaylistView !== null) {
     console.log(">>> USER PLAYLIST BLOCK RUNNING");
+
     const viewport = document.getElementById("masterApplicationViewport");
     viewport.innerHTML = "";
 
-    // Header + Back Button
-    document.getElementById('navbarReturnTrigger').style.display = 'block';
-    document.getElementById('navbarReturnTrigger').onclick = navigateToPlaylistHubMenu;
-    document.getElementById('applicationHeaderTitle').innerText = activeUserPlaylistView + " Playlist";
+    /* --------------------------------------------
+       HEADER SWITCHING (CRITICAL FIX)
+       -------------------------------------------- */
 
-    // Get dance names in this user playlist
+    // Hide HUB header (venue-header)
+    const hubHeader = document.querySelector('.venue-header');
+    if (hubHeader) hubHeader.style.display = 'none';
+
+    // Show PLAYLIST header (header-bar)
+    const playlistHeader = document.querySelector('.header-bar');
+    if (playlistHeader) playlistHeader.style.display = 'flex';
+
+    // Back button + playlist title
+    const backBtn = document.getElementById('navbarReturnTrigger');
+    if (backBtn) {
+        backBtn.style.display = 'block';
+        backBtn.onclick = navigateToPlaylistHubMenu;
+    }
+
+    const titleEl = document.getElementById('applicationHeaderTitle');
+    if (titleEl) {
+        titleEl.innerText = activeUserPlaylistView + " Playlist";
+    }
+
+    /* --------------------------------------------
+       LOAD USER PLAYLIST TRACKS
+       -------------------------------------------- */
+
     const tracks = userPlaylistsData[activeUserPlaylistView] || [];
 
     if (!tracks.length) {
