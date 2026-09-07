@@ -368,12 +368,9 @@ function countAllDances() {
 }
 
 function countMixedBag() {
-    return localDanceDatabase.filter(d => {
-        const level = (d.level || "").toLowerCase();
-        return ![""]
-            .includes(level);
-    }).length;
+    return localDanceDatabase.filter(d => d.playlist === "Mixed Bag").length;
 }
+
 
 /* ============================================
    MAIN RENDERER
@@ -409,7 +406,7 @@ function renderApplicationInterface() {
         return;
     }
 
-    /* --------------------------------------------
+   /* --------------------------------------------
    PLAYLIST VIEW (Mixed Bag / ALL Dances)
    -------------------------------------------- */
 if (selectedActivePlaylistGroup !== null) {
@@ -419,12 +416,9 @@ if (selectedActivePlaylistGroup !== null) {
     switch (selectedActivePlaylistGroup) {
 
         case "Mixed Bag":
-            // Example rule: dances not in the main levels
-            playlistTracks = localDanceDatabase.filter(track => {
-                const level = (track.level || "").toLowerCase();
-                return !["beginner", "improver", "intermediate", "advanced"]
-                    .includes(level);
-            });
+            playlistTracks = localDanceDatabase.filter(track =>
+                track.playlist === "Mixed Bag"
+            );
             break;
 
         case "ALL Dances":
@@ -450,7 +444,6 @@ if (selectedActivePlaylistGroup !== null) {
     updateHubVisibility();
     return;
 }
-
 
     /* --------------------------------------------
        USER PLAYLIST VIEW
