@@ -529,6 +529,12 @@ if (activeUserPlaylistView !== null) {
     /* --------------------------------------------
        CLEAN HUB SCREEN (default)
        -------------------------------------------- */
+   if (
+    activeUserPlaylistView === null &&
+    selectedActivePlaylistGroup === null &&
+    activeDayView === null &&
+    activeDifficultyView === null
+) {
     document.getElementById('navbarReturnTrigger').style.display = 'none';
     document.getElementById('navbarReturnTrigger').onclick = null;
 
