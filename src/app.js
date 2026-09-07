@@ -1805,6 +1805,8 @@ function renderSimpleSearchCards(matches, container) {
 /* ============================================
    HUB VISIBILITY UPDATER
 ============================================ */
+
+/*
 function updateHubVisibility() {
     const filterBar = document.getElementById('dayFilterBar');
     const diffBar = document.getElementById('difficultyFilterBar');
@@ -1814,6 +1816,25 @@ function updateHubVisibility() {
     if (diffBar) diffBar.style.display = 'none';
     if (navRow) navRow.style.display = 'none';
 }
+
+*/
+
+function updateHubVisibility() {
+
+    // ⭐ Prevent hub UI from re-rendering while viewing a user playlist
+    if (activeUserPlaylistView !== null) {
+        return;
+    }
+
+    const filterBar = document.getElementById('dayFilterBar');
+    const diffBar = document.getElementById('difficultyFilterBar');
+    const navRow = document.querySelector('.hub-nav-row');
+
+    if (filterBar) filterBar.style.display = 'none';
+    if (diffBar) diffBar.style.display = 'none';
+    if (navRow) navRow.style.display = 'none';
+}
+
 
 /* ============================================
    INITIALIZE APP
