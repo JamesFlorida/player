@@ -20,7 +20,7 @@ venueDanceMap.forEach(entry => {
     if (base) {
         localDanceDatabase.push({
             ...base,
-            playlist: entry.playlist,
+        /*    playlist: entry.playlist,  */
             daytaught: entry.daytaught
         });
     }
