@@ -608,6 +608,7 @@ ${countDifficulty("Advanced") > 0 ? `
    
           `;
 }
+}
 
 function activatePlaylistHeader(title) {
     // Hide big venue header
