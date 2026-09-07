@@ -540,6 +540,13 @@ if (activeUserPlaylistView !== null) {
     /* --------------------------------------------
        CLEAN HUB SCREEN (default)
        -------------------------------------------- */
+   console.log(">>> HUB CONDITION VALUES:", {
+    activeUserPlaylistView,
+    selectedActivePlaylistGroup,
+    activeDayView,
+    activeDifficultyView
+});
+
    if (
     activeUserPlaylistView === null &&
     selectedActivePlaylistGroup === null &&
