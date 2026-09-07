@@ -370,7 +370,7 @@ function countAllDances() {
 function countMixedBag() {
     return localDanceDatabase.filter(d => {
         const level = (d.level || "").toLowerCase();
-        return !["beginner", "improver", "intermediate", "advanced"]
+        return !["Mixed"]
             .includes(level);
     }).length;
 }
