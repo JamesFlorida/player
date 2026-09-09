@@ -14,7 +14,7 @@ import { venueEvents } from "./venues/Stockyard/venueEvents.js";
 let localDanceDatabase = [];
 
 venueDanceMap.forEach(entry => {
-    const base = danceDataStockyard.find(d => d.id === entry.id);
+    const base = danceData.find(d => d.id === entry.id);
     if (base) {
         localDanceDatabase.push({
             ...base,
