@@ -49,7 +49,6 @@ const venueDanceMap = [
 { id: 97, playlist: "Stock-010", daytaught: "Wednesday" },
 { id: 96, playlist: "Stock-010", daytaught: "Wednesday" },
 { id: 95, playlist: "Stock-010", daytaught: "Wednesday" },
-{ id: 94, playlist: "Stock-010", daytaught: "Wednesday" },
 { id: 93, playlist: "Stock-010", daytaught: "Wednesday" },
 { id: 92, playlist: "Stock-010", daytaught: "Wednesday" },
 { id: 91, playlist: "Stock-010", daytaught: "Wednesday" },
