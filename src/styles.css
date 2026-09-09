@@ -55,11 +55,16 @@ body {
     font-weight: bold;
     font-size: 1.3rem;
     box-shadow: none !important;  /* Remove shadow overlay */
-    position: static !important;  /* ⭐ Prevent fixed overlay */
-    top: auto;
+   
+    /* position: static !important;   ⭐ Prevent fixed overlay */
+   position: sticky;
+   
+    /*  top: auto;  */
+    top: 0;
     left: auto;
     right: auto;
-    z-index: 1;
+    /*   z-index: 1;   */
+    z-index: 999;
     height: 60px;
     box-sizing: border-box;
     color: #fff;
