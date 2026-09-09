@@ -11,10 +11,6 @@ import { venueEvents } from "./venues/Stockyard/venueEvents.js";
 /* ============================================
    MERGE STOCKYARD DANCE DATA + VENUE MAP  
 ============================================ */
-
-import { danceDataStockyard } from "./venues/Stockyard/danceData-stockyard.js";
-import { venueDanceMap } from "./venues/Stockyard/venueDanceMap.js";
-
 let localDanceDatabase = [];
 
 venueDanceMap.forEach(entry => {
