@@ -3,7 +3,7 @@ console.log("TOP OF APP.JS LOADED");
    IMPORTS      
 ============================================ */
 import { danceData } from './venues/Stockyard/danceData-stockyard.js';
-import { globalDanceList } from "./globalDanceList.js";
+// import { globalDanceList } from "./globalDanceList.js";
 import { venueDanceMap } from "./venues/Stockyard/venueDanceMap.js";
 import { venueConfig } from "./venues/Stockyard/venueConfig.js";
 import { venueEvents } from "./venues/Stockyard/venueEvents.js";
