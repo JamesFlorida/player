@@ -8,19 +8,21 @@ import { venueDanceMap } from "./venues/Stockyard/venueDanceMap.js";
 import { venueConfig } from "./venues/Stockyard/venueConfig.js";
 import { venueEvents } from "./venues/Stockyard/venueEvents.js";
 
-
-
 /* ============================================
-   MERGE GLOBAL + VENUE DANCE DATA  
+   MERGE STOCKYARD DANCE DATA + VENUE MAP  
 ============================================ */
+
+import { danceDataStockyard } from "./venues/Stockyard/danceData-stockyard.js";
+import { venueDanceMap } from "./venues/Stockyard/venueDanceMap.js";
+
 let localDanceDatabase = [];
 
 venueDanceMap.forEach(entry => {
-    const base = globalDanceList.find(d => d.id === entry.id);
+    const base = danceDataStockyard.find(d => d.id === entry.id);
     if (base) {
         localDanceDatabase.push({
             ...base,
-        /*    playlist: entry.playlist,  */
+            playlist: entry.playlist,
             daytaught: entry.daytaught
         });
     }
