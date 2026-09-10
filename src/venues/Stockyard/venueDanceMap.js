@@ -1,4 +1,13 @@
 const venueDanceMap = [
+{ id: 27, playlist: "Stock-003", daytaught: "Tuesday" },
+{ id: 25, playlist: "Stock-003", daytaught: "Tuesday" },
+{ id: 24, playlist: "Stock-003", daytaught: "Tuesday" },
+{ id: 23, playlist: "Stock-003", daytaught: "Tuesday" },
+{ id: 21, playlist: "Stock-003", daytaught: "Tuesday" },
+{ id: 20, playlist: "Stock-002", daytaught: "Tuesday" },
+{ id: 19, playlist: "Stock-002", daytaught: "Tuesday" },
+{ id: 28, playlist: "Stock-003", daytaught: "Tuesday" },
+{ id: 67, playlist: "Stock-007", daytaught: "Tuesday" },
 { id: 144, playlist: "Stock-015", daytaught: "Wednesday" },
 { id: 143, playlist: "Stock-015", daytaught: "Wednesday" },
 { id: 142, playlist: "Stock-015", daytaught: "Wednesday" },
