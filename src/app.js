@@ -449,13 +449,19 @@ if (selectedActivePlaylistGroup !== null) {
     switch (selectedActivePlaylistGroup) {
 
         case "Mixed Bag":
-            playlistTracks = localDanceDatabase.filter(track =>
-                track.playlist === "Mixed Bag"
-            );
+            playlistTracks = localDanceDatabase
+                .filter(track => track.playlist === "Mixed Bag")
+                .filter((dance, index, arr) =>
+                    index === arr.findIndex(d => d.name === dance.name)
+                );
             break;
 
         case "ALL Dances":
-            playlistTracks = localDanceDatabase.slice();
+            playlistTracks = localDanceDatabase
+                .slice()
+                .filter((dance, index, arr) =>
+                    index === arr.findIndex(d => d.name === dance.name)
+                );
             break;
 
         default:
@@ -477,6 +483,7 @@ if (selectedActivePlaylistGroup !== null) {
     updateHubVisibility();
     return;
 }
+
 /* --------------------------------------------
    USER PLAYLIST VIEW
 -------------------------------------------- */
@@ -486,19 +493,15 @@ if (activeUserPlaylistView !== null) {
     const viewport = document.getElementById("masterApplicationViewport");
     viewport.innerHTML = "";
 
-    /* --------------------------------------------
-       HEADER SWITCHING (CRITICAL FIX)
-       -------------------------------------------- */
-
-    // Hide HUB header (venue-header)
+    // Hide HUB header
     const hubHeader = document.querySelector('.venue-header');
     if (hubHeader) hubHeader.style.display = 'none';
 
-    // Show PLAYLIST header (header-bar)
+    // Show PLAYLIST header
     const playlistHeader = document.querySelector('.header-bar');
     if (playlistHeader) playlistHeader.style.display = 'flex';
 
-    // Back button + playlist title
+    // Back button
     const backBtn = document.getElementById('navbarReturnTrigger');
     if (backBtn) {
         backBtn.style.display = 'block';
@@ -510,10 +513,6 @@ if (activeUserPlaylistView !== null) {
         titleEl.innerText = activeUserPlaylistView + " Playlist";
     }
 
-    /* --------------------------------------------
-       LOAD USER PLAYLIST TRACKS
-       -------------------------------------------- */
-
     const tracks = userPlaylistsData[activeUserPlaylistView] || [];
 
     if (!tracks.length) {
@@ -524,10 +523,11 @@ if (activeUserPlaylistView !== null) {
         return;
     }
 
-    // Convert dance names → full dance objects
-    const danceObjects = localDanceDatabase.filter(d =>
-        tracks.includes(d.name)
-    );
+    const danceObjects = localDanceDatabase
+        .filter(d => tracks.includes(d.name))
+        .filter((dance, index, arr) =>
+            index === arr.findIndex(d => d.name === dance.name)
+        );
 
     renderDanceCardsList(danceObjects, viewport);
     return;
@@ -539,8 +539,13 @@ if (activeUserPlaylistView !== null) {
     if (activeDayView !== null) {
 
       activatePlaylistHeader(activeDayView + " Dances");
-      const dayTracks = localDanceDatabase.filter(track =>
+
+      const dayTracks = localDanceDatabase
+        .filter(track =>
             activeDayFilter === "ALL" ? true : track.daytaught === activeDayFilter
+        )
+        .filter((dance, index, arr) =>
+            index === arr.findIndex(d => d.name === dance.name)
         );
 
         if (!dayTracks.length) {
@@ -553,7 +558,7 @@ if (activeUserPlaylistView !== null) {
 
         renderDanceCardsList(dayTracks, viewport);
         updateHubVisibility();
-        return;   // prevent hub screen from overwriting day view
+        return;
     }
 
     /* --------------------------------------------
@@ -564,9 +569,13 @@ if (activeUserPlaylistView !== null) {
         activatePlaylistHeader(activeDifficultyView + " Dances");
         const level = (activeDifficultyFilter || "").toLowerCase();
 
-        const difficultyTracks = localDanceDatabase.filter(track =>
-            (track.level || "").toLowerCase().includes(level)
-        );
+        const difficultyTracks = localDanceDatabase
+            .filter(track =>
+                (track.level || "").toLowerCase().includes(level)
+            )
+            .filter((dance, index, arr) =>
+                index === arr.findIndex(d => d.name === dance.name)
+            );
 
         if (!difficultyTracks.length) {
             viewport.innerHTML = `
@@ -578,7 +587,7 @@ if (activeUserPlaylistView !== null) {
 
         renderDanceCardsList(difficultyTracks, viewport);
         updateHubVisibility();
-        return;   // prevent hub screen from overwriting difficulty view
+        return;
     }
 
     /* --------------------------------------------
@@ -605,7 +614,6 @@ if (activeUserPlaylistView !== null) {
 
    viewport.innerHTML = `
     <div class="hub-screen">
-        <!-- USER PLAYLISTS (dynamic, appear at top) -->
         ${Object.keys(userPlaylistsData || {}).map(name => `
             <div class="hub-card" onclick="openUserPlaylistView('${name}')">
                 <div class="hub-card-title">
@@ -613,8 +621,6 @@ if (activeUserPlaylistView !== null) {
                 </div>
             </div>
         `).join('')}
-
-        <!-- SYSTEM PLAYLISTS (conditionally shown) -->
 
 ${countDay("Tuesday") > 0 ? `
 <div class="hub-card" onclick="openHubPlaylist(1)">
@@ -664,7 +670,6 @@ ${countDifficulty("Advanced") > 0 ? `
 </div>
 ` : ""}
 
-<!-- ALL Dances is always shown -->
 <div class="hub-card" onclick="openHubPlaylist(9)">
     <div class="hub-card-title">ALL Dances (${countAllDances()})</div>
 </div>
@@ -672,6 +677,7 @@ ${countDifficulty("Advanced") > 0 ? `
           `;
 }
 }
+
 
 function activatePlaylistHeader(title) {
     // Hide big venue header
