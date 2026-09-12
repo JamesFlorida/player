@@ -1974,50 +1974,85 @@ function openMusic(danceId) {
     launchMediaOverlay(dance.musicUrl, "Music");
 }
 
-
 function launchMediaOverlay(targetUrl, displayTitle) {
-   overlayActive = true; //REMOVE 
+    overlayActive = true;
 
-   console.log("launchMediaOverlay URL:", targetUrl);
-
+    console.log("launchMediaOverlay URL:", targetUrl);
     if (!targetUrl) return;
 
-    // Force HTTPS for YouTube and other embeds
-    targetUrl = targetUrl.replace('http://', 'https://');
+    // Ensure correct YouTube embed domain
+    if (targetUrl.includes("youtube.com/embed/") && !targetUrl.includes("www.youtube.com")) {
+        targetUrl = targetUrl.replace("https://youtube.com", "https://www.youtube.com");
+    }
 
     const container = document.getElementById('playerOverlayFrame');
-
     if (!container) return;
 
-    container.style.display = 'none';
+    // Reset overlay
     container.innerHTML = '';
 
+    // Build overlay header
+    const headerHTML = `
+        <div class="overlay-control-header">
+            <span class="overlay-title" id="overlayPanelTitle">${displayTitle}</span>
+            <button class="done-close-btn" onclick="shutOverlayViewer()">Done</button>
+        </div>
+    `;
+
+    // Fallback block (always available, only shown if user taps it)
+    const fallbackHTML = `
+        <div id="videoFallback" style="display:none; text-align:center; padding:20px;">
+            <p style="color:#ccc; margin-bottom:15px;">
+                This video cannot be played inside the viewer.  
+                Tap below to open it directly in YouTube.
+            </p>
+            <button id="fallbackOpenBtn" class="fallback-open-btn">
+                Open on YouTube
+            </button>
+        </div>
+    `;
+
+    /* --------------------------------------------
+       STEPS VIEW (CopperKnob)
+       -------------------------------------------- */
     if (displayTitle.includes("steps") || displayTitle.includes("Steps")) {
-        // STEPS: use <object> for CopperKnob / step sheets
         container.innerHTML = `
-            <div class="overlay-control-header">
-                <span class="overlay-title" id="overlayPanelTitle">${displayTitle}</span>
-                <button class="done-close-btn" onclick="shutOverlayViewer()">Done</button>
-            </div>
+            ${headerHTML}
             <object data="${targetUrl}" class="overlay-viewport-iframe" type="text/html"></object>
         `;
-    } else {
-        // YOUTUBE: use <iframe> with proper sandbox + allow
-        container.innerHTML = `
-            <div class="overlay-control-header">
-                <span class="overlay-title" id="overlayPanelTitle">${displayTitle}</span>
-                <button class="done-close-btn" onclick="shutOverlayViewer()">Done</button>
-            </div>
-            <iframe id="appIframeViewport"
-                    class="overlay-viewport-iframe"
-                    src="${targetUrl}"
-                    allow="autoplay; encrypted-media; fullscreen"
-                    sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-popups-to-escape-sandbox">
-            </iframe>
-        `;
+        container.style.display = 'block';
+        return;
     }
+
+    /* --------------------------------------------
+       YOUTUBE VIEW (simple + stable + explanatory)
+       -------------------------------------------- */
+
+    container.innerHTML = `
+        ${headerHTML}
+        <iframe id="appIframeViewport"
+                class="overlay-viewport-iframe"
+                src="${targetUrl}"
+                allow="autoplay; encrypted-media; fullscreen">
+        </iframe>
+        ${fallbackHTML}
+    `;
+
     container.style.display = 'block';
+
+    // Fallback button → open YouTube in new tab
+    const fallbackBtn = container.querySelector('#fallbackOpenBtn');
+    fallbackBtn.onclick = () => {
+        window.open(targetUrl, "_blank");
+    };
 }
+
+
+
+
+
+
+
 function shutOverlayViewer() {
    overlayActive = false;  //REMOVE
 
