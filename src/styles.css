@@ -1444,6 +1444,11 @@ body.workspace-phase1 .workspace-name-box {
     border-radius: 6px;
     text-decoration: none;
 }
+/* Disabled buttons look dim on mobile */
+button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
 
 
 /* FINAL authoritative spacing for workspace descriptions
