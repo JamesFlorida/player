@@ -824,39 +824,69 @@ function renderDanceCardsList(tracks, containerElement) {
             <div class="meta-line">Song: ${track.song} - ${track.artist}</div>
 
             <div class="dance-button-row">
+
                 <button class="playlist-btn steps-btn">Steps</button>
-                <button class="playlist-btn teach-btn">Teach</button>
-                <button class="playlist-btn demo-btn">Demo</button>
-                <button class="playlist-btn music-btn">Music</button>
+
+                <button 
+                    class="playlist-btn teach-btn"
+                    ${track.teach ? "" : "disabled"}
+                >
+                    Teach
+                </button>
+
+                <button 
+                    class="playlist-btn demo-btn"
+                    ${track.demo ? "" : "disabled"}
+                >
+                    Demo
+                </button>
+
+                <button 
+                    class="playlist-btn music-btn"
+                    ${track.music ? "" : "disabled"}
+                >
+                    Music
+                </button>
+
             </div>
         `;
 
         console.log(">>> HTML GENERATED:", card.innerHTML);
 
-        // Attach event listeners with stopPropagation to prevent card navigation
+        // Steps always works
         card.querySelector('.steps-btn').addEventListener('click', (event) => {
             event.stopPropagation();
             launchMediaOverlay(track.steps, `${track.name} - Steps`);
         });
 
-        card.querySelector('.teach-btn').addEventListener('click', (event) => {
-            event.stopPropagation();
-            launchMediaOverlay(track.teach, `${track.name} - Teach`);
-        });
+        // Teach only if URL exists
+        if (track.teach) {
+            card.querySelector('.teach-btn').addEventListener('click', (event) => {
+                event.stopPropagation();
+                launchMediaOverlay(track.teach, `${track.name} - Teach`);
+            });
+        }
 
-        card.querySelector('.demo-btn').addEventListener('click', (event) => {
-            event.stopPropagation();
-            launchMediaOverlay(track.demo, `${track.name} - Demo`);
-        });
+        // Demo only if URL exists
+        if (track.demo) {
+            card.querySelector('.demo-btn').addEventListener('click', (event) => {
+                event.stopPropagation();
+                launchMediaOverlay(track.demo, `${track.name} - Demo`);
+            });
+        }
 
-        card.querySelector('.music-btn').addEventListener('click', (event) => {
-            event.stopPropagation();
-            launchMediaOverlay(track.music, `${track.name} - Music`);
-        });
+        // Music only if URL exists
+        if (track.music) {
+            card.querySelector('.music-btn').addEventListener('click', (event) => {
+                event.stopPropagation();
+                launchMediaOverlay(track.music, `${track.name} - Music`);
+            });
+        }
 
         containerElement.appendChild(card);
     });
 }
+
 
 
 
