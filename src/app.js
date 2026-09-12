@@ -2050,9 +2050,6 @@ function launchMediaOverlay(targetUrl, displayTitle) {
 
 
 
-
-
-
 function shutOverlayViewer() {
    overlayActive = false;  //REMOVE
 
