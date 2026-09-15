@@ -1815,7 +1815,7 @@ function navigateBackFromWorkspace() {
     workspaceSearchQuery = "";
     workspaceSearchResults = [];
     workspaceEditingOriginalName = "";
-    workspacePlaylistName = "";
+    //  workspacePlaylistName = "";   Removed 9.15.26 causing wipe before save, losing persistence
     workspaceMode = "neutral";
 
     // ⭐ Hide workspace title (this was the missing piece)
