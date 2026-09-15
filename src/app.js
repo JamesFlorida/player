@@ -1,4 +1,4 @@
-console.log("TOP OF APP.JS LOADED");
+console.log("REAL APP.JS LOADED");
 /* ============================================
    IMPORTS      
 ============================================ */
