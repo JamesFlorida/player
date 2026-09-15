@@ -1265,7 +1265,7 @@ function renderCreateModeLayout() {
 
 // function below added 9.15.26
 function renderInfoPage() {
-    const viewport = document.getElementById("appContainer");
+    const viewport = document.getElementById("viewport");
 
     viewport.innerHTML = `
         <div id="workspaceHeader">
