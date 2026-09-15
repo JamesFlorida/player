@@ -48,7 +48,14 @@ let workspaceSelectedDances = [];         // Dance names inside playlist
 let workspaceSearchQuery = "";            // Workspace search text
 let workspaceSearchResults = [];          // Workspace search results
 let workspaceEditingOriginalName = "";    // For safe renaming
-let userPlaylistsData = {};                   // User-created playlists
+let userPlaylistsData = {};  // temporary until DB loads
+
+loadPlaylist("userPlaylists").then(result => {
+    if (result?.data) {
+        userPlaylistsData = result.data;
+    }
+});
+
 let allDances = danceData;       // Shared dataset
 
 /* ============================================
@@ -347,7 +354,6 @@ function openUserPlaylistView(name) {
 
     renderApplicationInterface();
 }
-
 
 
 /* ============================================
@@ -1503,11 +1509,15 @@ function deleteWorkspacePlaylist(name) {
 }
 
 function confirmDeletePlaylist(name) {
+    // Delete from in-memory object
     delete userPlaylistsData[name];
+
+    // ⭐ NEW: Save updated playlists permanently in IndexedDB
+    savePlaylist("userPlaylists", userPlaylistsData);
+
     showWorkspaceMessage(`Playlist "${name}" deleted.`, "error");
     renderWorkspaceScreen();
 }
-
 
 /* ============================================
    WORKSPACE — HANDLE NAME INPUT
@@ -1658,8 +1668,15 @@ function addDanceToWorkspace(name) {
     if (!workspaceSelectedDances.includes(name)) {
         workspaceSelectedDances.push(name);
         renderWorkspaceSelectedDances();
+
+        // ⭐ If editing an existing playlist, save immediately
+        if (workspaceMode === "edit" && workspacePlaylistName) {
+            userPlaylistsData[workspacePlaylistName] = [...workspaceSelectedDances];
+            savePlaylist("userPlaylists", userPlaylistsData);
+        }
     }
 }
+
 
 /* ============================================
    WORKSPACE — REMOVE DANCE
@@ -1669,8 +1686,15 @@ function removeDanceFromWorkspace(name) {
     if (index !== -1) {
         workspaceSelectedDances.splice(index, 1);
         renderWorkspaceSelectedDances();
+
+        // ⭐ If editing an existing playlist, save immediately
+        if (workspaceMode === "edit" && workspacePlaylistName) {
+            userPlaylistsData[workspacePlaylistName] = [...workspaceSelectedDances];
+            savePlaylist("userPlaylists", userPlaylistsData);
+        }
     }
 }
+
 
 /* ============================================
    WORKSPACE — SAVE PLAYLIST
@@ -1691,14 +1715,19 @@ function saveWorkspacePlaylist() {
         return;
     }
 
-    // SAVE
+    // SAVE (in memory)
     userPlaylistsData[workspacePlaylistName] = [...workspaceSelectedDances];
+
+    // ⭐ NEW: SAVE TO INDEXEDDB (permanent)
+    savePlaylist("userPlaylists", userPlaylistsData);
+
     showWorkspaceMessage(`Playlist "${workspacePlaylistName}" saved!`, "success");
 
     // ⭐ Switch to EDIT mode so the selector appears
     workspaceMode = "edit";
     renderWorkspaceScreen();
 }
+
 
 /* ============================================
    WORKSPACE — SELECT PLAYLIST FOR EDITING
