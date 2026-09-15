@@ -551,15 +551,18 @@ function renderApplicationInterface() {
    INFO PAGE SCREEN
    -------------------------------------------- */
     if (lastNavigationMode === "info") {
-        // Downstream header-bar setup
-        document.querySelector('.header-bar').style.display = '';
-        document.getElementById('applicationHeaderTitle').textContent = "App Info";
-        document.getElementById('workspaceSmallLogo').style.display = '';
-        document.getElementById('navbarReturnTrigger').style.display = '';
 
-        renderInfoPage();
-        return;
-    }
+    activeUserPlaylistView = "info";  // ⭐ THIS FIXES EVERYTHING
+
+    document.querySelector('.header-bar').style.display = '';
+    document.getElementById('applicationHeaderTitle').textContent = "App Info";
+    document.getElementById('workspaceSmallLogo').style.display = '';
+    document.getElementById('navbarReturnTrigger').style.display = '';
+
+    renderInfoPage();
+    return;
+}
+
 
    /* --------------------------------------------
    PLAYLIST VIEW (Mixed Bag / ALL Dances)
