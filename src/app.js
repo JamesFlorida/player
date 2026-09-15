@@ -370,6 +370,7 @@ function openDanceFromPlaylist(danceId) {
 }
 function openManageUserPlaylists() {
     console.log("MUP CLICKED → entering workspace mode");
+    requestPersistence(); 
     lastNavigationMode = "workspace";
     workspaceMode = "";   // default mode (shows Create/Edit/Delete panel)
     renderApplicationInterface();
@@ -2125,6 +2126,14 @@ function shutOverlayViewer() {
     // Re-render correct screen based on current state
     renderApplicationInterface();
 }
+
+async function requestPersistence() {
+    if (navigator.storage && navigator.storage.persist) {
+        const granted = await navigator.storage.persist();
+        console.log("Persistence granted:", granted);
+    }
+}
+
 
 
 /* ============================================
