@@ -1705,6 +1705,8 @@ function removeDanceFromWorkspace(name) {
    WORKSPACE — SAVE PLAYLIST
 ============================================ */
 function saveWorkspacePlaylist() {
+    console.log("SAVE BUTTON CLICKED — footer HTML:", document.getElementById("workspaceFooter")?.innerHTML);
+
     console.log("Save Workspace Playlist");
     console.log("SAVE — workspacePlaylistName:", workspacePlaylistName);
     console.log("DEBUG — workspaceSelectedDances:", workspaceSelectedDances);
