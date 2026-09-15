@@ -798,7 +798,8 @@ ${countDifficulty("Advanced") > 0 ? `
 <div class="hub-card" onclick="openHubPlaylist(9)">
     <div class="hub-card-title">ALL Dances (${countAllDances()})</div>
 </div>
-// added next line 9.15.26
+
+
 <button class="hub-btn" onclick="navigateToInfoPage()">App Info</button>
 
    
