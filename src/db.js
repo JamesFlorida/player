@@ -23,24 +23,42 @@ export async function savePlaylist(id, data) {
     const db = await openDB();
     const tx = db.transaction(STORE_NAME, "readwrite");
     tx.objectStore(STORE_NAME).put({ id, data });
-    return tx.complete;
+
+    return new Promise((resolve, reject) => {
+        tx.oncomplete = () => resolve(true);
+        tx.onerror = () => reject(tx.error);
+    });
 }
 
 export async function loadPlaylist(id) {
     const db = await openDB();
     const tx = db.transaction(STORE_NAME, "readonly");
-    return tx.objectStore(STORE_NAME).get(id);
+    const request = tx.objectStore(STORE_NAME).get(id);
+
+    return new Promise((resolve, reject) => {
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+    });
 }
 
 export async function loadAllPlaylists() {
     const db = await openDB();
     const tx = db.transaction(STORE_NAME, "readonly");
-    return tx.objectStore(STORE_NAME).getAll();
+    const request = tx.objectStore(STORE_NAME).getAll();
+
+    return new Promise((resolve, reject) => {
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+    });
 }
 
 export async function deletePlaylist(id) {
     const db = await openDB();
     const tx = db.transaction(STORE_NAME, "readwrite");
     tx.objectStore(STORE_NAME).delete(id);
-    return tx.complete;
+
+    return new Promise((resolve, reject) => {
+        tx.oncomplete = () => resolve(true);
+        tx.onerror = () => reject(tx.error);
+    });
 }
