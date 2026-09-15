@@ -1450,6 +1450,25 @@ button:disabled {
     cursor: not-allowed;
 }
 
+/* --------------------------------------------
+   INFO PAGE    added 9.15.26
+   -------------------------------------------- */
+.info-content {
+    padding: 20px;
+    font-size: 1rem;
+    line-height: 1.4;
+}
+
+.info-note {
+    margin-bottom: 20px;
+}
+
+.workspace-logo-small {
+    height: 32px;
+    width: auto;
+    margin-left: auto;
+}
+
 
 /* FINAL authoritative spacing for workspace descriptions
 .workspace-mode-desc {

@@ -1,4 +1,5 @@
 console.log("REAL APP.JS LOADED");
+// Change notes in function generateInfoNotesHTML()
 /* ============================================
    IMPORTS      
 ============================================ */
@@ -273,6 +274,66 @@ function navigateToPlaylistHubMenu() {
     renderApplicationInterface();
 }
 
+// function added 9.15.26
+function generateInfoNotesHTML() {
+    return `
+        <div class="info-note">
+            <h3>Latest Updates & Version Info</h3>
+            <p>
+                Version 1.0.12 — Playlist persistence fixed.<br>
+                Added new dances for Tuesday & Weekend nights.<br>
+                Improved video fallback behavior.<br>
+                Minor layout adjustments.
+            </p>
+        </div>
+
+        <div class="info-note">
+            <h3>About the App</h3>
+            <p>This app is offered free for Stockyard dancers. It is written and maintained by a fellow Stockyard dancer.</p>
+        </div>
+
+        <div class="info-note">
+            <h3>Responsibility & Contact</h3>
+            <p>Stockyard management and staff are not responsible for the app or its content.<br>
+            Suggestions or comments: <strong>tampadancing@gmail.com</strong></p>
+        </div>
+
+        <div class="info-note">
+            <h3>What Kind of App Is This?</h3>
+            <p>This is a web‑app, not a traditional app store download. It works on all major devices and updates instantly.</p>
+        </div>
+
+        <div class="info-note">
+            <h3>How to Use It</h3>
+            <p>
+                • Scan the QR code to open the app<br>
+                • Save it to your home screen (you’ll see the Stockyard Bull icon)
+            </p>
+        </div>
+
+        <div class="info-note">
+            <h3>About Videos</h3>
+            <p>Some video owners block in‑app playback. When that happens, the app opens the video directly in YouTube. Close YouTube to return.</p>
+        </div>
+
+        <div class="info-note">
+            <h3>Dance Updates</h3>
+            <p>The app is updated regularly with the latest Stockyard dances. If new dances don’t appear, close and reopen the app.</p>
+        </div>
+
+        <div class="info-note">
+            <h3>Sharing</h3>
+            <p>Feel free to share this app with anyone — it’s completely free. Just have them scan the QR code.</p>
+        </div>
+
+        <div class="info-note">
+            <h3>Final Note</h3>
+            <p>I hope this app helps you learn, practice, and enjoy dancing even more. Have fun!</p>
+        </div>
+    `;
+}
+
+
 function returnToHub() {
     selectedActivePlaylistGroup = null;
     activeDayView = null;
@@ -376,6 +437,18 @@ function openManageUserPlaylists() {
     renderApplicationInterface();
 }
 
+// added function below 9.15.26
+function navigateToInfoPage() {
+    lastNavigationMode = "info";
+    renderApplicationInterface();
+}
+
+// added function below 9.15.26
+function navigateBackFromInfo() {
+    lastNavigationMode = null;   // return to normal state-based navigation
+    renderApplicationInterface();
+}
+
 
 /* ============================================
    OPEN DANCE FROM SEARCH
@@ -449,6 +522,14 @@ function renderApplicationInterface() {
         setTimeout(attachWorkspaceListeners, 0);
         return;
     }
+
+    /* --------------------------------------------
+   INFO PAGE SCREEN
+   -------------------------------------------- */
+if (lastNavigationMode === "info") {
+    renderInfoPage();
+    return;
+}
 
    /* --------------------------------------------
    PLAYLIST VIEW (Mixed Bag / ALL Dances)
@@ -684,6 +765,9 @@ ${countDifficulty("Advanced") > 0 ? `
 <div class="hub-card" onclick="openHubPlaylist(9)">
     <div class="hub-card-title">ALL Dances (${countAllDances()})</div>
 </div>
+// added next line 9.15.26
+<button class="hub-btn" onclick="navigateToInfoPage()">App Info</button>
+
    
           `;
 }
@@ -1177,6 +1261,23 @@ function renderCreateModeLayout() {
 
         return; // ⭐ STOP — Phase 2 complete
     }
+}
+
+// function below added 9.15.26
+function renderInfoPage() {
+    const viewport = document.getElementById("appContainer");
+
+    viewport.innerHTML = `
+        <div id="workspaceHeader">
+            <button class="back-btn" onclick="navigateBackFromInfo()">Back</button>
+            <div class="workspace-title">App Info</div>
+            <img src="images/bull-logo-small.png" class="workspace-logo-small">
+        </div>
+
+        <div id="infoContent" class="info-content">
+            ${generateInfoNotesHTML()}
+        </div>
+    `;
 }
 
 function startEditMode() {
