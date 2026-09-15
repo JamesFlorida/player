@@ -1731,8 +1731,10 @@ function saveWorkspacePlaylist() {
     showWorkspaceMessage(`Playlist "${workspacePlaylistName}" saved!`, "success");
 
     // ⭐ Switch to EDIT mode so the selector appears
-    workspaceMode = "edit";
-    renderWorkspaceScreen();
+    // workspaceMode = "edit";
+    //renderWorkspaceScreen();
+    navigateBackFromWorkspace();
+
 }
 
 
