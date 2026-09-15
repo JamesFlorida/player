@@ -1272,7 +1272,7 @@ function renderInfoPage() {
         <div id="workspaceHeader">
             <button class="back-btn" onclick="navigateBackFromInfo()">Back</button>
             <div class="workspace-title">App Info</div>
-            <img src="images/bull-logo-small.png" class="workspace-logo-small">
+            <img src="images/iconMasterLogo32x32.png" class="workspace-logo-small">
         </div>
 
         <div id="infoContent" class="info-content">
