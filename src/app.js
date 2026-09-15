@@ -445,14 +445,19 @@ function navigateToInfoPage() {
     // Show downstream header-bar
     document.querySelector('.header-bar').style.display = '';
 
-    // Set downstream header-bar content
+    // Set header-bar title
     document.getElementById('applicationHeaderTitle').textContent = "App Info";
+
+    // Show small logo
     document.getElementById('workspaceSmallLogo').style.display = '';
+
+    // Show back button
     document.getElementById('navbarReturnTrigger').style.display = '';
 
     lastNavigationMode = "info";
     renderApplicationInterface();
 }
+
 
 // added function below 9.15.26
 function navigateBackFromInfo() {
@@ -545,25 +550,16 @@ function renderApplicationInterface() {
    /* --------------------------------------------
    INFO PAGE SCREEN
    -------------------------------------------- */
-if (lastNavigationMode === "info") {
+    if (lastNavigationMode === "info") {
+        // Downstream header-bar setup
+        document.querySelector('.header-bar').style.display = '';
+        document.getElementById('applicationHeaderTitle').textContent = "App Info";
+        document.getElementById('workspaceSmallLogo').style.display = '';
+        document.getElementById('navbarReturnTrigger').style.display = '';
 
-    // Show downstream header-bar
-    document.querySelector('.header-bar').style.display = '';
-
-    // Set header-bar title
-    document.getElementById('applicationHeaderTitle').textContent = "App Info";
-
-    // Show small logo
-    document.getElementById('workspaceSmallLogo').style.display = '';
-
-    // Show back button
-    document.getElementById('navbarReturnTrigger').style.display = '';
-
-    // Render the Info Page content
-    renderInfoPage();
-    return;
-}
-
+        renderInfoPage();
+        return;
+    }
 
    /* --------------------------------------------
    PLAYLIST VIEW (Mixed Bag / ALL Dances)
@@ -1301,23 +1297,14 @@ function renderCreateModeLayout() {
 function renderInfoPage() {
     const viewport = document.getElementById("masterApplicationViewport");
 
-
+    // ONLY render content — NEVER render a header here
     viewport.innerHTML = `
-    <div class="header-bar">
-        <button class="back-nav-btn" onclick="navigateBackFromInfo()" id="navbarReturnTrigger">⬅ Back</button>
-        <span id="applicationHeaderTitle">App Info</span>
-        <img id="workspaceSmallLogo"
-             src="images/iconMasterLogo32x32.png"
-             class="header-small-logo"
-             alt="Stockyard Logo">
-    </div>
-
-    <div id="infoContent" class="info-content">
-        ${generateInfoNotesHTML()}
-    </div>
-`;
-
+        <div id="infoContent" class="info-content">
+            ${generateInfoNotesHTML()}
+        </div>
+    `;
 }
+
 
 function startEditMode() {
     console.log("Start Edit Mode");
