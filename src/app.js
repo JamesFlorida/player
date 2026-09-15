@@ -1077,7 +1077,7 @@ function renderWorkspaceScreen() {
     <!-- WORKSPACE HEADER BAR -->
     <div class="header-bar">
         <button id="navbarReturnTrigger" class="header-back-btn">⟵</button>
-        <img id="workspaceSmallLogo" class="workspace-small-logo" src="StockyardLogo32x32.png">
+        <img id="workspaceSmallLogo" class="workspace-small-logo" src="iconMasterLogo32x32.png">
         <span id="applicationHeaderTitle" class="header-title"></span>
     </div>
 
