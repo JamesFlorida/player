@@ -2297,3 +2297,6 @@ window.openEventsView = openEventsView;
 window.returnToHub = returnToHub;
 window.openHubPlaylist = openHubPlaylist;
 window.openManageUserPlaylists = openManageUserPlaylists;
+window.navigateToInfoPage = navigateToInfoPage;
+window.navigateBackFromInfo = navigateBackFromInfo;
+
