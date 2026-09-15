@@ -2,6 +2,8 @@ console.log("REAL APP.JS LOADED");
 /* ============================================
    IMPORTS      
 ============================================ */
+navigator.storage && navigator.storage.persist();
+
 import { danceData } from './venues/Stockyard/danceData-stockyard.js';
 // import { globalDanceList } from "./globalDanceList.js";
 import { venueDanceMap } from "./venues/Stockyard/venueDanceMap.js";
