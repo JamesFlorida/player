@@ -1954,9 +1954,12 @@ function updateHubVisibility() {
    INITIALIZE APP
 ============================================ */
 window.onload = function () {
+   window.onload = function () {
     initializeVenueBranding();
-    renderApplicationInterface();
+    renderApplicationInterface();   // First render (empty playlists)
+    initializeUserPlaylists();      // Second render (with playlists)
 };
+
 // HUB playlist categories used on the main screen
 const hubPlaylists = [
     "Your Playlists",   // 0
@@ -2134,6 +2137,21 @@ async function requestPersistence() {
     }
 }
 
+async function initializeUserPlaylists() {
+    console.log("Initializing user playlists…");
+
+    const result = await loadPlaylist("userPlaylists");
+
+    if (result?.data) {
+        userPlaylistsData = result.data;
+        console.log("User playlists loaded:", userPlaylistsData);
+
+        // Re-render HUB with playlists
+        renderApplicationInterface();
+    } else {
+        console.log("No user playlists found.");
+    }
+}
 
 
 /* ============================================
