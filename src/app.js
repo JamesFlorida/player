@@ -585,104 +585,52 @@ function renderApplicationInterface() {
         return;
     }
 
-    // (rest of your blocks unchanged)
-}
+    /* --------------------------------------------
+       PLAYLIST VIEW (Mixed Bag / ALL Dances)
+       -------------------------------------------- */
+    if (selectedActivePlaylistGroup !== null) {
 
+        let playlistTracks = [];
 
-   /* --------------------------------------------
-   PLAYLIST VIEW (Mixed Bag / ALL Dances)
-   -------------------------------------------- */
-if (selectedActivePlaylistGroup !== null) {
+        switch (selectedActivePlaylistGroup) {
 
-    let playlistTracks = [];
+            case "Mixed Bag":
+                playlistTracks = localDanceDatabase
+                    .filter(track => track.playlist === "Mixed Bag")
+                    .filter((dance, index, arr) =>
+                        index === arr.findIndex(d => d.name === dance.name)
+                    );
+                break;
 
-    switch (selectedActivePlaylistGroup) {
+            case "ALL Dances":
+                playlistTracks = localDanceDatabase
+                    .slice()
+                    .filter((dance, index, arr) =>
+                        index === arr.findIndex(d => d.name === dance.name)
+                    );
+                break;
 
-        case "Mixed Bag":
-            playlistTracks = localDanceDatabase
-                .filter(track => track.playlist === "Mixed Bag")
-                .filter((dance, index, arr) =>
-                    index === arr.findIndex(d => d.name === dance.name)
-                );
-            break;
+            default:
+                playlistTracks = [];
+        }
 
-        case "ALL Dances":
-            playlistTracks = localDanceDatabase
-                .slice()
-                .filter((dance, index, arr) =>
-                    index === arr.findIndex(d => d.name === dance.name)
-                );
-            break;
+        activatePlaylistHeader(selectedActivePlaylistGroup + " Playlist");
 
-        default:
-            playlistTracks = [];
-    }
+        if (!playlistTracks.length) {
+            viewport.innerHTML = `
+                <p style="text-align:center;color:#aaa;margin-top:20px;">
+                    No dances found for this playlist.
+                </p>`;
+            updateHubVisibility();
+            return;
+        }
 
-    activatePlaylistHeader(selectedActivePlaylistGroup + " Playlist");
-
-    if (!playlistTracks.length) {
-        viewport.innerHTML = `
-            <p style="text-align:center;color:#aaa;margin-top:20px;">
-                No dances found for this playlist.
-            </p>`;
+        renderDanceCardsList(playlistTracks, viewport);
         updateHubVisibility();
         return;
     }
 
-    renderDanceCardsList(playlistTracks, viewport);
-    updateHubVisibility();
-    return;
-}
-
-/* --------------------------------------------
-   USER PLAYLIST VIEW
--------------------------------------------- */
-if (activeUserPlaylistView !== null) {
-    console.log(">>> USER PLAYLIST BLOCK RUNNING");
-
-    const viewport = document.getElementById("masterApplicationViewport");
-    viewport.innerHTML = "";
-
-    // Hide HUB header
-    const hubHeader = document.querySelector('.venue-header');
-    if (hubHeader) hubHeader.style.display = 'none';
-
-    // Show PLAYLIST header
-    const playlistHeader = document.querySelector('.header-bar');
-    if (playlistHeader) playlistHeader.style.display = 'flex';
-
-    // Back button
-    const backBtn = document.getElementById('navbarReturnTrigger');
-    if (backBtn) {
-        backBtn.style.display = 'block';
-        backBtn.onclick = navigateToPlaylistHubMenu;
-    }
-
-    const titleEl = document.getElementById('applicationHeaderTitle');
-    if (titleEl) {
-        titleEl.innerText = activeUserPlaylistView + " Playlist";
-    }
-
-    const tracks = userPlaylistsData[activeUserPlaylistView] || [];
-
-    if (!tracks.length) {
-        viewport.innerHTML = `
-            <p style="text-align:center;color:#aaa;margin-top:20px;">
-                No dances found for this user playlist.
-            </p>`;
-        return;
-    }
-
-    const danceObjects = localDanceDatabase
-        .filter(d => tracks.includes(d.name))
-        .filter((dance, index, arr) =>
-            index === arr.findIndex(d => d.name === dance.name)
-        );
-
-    renderDanceCardsList(danceObjects, viewport);
-    return;
-}
-
+   
     /* --------------------------------------------
        DAY VIEW
        -------------------------------------------- */
