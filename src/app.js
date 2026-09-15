@@ -1283,16 +1283,20 @@ function renderInfoPage() {
 
 
     viewport.innerHTML = `
-        <div id="workspaceHeader">
-            <button class="back-btn" onclick="navigateBackFromInfo()">Back</button>
-            <div class="workspace-title">App Info</div>
-            <img src="images/iconMasterLogo32x32.png" class="workspace-logo-small">
-        </div>
+    <div class="header-bar">
+        <button class="back-nav-btn" onclick="navigateBackFromInfo()" id="navbarReturnTrigger">⬅ Back</button>
+        <span id="applicationHeaderTitle">App Info</span>
+        <img id="workspaceSmallLogo"
+             src="images/iconMasterLogo32x32.png"
+             class="header-small-logo"
+             alt="Stockyard Logo">
+    </div>
 
-        <div id="infoContent" class="info-content">
-            ${generateInfoNotesHTML()}
-        </div>
-    `;
+    <div id="infoContent" class="info-content">
+        ${generateInfoNotesHTML()}
+    </div>
+`;
+
 }
 
 function startEditMode() {
