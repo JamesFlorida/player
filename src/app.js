@@ -1954,7 +1954,6 @@ function updateHubVisibility() {
    INITIALIZE APP
 ============================================ */
 window.onload = function () {
-   window.onload = function () {
     initializeVenueBranding();
     renderApplicationInterface();   // First render (empty playlists)
     initializeUserPlaylists();      // Second render (with playlists)
