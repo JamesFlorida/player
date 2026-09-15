@@ -1468,6 +1468,13 @@ button:disabled {
     width: auto;
     margin-left: auto;
 }
+.header-bar {
+    background-color: red !important;
+}
+
+.info-content {
+    margin-top: 60px; /* same height as header-bar */
+}
 
 
 /* FINAL authoritative spacing for workspace descriptions

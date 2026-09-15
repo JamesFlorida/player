@@ -510,6 +510,9 @@ function countMixedBag() {
    MAIN RENDERER
 ============================================ */
 function renderApplicationInterface() {
+    console.log("HEADER BAR EXISTS AT START:", document.querySelector('.header-bar'));
+    console.log("VENUE HEADER EXISTS AT START:", document.querySelector('.venue-header'));
+   
     if (overlayActive) {
         console.log(">>> renderApplicationInterface BLOCKED (overlay active)");
         return;
@@ -547,20 +550,42 @@ function renderApplicationInterface() {
         return;
     }
 
-   /* --------------------------------------------
-   INFO PAGE SCREEN
-   -------------------------------------------- */
+    /* --------------------------------------------
+       INFO PAGE SCREEN  ⭐ MUST COME BEFORE HUB BLOCK
+       -------------------------------------------- */
     if (lastNavigationMode === "info") {
 
-    activeUserPlaylistView = "info";  // ⭐ THIS FIXES EVERYTHING
+        activeUserPlaylistView = "info";  
 
-    document.querySelector('.header-bar').style.display = '';
-    document.getElementById('applicationHeaderTitle').textContent = "App Info";
-    document.getElementById('workspaceSmallLogo').style.display = '';
-    document.getElementById('navbarReturnTrigger').style.display = '';
+        document.querySelector('.header-bar').style.display = '';
+        document.getElementById('applicationHeaderTitle').textContent = "App Info";
+        document.getElementById('workspaceSmallLogo').style.display = '';
+        document.getElementById('navbarReturnTrigger').style.display = '';
 
-    renderInfoPage();
-    return;
+        renderInfoPage();
+        return;
+    }
+
+    /* --------------------------------------------
+       HUB SCREEN (DEFAULT)
+       -------------------------------------------- */
+    if (
+        activeUserPlaylistView === null &&
+        selectedActivePlaylistGroup === null &&
+        activeDayView === null &&
+        activeDifficultyView === null
+    ) {
+        console.log(">>> HUB BLOCK RUNNING");
+
+        document.querySelector('.header-bar').style.display = 'none';
+        document.querySelector('.venue-header').style.display = '';
+
+        restoreHubHeader();
+        renderHubScreen();
+        return;
+    }
+
+    // (rest of your blocks unchanged)
 }
 
 
