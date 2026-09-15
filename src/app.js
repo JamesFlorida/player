@@ -445,22 +445,27 @@ function navigateToInfoPage() {
     // Show downstream header-bar
     document.querySelector('.header-bar').style.display = '';
 
+    // Set downstream header-bar content
+    document.getElementById('applicationHeaderTitle').textContent = "App Info";
+    document.getElementById('workspaceSmallLogo').style.display = '';
+    document.getElementById('navbarReturnTrigger').style.display = '';
+
     lastNavigationMode = "info";
     renderApplicationInterface();
 }
-
 
 // added function below 9.15.26
 function navigateBackFromInfo() {
     // Restore HUB header
     document.querySelector('.venue-header').style.display = '';
 
-    // Restore downstream header-bar (HUB logic will hide it if needed)
-    document.querySelector('.header-bar').style.display = '';
+    // Hide downstream header-bar (HUB logic will show/hide as needed)
+    document.querySelector('.header-bar').style.display = 'none';
 
     lastNavigationMode = null;
     renderApplicationInterface();
 }
+
 
 
 
