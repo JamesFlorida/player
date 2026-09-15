@@ -542,13 +542,28 @@ function renderApplicationInterface() {
         return;
     }
 
-    /* --------------------------------------------
+   /* --------------------------------------------
    INFO PAGE SCREEN
    -------------------------------------------- */
 if (lastNavigationMode === "info") {
+
+    // Show downstream header-bar
+    document.querySelector('.header-bar').style.display = '';
+
+    // Set header-bar title
+    document.getElementById('applicationHeaderTitle').textContent = "App Info";
+
+    // Show small logo
+    document.getElementById('workspaceSmallLogo').style.display = '';
+
+    // Show back button
+    document.getElementById('navbarReturnTrigger').style.display = '';
+
+    // Render the Info Page content
     renderInfoPage();
     return;
 }
+
 
    /* --------------------------------------------
    PLAYLIST VIEW (Mixed Bag / ALL Dances)
