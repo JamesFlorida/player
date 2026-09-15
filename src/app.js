@@ -439,15 +439,29 @@ function openManageUserPlaylists() {
 
 // added function below 9.15.26
 function navigateToInfoPage() {
+    // Hide HUB header
+    document.querySelector('.venue-header').style.display = 'none';
+
+    // Show downstream header-bar
+    document.querySelector('.header-bar').style.display = '';
+
     lastNavigationMode = "info";
     renderApplicationInterface();
 }
 
+
 // added function below 9.15.26
 function navigateBackFromInfo() {
-    lastNavigationMode = null;   // return to normal state-based navigation
+    // Restore HUB header
+    document.querySelector('.venue-header').style.display = '';
+
+    // Restore downstream header-bar (HUB logic will hide it if needed)
+    document.querySelector('.header-bar').style.display = '';
+
+    lastNavigationMode = null;
     renderApplicationInterface();
 }
+
 
 
 /* ============================================
