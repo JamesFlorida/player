@@ -581,7 +581,6 @@ function renderApplicationInterface() {
         document.querySelector('.venue-header').style.display = '';
 
         restoreHubHeader();
-        renderHubScreen();
         return;
     }
 
