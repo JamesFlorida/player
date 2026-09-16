@@ -204,11 +204,13 @@ function activateWorkspaceHeader(modeTitle) {
 
 function restoreHubHeader() {
     const venueHeaderHeight =
-    document.querySelector('.venue-header')?.offsetHeight || 0;
+        document.querySelector('.venue-header')?.offsetHeight || 0;
 
     const headerBar = document.querySelector('.header-bar');
-    headerBar.style.top = venueHeaderHeight + "px";
-    headerBar.style.display = "none";   // ← HIDE header-bar on hub
+    if (headerBar) {
+        headerBar.style.display = "";            // ⭐ ALWAYS SHOW GLOBAL HEADER
+        headerBar.style.top = venueHeaderHeight + "px";
+    }
 
     // Show the big venue header (bull banner)
     const venueHeader = document.querySelector('.venue-header');
@@ -236,6 +238,7 @@ function restoreHubHeader() {
         titleEl.innerText = venueConfig.headerTitle || venueConfig.name || "";
     }
 }
+
 
 
 /* ============================================
@@ -280,10 +283,8 @@ function generateInfoNotesHTML() {
         <div class="info-note">
             <h3>Latest Updates & Version Info</h3>
             <p>
-                Version 1.0.12 — Playlist persistence fixed.<br>
-                Added new dances for Tuesday & Weekend nights.<br>
-                Improved video fallback behavior.<br>
-                Minor layout adjustments.
+                Version 1.0.0.<br>
+                
             </p>
         </div>
 
@@ -458,21 +459,23 @@ function navigateToInfoPage() {
     renderApplicationInterface();
 }
 
-
-// added function below 9.15.26
 function navigateBackFromInfo() {
-    // Restore HUB header
+    // Reset hub state so playlists can render
+    activeUserPlaylistView = null;
+    selectedActivePlaylistGroup = null;
+    activeDayView = null;
+    activeDifficultyView = null;
+
+    // Show venue header (hub)
     document.querySelector('.venue-header').style.display = '';
 
-    // Hide downstream header-bar (HUB logic will show/hide as needed)
+    // Hide downstream header-bar
     document.querySelector('.header-bar').style.display = 'none';
 
-    lastNavigationMode = null;
+    // Return to hub
+    lastNavigationMode = "hub";
     renderApplicationInterface();
 }
-
-
-
 
 /* ============================================
    OPEN DANCE FROM SEARCH
@@ -557,10 +560,12 @@ function renderApplicationInterface() {
 
         activeUserPlaylistView = "info";  
 
-        document.querySelector('.header-bar').style.display = '';
+        document.querySelector('.header-bar').style.display = 'flex';
         document.getElementById('applicationHeaderTitle').textContent = "App Info";
         document.getElementById('workspaceSmallLogo').style.display = '';
-        document.getElementById('navbarReturnTrigger').style.display = '';
+        // document.getElementById('navbarReturnTrigger').style.display = '';
+        document.getElementById('navbarReturnTrigger').style.display = 'block';
+        document.getElementById('navbarReturnTrigger').onclick = navigateBackFromInfo;
 
         renderInfoPage();
         return;
@@ -1063,12 +1068,6 @@ function renderWorkspaceScreen() {
     document.getElementById('masterApplicationViewport').innerHTML = `
   <div class="workspace-screen">
 
-    <!-- WORKSPACE HEADER BAR -->
-    <div class="header-bar">
-        <button id="navbarReturnTrigger" class="header-back-btn">⟵</button>
-        <img id="workspaceSmallLogo" class="workspace-small-logo" src="iconMasterLogo32x32.png">
-        <span id="applicationHeaderTitle" class="header-title"></span>
-    </div>
 
     <!-- MODE SELECTION PANEL -->
     <div id="workspaceModePanel" class="workspace-mode-panel">

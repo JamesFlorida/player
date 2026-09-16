@@ -1459,22 +1459,24 @@ button:disabled {
     line-height: 1.4;
 }
 
-.info-note {
-    margin-bottom: 20px;
+.info-note h3 {
+    margin-bottom: 0;
 }
+
+.info-note p {
+    margin-top: 0;
+}
+
 
 .workspace-logo-small {
     height: 32px;
     width: auto;
     margin-left: auto;
 }
-.header-bar {
-    background-color: red !important;
-}
 
-.info-content {
-    margin-top: 60px; /* same height as header-bar */
-}
+
+
+
 
 
 /* FINAL authoritative spacing for workspace descriptions
