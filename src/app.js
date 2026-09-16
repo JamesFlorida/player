@@ -598,8 +598,12 @@ function renderApplicationInterface() {
             );
 
     } else {
-        // ⭐ USER PLAYLISTS — THIS WAS MISSING
-        playlistTracks = userPlaylistsData[selectedActivePlaylistGroup] || [];
+        // ⭐ USER PLAYLISTS — convert saved IDs into full dance objects
+        const ids = userPlaylistsData[selectedActivePlaylistGroup] || [];
+
+        playlistTracks = ids
+            .map(id => localDanceDatabase.find(d => d.id === id))
+            .filter(Boolean); // remove nulls if any ID doesn't match
     }
 
     activatePlaylistHeader(selectedActivePlaylistGroup + " Playlist");
@@ -617,6 +621,8 @@ function renderApplicationInterface() {
     updateHubVisibility();
     return;
 }
+
+
 
 
    
