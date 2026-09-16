@@ -307,14 +307,19 @@ function generateInfoNotesHTML() {
         <div class="info-note">
             <h3>How to Use It</h3>
             <p>
-                • Scan the QR code to open the app<br>
-                • Save it to your home screen (you’ll see the Stockyard Bull icon)
+                • You probably loaded this app by scanning a QR Code.<br>
+                • Next : Save it to your home screen (you’ll see the Stockyard Bull icon).<br>
+                • You may click any playlist (for Example "Tuesday", to see dances taught at Stockyard on Tuesday).<br>
+                • You can create your own practice list by clicking "Manage User Playlists"<br>
+                • Enter a playlist name and click "Create". <br>
+                • In the search bar, type letters ("sing" to find all dances with "sing", such as "single again"<br>
+                • When done, save, and your playlist will be shown on starting screen (click back, back).
             </p>
         </div>
 
         <div class="info-note">
             <h3>About Videos</h3>
-            <p>Some video owners block in‑app playback. When that happens, the app opens the video directly in YouTube. Close YouTube to return.</p>
+            <p>Some video owners block in‑app playback. When that happens, the app opens the video directly in YouTube. Close YouTube to return to app.</p>
         </div>
 
         <div class="info-note">
