@@ -345,7 +345,7 @@ function generateInfoNotesHTML() {
 function returnToHub() {
     activeUserPlaylistView = null;     // ⭐ REQUIRED
     activeUserPlaylistName = null;     // ⭐ REQUIRED
-
+    activeUserPlaylistName = null;
     selectedActivePlaylistGroup = null;
     activeDayView = null;
     activeDifficultyView = null;
@@ -815,6 +815,7 @@ function renderApplicationInterface() {
 
 
 
+
 function activatePlaylistHeader(title) {
     // Hide big venue header
     const venueHeader = document.querySelector('.venue-header');
@@ -828,7 +829,8 @@ function activatePlaylistHeader(title) {
     const backBtn = document.getElementById('navbarReturnTrigger');
     if (backBtn) {
         backBtn.style.display = 'block';
-        backBtn.onclick = navigateToPlaylistHubMenu;
+        backBtn.onclick = returnToHub;
+ 
     }
 
     // Set title
@@ -2010,6 +2012,7 @@ function renderSingleDanceScreen(dance) {
 
     document.getElementById('navbarReturnTrigger').style.display = 'block';
     document.getElementById('navbarReturnTrigger').onclick = returnToSearchResults;
+    //document.getElementById('navbarReturnTrigger').onclick = returnToHub;
 
     document.getElementById('applicationHeaderTitle').innerText = dance.name;
 
