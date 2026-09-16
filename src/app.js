@@ -421,13 +421,17 @@ function openSpecificPlaylistView(name) {
 function openUserPlaylistView(name) {
     console.log(">>> USER PLAYLIST CARD CLICKED:", name);
 
-    activeUserPlaylistName = name;        // navigation identity
-    selectedActivePlaylistGroup = name;   // ⭐ data identity
+    // Activate user playlist mode
+    activeUserPlaylistView = name;
 
+    // Set the playlist to view
+    selectedActivePlaylistGroup = name;
+
+    // Clear hub filters
     activeDayView = null;
     activeDifficultyView = null;
 
-    lastNavigationMode = "user-playlist";
+    lastNavigationMode = "playlist";
 
     renderApplicationInterface();
 }
