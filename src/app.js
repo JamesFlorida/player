@@ -344,7 +344,7 @@ function generateInfoNotesHTML() {
 function returnToHub() {
     activeUserPlaylistView = null;     // ⭐ REQUIRED
     activeUserPlaylistName = null;     // ⭐ REQUIRED
-
+    activeUserPlaylistName = null;
     selectedActivePlaylistGroup = null;
     activeDayView = null;
     activeDifficultyView = null;
