@@ -42,6 +42,7 @@ let activeDifficultyView = null;          // Hub difficulty view
 let activeDifficultyFilter = "";          // Hub difficulty filter
 let lastNavigationMode = null;            // "hub", "playlist", "workspace"
 let activeUserPlaylistView = null;
+let activeUserPlaylistName = null;
 
 
 /* ============================================
@@ -342,12 +343,20 @@ function generateInfoNotesHTML() {
 
 
 function returnToHub() {
+    activeUserPlaylistView = null;     // ⭐ REQUIRED
+    activeUserPlaylistName = null;     // ⭐ REQUIRED
+
     selectedActivePlaylistGroup = null;
     activeDayView = null;
     activeDifficultyView = null;
+    activeUserPlaylistName = null;
     lastNavigationMode = "hub";
+
     renderApplicationInterface();
 }
+
+
+
 
 function returnToSearchResults() {
     lastNavigationMode = "search";
@@ -396,9 +405,10 @@ function setDifficultyFilter(level) {
     renderApplicationInterface();
 }
 
+
 /* ============================================
    OPEN PLAYLIST VIEW
-============================================ */
+
 function openSpecificPlaylistView(name) {
    console.log(">>> PLAYLIST CARD CLICKED:", name);
     selectedActivePlaylistGroup = name;
@@ -407,25 +417,24 @@ function openSpecificPlaylistView(name) {
     lastNavigationMode = "playlist";
     renderApplicationInterface();
 }
+============================================ */
+
 function openUserPlaylistView(name) {
     console.log(">>> USER PLAYLIST CARD CLICKED:", name);
 
-    // Clear venue playlist mode
-    selectedActivePlaylistGroup = null;
+    activeUserPlaylistName = name;        // navigation identity
+    selectedActivePlaylistGroup = name;   // ⭐ data identity
 
-    // Activate user playlist mode
-    activeUserPlaylistView = name;
-
-    // Clear ALL hub filters
     activeDayView = null;
-    activeDayFilter = "ALL";          // ⭐ REQUIRED FIX
     activeDifficultyView = null;
-    activeDifficultyFilter = "";      // ⭐ REQUIRED FIX
 
     lastNavigationMode = "user-playlist";
 
     renderApplicationInterface();
 }
+
+
+
 
 
 /* ============================================
@@ -560,7 +569,7 @@ function renderApplicationInterface() {
     }
 
     /* --------------------------------------------
-       INFO PAGE SCREEN  ⭐ MUST COME BEFORE HUB BLOCK
+       INFO PAGE SCREEN
        -------------------------------------------- */
     if (lastNavigationMode === "info") {
 
@@ -569,7 +578,6 @@ function renderApplicationInterface() {
         document.querySelector('.header-bar').style.display = 'flex';
         document.getElementById('applicationHeaderTitle').textContent = "App Info";
         document.getElementById('workspaceSmallLogo').style.display = '';
-        // document.getElementById('navbarReturnTrigger').style.display = '';
         document.getElementById('navbarReturnTrigger').style.display = 'block';
         document.getElementById('navbarReturnTrigger').onclick = navigateBackFromInfo;
 
@@ -577,34 +585,65 @@ function renderApplicationInterface() {
         return;
     }
 
+    /* --------------------------------------------
+       USER PLAYLIST VIEW
+       -------------------------------------------- */
+    if (lastNavigationMode === "user-playlist" && activeUserPlaylistName !== null) {
+
+        console.log(">>> USER PLAYLIST VIEW BLOCK EXECUTING");
+        console.log("ACTIVE USER PLAYLIST NAME:", activeUserPlaylistName);
+        console.log("USER PLAYLIST KEYS:", Object.keys(userPlaylistsData));
+        console.log("USER PLAYLIST IDS:", userPlaylistsData[activeUserPlaylistName]);
+
+        const ids = userPlaylistsData[activeUserPlaylistName] || [];
+
+        const playlistTracks = ids
+            .map(id => localDanceDatabase.find(d => d.id === id))
+            .filter(Boolean);
+
+        activatePlaylistHeader(activeUserPlaylistName + " Playlist");
+
+        if (!playlistTracks.length) {
+            viewport.innerHTML = `
+                <p style="text-align:center;color:#aaa;margin-top:20px;">
+                    No dances found for this playlist.
+                </p>`;
+            updateHubVisibility();
+            return;
+        }
+
+        renderDanceCardsList(playlistTracks, viewport);
+        updateHubVisibility();
+        return;
+    }
 
     /* --------------------------------------------
        PLAYLIST VIEW (Mixed Bag / ALL Dances)
        -------------------------------------------- */
-    if (selectedActivePlaylistGroup !== null) {
+    if (lastNavigationMode !== "user-playlist" && selectedActivePlaylistGroup !== null) {
 
         let playlistTracks = [];
 
-        switch (selectedActivePlaylistGroup) {
+        if (selectedActivePlaylistGroup === "Mixed Bag") {
+            playlistTracks = localDanceDatabase
+                .filter(track => track.playlist === "Mixed Bag")
+                .filter((dance, index, arr) =>
+                    index === arr.findIndex(d => d.name === dance.name)
+                );
 
-            case "Mixed Bag":
-                playlistTracks = localDanceDatabase
-                    .filter(track => track.playlist === "Mixed Bag")
-                    .filter((dance, index, arr) =>
-                        index === arr.findIndex(d => d.name === dance.name)
-                    );
-                break;
+        } else if (selectedActivePlaylistGroup === "ALL Dances") {
+            playlistTracks = localDanceDatabase
+                .slice()
+                .filter((dance, index, arr) =>
+                    index === arr.findIndex(d => d.name === dance.name)
+                );
 
-            case "ALL Dances":
-                playlistTracks = localDanceDatabase
-                    .slice()
-                    .filter((dance, index, arr) =>
-                        index === arr.findIndex(d => d.name === dance.name)
-                    );
-                break;
+        } else {
+            const ids = userPlaylistsData[selectedActivePlaylistGroup] || [];
 
-            default:
-                playlistTracks = [];
+            playlistTracks = ids
+                .map(id => localDanceDatabase.find(d => d.id === id))
+                .filter(Boolean);
         }
 
         activatePlaylistHeader(selectedActivePlaylistGroup + " Playlist");
@@ -623,21 +662,20 @@ function renderApplicationInterface() {
         return;
     }
 
-   
     /* --------------------------------------------
        DAY VIEW
        -------------------------------------------- */
     if (activeDayView !== null) {
 
-      activatePlaylistHeader(activeDayView + " Dances");
+        activatePlaylistHeader(activeDayView + " Dances");
 
-      const dayTracks = localDanceDatabase
-        .filter(track =>
-            activeDayFilter === "ALL" ? true : track.daytaught === activeDayFilter
-        )
-        .filter((dance, index, arr) =>
-            index === arr.findIndex(d => d.name === dance.name)
-        );
+        const dayTracks = localDanceDatabase
+            .filter(track =>
+                activeDayFilter === "ALL" ? true : track.daytaught === activeDayFilter
+            )
+            .filter((dance, index, arr) =>
+                index === arr.findIndex(d => d.name === dance.name)
+            );
 
         if (!dayTracks.length) {
             viewport.innerHTML = `
@@ -684,94 +722,97 @@ function renderApplicationInterface() {
     /* --------------------------------------------
        CLEAN HUB SCREEN (default)
        -------------------------------------------- */
-   console.log(">>> HUB CONDITION VALUES:", {
-    activeUserPlaylistView,
-    selectedActivePlaylistGroup,
-    activeDayView,
-    activeDifficultyView
-});
+    console.log(">>> HUB CONDITION VALUES:", {
+        activeUserPlaylistView,
+        selectedActivePlaylistGroup,
+        activeDayView,
+        activeDifficultyView,
+        activeUserPlaylistName
+    });
 
-   if (
-    activeUserPlaylistView === null &&
-    selectedActivePlaylistGroup === null &&
-    activeDayView === null &&
-    activeDifficultyView === null
-) {
-    console.log(">>> HUB BLOCK RUNNING");
-    document.getElementById('navbarReturnTrigger').style.display = 'none';
-    document.getElementById('navbarReturnTrigger').onclick = null;
+    if (
+        activeUserPlaylistView === null &&
+        selectedActivePlaylistGroup === null &&
+        activeDayView === null &&
+        activeDifficultyView === null &&
+        activeUserPlaylistName === null
+    ) {
+        console.log(">>> HUB BLOCK RUNNING");
+        document.getElementById('navbarReturnTrigger').style.display = 'none';
+        document.getElementById('navbarReturnTrigger').onclick = null;
 
-    restoreHubHeader();
+        restoreHubHeader();
 
-   viewport.innerHTML = `
-    <div class="hub-screen">
-        ${Object.keys(userPlaylistsData || {}).map(name => `
-            <div class="hub-card" onclick="openUserPlaylistView('${name}')">
-                <div class="hub-card-title">
-                    ${name} (${userPlaylistsData[name].length})
+        viewport.innerHTML = `
+        <div class="hub-screen">
+            ${Object.keys(userPlaylistsData || {}).map(name => `
+                <div class="hub-card" onclick="openUserPlaylistView('${name}')">
+                    <div class="hub-card-title">
+                        ${name} (${userPlaylistsData[name].length})
+                    </div>
                 </div>
+            `).join('')}
+
+            ${countDay("Tuesday") > 0 ? `
+            <div class="hub-card" onclick="openHubPlaylist(1)">
+                <div class="hub-card-title">Tuesday (${countDay("Tuesday")})</div>
             </div>
-        `).join('')}
+            ` : ""}
 
-${countDay("Tuesday") > 0 ? `
-<div class="hub-card" onclick="openHubPlaylist(1)">
-    <div class="hub-card-title">Tuesday (${countDay("Tuesday")})</div>
-</div>
-` : ""}
+            ${countDay("Wednesday") > 0 ? `
+            <div class="hub-card" onclick="openHubPlaylist(2)">
+                <div class="hub-card-title">Wednesday (${countDay("Wednesday")})</div>
+            </div>
+            ` : ""}
 
-${countDay("Wednesday") > 0 ? `
-<div class="hub-card" onclick="openHubPlaylist(2)">
-    <div class="hub-card-title">Wednesday (${countDay("Wednesday")})</div>
-</div>
-` : ""}
+            ${countDay("Weekend") > 0 ? `
+            <div class="hub-card" onclick="openHubPlaylist(3)">
+                <div class="hub-card-title">Weekend (${countDay("Weekend")})</div>
+            </div>
+            ` : ""}
 
-${countDay("Weekend") > 0 ? `
-<div class="hub-card" onclick="openHubPlaylist(3)">
-    <div class="hub-card-title">Weekend (${countDay("Weekend")})</div>
-</div>
-` : ""}
+            ${countMixedBag() > 0 ? `
+            <div class="hub-card" onclick="openHubPlaylist(4)">
+                <div class="hub-card-title">Mixed Bag (${countMixedBag()})</div>
+            </div>
+            ` : ""}
 
-${countMixedBag() > 0 ? `
-<div class="hub-card" onclick="openHubPlaylist(4)">
-    <div class="hub-card-title">Mixed Bag (${countMixedBag()})</div>
-</div>
-` : ""}
+            ${countDifficulty("Beginner") > 0 ? `
+            <div class="hub-card" onclick="openHubPlaylist(5)">
+                <div class="hub-card-title">Beginner (${countDifficulty("Beginner")})</div>
+            </div>
+            ` : ""}
 
-${countDifficulty("Beginner") > 0 ? `
-<div class="hub-card" onclick="openHubPlaylist(5)">
-    <div class="hub-card-title">Beginner (${countDifficulty("Beginner")})</div>
-</div>
-` : ""}
+            ${countDifficulty("Improver") > 0 ? `
+            <div class="hub-card" onclick="openHubPlaylist(6)">
+                <div class="hub-card-title">Improver (${countDifficulty("Improver")})</div>
+            </div>
+            ` : ""}
 
-${countDifficulty("Improver") > 0 ? `
-<div class="hub-card" onclick="openHubPlaylist(6)">
-    <div class="hub-card-title">Improver (${countDifficulty("Improver")})</div>
-</div>
-` : ""}
+            ${countDifficulty("Intermediate") > 0 ? `
+            <div class="hub-card" onclick="openHubPlaylist(7)">
+                <div class="hub-card-title">Intermediate (${countDifficulty("Intermediate")})</div>
+            </div>
+            ` : ""}
 
-${countDifficulty("Intermediate") > 0 ? `
-<div class="hub-card" onclick="openHubPlaylist(7)">
-    <div class="hub-card-title">Intermediate (${countDifficulty("Intermediate")})</div>
-</div>
-` : ""}
+            ${countDifficulty("Advanced") > 0 ? `
+            <div class="hub-card" onclick="openHubPlaylist(8)">
+                <div class="hub-card-title">Advanced (${countDifficulty("Advanced")})</div>
+            </div>
+            ` : ""}
 
-${countDifficulty("Advanced") > 0 ? `
-<div class="hub-card" onclick="openHubPlaylist(8)">
-    <div class="hub-card-title">Advanced (${countDifficulty("Advanced")})</div>
-</div>
-` : ""}
+            <div class="hub-card" onclick="openHubPlaylist(9)">
+                <div class="hub-card-title">ALL Dances (${countAllDances()})</div>
+            </div>
 
-<div class="hub-card" onclick="openHubPlaylist(9)">
-    <div class="hub-card-title">ALL Dances (${countAllDances()})</div>
-</div>
+            <button class="hub-btn" onclick="navigateToInfoPage()">App Info</button>
+        </div>
+        `;
 
-
-<button class="hub-btn" onclick="navigateToInfoPage()">App Info</button>
-
-   
-          `;
+        return;
+    }
 }
-}
+
 
 
 function activatePlaylistHeader(title) {
@@ -1703,7 +1744,7 @@ function renderWorkspaceSearchResults() {
         // ⭐ Entire-row tap behavior
         if (!isAlreadySelected) {
           row.onclick = () => {
-           addDanceToWorkspace(track.name);
+           addDanceToWorkspace(track.id);
 
            // ⭐ Instant visual feedback BEFORE re-render
            row.classList.add("disabled");
@@ -1760,9 +1801,9 @@ function renderWorkspaceSelectedDances() {
 /* ============================================
    WORKSPACE — ADD DANCE
 ============================================ */
-function addDanceToWorkspace(name) {
-    if (!workspaceSelectedDances.includes(name)) {
-        workspaceSelectedDances.push(name);
+function addDanceToWorkspace(danceId) {
+    if (!workspaceSelectedDances.includes(danceId)) {
+        workspaceSelectedDances.push(danceId);
         renderWorkspaceSelectedDances();
 
         // ⭐ If editing an existing playlist, save immediately
@@ -1772,6 +1813,7 @@ function addDanceToWorkspace(name) {
         }
     }
 }
+
 
 
 /* ============================================
@@ -2252,7 +2294,6 @@ async function initializeUserPlaylists() {
    GLOBAL EXPORTS (Required for HTML onclick)
 ============================================ */
 window.navigateToPlaylistHubMenu = navigateToPlaylistHubMenu;
-window.openSpecificPlaylistView = openSpecificPlaylistView;
 window.handleLiveSearchInput = handleLiveSearchInput;
 window.setDayFilter = setDayFilter;
 window.setDifficultyFilter = setDifficultyFilter;
@@ -2289,4 +2330,6 @@ window.openHubPlaylist = openHubPlaylist;
 window.openManageUserPlaylists = openManageUserPlaylists;
 window.navigateToInfoPage = navigateToInfoPage;
 window.navigateBackFromInfo = navigateBackFromInfo;
+
+
 
