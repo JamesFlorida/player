@@ -1,5 +1,6 @@
 console.log("REAL APP.JS LOADED");
-// Change notes in function generateInfoNotesHTML()
+// Change notes, this file, in function generateInfoNotesHTML()
+// Change venue events in file venueEvents.js
 /* ============================================
    IMPORTS      
 ============================================ */
