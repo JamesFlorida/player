@@ -395,9 +395,10 @@ function setDifficultyFilter(level) {
     renderApplicationInterface();
 }
 
+
 /* ============================================
    OPEN PLAYLIST VIEW
-============================================ */
+
 function openSpecificPlaylistView(name) {
    console.log(">>> PLAYLIST CARD CLICKED:", name);
     selectedActivePlaylistGroup = name;
@@ -406,19 +407,20 @@ function openSpecificPlaylistView(name) {
     lastNavigationMode = "playlist";
     renderApplicationInterface();
 }
+============================================ */
 
 function openUserPlaylistView(name) {
     console.log(">>> USER PLAYLIST CARD CLICKED:", name);
 
     // Set the playlist to view
-    selectedActivePlaylistGroup = name;
+   activeUserPlaylistName = name;       // user playlist identity
 
     // Clear hub filters
     activeDayView = null;
     activeDifficultyView = null;
-
+    selectedActivePlaylistGroup = null;   // prevent collisions with system playlists
     // Switch to playlist mode (same as built-in playlists)
-    lastNavigationMode = "playlist";
+    lastNavigationMode = "user-playlist"; // dedicated mode
 
     renderApplicationInterface();
 }
@@ -574,12 +576,45 @@ function renderApplicationInterface() {
         renderInfoPage();
         return;
     }
+    /* --------------------------------------------
+   USER PLAYLIST VIEW
+   -------------------------------------------- */
+if (lastNavigationMode === "user-playlist" && activeUserPlaylistName !== null) {
+
+    console.log(">>> USER PLAYLIST VIEW BLOCK EXECUTING");
+
+    const ids = userPlaylistsData[activeUserPlaylistName] || [];
+
+    const playlistTracks = ids
+        .map(id => localDanceDatabase.find(d => d.id === id))
+        .filter(Boolean);
+
+    activatePlaylistHeader(activeUserPlaylistName + " Playlist");
+
+    if (!playlistTracks.length) {
+        viewport.innerHTML = `
+            <p style="text-align:center;color:#aaa;margin-top:20px;">
+                No dances found for this playlist.
+            </p>`;
+        updateHubVisibility();
+        return;
+    }
+
+    renderDanceCardsList(playlistTracks, viewport);
+    updateHubVisibility();
+    return;
+}
 
 
     /* --------------------------------------------
-       PLAYLIST VIEW (Mixed Bag / ALL Dances)
-       -------------------------------------------- */
-    if (selectedActivePlaylistGroup !== null) {
+   PLAYLIST VIEW (Mixed Bag / ALL Dances)
+   -------------------------------------------- */
+
+// Prevent system playlists from running during user playlist mode
+if (lastNavigationMode === "user-playlist") {
+    // Skip this block entirely
+} 
+else if (selectedActivePlaylistGroup !== null) {
 
     let playlistTracks = [];
 
@@ -621,9 +656,6 @@ function renderApplicationInterface() {
     updateHubVisibility();
     return;
 }
-
-
-
 
    
     /* --------------------------------------------
@@ -684,20 +716,22 @@ function renderApplicationInterface() {
     }
 
     /* --------------------------------------------
-       CLEAN HUB SCREEN (default)
-       -------------------------------------------- */
-   console.log(">>> HUB CONDITION VALUES:", {
+   CLEAN HUB SCREEN (default)
+   -------------------------------------------- */
+console.log(">>> HUB CONDITION VALUES:", {
     activeUserPlaylistView,
     selectedActivePlaylistGroup,
     activeDayView,
-    activeDifficultyView
+    activeDifficultyView,
+    activeUserPlaylistName
 });
 
-   if (
+if (
     activeUserPlaylistView === null &&
     selectedActivePlaylistGroup === null &&
     activeDayView === null &&
-    activeDifficultyView === null
+    activeDifficultyView === null &&
+    activeUserPlaylistName === null
 ) {
     console.log(">>> HUB BLOCK RUNNING");
     document.getElementById('navbarReturnTrigger').style.display = 'none';
@@ -705,7 +739,7 @@ function renderApplicationInterface() {
 
     restoreHubHeader();
 
-   viewport.innerHTML = `
+    viewport.innerHTML = `
     <div class="hub-screen">
         ${Object.keys(userPlaylistsData || {}).map(name => `
             <div class="hub-card" onclick="openUserPlaylistView('${name}')">
@@ -715,64 +749,62 @@ function renderApplicationInterface() {
             </div>
         `).join('')}
 
-${countDay("Tuesday") > 0 ? `
-<div class="hub-card" onclick="openHubPlaylist(1)">
-    <div class="hub-card-title">Tuesday (${countDay("Tuesday")})</div>
-</div>
-` : ""}
+        ${countDay("Tuesday") > 0 ? `
+        <div class="hub-card" onclick="openHubPlaylist(1)">
+            <div class="hub-card-title">Tuesday (${countDay("Tuesday")})</div>
+        </div>
+        ` : ""}
 
-${countDay("Wednesday") > 0 ? `
-<div class="hub-card" onclick="openHubPlaylist(2)">
-    <div class="hub-card-title">Wednesday (${countDay("Wednesday")})</div>
-</div>
-` : ""}
+        ${countDay("Wednesday") > 0 ? `
+        <div class="hub-card" onclick="openHubPlaylist(2)">
+            <div class="hub-card-title">Wednesday (${countDay("Wednesday")})</div>
+        </div>
+        ` : ""}
 
-${countDay("Weekend") > 0 ? `
-<div class="hub-card" onclick="openHubPlaylist(3)">
-    <div class="hub-card-title">Weekend (${countDay("Weekend")})</div>
-</div>
-` : ""}
+        ${countDay("Weekend") > 0 ? `
+        <div class="hub-card" onclick="openHubPlaylist(3)">
+            <div class="hub-card-title">Weekend (${countDay("Weekend")})</div>
+        </div>
+        ` : ""}
 
-${countMixedBag() > 0 ? `
-<div class="hub-card" onclick="openHubPlaylist(4)">
-    <div class="hub-card-title">Mixed Bag (${countMixedBag()})</div>
-</div>
-` : ""}
+        ${countMixedBag() > 0 ? `
+        <div class="hub-card" onclick="openHubPlaylist(4)">
+            <div class="hub-card-title">Mixed Bag (${countMixedBag()})</div>
+        </div>
+        ` : ""}
 
-${countDifficulty("Beginner") > 0 ? `
-<div class="hub-card" onclick="openHubPlaylist(5)">
-    <div class="hub-card-title">Beginner (${countDifficulty("Beginner")})</div>
-</div>
-` : ""}
+        ${countDifficulty("Beginner") > 0 ? `
+        <div class="hub-card" onclick="openHubPlaylist(5)">
+            <div class="hub-card-title">Beginner (${countDifficulty("Beginner")})</div>
+        </div>
+        ` : ""}
 
-${countDifficulty("Improver") > 0 ? `
-<div class="hub-card" onclick="openHubPlaylist(6)">
-    <div class="hub-card-title">Improver (${countDifficulty("Improver")})</div>
-</div>
-` : ""}
+        ${countDifficulty("Improver") > 0 ? `
+        <div class="hub-card" onclick="openHubPlaylist(6)">
+            <div class="hub-card-title">Improver (${countDifficulty("Improver")})</div>
+        </div>
+        ` : ""}
 
-${countDifficulty("Intermediate") > 0 ? `
-<div class="hub-card" onclick="openHubPlaylist(7)">
-    <div class="hub-card-title">Intermediate (${countDifficulty("Intermediate")})</div>
-</div>
-` : ""}
+        ${countDifficulty("Intermediate") > 0 ? `
+        <div class="hub-card" onclick="openHubPlaylist(7)">
+            <div class="hub-card-title">Intermediate (${countDifficulty("Intermediate")})</div>
+        </div>
+        ` : ""}
 
-${countDifficulty("Advanced") > 0 ? `
-<div class="hub-card" onclick="openHubPlaylist(8)">
-    <div class="hub-card-title">Advanced (${countDifficulty("Advanced")})</div>
-</div>
-` : ""}
+        ${countDifficulty("Advanced") > 0 ? `
+        <div class="hub-card" onclick="openHubPlaylist(8)">
+            <div class="hub-card-title">Advanced (${countDifficulty("Advanced")})</div>
+        </div>
+        ` : ""}
 
-<div class="hub-card" onclick="openHubPlaylist(9)">
-    <div class="hub-card-title">ALL Dances (${countAllDances()})</div>
-</div>
+        <div class="hub-card" onclick="openHubPlaylist(9)">
+            <div class="hub-card-title">ALL Dances (${countAllDances()})</div>
+        </div>
 
-
-<button class="hub-btn" onclick="navigateToInfoPage()">App Info</button>
-
-   
-          `;
+        <button class="hub-btn" onclick="navigateToInfoPage()">App Info</button>
+    `;
 }
+
 }
 
 
