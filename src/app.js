@@ -406,25 +406,24 @@ function openSpecificPlaylistView(name) {
     lastNavigationMode = "playlist";
     renderApplicationInterface();
 }
+
 function openUserPlaylistView(name) {
     console.log(">>> USER PLAYLIST CARD CLICKED:", name);
 
-    // Clear venue playlist mode
-    selectedActivePlaylistGroup = null;
+    // Set the playlist to view
+    selectedActivePlaylistGroup = name;
 
-    // Activate user playlist mode
-    activeUserPlaylistView = name;
-
-    // Clear ALL hub filters
+    // Clear hub filters
     activeDayView = null;
-    activeDayFilter = "ALL";          // ⭐ REQUIRED FIX
     activeDifficultyView = null;
-    activeDifficultyFilter = "";      // ⭐ REQUIRED FIX
 
-    lastNavigationMode = "user-playlist";
+    // Switch to playlist mode (same as built-in playlists)
+    lastNavigationMode = "playlist";
 
     renderApplicationInterface();
 }
+
+
 
 
 /* ============================================
@@ -582,45 +581,43 @@ function renderApplicationInterface() {
        -------------------------------------------- */
     if (selectedActivePlaylistGroup !== null) {
 
-        let playlistTracks = [];
+    let playlistTracks = [];
 
-        switch (selectedActivePlaylistGroup) {
+    if (selectedActivePlaylistGroup === "Mixed Bag") {
+        playlistTracks = localDanceDatabase
+            .filter(track => track.playlist === "Mixed Bag")
+            .filter((dance, index, arr) =>
+                index === arr.findIndex(d => d.name === dance.name)
+            );
 
-            case "Mixed Bag":
-                playlistTracks = localDanceDatabase
-                    .filter(track => track.playlist === "Mixed Bag")
-                    .filter((dance, index, arr) =>
-                        index === arr.findIndex(d => d.name === dance.name)
-                    );
-                break;
+    } else if (selectedActivePlaylistGroup === "ALL Dances") {
+        playlistTracks = localDanceDatabase
+            .slice()
+            .filter((dance, index, arr) =>
+                index === arr.findIndex(d => d.name === dance.name)
+            );
 
-            case "ALL Dances":
-                playlistTracks = localDanceDatabase
-                    .slice()
-                    .filter((dance, index, arr) =>
-                        index === arr.findIndex(d => d.name === dance.name)
-                    );
-                break;
+    } else {
+        // ⭐ USER PLAYLISTS — THIS WAS MISSING
+        playlistTracks = userPlaylistsData[selectedActivePlaylistGroup] || [];
+    }
 
-            default:
-                playlistTracks = [];
-        }
+    activatePlaylistHeader(selectedActivePlaylistGroup + " Playlist");
 
-        activatePlaylistHeader(selectedActivePlaylistGroup + " Playlist");
-
-        if (!playlistTracks.length) {
-            viewport.innerHTML = `
-                <p style="text-align:center;color:#aaa;margin-top:20px;">
-                    No dances found for this playlist.
-                </p>`;
-            updateHubVisibility();
-            return;
-        }
-
-        renderDanceCardsList(playlistTracks, viewport);
+    if (!playlistTracks.length) {
+        viewport.innerHTML = `
+            <p style="text-align:center;color:#aaa;margin-top:20px;">
+                No dances found for this playlist.
+            </p>`;
         updateHubVisibility();
         return;
     }
+
+    renderDanceCardsList(playlistTracks, viewport);
+    updateHubVisibility();
+    return;
+}
+
 
    
     /* --------------------------------------------
