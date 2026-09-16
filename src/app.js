@@ -566,23 +566,6 @@ function renderApplicationInterface() {
         return;
     }
 
-    /* --------------------------------------------
-       HUB SCREEN (DEFAULT)
-       -------------------------------------------- */
-    if (
-        activeUserPlaylistView === null &&
-        selectedActivePlaylistGroup === null &&
-        activeDayView === null &&
-        activeDifficultyView === null
-    ) {
-        console.log(">>> HUB BLOCK RUNNING");
-
-        document.querySelector('.header-bar').style.display = 'none';
-        document.querySelector('.venue-header').style.display = '';
-
-        restoreHubHeader();
-        return;
-    }
 
     /* --------------------------------------------
        PLAYLIST VIEW (Mixed Bag / ALL Dances)
