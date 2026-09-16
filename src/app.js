@@ -41,6 +41,7 @@ let activeDifficultyView = null;          // Hub difficulty view
 let activeDifficultyFilter = "";          // Hub difficulty filter
 let lastNavigationMode = null;            // "hub", "playlist", "workspace"
 let activeUserPlaylistView = null;
+let activeUserPlaylistName = null;
 
 
 /* ============================================
@@ -341,12 +342,19 @@ function generateInfoNotesHTML() {
 
 
 function returnToHub() {
+    activeUserPlaylistView = null;     // ⭐ REQUIRED
+    activeUserPlaylistName = null;     // ⭐ REQUIRED
+
     selectedActivePlaylistGroup = null;
     activeDayView = null;
     activeDifficultyView = null;
+
     lastNavigationMode = "hub";
+
     renderApplicationInterface();
 }
+
+
 
 function returnToSearchResults() {
     lastNavigationMode = "search";
@@ -412,18 +420,17 @@ function openSpecificPlaylistView(name) {
 function openUserPlaylistView(name) {
     console.log(">>> USER PLAYLIST CARD CLICKED:", name);
 
-    // Set the playlist to view
-   activeUserPlaylistName = name;       // user playlist identity
+    activeUserPlaylistName = name;        // navigation identity
+    selectedActivePlaylistGroup = name;   // ⭐ data identity
 
-    // Clear hub filters
     activeDayView = null;
     activeDifficultyView = null;
-    selectedActivePlaylistGroup = null;   // prevent collisions with system playlists
-    // Switch to playlist mode (same as built-in playlists)
-    lastNavigationMode = "user-playlist"; // dedicated mode
+
+    lastNavigationMode = "user-playlist";
 
     renderApplicationInterface();
 }
+
 
 
 
@@ -582,8 +589,12 @@ function renderApplicationInterface() {
 if (lastNavigationMode === "user-playlist" && activeUserPlaylistName !== null) {
 
     console.log(">>> USER PLAYLIST VIEW BLOCK EXECUTING");
+    console.log("ACTIVE USER PLAYLIST NAME:", activeUserPlaylistName);
+    console.log("USER PLAYLIST KEYS:", Object.keys(userPlaylistsData));
+    console.log("USER PLAYLIST IDS:", userPlaylistsData[activeUserPlaylistName]);
 
-    const ids = userPlaylistsData[activeUserPlaylistName] || [];
+
+    const ids = userPlaylistsData[selectedActivePlaylistGroup] || [];
 
     const playlistTracks = ids
         .map(id => localDanceDatabase.find(d => d.id === id))
@@ -1737,7 +1748,7 @@ function renderWorkspaceSearchResults() {
         // ⭐ Entire-row tap behavior
         if (!isAlreadySelected) {
           row.onclick = () => {
-           addDanceToWorkspace(track.name);
+           addDanceToWorkspace(track.id);
 
            // ⭐ Instant visual feedback BEFORE re-render
            row.classList.add("disabled");
@@ -1794,9 +1805,9 @@ function renderWorkspaceSelectedDances() {
 /* ============================================
    WORKSPACE — ADD DANCE
 ============================================ */
-function addDanceToWorkspace(name) {
-    if (!workspaceSelectedDances.includes(name)) {
-        workspaceSelectedDances.push(name);
+function addDanceToWorkspace(danceId) {
+    if (!workspaceSelectedDances.includes(danceId)) {
+        workspaceSelectedDances.push(danceId);
         renderWorkspaceSelectedDances();
 
         // ⭐ If editing an existing playlist, save immediately
@@ -1806,6 +1817,7 @@ function addDanceToWorkspace(name) {
         }
     }
 }
+
 
 
 /* ============================================
@@ -2286,7 +2298,6 @@ async function initializeUserPlaylists() {
    GLOBAL EXPORTS (Required for HTML onclick)
 ============================================ */
 window.navigateToPlaylistHubMenu = navigateToPlaylistHubMenu;
-window.openSpecificPlaylistView = openSpecificPlaylistView;
 window.handleLiveSearchInput = handleLiveSearchInput;
 window.setDayFilter = setDayFilter;
 window.setDifficultyFilter = setDifficultyFilter;
@@ -2323,4 +2334,6 @@ window.openHubPlaylist = openHubPlaylist;
 window.openManageUserPlaylists = openManageUserPlaylists;
 window.navigateToInfoPage = navigateToInfoPage;
 window.navigateBackFromInfo = navigateBackFromInfo;
+
+
 
