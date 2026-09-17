@@ -1740,22 +1740,25 @@ function renderWorkspaceSelectedDances() {
         return;
     }
 
-    workspaceSelectedDances.forEach(name => {
-        const row = document.createElement('div');
-        row.className = 'workspace-selected-row';
+   workspaceSelectedDances.forEach(danceId => {
+    const track = localDanceDatabase.find(d => d.id === danceId);
+    if (!track) return;
 
-        row.innerHTML = `
-            <span>${name}</span>
-            <button class="workspace-remove-btn">Remove</button>
-        `;
+    const row = document.createElement('div');
+    row.className = 'workspace-selected-row';
 
-        // Entire-row tap behavior
-        row.onclick = () => {
-            removeDanceFromWorkspace(name);
-        };
+    row.innerHTML = `
+        <span>${track.name}</span>
+        <button class="workspace-remove-btn">Remove</button>
+    `;
 
-        container.appendChild(row);
-    });
+    row.onclick = () => {
+        removeDanceFromWorkspace(danceId);
+    };
+
+    container.appendChild(row);
+});
+
 }
 
 /* ============================================
@@ -1777,19 +1780,19 @@ function addDanceToWorkspace(danceId) {
 /* ============================================
    WORKSPACE — REMOVE DANCE
 ============================================ */
-function removeDanceFromWorkspace(name) {
-    const index = workspaceSelectedDances.indexOf(name);
+function removeDanceFromWorkspace(danceId) {
+    const index = workspaceSelectedDances.indexOf(danceId);
     if (index !== -1) {
         workspaceSelectedDances.splice(index, 1);
         renderWorkspaceSelectedDances();
 
-        // ⭐ If editing an existing playlist, save immediately
         if (workspaceMode === "edit" && workspacePlaylistName) {
             userPlaylistsData[workspacePlaylistName] = [...workspaceSelectedDances];
             savePlaylist("userPlaylists", userPlaylistsData);
         }
     }
 }
+
 
 /* ============================================
    WORKSPACE — SAVE PLAYLIST
