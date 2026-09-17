@@ -240,8 +240,6 @@ function restoreHubHeader() {
     }
 }
 
-
-
 /* ============================================
    NAVIGATION HELPERS
 ============================================ */
@@ -344,18 +342,13 @@ function generateInfoNotesHTML() {
 function returnToHub() {
     activeUserPlaylistView = null;     // ⭐ REQUIRED
     activeUserPlaylistName = null;     // ⭐ REQUIRED
-    activeUserPlaylistName = null;
     selectedActivePlaylistGroup = null;
     activeDayView = null;
     activeDifficultyView = null;
-    activeUserPlaylistName = null;
     lastNavigationMode = "hub";
 
     renderApplicationInterface();
 }
-
-
-
 
 function returnToSearchResults() {
     lastNavigationMode = "search";
@@ -404,20 +397,6 @@ function setDifficultyFilter(level) {
     renderApplicationInterface();
 }
 
-
-/* ============================================
-   OPEN PLAYLIST VIEW
-
-function openSpecificPlaylistView(name) {
-   console.log(">>> PLAYLIST CARD CLICKED:", name);
-    selectedActivePlaylistGroup = name;
-    activeDayView = null;
-    activeDifficultyView = null;
-    lastNavigationMode = "playlist";
-    renderApplicationInterface();
-}
-============================================ */
-
 function openUserPlaylistView(name) {
     console.log(">>> USER PLAYLIST CARD CLICKED:", name);
 
@@ -431,14 +410,10 @@ function openUserPlaylistView(name) {
     activeDayView = null;
     activeDifficultyView = null;
 
-    lastNavigationMode = "playlist";
+    lastNavigationMode = "user-playlist";
 
     renderApplicationInterface();
 }
-
-
-
-
 
 /* ============================================
    OPEN DANCE FROM PLAYLIST
@@ -526,7 +501,6 @@ function countMixedBag() {
     return localDanceDatabase.filter(d => d.playlist === "Mixed Bag").length;
 }
 
-
 /* ============================================
    MAIN RENDERER
 ============================================ */
@@ -589,37 +563,36 @@ function renderApplicationInterface() {
     }
 
     /* --------------------------------------------
-       USER PLAYLIST VIEW
-       -------------------------------------------- */
-    if (lastNavigationMode === "user-playlist" && activeUserPlaylistName !== null) {
+   USER PLAYLIST VIEW
+-------------------------------------------- */
+if (lastNavigationMode === "user-playlist" && activeUserPlaylistView !== null) {
 
-        console.log(">>> USER PLAYLIST VIEW BLOCK EXECUTING");
-        console.log("ACTIVE USER PLAYLIST NAME:", activeUserPlaylistName);
-        console.log("USER PLAYLIST KEYS:", Object.keys(userPlaylistsData));
-        console.log("USER PLAYLIST IDS:", userPlaylistsData[activeUserPlaylistName]);
+    console.log(">>> USER PLAYLIST VIEW BLOCK EXECUTING");
+    console.log("ACTIVE USER PLAYLIST VIEW:", activeUserPlaylistView);
+    console.log("USER PLAYLIST KEYS:", Object.keys(userPlaylistsData));
+    console.log("USER PLAYLIST IDS:", userPlaylistsData[activeUserPlaylistView]);
 
-        const ids = userPlaylistsData[activeUserPlaylistName] || [];
+    const ids = userPlaylistsData[activeUserPlaylistView] || [];
 
-        const playlistTracks = ids
-            .map(id => localDanceDatabase.find(d => d.id === id))
-            .filter(Boolean);
+    const playlistTracks = ids
+        .map(id => localDanceDatabase.find(d => d.id === id))
+        .filter(Boolean);
 
-        activatePlaylistHeader(activeUserPlaylistName + " Playlist");
+    activatePlaylistHeader(activeUserPlaylistView + " Playlist");
 
-        if (!playlistTracks.length) {
-            viewport.innerHTML = `
-                <p style="text-align:center;color:#aaa;margin-top:20px;">
-                    No dances found for this playlist.
-                </p>`;
-            updateHubVisibility();
-            return;
-        }
-
-        renderDanceCardsList(playlistTracks, viewport);
+    if (!playlistTracks.length) {
+        viewport.innerHTML = `
+            <p style="text-align:center;color:#aaa;margin-top:20px;">
+                No dances found for this playlist.
+            </p>`;
         updateHubVisibility();
         return;
     }
 
+    renderDanceCardsList(playlistTracks, viewport);
+    updateHubVisibility();
+    return;
+}
     /* --------------------------------------------
        PLAYLIST VIEW (Mixed Bag / ALL Dances)
        -------------------------------------------- */
@@ -730,6 +703,7 @@ function renderApplicationInterface() {
         selectedActivePlaylistGroup,
         activeDayView,
         activeDifficultyView,
+        activeUserPlaylistView,
         activeUserPlaylistName
     });
 
@@ -816,9 +790,6 @@ function renderApplicationInterface() {
     }
 }
 
-
-
-
 function activatePlaylistHeader(title) {
     // Hide big venue header
     const venueHeader = document.querySelector('.venue-header');
@@ -876,7 +847,6 @@ function openAllDances() {
     renderApplicationInterface();
 }
 
-   
 function openEventsView() {
     console.log("fIRST LINE IN Open Events View");
     activatePlaylistHeader("Events");
@@ -933,7 +903,6 @@ function renderEventsList() {
         container.appendChild(card);
     });
 }
-
 
 /* ============================================
    DANCE CARD RENDERER
@@ -1028,9 +997,8 @@ function renderDanceCardsList(tracks, containerElement) {
     });
 }
 
-
-
-
+        // ⭐ Restore two-column layout
+       
 /* ============================================
    WORKSPACE PLAYLIST SELECTION (EDIT MODE)
 ============================================ */
@@ -1119,7 +1087,6 @@ function renderWorkspaceScreen() {
     // Inject workspace DOM
     document.getElementById('masterApplicationViewport').innerHTML = `
   <div class="workspace-screen">
-
 
     <!-- MODE SELECTION PANEL -->
     <div id="workspaceModePanel" class="workspace-mode-panel">
@@ -1232,9 +1199,7 @@ function renderCreateModeLayout() {
 
         // ⭐ Disable Phase‑1 full‑width mode
         document.body.classList.remove("workspace-phase1");
-
-        // ⭐ Restore two-column layout
-        if (columns) {
+ if (columns) {
             columns.style.display = "flex";
         }
 
@@ -1314,7 +1279,6 @@ function renderInfoPage() {
         </div>
     `;
 }
-
 
 function startEditMode() {
     console.log("Start Edit Mode");
@@ -1399,7 +1363,6 @@ function startCreateMode() {
     renderCreateModeLayout();
 }
 
-
 function startDeleteMode() {
     console.log("Start Delete Mode — workspaceMode:", workspaceMode);
     activateWorkspaceHeader("Delete Playlist");
@@ -1463,8 +1426,6 @@ function beginWorkspacePhase2() {
     workspacePhase = 2;
     renderCreateModeLayout();
 }
-
-
 
 function attachWorkspaceListeners() {
     const createBtn = document.getElementById("modeCreateBtn");
@@ -1591,8 +1552,6 @@ function updateWorkspaceModeButtons(activeMode) {
     }
 }
 
-
-
 function renderWorkspaceDeleteList() {
     const container = document.getElementById('workspaceDeleteList');
     if (!container) return;
@@ -1619,8 +1578,6 @@ function renderWorkspaceDeleteList() {
 
     container.innerHTML = html;
 }
-
-
 
 /* ============================================
    DELETE LIST RENDERER
@@ -1693,7 +1650,6 @@ function handleWorkspaceSearchInput(value) {
 
     renderWorkspaceSearchResults();
 }
-
 
 function showWorkspaceMessage(text, type = "success") {
     const msg = document.getElementById("workspaceMessage");
@@ -1768,7 +1724,6 @@ function renderWorkspaceSearchResults() {
     });
 }
 
-
 /* ============================================
    WORKSPACE — SELECTED LIST RENDERER (UPDATED)
 ============================================ */
@@ -1819,8 +1774,6 @@ function addDanceToWorkspace(danceId) {
     }
 }
 
-
-
 /* ============================================
    WORKSPACE — REMOVE DANCE
 ============================================ */
@@ -1837,7 +1790,6 @@ function removeDanceFromWorkspace(name) {
         }
     }
 }
-
 
 /* ============================================
    WORKSPACE — SAVE PLAYLIST
@@ -1874,7 +1826,6 @@ function saveWorkspacePlaylist() {
     navigateBackFromWorkspace();
 
 }
-
 
 /* ============================================
    WORKSPACE — SELECT PLAYLIST FOR EDITING
@@ -1982,7 +1933,6 @@ function navigateBackFromWorkspace() {
     renderApplicationInterface();
 }
 
-
 /* ============================================
    OPEN WORKSPACE
 ============================================ */
@@ -1993,8 +1943,6 @@ function openWorkspace() {
     attachWorkspaceListeners();
     console.log("ENTER: openWorkspace — workspaceMode AFTER =", workspaceMode);
 }
-
-
 
 /* ============================================
    CANCEL WORKSPACE 
@@ -2059,23 +2007,6 @@ function renderSimpleSearchCards(matches, container) {
     });
 }
 
-/* ============================================
-   HUB VISIBILITY UPDATER
-============================================ */
-
-/*
-function updateHubVisibility() {
-    const filterBar = document.getElementById('dayFilterBar');
-    const diffBar = document.getElementById('difficultyFilterBar');
-    const navRow = document.querySelector('.hub-nav-row');
-
-    if (filterBar) filterBar.style.display = 'none';
-    if (diffBar) diffBar.style.display = 'none';
-    if (navRow) navRow.style.display = 'none';
-}
-
-*/
-
 function updateHubVisibility() {
 
     // ⭐ Prevent hub UI from re-rendering while viewing a user playlist
@@ -2091,7 +2022,6 @@ function updateHubVisibility() {
     if (diffBar) diffBar.style.display = 'none';
     if (navRow) navRow.style.display = 'none';
 }
-
 
 /* ============================================
    INITIALIZE APP
@@ -2256,9 +2186,6 @@ function launchMediaOverlay(targetUrl, displayTitle) {
     };
 }
 
-
-
-
 function shutOverlayViewer() {
    overlayActive = false;  //REMOVE
 
@@ -2294,7 +2221,6 @@ async function initializeUserPlaylists() {
         console.log("No user playlists found.");
     }
 }
-
 
 /* ============================================
    GLOBAL EXPORTS (Required for HTML onclick)
@@ -2336,6 +2262,3 @@ window.openHubPlaylist = openHubPlaylist;
 window.openManageUserPlaylists = openManageUserPlaylists;
 window.navigateToInfoPage = navigateToInfoPage;
 window.navigateBackFromInfo = navigateBackFromInfo;
-
-
-
