@@ -1,3 +1,4 @@
+// TEST_EDIT_12345
 console.log("REAL APP.JS LOADED");
 // Change notes in function generateInfoNotesHTML()
 /* ============================================
