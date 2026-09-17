@@ -1,6 +1,6 @@
 // 09.17.26 at 11;54AM EST
-console.log("09.16.26 at 12:33pm");
-// Change notes, this file, in function generateInfoNotesHTML()
+console.log("9.17.26 at 12:39");
+// Change notes in function generateInfoNotesHTML()
 // Change venue events in file venueEvents.js
 /* ============================================
    IMPORTS      
