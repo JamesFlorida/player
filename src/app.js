@@ -1,10 +1,43 @@
-// 09.17.26 at 11;54AM EST
-console.log("9.18.26 at 9:50am");
+
+console.log("9.18.26 at 10:20am");
 // Change notes in function generateInfoNotesHTML()
+
 /* ============================================
-   IMPORTS      
+   VERSION SYSTEM (must run before imports)
 ============================================ */
+
+async function loadAppVersion() {
+    try {
+        const response = await fetch('version.json?v=' + Date.now());
+        const data = await response.json();
+        window.APP_VERSION = data.version;
+    } catch (err) {
+        console.log("Could not load version.json", err);
+        window.APP_VERSION = "unknown";
+    }
+}
+
+await loadAppVersion();
+
+async function checkForUpdate() {
+    try {
+        const response = await fetch('version.json?v=' + Date.now());
+        const data = await response.json();
+
+        if (data.version !== window.APP_VERSION) {
+            console.log("New version detected — refreshing PWA");
+            location.reload(true);
+        }
+
+    } catch (err) {
+        console.log("Version check failed:", err);
+    }
+}
+
+checkForUpdate();
+
 navigator.storage && navigator.storage.persist();
+
  
 import { danceData } from './venues/Stockyard/danceData-stockyard.js';
 // import { globalDanceList } from "./globalDanceList.js";
@@ -283,9 +316,9 @@ function generateInfoNotesHTML() {
         <div class="info-note">
             <h3>Latest Updates & Version Info</h3>
             <p>
-                Version 3.0.0.<br>
-                
+            Version ${window.APP_VERSION}<br>
             </p>
+
         </div>
 
         <div class="info-note">
@@ -2228,6 +2261,11 @@ async function initializeUserPlaylists() {
         console.log("No user playlists found.");
     }
 }
+
+
+
+
+
 
 /* ============================================
    GLOBAL EXPORTS (Required for HTML onclick)
