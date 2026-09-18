@@ -3,7 +3,20 @@ console.log("9.18.26 at 10:20am");
 // Change notes in function generateInfoNotesHTML()
 
 /* ============================================
-   VERSION SYSTEM (must run before imports)
+   IMPORTS      
+============================================ */
+
+navigator.storage && navigator.storage.persist();
+
+import { danceData } from './venues/Stockyard/danceData-stockyard.js';
+// import { globalDanceList } from "./globalDanceList.js";
+import { venueDanceMap } from "./venues/Stockyard/venueDanceMap.js";
+import { venueConfig } from "./venues/Stockyard/venueConfig.js";
+import { venueEvents } from "./venues/Stockyard/venueEvents.js";
+import { savePlaylist, loadPlaylist, deletePlaylist } from './db.js';
+
+/* ============================================
+   VERSION SYSTEM
 ============================================ */
 
 async function loadAppVersion() {
@@ -16,8 +29,6 @@ async function loadAppVersion() {
         window.APP_VERSION = "unknown";
     }
 }
-
-await loadAppVersion();
 
 async function checkForUpdate() {
     try {
@@ -34,17 +45,13 @@ async function checkForUpdate() {
     }
 }
 
-checkForUpdate();
+async function initVersionSystem() {
+    await loadAppVersion();
+    checkForUpdate();
+}
 
-navigator.storage && navigator.storage.persist();
+initVersionSystem();
 
- 
-import { danceData } from './venues/Stockyard/danceData-stockyard.js';
-// import { globalDanceList } from "./globalDanceList.js";
-import { venueDanceMap } from "./venues/Stockyard/venueDanceMap.js";
-import { venueConfig } from "./venues/Stockyard/venueConfig.js";
-import { venueEvents } from "./venues/Stockyard/venueEvents.js";
-import { savePlaylist, loadPlaylist, deletePlaylist } from './db.js';
 
 
 /* ============================================
