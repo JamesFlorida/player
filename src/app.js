@@ -294,6 +294,16 @@ function generateInfoNotesHTML() {
         </div>
 
         <div class="info-note">
+            <h3>Sharing</h3>
+            <p>
+            Feel free to share this app with anyone — it’s completely free.  
+            Just have them scan the QR code.
+        </p>
+
+        <img src="images/stockyard_qr.png" class="info-qr">
+        </div>
+
+        <div class="info-note">
             <h3>Responsibility & Contact</h3>
             <p>Stockyard management and staff are not responsible for the app or its content.<br>
             Suggestions or comments: <strong>tampadancing@gmail.com</strong></p>
@@ -326,17 +336,6 @@ function generateInfoNotesHTML() {
             <h3>Dance Updates</h3>
             <p>The app is updated regularly with the latest Stockyard dances. If new dances don’t appear, close and reopen the app.</p>
         </div>
-
-        <div class="info-note">
-            <h3>Sharing</h3>
-            <p>
-            Feel free to share this app with anyone — it’s completely free.  
-            Just have them scan the QR code.
-        </p>
-
-        <img src="images/stockyard_qr.png" class="info-qr">
-        </div>
-
 
         <div class="info-note">
             <h3>Final Note</h3>

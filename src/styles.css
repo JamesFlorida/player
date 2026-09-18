@@ -1458,6 +1458,15 @@ button:disabled {
     width: auto;
     margin-left: auto;
 }
+
+.info-qr {
+    display: block;
+    width: 160px;        /* adjust as needed */
+    height: auto;
+    margin: 12px auto;   /* centers it */
+    border-radius: 8px;  /* optional: soft corners */
+}
+
 /* ============================================================
    WORKSPACE — DELETE PLAYLIST ROWS (MATCH EDIT MODE EXACTLY)
    ============================================================ */
@@ -1515,10 +1524,4 @@ button:disabled {
 }
 
 
-.info-qr {
-    display: block;
-    width: 160px;        /* adjust as needed */
-    height: auto;
-    margin: 12px auto;   /* centers it */
-    border-radius: 8px;  /* optional: soft corners */
-}
+
