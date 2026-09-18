@@ -82,7 +82,6 @@ body {
     display: none;
 }
 
-
 /* ============================================================
    GLOBAL — FIXED FOOTER BAR
    ============================================================ */
@@ -98,7 +97,6 @@ body {
 
     z-index: 1000;
 }
-
 
 /* ============================================================
    WORKSPACE — HEADER HORIZONTAL ALIGNMENT (PATCH 19)
@@ -132,8 +130,6 @@ body {
     padding-top: 6px;
     padding-bottom: 6px;
 }
-
-
 
 /* ============================================================
    GLOBAL — APP CONTAINER
@@ -402,6 +398,13 @@ object {
     font-weight: bold;
 }
 
+#workspaceLeftColumn .workspace-section-title {
+    font-size: 1.4rem;      /* bigger, readable */
+    font-weight: 600;
+    margin-bottom: 20px;    /* adds breathing room */
+}
+
+/*
 /* ============================================================
    NEW HUB SCREEN LAYOUT
    ============================================================ */
@@ -604,13 +607,6 @@ body:not(.workspace-mode-edit) #workspacePlaylistSelection {
     overflow-y: auto;
 }
 
-#workspaceLeftColumn .workspace-section-title {
-    font-size: 1.4rem;      /* bigger, readable */
-    font-weight: 600;
-    margin-bottom: 20px;    /* adds breathing room */
-}
-
-/*
 #applicationHeaderTitle {
     display: none;
 }
@@ -713,8 +709,6 @@ body.workspace-mode-select #workspaceContent {
 .workspace-footer-fixed button {
     flex: 1;
 }
-
-
 
 /* ============================================================
    WORKSPACE — PHONE (WORKSPACE SCREEN ONLY)
@@ -903,7 +897,6 @@ body.workspace-mode-select #workspaceContent {
     }
 }
 
-
 /* ============================================================
    WORKSPACE — LEFT COLUMN (SEARCH RESULTS) — UPDATED HITBOX
    ============================================================ */
@@ -943,7 +936,6 @@ body.workspace-mode-select #workspaceContent {
     border-radius: 6px;
 }
 
-
 .workspace-dance-row:active {
     background-color: rgba(255, 255, 255, 0.08);
     transform: scale(0.98);
@@ -957,8 +949,6 @@ body.workspace-mode-select #workspaceContent {
     display: flex;
     align-items: center;
 }
-
-
 
 /* ============================================================
    WORKSPACE — LEFT COLUMN (EXISTING PLAYLISTS)
@@ -1075,7 +1065,6 @@ body.workspace-mode-select #workspaceContent {
     transform: none;
 }
 
-
 /* ============================================================
    WORKSPACE — ACTION BUTTONS (Save / Cancel)
    ============================================================ */
@@ -1178,9 +1167,6 @@ body.workspace-mode-select #workspaceContent {
 .workspace-mode-btn:last-child {
   margin-bottom: 12px;
 }
-
-
-
 
 /* ==========================================
    WORKSPACE — AGGRESSIVE VERTICAL COMPRESSION
@@ -1467,21 +1453,51 @@ button:disabled {
     margin-top: 0;
 }
 
-
 .workspace-logo-small {
     height: 32px;
     width: auto;
     margin-left: auto;
 }
+/* ============================================================
+   WORKSPACE — DELETE PLAYLIST ROWS (NEW)
+   ============================================================ */
 
+.workspace-delete-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
+  padding: 14px 0;
+  min-height: 48px;
 
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 
-
-
-/* FINAL authoritative spacing for workspace descriptions
-.workspace-mode-desc {
-    margin-top: 6px !important;    
-    margin-bottom: 14px !important; 
+  transition: background-color 50ms ease, transform 50ms ease;
 }
- */
+
+.workspace-delete-item:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.workspace-delete-item span {
+  color: #fff;
+  font-size: 15px;
+  line-height: 1.3;
+  display: flex;
+  align-items: center;
+}
+
+/* Delete button */
+.workspace-delete-btn {
+  background: #c00;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 14px;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.workspace-delete-btn:hover {
+  background: #e00;
+}
