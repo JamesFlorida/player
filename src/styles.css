@@ -1459,7 +1459,7 @@ button:disabled {
     margin-left: auto;
 }
 /* ============================================================
-   WORKSPACE — DELETE PLAYLIST ROWS (MATCH EDIT MODE)
+   WORKSPACE — DELETE PLAYLIST ROWS (MATCH EDIT MODE EXACTLY)
    ============================================================ */
 
 .workspace-delete-item {
@@ -1467,14 +1467,16 @@ button:disabled {
   justify-content: space-between;
   align-items: center;
 
-  background: #2a2a2a;              /* same as .workspace-playlist-item */
+  background: #2a2a2a;              /* same as edit rows */
   border-radius: 6px;               /* same rounded corners */
-  border: 1px solid #3a3a3a;        /* same subtle outline */
+  border: 1px solid #3a3a3a;        /* same outline */
 
   padding: 10px 14px;               /* identical padding */
-  margin: 6px 0;                    /* identical vertical spacing */
+  margin: 6px 0;                    /* identical spacing between rows */
 
+  min-height: 48px;                 /* identical row height */
   cursor: pointer;                  /* same feel as edit rows */
+
   transition: background 0.2s, transform 0.1s;
 }
 
