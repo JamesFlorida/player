@@ -297,7 +297,7 @@ function generateInfoNotesHTML() {
             <h3>Sharing</h3>
             <p>
             Feel free to share this app with anyone — it’s completely free.  
-            Just have them scan the QR code.
+            Just have them scan the QR code, then have them save it to their home screen (they will see the Stockyard Bull icon).<br>
         </p>
 
         <img src="images/stockyard_qr.png" class="info-qr">
@@ -317,8 +317,6 @@ function generateInfoNotesHTML() {
         <div class="info-note">
             <h3>How to Use It</h3>
             <p>
-                • You probably loaded this app by scanning a QR Code.<br>
-                • Next : Save it to your home screen (you’ll see the Stockyard Bull icon).<br>
                 • You may click any playlist (for Example "Tuesday", to see dances taught at Stockyard on Tuesday).<br>
                 • You can create your own practice list by clicking "Manage User Playlists"<br>
                 • Enter a playlist name and click "Create". <br>
