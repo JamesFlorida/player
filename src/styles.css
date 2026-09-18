@@ -1459,7 +1459,7 @@ button:disabled {
     margin-left: auto;
 }
 /* ============================================================
-   WORKSPACE — DELETE PLAYLIST ROWS (NEW)
+   WORKSPACE — DELETE PLAYLIST ROWS (MATCH EDIT MODE)
    ============================================================ */
 
 .workspace-delete-item {
@@ -1467,16 +1467,25 @@ button:disabled {
   justify-content: space-between;
   align-items: center;
 
-  padding: 14px 0;
-  min-height: 48px;
+  background: #2a2a2a;              /* same as .workspace-playlist-item */
+  border-radius: 6px;               /* same rounded corners */
+  border: 1px solid #3a3a3a;        /* same subtle outline */
 
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 10px 14px;               /* identical padding */
+  margin: 6px 0;                    /* identical vertical spacing */
 
-  transition: background-color 50ms ease, transform 50ms ease;
+  cursor: pointer;                  /* same feel as edit rows */
+  transition: background 0.2s, transform 0.1s;
 }
 
 .workspace-delete-item:hover {
-  background-color: rgba(255, 255, 255, 0.08);
+  background: #3a3a3a;              /* same hover color */
+  transform: scale(1.02);           /* same hover scale */
+}
+
+.workspace-delete-item:active {
+  background: #444;                 /* same active color */
+  transform: scale(0.98);           /* same tap feel */
 }
 
 .workspace-delete-item span {
@@ -1487,13 +1496,14 @@ button:disabled {
   align-items: center;
 }
 
-/* Delete button */
+/* Delete button — sized to match row height */
 .workspace-delete-btn {
   background: #c00;
   color: #fff;
   border: none;
   border-radius: 6px;
-  padding: 8px 14px;
+
+  padding: 8px 14px;                /* balanced inside the row */
   font-size: 0.95rem;
   cursor: pointer;
 }
