@@ -5,7 +5,7 @@ console.log("9.17.26 at 12:39");
    IMPORTS      
 ============================================ */
 navigator.storage && navigator.storage.persist();
-
+ 
 import { danceData } from './venues/Stockyard/danceData-stockyard.js';
 // import { globalDanceList } from "./globalDanceList.js";
 import { venueDanceMap } from "./venues/Stockyard/venueDanceMap.js";
@@ -329,8 +329,14 @@ function generateInfoNotesHTML() {
 
         <div class="info-note">
             <h3>Sharing</h3>
-            <p>Feel free to share this app with anyone — it’s completely free. Just have them scan the QR code.</p>
+            <p>
+            Feel free to share this app with anyone — it’s completely free.  
+            Just have them scan the QR code.
+        </p>
+
+        <img src="images/stockyard_qr.png" class="info-qr">
         </div>
+
 
         <div class="info-note">
             <h3>Final Note</h3>

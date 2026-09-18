@@ -847,10 +847,11 @@ body.workspace-mode-select #workspaceContent {
 
 .workspace-delete-list {
   background: transparent;     /* remove the big gray box */
-  border: none;                /* remove outline */
+  border: none; 
+  border: 3px solid rgba(255,0,0,0.99);
   padding: 0;                  /* match Edit Mode */
   margin-top: 10px;
-  max-height: 260px;
+  height: 360px;
   overflow-y: auto;
 }
 
@@ -1511,4 +1512,13 @@ button:disabled {
 
 .workspace-delete-btn:hover {
   background: #e00;
+}
+
+
+.info-qr {
+    display: block;
+    width: 160px;        /* adjust as needed */
+    height: auto;
+    margin: 12px auto;   /* centers it */
+    border-radius: 8px;  /* optional: soft corners */
 }
