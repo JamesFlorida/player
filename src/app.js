@@ -47,7 +47,7 @@ async function checkForUpdate() {
 
 async function initVersionSystem() {
     await loadAppVersion();
-    checkForUpdate();
+    await checkForUpdate();
 }
 
 initVersionSystem();
@@ -2073,13 +2073,11 @@ function updateHubVisibility() {
 /* ============================================
    INITIALIZE APP
 ============================================ */
-window.onload = async function () {
-    await initVersionSystem();      // <-- Wait for version.json to load
+window.onload = function () {
     initializeVenueBranding();
     renderApplicationInterface();   // First render (empty playlists)
     initializeUserPlaylists();      // Second render (with playlists)
 };
-
 
 // HUB playlist categories used on the main screen
 const hubPlaylists = [
