@@ -2073,11 +2073,13 @@ function updateHubVisibility() {
 /* ============================================
    INITIALIZE APP
 ============================================ */
-window.onload = function () {
+window.onload = async function () {
+    await initVersionSystem();      // <-- Wait for version.json to load
     initializeVenueBranding();
     renderApplicationInterface();   // First render (empty playlists)
     initializeUserPlaylists();      // Second render (with playlists)
 };
+
 
 // HUB playlist categories used on the main screen
 const hubPlaylists = [
