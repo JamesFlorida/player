@@ -50,7 +50,14 @@ async function initVersionSystem() {
     await checkForUpdate();
 }
 
-initVersionSystem();
+
+/* ============================================
+   RUN VERSION SYSTEM SAFELY
+============================================ */
+
+(async function () {
+    await initVersionSystem();
+})();
 
 
 
