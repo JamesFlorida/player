@@ -5,15 +5,14 @@ console.log("9.18.26 at 10:20am");
 /* ============================================
    IMPORTS      
 ============================================ */
-
-navigator.storage && navigator.storage.persist();
-
 import { danceData } from './venues/Stockyard/danceData-stockyard.js';
 // import { globalDanceList } from "./globalDanceList.js";
 import { venueDanceMap } from "./venues/Stockyard/venueDanceMap.js";
 import { venueConfig } from "./venues/Stockyard/venueConfig.js";
 import { venueEvents } from "./venues/Stockyard/venueEvents.js";
 import { savePlaylist, loadPlaylist, deletePlaylist } from './db.js';
+
+navigator.storage && navigator.storage.persist();
 
 /* ============================================
    VERSION SYSTEM
@@ -49,7 +48,6 @@ async function initVersionSystem() {
     await loadAppVersion();
     await checkForUpdate();
 }
-
 
 /* ============================================
    RUN VERSION SYSTEM SAFELY
