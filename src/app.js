@@ -1,12 +1,12 @@
 // 09.17.26 at 11;54AM EST
-console.log("9.17.26 at 12:39");
+console.log("9.18.26 at 9:50am");
 // Change notes in function generateInfoNotesHTML()
 // Change venue events in file venueEvents.js
 /* ============================================
    IMPORTS      
 ============================================ */
 navigator.storage && navigator.storage.persist();
-
+ 
 import { danceData } from './venues/Stockyard/danceData-stockyard.js';
 // import { globalDanceList } from "./globalDanceList.js";
 import { venueDanceMap } from "./venues/Stockyard/venueDanceMap.js";
@@ -284,7 +284,7 @@ function generateInfoNotesHTML() {
         <div class="info-note">
             <h3>Latest Updates & Version Info</h3>
             <p>
-                Version 1.0.0.<br>
+                Version 3.0.0.<br>
                 
             </p>
         </div>
@@ -292,6 +292,16 @@ function generateInfoNotesHTML() {
         <div class="info-note">
             <h3>About the App</h3>
             <p>This app is offered free for Stockyard dancers. It is written and maintained by a fellow Stockyard dancer.</p>
+        </div>
+
+        <div class="info-note">
+            <h3>Sharing</h3>
+            <p>
+            Feel free to share this app with anyone — it’s completely free.  
+            Just have them scan the QR code, then have them save it to their home screen (they will see the Stockyard Bull icon).<br>
+        </p>
+
+        <img src="images/stockyard_qr.png" class="info-qr">
         </div>
 
         <div class="info-note">
@@ -308,8 +318,6 @@ function generateInfoNotesHTML() {
         <div class="info-note">
             <h3>How to Use It</h3>
             <p>
-                • You probably loaded this app by scanning a QR Code.<br>
-                • Next : Save it to your home screen (you’ll see the Stockyard Bull icon).<br>
                 • You may click any playlist (for Example "Tuesday", to see dances taught at Stockyard on Tuesday).<br>
                 • You can create your own practice list by clicking "Manage User Playlists"<br>
                 • Enter a playlist name and click "Create". <br>
@@ -326,11 +334,6 @@ function generateInfoNotesHTML() {
         <div class="info-note">
             <h3>Dance Updates</h3>
             <p>The app is updated regularly with the latest Stockyard dances. If new dances don’t appear, close and reopen the app.</p>
-        </div>
-
-        <div class="info-note">
-            <h3>Sharing</h3>
-            <p>Feel free to share this app with anyone — it’s completely free. Just have them scan the QR code.</p>
         </div>
 
         <div class="info-note">

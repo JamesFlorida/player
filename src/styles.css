@@ -82,7 +82,6 @@ body {
     display: none;
 }
 
-
 /* ============================================================
    GLOBAL — FIXED FOOTER BAR
    ============================================================ */
@@ -98,7 +97,6 @@ body {
 
     z-index: 1000;
 }
-
 
 /* ============================================================
    WORKSPACE — HEADER HORIZONTAL ALIGNMENT (PATCH 19)
@@ -132,8 +130,6 @@ body {
     padding-top: 6px;
     padding-bottom: 6px;
 }
-
-
 
 /* ============================================================
    GLOBAL — APP CONTAINER
@@ -402,6 +398,13 @@ object {
     font-weight: bold;
 }
 
+#workspaceLeftColumn .workspace-section-title {
+    font-size: 1.4rem;      /* bigger, readable */
+    font-weight: 600;
+    margin-bottom: 20px;    /* adds breathing room */
+}
+
+/*
 /* ============================================================
    NEW HUB SCREEN LAYOUT
    ============================================================ */
@@ -604,13 +607,6 @@ body:not(.workspace-mode-edit) #workspacePlaylistSelection {
     overflow-y: auto;
 }
 
-#workspaceLeftColumn .workspace-section-title {
-    font-size: 1.4rem;      /* bigger, readable */
-    font-weight: 600;
-    margin-bottom: 20px;    /* adds breathing room */
-}
-
-/*
 #applicationHeaderTitle {
     display: none;
 }
@@ -713,8 +709,6 @@ body.workspace-mode-select #workspaceContent {
 .workspace-footer-fixed button {
     flex: 1;
 }
-
-
 
 /* ============================================================
    WORKSPACE — PHONE (WORKSPACE SCREEN ONLY)
@@ -852,12 +846,12 @@ body.workspace-mode-select #workspaceContent {
 }
 
 .workspace-delete-list {
-  background: #1f1f1f;          /* visible dark panel */
-  border-radius: 8px;
-  border: 1px solid #444;       /* subtle outline */
-  padding: 10px;
+  background: transparent;     /* remove the big gray box */
+  border: none; 
+  border: 3px solid rgba(255,0,0,0.99);
+  padding: 0;                  /* match Edit Mode */
   margin-top: 10px;
-  max-height: 260px;
+  height: 360px;
   overflow-y: auto;
 }
 
@@ -903,7 +897,6 @@ body.workspace-mode-select #workspaceContent {
     }
 }
 
-
 /* ============================================================
    WORKSPACE — LEFT COLUMN (SEARCH RESULTS) — UPDATED HITBOX
    ============================================================ */
@@ -943,7 +936,6 @@ body.workspace-mode-select #workspaceContent {
     border-radius: 6px;
 }
 
-
 .workspace-dance-row:active {
     background-color: rgba(255, 255, 255, 0.08);
     transform: scale(0.98);
@@ -957,8 +949,6 @@ body.workspace-mode-select #workspaceContent {
     display: flex;
     align-items: center;
 }
-
-
 
 /* ============================================================
    WORKSPACE — LEFT COLUMN (EXISTING PLAYLISTS)
@@ -1075,7 +1065,6 @@ body.workspace-mode-select #workspaceContent {
     transform: none;
 }
 
-
 /* ============================================================
    WORKSPACE — ACTION BUTTONS (Save / Cancel)
    ============================================================ */
@@ -1178,9 +1167,6 @@ body.workspace-mode-select #workspaceContent {
 .workspace-mode-btn:last-child {
   margin-bottom: 12px;
 }
-
-
-
 
 /* ==========================================
    WORKSPACE — AGGRESSIVE VERTICAL COMPRESSION
@@ -1467,21 +1453,75 @@ button:disabled {
     margin-top: 0;
 }
 
-
 .workspace-logo-small {
     height: 32px;
     width: auto;
     margin-left: auto;
 }
 
-
-
-
-
-
-/* FINAL authoritative spacing for workspace descriptions
-.workspace-mode-desc {
-    margin-top: 6px !important;    
-    margin-bottom: 14px !important; 
+.info-qr {
+    display: block;
+    width: 160px;        /* adjust as needed */
+    height: auto;
+    margin: 12px auto;   /* centers it */
+    border-radius: 8px;  /* optional: soft corners */
 }
- */
+
+/* ============================================================
+   WORKSPACE — DELETE PLAYLIST ROWS (MATCH EDIT MODE EXACTLY)
+   ============================================================ */
+
+.workspace-delete-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background: #2a2a2a;              /* same as edit rows */
+  border-radius: 6px;               /* same rounded corners */
+  border: 1px solid #3a3a3a;        /* same outline */
+
+  padding: 10px 14px;               /* identical padding */
+  margin: 6px 0;                    /* identical spacing between rows */
+
+  min-height: 48px;                 /* identical row height */
+  cursor: pointer;                  /* same feel as edit rows */
+
+  transition: background 0.2s, transform 0.1s;
+}
+
+.workspace-delete-item:hover {
+  background: #3a3a3a;              /* same hover color */
+  transform: scale(1.02);           /* same hover scale */
+}
+
+.workspace-delete-item:active {
+  background: #444;                 /* same active color */
+  transform: scale(0.98);           /* same tap feel */
+}
+
+.workspace-delete-item span {
+  color: #fff;
+  font-size: 15px;
+  line-height: 1.3;
+  display: flex;
+  align-items: center;
+}
+
+/* Delete button — sized to match row height */
+.workspace-delete-btn {
+  background: #c00;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+
+  padding: 8px 14px;                /* balanced inside the row */
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.workspace-delete-btn:hover {
+  background: #e00;
+}
+
+
+
