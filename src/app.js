@@ -1,5 +1,5 @@
 // 09.17.26 at 11;54AM EST
-console.log("9.17.26 at 12:39");
+console.log("9.18.26 at 9:50am");
 // Change notes in function generateInfoNotesHTML()
 /* ============================================
    IMPORTS      
@@ -283,7 +283,7 @@ function generateInfoNotesHTML() {
         <div class="info-note">
             <h3>Latest Updates & Version Info</h3>
             <p>
-                Version 1.0.0.<br>
+                Version 3.0.0.<br>
                 
             </p>
         </div>
