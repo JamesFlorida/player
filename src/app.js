@@ -335,7 +335,7 @@ function generateInfoNotesHTML() {
 
         <div class="info-note">
             <h3>About the App</h3>
-            <p>This app is offered free for Stockyard dancers. It is written and maintained by a fellow Stockyard dancer.</p>
+            <p>This app is offered free for Stockyard dancers. It was written by, and maintained by, a fellow Stockyard dancer.</p>
         </div>
 
         <div class="info-note">
