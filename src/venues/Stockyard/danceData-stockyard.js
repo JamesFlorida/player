@@ -200,5 +200,4 @@ export const danceData = [
 { id: 26, playlist: "Mixed Bag", level: "High Beginner", daytaught: "Wednesday", name: "Redneck Angel", choreographer: "LitzenBurg/Filiou", song: "Merry Go Round", artist: "JaneDear Girls", steps: "https://www.copperknob.co.uk/stepsheets/NM5RM5Z/redneck-angel", teach: "https://www.youtube.com/embed/6z2GydiaOuo", demo: "https://www.youtube.com/embed/ibGgYAI5yfU", music: "https://www.youtube.com/embed/2HkbIy77nYw" },
 { id: 25, playlist: "Stock -018", level: "Beginner", daytaught: "Tuesday", name: "Y allsome-No teach or demo", choreographer: "Nancy Rosera", song: "Y allsome", artist: "Pryor and Lee", steps: "https://www.copperknob.co.uk/stepsheets/LBYCDM4/yallsome", teach: "", demo: "", music: "https://www.youtube.com/embed/tbSzyMwIKio" }
 
-
 ];
