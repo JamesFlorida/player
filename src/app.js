@@ -1687,7 +1687,10 @@ function handleWorkspaceSearchInput(value) {
     workspaceSearchQuery = value.trim().toLowerCase();
 
     if (!workspaceSearchQuery) {
-        workspaceSearchResults = [];
+        // ⭐ Reset to ALL dances not already selected
+        workspaceSearchResults = allDances.filter(track =>
+            !workspaceSelectedDances.includes(track.id)
+        );
         renderWorkspaceSearchResults();
         return;
     }
@@ -1698,13 +1701,15 @@ function handleWorkspaceSearchInput(value) {
         const choreo = (track.choreographer || "").toLowerCase();
 
         return (
-            name.includes(workspaceSearchQuery) ||
-            choreo.includes(workspaceSearchQuery)
+            (name.includes(workspaceSearchQuery) ||
+             choreo.includes(workspaceSearchQuery)) &&
+            !workspaceSelectedDances.includes(track.id)
         );
     });
 
     renderWorkspaceSearchResults();
 }
+
 
 function showWorkspaceMessage(text, type = "success") {
     const msg = document.getElementById("workspaceMessage");
