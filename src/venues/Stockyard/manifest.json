@@ -1,7 +1,7 @@
 {
   "name": "Stockyard Line Dance",
   "short_name": "Stockyard",
-  "start_url": "./index.html?v=9.26.26A",
+  "start_url": "./index.html?v=9.26.26B",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#000000",
