@@ -1309,7 +1309,7 @@ function renderCreateModeLayout() {
             !workspaceSelectedDances.includes(track.name)
         );
 
-        workspaceSearchResults = [];
+        //   workspaceSearchResults = [];
         renderWorkspaceSelectedDances();
         renderWorkspaceSearchResults();
 
