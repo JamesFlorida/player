@@ -1305,11 +1305,17 @@ function renderCreateModeLayout() {
         `;
 
         // ⭐ INITIAL RENDER OF LISTS
-        workspaceSearchResults = allDances.filter(track =>
-            !workspaceSelectedDances.includes(track.name)
+        //workspaceSearchResults = allDances.filter(track =>
+        //    !workspaceSelectedDances.includes(track.name)
+        //);
+        //   workspaceSearchResults = [];
+        
+        workspaceSearchResults = allDances
+            .filter(track => !workspaceSelectedDances.includes(track.name))
+            .filter((dance, index, arr) =>
+            index === arr.findIndex(d => d.name === dance.name)
         );
 
-        //   workspaceSearchResults = [];
         renderWorkspaceSelectedDances();
         renderWorkspaceSearchResults();
 
