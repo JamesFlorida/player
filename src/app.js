@@ -1841,12 +1841,19 @@ function removeDanceFromWorkspace(danceId) {
         workspaceSelectedDances.splice(index, 1);
         renderWorkspaceSelectedDances();
 
+        // Rebuild search list so gray state updates
+        workspaceSearchResults = allDances.filter(track =>
+            !workspaceSelectedDances.includes(track.id)
+        );
+        renderWorkspaceSearchResults();
+
         if (workspaceMode === "edit" && workspacePlaylistName) {
             userPlaylistsData[workspacePlaylistName] = [...workspaceSelectedDances];
             savePlaylist("userPlaylists", userPlaylistsData);
         }
     }
 }
+
 
 
 /* ============================================
