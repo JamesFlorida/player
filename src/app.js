@@ -1941,9 +1941,12 @@ function selectPlaylistForEditing(name) {
     // ⭐ Render selected dances
     renderWorkspaceSelectedDances();
 
-    // ⭐ Clear old search results from previous screens
-    workspaceSearchResults = [];
+    // ⭐ Populate search list with ALL dances not already selected
+    workspaceSearchResults = allDances.filter(track =>
+    !workspaceSelectedDances.includes(track.id)
+    );
     renderWorkspaceSearchResults();
+
 }
 
 /* ============================================
