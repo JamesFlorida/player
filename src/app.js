@@ -1309,7 +1309,7 @@ function renderCreateModeLayout() {
         //    !workspaceSelectedDances.includes(track.name)
         //);
         //   workspaceSearchResults = [];
-        
+
         workspaceSearchResults = allDances
             .filter(track => !workspaceSelectedDances.includes(track.name))
             .filter((dance, index, arr) =>
@@ -1738,7 +1738,7 @@ function renderWorkspaceSearchResults() {
     workspaceSearchResults.forEach(track => {
         const row = document.createElement('div');
 
-        const isAlreadySelected = workspaceSelectedDances.includes(track.name);
+        const isAlreadySelected = workspaceSelectedDances.includes(track.id);
 
         // ⭐ Row class (dim entire row if already selected)
         row.className = isAlreadySelected
