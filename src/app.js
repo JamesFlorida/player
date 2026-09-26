@@ -335,7 +335,7 @@ function generateInfoNotesHTML() {
 
         <div class="info-note">
             <h3>About the App</h3>
-            <p>This app is offered free for Stockyard dancers. It is written and maintained by a fellow Stockyard dancer.</p>
+            <p>This app is offered free for Stockyard dancers. It was written by, and maintained by, a fellow Stockyard dancer.</p>
         </div>
 
         <div class="info-note">
@@ -1305,11 +1305,17 @@ function renderCreateModeLayout() {
         `;
 
         // ⭐ INITIAL RENDER OF LISTS
-        workspaceSearchResults = allDances.filter(track =>
-            !workspaceSelectedDances.includes(track.name)
+        //workspaceSearchResults = allDances.filter(track =>
+        //    !workspaceSelectedDances.includes(track.name)
+        //);
+        //   workspaceSearchResults = [];
+
+        workspaceSearchResults = allDances
+            .filter(track => !workspaceSelectedDances.includes(track.name))
+            .filter((dance, index, arr) =>
+            index === arr.findIndex(d => d.name === dance.name)
         );
 
-        workspaceSearchResults = [];
         renderWorkspaceSelectedDances();
         renderWorkspaceSearchResults();
 
@@ -1681,7 +1687,10 @@ function handleWorkspaceSearchInput(value) {
     workspaceSearchQuery = value.trim().toLowerCase();
 
     if (!workspaceSearchQuery) {
-        workspaceSearchResults = [];
+        // ⭐ Reset to ALL dances not already selected
+        workspaceSearchResults = allDances.filter(track =>
+            !workspaceSelectedDances.includes(track.id)
+        );
         renderWorkspaceSearchResults();
         return;
     }
@@ -1692,13 +1701,15 @@ function handleWorkspaceSearchInput(value) {
         const choreo = (track.choreographer || "").toLowerCase();
 
         return (
-            name.includes(workspaceSearchQuery) ||
-            choreo.includes(workspaceSearchQuery)
+            (name.includes(workspaceSearchQuery) ||
+             choreo.includes(workspaceSearchQuery)) &&
+            !workspaceSelectedDances.includes(track.id)
         );
     });
 
     renderWorkspaceSearchResults();
 }
+
 
 function showWorkspaceMessage(text, type = "success") {
     const msg = document.getElementById("workspaceMessage");
@@ -1732,7 +1743,7 @@ function renderWorkspaceSearchResults() {
     workspaceSearchResults.forEach(track => {
         const row = document.createElement('div');
 
-        const isAlreadySelected = workspaceSelectedDances.includes(track.name);
+        const isAlreadySelected = workspaceSelectedDances.includes(track.id);
 
         // ⭐ Row class (dim entire row if already selected)
         row.className = isAlreadySelected
@@ -1835,12 +1846,19 @@ function removeDanceFromWorkspace(danceId) {
         workspaceSelectedDances.splice(index, 1);
         renderWorkspaceSelectedDances();
 
+        // Rebuild search list so gray state updates
+        workspaceSearchResults = allDances.filter(track =>
+            !workspaceSelectedDances.includes(track.id)
+        );
+        renderWorkspaceSearchResults();
+
         if (workspaceMode === "edit" && workspacePlaylistName) {
             userPlaylistsData[workspacePlaylistName] = [...workspaceSelectedDances];
             savePlaylist("userPlaylists", userPlaylistsData);
         }
     }
 }
+
 
 
 /* ============================================
@@ -1928,9 +1946,12 @@ function selectPlaylistForEditing(name) {
     // ⭐ Render selected dances
     renderWorkspaceSelectedDances();
 
-    // ⭐ Clear old search results from previous screens
-    workspaceSearchResults = [];
+    // ⭐ Populate search list with ALL dances not already selected
+    workspaceSearchResults = allDances.filter(track =>
+    !workspaceSelectedDances.includes(track.id)
+    );
     renderWorkspaceSearchResults();
+
 }
 
 /* ============================================
