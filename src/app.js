@@ -108,7 +108,7 @@ loadPlaylist("userPlaylists").then(result => {
     }
 });
 
-let allDances = danceData;       // Shared dataset
+//   let allDances = danceData;       // Shared dataset
 
 /* ============================================
    VENUE BRANDING
@@ -1310,7 +1310,7 @@ function renderCreateModeLayout() {
         //);
         //   workspaceSearchResults = [];
 
-        workspaceSearchResults = allDances
+        workspaceSearchResults = localDanceDatabase
             .filter(track => !workspaceSelectedDances.includes(track.name))
             .filter((dance, index, arr) =>
             index === arr.findIndex(d => d.name === dance.name)
@@ -1688,7 +1688,7 @@ function handleWorkspaceSearchInput(value) {
 
     if (!workspaceSearchQuery) {
         // ⭐ Reset to ALL dances not already selected
-        workspaceSearchResults = allDances.filter(track =>
+        workspaceSearchResults = localDanceDatabase.filter(track =>
             !workspaceSelectedDances.includes(track.id)
         );
         renderWorkspaceSearchResults();
@@ -1696,7 +1696,7 @@ function handleWorkspaceSearchInput(value) {
     }
 
     // ⭐ Only search fields visible in the workspace UI
-    workspaceSearchResults = allDances.filter(track => {
+    workspaceSearchResults = localDanceDatabase.filter(track => {
         const name = (track.name || "").toLowerCase();
         const choreo = (track.choreographer || "").toLowerCase();
 
@@ -1847,7 +1847,7 @@ function removeDanceFromWorkspace(danceId) {
         renderWorkspaceSelectedDances();
 
         // Rebuild search list so gray state updates
-        workspaceSearchResults = allDances.filter(track =>
+        workspaceSearchResults = localDanceDatabase.filter(track =>
             !workspaceSelectedDances.includes(track.id)
         );
         renderWorkspaceSearchResults();
@@ -1947,7 +1947,7 @@ function selectPlaylistForEditing(name) {
     renderWorkspaceSelectedDances();
 
     // ⭐ Populate search list with ALL dances not already selected
-    workspaceSearchResults = allDances.filter(track =>
+    workspaceSearchResults = localDanceDatabase.filter(track =>
     !workspaceSelectedDances.includes(track.id)
     );
     renderWorkspaceSearchResults();
