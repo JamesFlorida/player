@@ -182,20 +182,20 @@ body {
    ============================================================ */
 .dance-entry-card {
   border-radius: 12px;
-  padding: 22px;
-  margin-bottom: 20px;
+  padding: 18px;
+  margin-bottom: 16px;
   box-sizing: border-box;
 }
 
 .title-line {
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   font-weight: bold;
   margin-bottom: 6px;
   text-align: center;
 }
 
 .meta-line {
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   margin-bottom: 22px;
   text-align: center;
   line-height: 1.4;
@@ -237,7 +237,7 @@ body {
 }
 
 .playlist-btn {
-    padding: 16px 6px; /* larger tap area */
+    padding: 12px 4px; /* larger tap area */
     font-size: 0.9rem;
     border-radius: 10px;
     background-color: #2c3e50; /* your theme buttonBlue */
