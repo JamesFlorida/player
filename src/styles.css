@@ -233,11 +233,11 @@ body {
 .dance-button-row {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 16px; /* more space between buttons */
+    gap: 20px; /* more space between buttons */
 }
 
 .playlist-btn {
-    padding: 12px 4px; /* larger tap area */
+    padding: 10px 6px; /* larger tap area */
     font-size: 0.9rem;
     border-radius: 10px;
     background-color: #2c3e50; /* your theme buttonBlue */
