@@ -356,7 +356,10 @@ function generateInfoNotesHTML() {
 
         <div class="info-note">
             <h3>What Kind of App Is This?</h3>
-            <p>This is a web‑app, not a traditional app store download. It works on all major devices and updates instantly.</p>
+            <p>This is a web app, not a traditional app store download. <br>
+            The app is updated regularly with the latest Stockyard dances.<br>
+            If new dances don’t appear, close the app (swipe close), then and then reopen the app.<br>
+            The latest version with latest dance updates will load. </p>
         </div>
 
         <div class="info-note">
@@ -372,13 +375,10 @@ function generateInfoNotesHTML() {
 
         <div class="info-note">
             <h3>About Videos</h3>
-            <p>Some video owners block in‑app playback. When that happens, the app opens the video directly in YouTube. Close YouTube to return to app.</p>
+            <p>Some video owners block in app playback. When that happens, the app opens the video directly in YouTube. Close YouTube to return to app.</p>
         </div>
 
-        <div class="info-note">
-            <h3>Dance Updates</h3>
-            <p>The app is updated regularly with the latest Stockyard dances. If new dances don’t appear, close and reopen the app.</p>
-        </div>
+        
 
         <div class="info-note">
             <h3>Final Note</h3>
