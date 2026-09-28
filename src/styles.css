@@ -205,12 +205,12 @@ body {
 .button-bar-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
+  gap: 24px;
 }
 
 /* Action buttons */
 .action-touch-btn {
-  padding: 16px 6px;
+  padding: 16px 12px;
   border-radius: 10px;
   font-weight: bold;
   font-size: 0.90rem;
