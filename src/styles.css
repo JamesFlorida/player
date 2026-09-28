@@ -227,6 +227,26 @@ body {
 }
 
 /* ============================================================
+   FIX — Larger Action Buttons on Dance List
+   ============================================================ */
+
+.dance-button-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px; /* more space between buttons */
+}
+
+.playlist-btn {
+    padding: 16px 6px; /* larger tap area */
+    font-size: 0.9rem;
+    border-radius: 10px;
+    background-color: #2c3e50; /* your theme buttonBlue */
+    color: white;
+    border: none;
+}
+
+
+/* ============================================================
    GLOBAL — OVERLAY LAYOUT
    ============================================================ */
 .inapp-overlay-window {
