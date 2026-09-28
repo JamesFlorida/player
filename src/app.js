@@ -1931,10 +1931,10 @@ function selectPlaylistForEditing(name) {
     const footer = document.createElement("div");
     footer.id = "workspaceFooter";
     footer.className = "workspace-footer-fixed";
-    footer.innerHTML = `
-        <button class="workspace-save-btn workspace-footer-btn" onclick="saveWorkspacePlaylist()">Save Changes</button>
-        <button class="workspace-cancel-btn workspace-footer-btn" onclick="cancelWorkspace()">Cancel</button>
-    `;
+
+    // ⭐ REMOVE Save/Cancel for Edit Mode — rely on back arrow
+    footer.innerHTML = ``;
+
     screen.appendChild(footer);
 
     // ⭐ Render selected dances
@@ -1942,11 +1942,11 @@ function selectPlaylistForEditing(name) {
 
     // ⭐ Populate search list with ALL dances not already selected
     workspaceSearchResults = localDanceDatabase.filter(track =>
-    !workspaceSelectedDances.includes(track.id)
+        !workspaceSelectedDances.includes(track.id)
     );
     renderWorkspaceSearchResults();
-
 }
+
 
 /* ============================================
    WORKSPACE — NAVIGATION BACK
