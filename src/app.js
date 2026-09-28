@@ -338,6 +338,8 @@ function generateInfoNotesHTML() {
             <p>This app is offered free for Stockyard dancers. It was written by, and maintained by, a fellow Stockyard dancer.</p>
         </div>
 
+
+
         <div class="info-note">
             <h3>Sharing</h3>
             <p>
@@ -349,17 +351,10 @@ function generateInfoNotesHTML() {
         </div>
 
         <div class="info-note">
-            <h3>Responsibility & Contact</h3>
-            <p>Stockyard management and staff are not responsible for the app or its content.<br>
-            Suggestions or comments: <strong>tampadancing@gmail.com</strong></p>
-        </div>
-
-        <div class="info-note">
             <h3>What Kind of App Is This?</h3>
-            <p>This is a web app, not a traditional app store download. <br>
-            The app is updated regularly with the latest Stockyard dances.<br>
-            If new dances don’t appear, close the app (swipe close), then and then reopen the app.<br>
-            The latest version with latest dance updates will load. </p>
+            <p>This is a web app, not a traditional app store download. The app is updated regularly with the latest Stockyard dances.<br>
+            If new dances don’t appear, close the app (swipe close), then reopen the app, and the latest version with latest dance updates will load.<br>
+             </p>
         </div>
 
         <div class="info-note">
@@ -378,7 +373,11 @@ function generateInfoNotesHTML() {
             <p>Some video owners block in app playback. When that happens, the app opens the video directly in YouTube. Close YouTube to return to app.</p>
         </div>
 
-        
+        <div class="info-note">
+            <h3>Responsibility & Contact</h3>
+            <p>Stockyard management and staff are not responsible for the app or its content.<br>
+            Suggestions or comments: <strong>tampadancing@gmail.com</strong></p>
+        </div>
 
         <div class="info-note">
             <h3>Final Note</h3>
