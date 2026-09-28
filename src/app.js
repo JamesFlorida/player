@@ -1535,15 +1535,10 @@ function renderEditModeLayout() {
         screen.appendChild(footer);
     }
 
-    footer.innerHTML = `
-        <button class="workspace-save-btn workspace-footer-btn" onclick="saveEditedPlaylist()">Save Changes</button>
-        <button class="workspace-cancel-btn workspace-footer-btn" onclick="cancelWorkspace()">Cancel</button>
-    `;
-
-    // ⭐ Hide Save button until a playlist is selected
-    const saveBtn = footer.querySelector(".workspace-save-btn");
-    if (saveBtn) saveBtn.style.display = "none";
+    // ⭐ REMOVE Save/Cancel for Edit Mode — rely on back arrow
+    footer.innerHTML = ``;
 }
+
 
 /* ============================================
    DELETE MODE LAYOUT
