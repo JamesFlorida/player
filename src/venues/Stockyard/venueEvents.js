@@ -6,7 +6,7 @@ export const venueEvents = [
         image: "./images/diamond_rio.png",
         price: "GA $25 advance / $30 day of show — VIP $95",
         link: "https://stockyardlive.com"
-    }
+    },
     {
         id: "evt_new_event",
         title: "Dances Taught",
