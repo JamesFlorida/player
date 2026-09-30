@@ -942,15 +942,18 @@ function renderEventsList() {
                 <div class="event-date">${evt.date}</div>
                 <div class="event-price">${evt.price}</div>
 
-                <a href="${evt.link}" target="_blank" class="event-link">
-                    Tickets & Info
-                </a>
+                ${evt.link ? `
+                    <a href="${evt.link}" target="_blank" class="event-link">
+                        Tickets & Info
+                    </a>
+                ` : ``}
             </div>
         `;
 
         container.appendChild(card);
     });
 }
+
 
 /* ============================================
    DANCE CARD RENDERER
