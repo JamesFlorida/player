@@ -10,7 +10,7 @@ export const venueEvents = [
     {
         id: "evt_new_event",
         title: "Dances Taught",
-        date: "Dances Week of 9-28-26",
+        date: "Dances Week of 10-06-26",
         image: "./images/Stockyard10-06-26.png",
         price: "N/A",
         // ⭐ No link field at all
