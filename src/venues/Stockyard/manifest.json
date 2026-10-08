@@ -1,14 +1,14 @@
 {
   "name": "Stockyard Line Dance",
   "short_name": "Stockyard",
-  "start_url": "./index.html?v=10.06.26A",
+  "start_url": "./index.html?v=10.08.26",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#000000",
   "icons": [
     {
-      "src": "images/iconStockyardMaster.png",
-      "sizes": "192x192",
+      "src": "images/SplashStockyard512x512.png",
+      "sizes": "512x512",
       "type": "image/png"
     }
   ]
