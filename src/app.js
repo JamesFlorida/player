@@ -2100,7 +2100,11 @@ window.onload = function () {
     initializeVenueBranding();
     renderApplicationInterface();   // First render (empty playlists)
     initializeUserPlaylists();      // Second render (with playlists)
+
+    // ⭐ Hide the instant splash screen
+    document.getElementById("instantSplash").style.display = "none";
 };
+
 
 // HUB playlist categories used on the main screen
 const hubPlaylists = [

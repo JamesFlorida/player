@@ -122,3 +122,26 @@ body {
 .workspace-screen {
     background-color: transparent;
 }
+#instantSplash {
+    background-color: #000000;
+    color: white;
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    z-index: 9999;
+}
+
+.instantSplashLogo {
+    width: 160px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.instantSplashText {
+    opacity: 0.8;
+}
+
