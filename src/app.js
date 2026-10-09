@@ -57,7 +57,6 @@ async function sendLaunchEvent(data) {
 
     try {
         const response = await fetch("https://gentle-river-58db.james-x-hassett-ef8.workers.dev", {
-           
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -67,12 +66,15 @@ async function sendLaunchEvent(data) {
 
         if (!response.ok) {
             console.error("Worker error:", response.status);
+        } else {
+            console.log("Cloudflare responded OK");
         }
+
     } catch (err) {
         console.error("Network error:", err);
     }
-     console.log("Cloudflare responded OK");
 }
+
 
 
 /* ============================================
@@ -2131,8 +2133,9 @@ window.onload = function () {
     document.getElementById("instantSplash").style.display = "none";
 
     // ⭐ SEND LAUNCH EVENT TO CLOUDFLARE
+    console.log("Sending launch event to Cloudflare...");
     sendLaunchEvent({
-        console.log("Sending launch event to Cloudflare...");
+        
         event: "launch",
         venue: "Stockyard",
         timestamp: new Date().toISOString()
