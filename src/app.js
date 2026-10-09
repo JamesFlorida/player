@@ -56,7 +56,7 @@ async function initVersionSystem() {
 async function sendLaunchEvent(data) {
 
     try {
-       const response = await fetch("https://gentle-river-58db.james-x-hassett-ef8.workers.dev/", {
+       const response = await fetch("https://gentle-river-58db.james-x-hassett-ef8.workers.dev/api/", {
 
             method: "POST",
             headers: {
