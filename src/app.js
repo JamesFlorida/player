@@ -50,6 +50,29 @@ async function initVersionSystem() {
 }
 
 /* ============================================
+   CLOUDLARE USAGE TRACKING
+============================================ */
+
+async function sendLaunchEvent(data) {
+    try {
+        const response = await fetch("https://gentle-river-58db.james-x-hassett-ef8.workers.dev", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        });
+
+        if (!response.ok) {
+            console.error("Worker error:", response.status);
+        }
+    } catch (err) {
+        console.error("Network error:", err);
+    }
+}
+
+
+/* ============================================
    RUN VERSION SYSTEM SAFELY
 ============================================ */
 
@@ -2103,7 +2126,15 @@ window.onload = function () {
 
     // ⭐ Hide the instant splash screen
     document.getElementById("instantSplash").style.display = "none";
+
+    // ⭐ SEND LAUNCH EVENT TO CLOUDFLARE
+    sendLaunchEvent({
+        event: "launch",
+        venue: "Stockyard",
+        timestamp: new Date().toISOString()
+    });
 };
+
 
 
 // HUB playlist categories used on the main screen
