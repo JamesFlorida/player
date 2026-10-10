@@ -76,6 +76,28 @@ async function sendLaunchEvent(data) {
         console.error("Network error:", err);
     }
 }
+async function sendResumeEvent() {
+  console.log("Sending resume event to Cloudflare...");
+  try {
+    const response = await fetch("https://gentle-river-58db.james-x-hassett-ef8.workers.dev/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        event: "resume",
+        venue: "Stockyard",
+        timestamp: new Date().toISOString()
+      })
+    });
+
+    if (!response.ok) {
+      console.error("Worker error:", response.status);
+    } else {
+      console.log("Cloudflare responded OK (resume)");
+    }
+  } catch (err) {
+    console.error("Network error:", err);
+  }
+}
 
 
 
@@ -2336,9 +2358,12 @@ async function initializeUserPlaylists() {
     }
 }
 
-
-
-
+document.addEventListener("visibilitychange", () => {
+  if (!document.hidden) {
+    // User returned to the app
+    sendResumeEvent();
+  }
+});
 
 
 /* ============================================
