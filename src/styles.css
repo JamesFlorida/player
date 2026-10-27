@@ -26,6 +26,19 @@ body {
 }
 
 /* ============================================================
+   GLOBAL — SEASONAL THEME BLOCK CSS
+   ============================================================ */
+body.halloween-theme .venue-header {
+    background-image: url("venues/Stockyard/images/halloween2026.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.85; /* subtle, non-blocking */
+}
+
+
+
+/* ============================================================
    WORKSPACE — MODE PANEL (DESKTOP/TABLET)
    ============================================================ */
 .workspace-mode-panel {

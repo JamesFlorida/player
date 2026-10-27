@@ -1,6 +1,6 @@
 
 console.log("9.18.26 at 10:20am");
-// Change notes in function generateInfoNotesHTML()
+// Change notes in function generateInfoNotesHTML() at line 378
 // Change venue events in file venueEvents.js
 /* ============================================
    IMPORTS      
@@ -383,15 +383,13 @@ function generateInfoNotesHTML() {
             Version ${window.APP_VERSION}<br>
             </p>
 
+    <div class="info-note">
+            <h3>Happy Halloween !</h3>
+        </div>
 
 <div class="info-note">
-    <h3>Thank you Maurice !</h3>
-    <p>
-        We are so fortunate to have such a great instructor!<br>
-        Knowledge, dance skills, clarity, consistency, patience, kindness, and humor are but a few of the many gifts Maurice brings to class.
-        Be sure to thank him for what he does.<br>
-    <h3>What’s New</h3>
-    <p>
+    <h3>Thank you Maurice for all you do!</h3>
+    
         This weeks dances :<br>
         Tuesday:<br> 
             - A Bar Song / Not at this Party / Footloose Cowgirl<br>
