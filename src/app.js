@@ -390,15 +390,13 @@ function generateInfoNotesHTML() {
 <div class="info-note">
     <h3>Thank you Maurice for all you do!</h3>
     
-        This weeks dances :<br>
+        This weeks dances : Not posted as of 10/27 at noon. <br>
         Tuesday:<br> 
-            - A Bar Song / Not at this Party / Footloose Cowgirl<br>
+            - <br>
         Wednesday:<br>
-            - Stomp 2,3,4 / Hurts So Bad / Another Drink<br>
+            - <br>
         Weekend:<br>
-            -Kingdom of Fear<br>
-            -Keep Up With a Cowgirl (NOTE! I only see a French Stepsheet in Copperknob), but your browser will translate.<br>
-            -Surprise<br>
+            -<br>
         
     </p>
 </div>
