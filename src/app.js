@@ -390,14 +390,10 @@ function generateInfoNotesHTML() {
 <div class="info-note">
     <h3>Thank you Maurice for all you do!</h3>
     
-        This weeks dances : Not posted as of 10/27 at noon. <br>
-        Tuesday:<br> 
-            - <br>
-        Wednesday:<br>
-            - <br>
-        Weekend:<br>
-            -<br>
-        
+        This weeks dances : <br>
+        Tuesday:     A Bar Song -- Not at This Party -- Footloose Cowgirl -- <br> 
+        Wednesday:   Stomp 2,3,4 --  Hurt So Bad -- Another Drink -- <br>
+        Weekend:     Rhythm In a World Gone Wrong --  Keep Up With a Cowgirl -- Surprise -- <br>
     </p>
 </div>
 
