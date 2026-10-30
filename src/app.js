@@ -20,30 +20,52 @@ navigator.storage && navigator.storage.persist();
 
 async function loadAppVersion() {
     try {
-        const response = await fetch('version.json?v=' + Date.now());
+        const response = await fetch('version.json?v=' + Date.now(), {
+            cache: "no-store"
+        });
+
         const data = await response.json();
+
         window.APP_VERSION = data.version;
+
+        console.log("App started with version:", window.APP_VERSION);
+
     } catch (err) {
         console.log("Could not load version.json", err);
         window.APP_VERSION = "unknown";
     }
 }
 
+
 async function checkForUpdate() {
     try {
-        const response = await fetch('version.json?v=' + Date.now());
+        const response = await fetch('version.json?v=' + Date.now(), {
+            cache: "no-store"
+        });
+
         const data = await response.json();
 
-        if (data.version !== window.APP_VERSION) {
-            console.log("New version detected — refreshing PWA");
-            location.reload(true);
+        console.log(
+            "Version check:",
+            "running =", window.APP_VERSION,
+            "server =", data.version
+        );
+
+        if (
+            window.APP_VERSION !== "unknown" &&
+            data.version !== window.APP_VERSION
+        ) {
+            console.log("New version detected — loading version:", data.version);
+
+            const updatedUrl = new URL(window.location.href);
+            updatedUrl.searchParams.set("v", data.version);
+            window.location.replace(updatedUrl.href);
         }
 
     } catch (err) {
         console.log("Version check failed:", err);
     }
 }
-
 async function initVersionSystem() {
     await loadAppVersion();
     await checkForUpdate();
@@ -2376,6 +2398,7 @@ document.addEventListener("visibilitychange", () => {
   if (!document.hidden) {
     // User returned to the app
     sendResumeEvent();
+    checkForUpdate();
   }
 });
 
