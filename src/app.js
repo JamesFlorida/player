@@ -5,12 +5,12 @@ console.log("9.18.26 at 10:20am");
 /* ============================================
    IMPORTS      
 ============================================ */
-import { danceData } from './venues/Stockyard/danceData-stockyard.js';
+import { danceData } from './venues/Stockyard/danceData-stockyard.js?v=10-30-26A';
 // import { globalDanceList } from "./globalDanceList.js";
-import { venueDanceMap } from "./venues/Stockyard/venueDanceMap.js";
+import { venueDanceMap } from "./venues/Stockyard/venueDanceMap.js?v=10-30-26A";
 import { venueConfig } from "./venues/Stockyard/venueConfig.js";
 import { venueEvents } from "./venues/Stockyard/venueEvents.js";
-import { savePlaylist, loadPlaylist, deletePlaylist } from './db.js';
+import { savePlaylist, loadPlaylist, deletePlaylist } from './db.js?v=10-30-26A';
 
 navigator.storage && navigator.storage.persist();
 
@@ -18,22 +18,12 @@ navigator.storage && navigator.storage.persist();
    VERSION SYSTEM
 ============================================ */
 
+const RUNNING_APP_VERSION = "10-30-26A";
+
 async function loadAppVersion() {
-    try {
-        const response = await fetch('version.json?v=' + Date.now(), {
-            cache: "no-store"
-        });
+    window.APP_VERSION = RUNNING_APP_VERSION;
 
-        const data = await response.json();
-
-        window.APP_VERSION = data.version;
-
-        console.log("App started with version:", window.APP_VERSION);
-
-    } catch (err) {
-        console.log("Could not load version.json", err);
-        window.APP_VERSION = "unknown";
-    }
+    console.log("App started with version:", window.APP_VERSION);
 }
 
 
@@ -2401,6 +2391,12 @@ document.addEventListener("visibilitychange", () => {
     checkForUpdate();
   }
 });
+
+window.addEventListener("pageshow", () => {
+    console.log("pageshow fired");
+    checkForUpdate();
+});
+
 
 
 /* ============================================
