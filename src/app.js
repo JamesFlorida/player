@@ -404,8 +404,8 @@ function generateInfoNotesHTML() {
     
         This weeks dances : <br>
         Tuesday:     A Bar Song -- Not at This Party -- Footloose Cowgirl -- <br> 
-        Wednesday:   Stomp 2,3,4 --  Hurt So Bad -- Another Drink -- <br>
-        Weekend:     Rhythm In a World Gone Wrong --  Keep Up With a Cowgirl -- Surprise -- <br>
+        Wednesday:   Stomp 2,3,4 --  Hurt So Bad -- Heart of Stone -- <br>
+        Weekend:     Rhythm In a World Gone Wrong --  Keep Up With a Cowgirl -- The Beast -- <br>
     </p>
 </div>
 
