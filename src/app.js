@@ -394,9 +394,6 @@ function generateInfoNotesHTML() {
             <p>
             Version ${window.APP_VERSION}<br>
             </p>
-
-    <div class="info-note">
-            <h3>Happy Halloween !</h3>
         </div>
 
 <div class="info-note">

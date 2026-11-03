@@ -27,7 +27,8 @@ body {
 
 /* ============================================================
    GLOBAL — SEASONAL THEME BLOCK CSS
-   ============================================================ */
+   
+
 body.halloween-theme .venue-header {
     background-image: url("venues/Stockyard/images/halloween2026.png");
     background-size: contain;
@@ -36,6 +37,7 @@ body.halloween-theme .venue-header {
     opacity: 0.85; /* subtle, non-blocking */
 }
 
+============================================================ */
 
 
 /* ============================================================
