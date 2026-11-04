@@ -1,6 +1,6 @@
-
-console.log("9.18.26 at 10:20am");
-// Change notes in function generateInfoNotesHTML() at line 378
+//  Enter at PS prompt to update versioning     .\src\venues\Stockyard\update-version.ps1
+// Use ctrl-C if necessary to stop script prematurely if something needs done before updating version.
+// Change notes in function generateInfoNotesHTML()
 // Change venue events in file venueEvents.js
 /* ============================================
    IMPORTS      
