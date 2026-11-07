@@ -122,7 +122,6 @@ async function sendResumeEvent() {
 })();
 
 
-
 /* ============================================
    MERGE STOCKYARD DANCE DATA + VENUE MAP  
 ============================================ */
@@ -133,7 +132,7 @@ venueDanceMap.forEach(entry => {
     if (base) {
         localDanceDatabase.push({
             ...base,
-            playlist: entry.playlist,
+            //playlist: entry.playlist,
             daytaught: entry.daytaught
         });
     }
@@ -619,9 +618,11 @@ function countAllDances() {
     return localDanceDatabase.length;
 }
 
+/*
 function countMixedBag() {
     return localDanceDatabase.filter(d => d.playlist === "Mixed Bag").length;
 }
+    */
 
 /* ============================================
    MAIN RENDERER
@@ -722,14 +723,7 @@ if (lastNavigationMode === "user-playlist" && activeUserPlaylistView !== null) {
 
         let playlistTracks = [];
 
-        if (selectedActivePlaylistGroup === "Mixed Bag") {
-            playlistTracks = localDanceDatabase
-                .filter(track => track.playlist === "Mixed Bag")
-                .filter((dance, index, arr) =>
-                    index === arr.findIndex(d => d.name === dance.name)
-                );
-
-        } else if (selectedActivePlaylistGroup === "ALL Dances") {
+        if (selectedActivePlaylistGroup === "ALL Dances") {
             playlistTracks = localDanceDatabase
                 .slice()
                 .filter((dance, index, arr) =>
@@ -876,9 +870,9 @@ if (lastNavigationMode === "user-playlist" && activeUserPlaylistView !== null) {
             </div>
             ` : ""}
 
-            ${countMixedBag() > 0 ? `
+            ${countDay("Mixed Bag") > 0 ? `
             <div class="hub-card" onclick="openHubPlaylist(5)">
-                <div class="hub-card-title">Mixed Bag (${countMixedBag()})</div>
+                <div class="hub-card-title">Mixed Bag (${countDay("Mixed Bag")})</div>
             </div>
             ` : ""}
 
@@ -2225,6 +2219,7 @@ function openHubPlaylist(index) {
         case "Wednesday":
         case "Thursday":
         case "Weekend":
+        case "Mixed Bag":
             openDayPlaylist(name);
             return;
 
@@ -2237,14 +2232,6 @@ function openHubPlaylist(index) {
 
         case "ALL Dances":
             selectedActivePlaylistGroup = "ALL Dances";
-            activeDayView = null;
-            activeDifficultyView = null;
-            lastNavigationMode = "playlist";
-            renderApplicationInterface();
-            return;
-
-        case "Mixed Bag":
-            selectedActivePlaylistGroup = "Mixed Bag";
             activeDayView = null;
             activeDifficultyView = null;
             lastNavigationMode = "playlist";
