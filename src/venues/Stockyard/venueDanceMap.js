@@ -217,6 +217,5 @@ const venueDanceMap = [
 { id: 27, daytaught: "Mixed Bag" },
 { id: 26, daytaught: "Mixed Bag" }
 
-
 ];
 export { venueDanceMap };
