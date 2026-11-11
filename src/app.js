@@ -5,12 +5,12 @@
 /* ============================================
    IMPORTS      
 ============================================ */
-import { danceData } from './venues/Stockyard/danceData-stockyard.js?v=11.10.26';
+import { danceData } from './venues/Stockyard/danceData-stockyard.js?v=11.11.26';
 // import { globalDanceList } from "./globalDanceList.js";
-import { venueDanceMap } from "./venues/Stockyard/venueDanceMap.js?v=11.10.26";
+import { venueDanceMap } from "./venues/Stockyard/venueDanceMap.js?v=11.11.26";
 import { venueConfig } from "./venues/Stockyard/venueConfig.js";
 import { venueEvents } from "./venues/Stockyard/venueEvents.js";
-import { savePlaylist, loadPlaylist, deletePlaylist } from './db.js?v=11.10.26';
+import { savePlaylist, loadPlaylist, deletePlaylist } from './db.js?v=11.11.26';
 
 navigator.storage && navigator.storage.persist();
 
@@ -18,7 +18,7 @@ navigator.storage && navigator.storage.persist();
    VERSION SYSTEM
 ============================================ */
 
-const RUNNING_APP_VERSION = "11.10.26";
+const RUNNING_APP_VERSION = "11.11.26";
 
 async function loadAppVersion() {
     window.APP_VERSION = RUNNING_APP_VERSION;
@@ -396,12 +396,12 @@ function generateInfoNotesHTML() {
         </div>
 
 <div class="info-note">
-    <h3>Thank you Maurice for all you do!</h3>
-    
-        LAST WEEKS dances (This weeks dances not posted by Stockyard as of 11.10.26 at 2:15pm) : <br>
-        Tuesday:     A Bar Song -- Not at This Party -- Footloose Cowgirl -- <br> 
-        Wednesday:   Stomp 2,3,4 --  Hurt So Bad -- Heart of Stone -- <br>
-        Weekend:     Rhythm In a World Gone Wrong --  Keep Up With a Cowgirl -- The Beast -- <br>
+    <h3>This week dances: Unknown</h3> 
+    <p>Dances not posted by Stockyard as of 11/11/26 8:30am<br>
+   
+        Tuesday:      <br> 
+        Wednesday:    <br>
+        Weekend:      <br>
     </p>
 </div>
 
