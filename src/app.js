@@ -396,12 +396,12 @@ function generateInfoNotesHTML() {
         </div>
 
 <div class="info-note">
-    <h3>This week dances: Unknown</h3> 
-    <p>Dances not posted by Stockyard as of 11/11/26 8:30am<br>
+    <h3>This week dances: </h3> 
+    <p>   <br>
    
-        Tuesday:      <br> 
-        Wednesday:    <br>
-        Weekend:      <br>
+        Tuesday:    Twenty Two, Cowgirls On, Baby I Wanna Know <br> 
+        Wednesday:  Blame Texas, Hurt So Bad, Heart of Stone   <br>
+        Weekend:    Rhythm in a World Gone Wrong, Clean Up to the Elbow, The Beast  <br>
     </p>
 </div>
 
