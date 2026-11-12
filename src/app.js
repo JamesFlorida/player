@@ -5,12 +5,12 @@
 /* ============================================
    IMPORTS      
 ============================================ */
-import { danceData } from './venues/Stockyard/danceData-stockyard.js?v=11.11.26';
+import { danceData } from './venues/Stockyard/danceData-stockyard.js?v=11.12.26';
 // import { globalDanceList } from "./globalDanceList.js";
-import { venueDanceMap } from "./venues/Stockyard/venueDanceMap.js?v=11.11.26";
+import { venueDanceMap } from "./venues/Stockyard/venueDanceMap.js?v=11.12.26";
 import { venueConfig } from "./venues/Stockyard/venueConfig.js";
 import { venueEvents } from "./venues/Stockyard/venueEvents.js";
-import { savePlaylist, loadPlaylist, deletePlaylist } from './db.js?v=11.11.26';
+import { savePlaylist, loadPlaylist, deletePlaylist } from './db.js?v=11.12.26';
 
 navigator.storage && navigator.storage.persist();
 
@@ -18,7 +18,7 @@ navigator.storage && navigator.storage.persist();
    VERSION SYSTEM
 ============================================ */
 
-const RUNNING_APP_VERSION = "11.11.26";
+const RUNNING_APP_VERSION = "11.12.26";
 
 async function loadAppVersion() {
     window.APP_VERSION = RUNNING_APP_VERSION;
