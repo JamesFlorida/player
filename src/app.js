@@ -5,12 +5,12 @@
 /* ============================================
    IMPORTS      
 ============================================ */
-import { danceData } from './venues/Stockyard/danceData-stockyard.js?v=11.17.26';
+import { danceData } from './venues/Stockyard/danceData-stockyard.js?v=11.17.26A';
 // import { globalDanceList } from "./globalDanceList.js";
-import { venueDanceMap } from "./venues/Stockyard/venueDanceMap.js?v=11.17.26";
+import { venueDanceMap } from "./venues/Stockyard/venueDanceMap.js?v=11.17.26A";
 import { venueConfig } from "./venues/Stockyard/venueConfig.js";
 import { venueEvents } from "./venues/Stockyard/venueEvents.js";
-import { savePlaylist, loadPlaylist, deletePlaylist } from './db.js?v=11.17.26';
+import { savePlaylist, loadPlaylist, deletePlaylist } from './db.js?v=11.17.26A';
 
 navigator.storage && navigator.storage.persist();
 
@@ -18,7 +18,7 @@ navigator.storage && navigator.storage.persist();
    VERSION SYSTEM
 ============================================ */
 
-const RUNNING_APP_VERSION = "11.17.26";
+const RUNNING_APP_VERSION = "11.17.26A";
 
 async function loadAppVersion() {
     window.APP_VERSION = RUNNING_APP_VERSION;
@@ -400,8 +400,8 @@ function generateInfoNotesHTML() {
     <p>   <br>
    
         Tuesday:    Twenty Two, Cowgirls On, Baby I Wanna Know <br> 
-        Wednesday:  Blame Texas, Hurt So Bad, Heart of Stone   <br>
-        Weekend:    Rhythm in a World Gone Wrong, Clean Up to the Elbow, The Beast  <br>
+        Wednesday:  Blame Texas, Long Road To Richmond, A Rattlesnake Kiss   <br>
+        Weekend:    Crazy, Sounds Like Something Id Do, The Beast  <br>
     </p>
 </div>
 
