@@ -400,8 +400,9 @@ function generateInfoNotesHTML() {
     <p>   <br>
    
         Tuesday:    Twenty Two, Cowgirls On, Baby I Wanna Know <br> 
-        Wednesday:  Blame Texas, Long Road To Richmond, A Rattlesnake Kiss   <br>
-        Weekend:    Crazy, Sounds Like Something Id Do, The Beast  <br>
+        Wednesday:  Closed for Thanksgiving   <br>
+        Thursday:   Closed for Thanksgiving   <br>
+        Friday/Saturday: For the Rest of Your Life, Blames on You, Hope Shes Drinking Tonight  <br>
     </p>
 </div>
 
