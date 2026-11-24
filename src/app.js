@@ -396,6 +396,7 @@ function generateInfoNotesHTML() {
         </div>
 
 <div class="info-note">
+    <h3>Happy Thanksgiving! </h3>
     <h3>This week dances: </h3> 
     <p>   <br>
    
